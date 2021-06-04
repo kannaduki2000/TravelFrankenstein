@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     //プレイヤーの動作の数値を入力（歩く、ジャンプ）
     public float inputSpeed;
     public float jumpingPower;
-
+    //
     public LayerMask CollisionLayer;
     [SerializeField] private LayerMask enemyLayer; // モック版熊倉:敵のLayer取得用
     private bool jumpFlg = false;
