@@ -6,7 +6,7 @@ using UnityEngine;
 //その前にレイヤー分けすると、
 //プレイヤーとエネミーですれ違い通信ができるようになるよ！
 
-//とてもとても非効率な書き方してる
+//とてもとても非効率な書き方してる-
 
 public class EnemyFollowing : MonoBehaviour
 {
