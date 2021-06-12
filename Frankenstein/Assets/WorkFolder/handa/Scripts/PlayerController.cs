@@ -40,8 +40,6 @@ public class PlayerController : MonoBehaviour
 
     public GameObject enemy;
 
-    //public EnemyController enemyCon;
-
     // モック版熊倉:GetCompornent重いんで直で取得、ここ敵の数増えるはずなので書き換えること
     [SerializeField] private EnemyController enemyCon;
     [SerializeField] private Image hp;
@@ -73,7 +71,7 @@ public class PlayerController : MonoBehaviour
 
 
         /*プレイヤーの移動入力処理--------------------------------------------*/
-        if(player_Move == false)
+        if (player_Move == false)
         {
             //矢印キーが押された場合
             x_val = Input.GetAxis("Horizontal");
@@ -84,7 +82,6 @@ public class PlayerController : MonoBehaviour
                 jump();
             }
         }
-        
         /*-----------------------------------------------------------------*/
 
         /*拾う、投げるの入力処理----------------------------------------------------*/
@@ -123,7 +120,7 @@ public class PlayerController : MonoBehaviour
         /*-----------------------------------------------------------------*/
 
         /*体力の減増処理-----------------------------------------------------------------*/
-        if (touchFlag || enemyTouchFlag)
+        if (touchFlag || enemyTouchFlag || enemyFollowFlg)
         {
             // 表示
             hpCanvas.SetActive(true);
@@ -131,7 +128,7 @@ public class PlayerController : MonoBehaviour
             // 電気を流す
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                HP -= 30;// HPを減らす
+                //HP -= 30;// HPを減らす
                 // モック版熊倉:HPバー
                 hp.fillAmount = HP / maxHP;
                 Debug.Log(HP);
@@ -146,18 +143,18 @@ public class PlayerController : MonoBehaviour
                     enemyCon.isCharging = false;
                     hpCanvas.SetActive(false);
                 }
-                
             }
             // 電気を充電
-            if (Input.GetKeyDown(KeyCode.RightShift))
+             if (Input.GetKeyDown(KeyCode.RightShift))
             {
-                HP += 30;// HPを増やす
+                //HP += 30;// HPを増やす
+                hp.fillAmount = HP / maxHP;
                 Debug.Log(HP);
                 // ここに処理を加える
 
                 if(enemyFollowFlg)
                 {
-
+                    enemyCon.isFollowing = false;
                 }
             }
         }
@@ -200,8 +197,7 @@ public class PlayerController : MonoBehaviour
     }
     /*-----------------------------------------------------------------*/
 
-
-    /*-----------------------------------------------------*/
+    /*-----------------------------------------------------------------*/
     void jump()
     {
         rb2d.AddForce(Vector2.up * jumpingPower);
@@ -264,7 +260,6 @@ public class PlayerController : MonoBehaviour
                 // ここでこのオブジェクトをプレイヤーの子供にする
                 item.gameObject.transform.parent = this.transform;
             }
-
         }
 
         if (Input.GetKeyUp(KeyCode.W))
@@ -280,7 +275,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "HomeApp")
         {
             touchFlag = true;
-        }   
+        }
+        else if (collision.gameObject.tag == "Enemy")
+        {
+            touchFlag = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -290,10 +289,10 @@ public class PlayerController : MonoBehaviour
             touchFlag = false;
             hpCanvas.SetActive(false);
         }
-
-        
-
+        else if(collision.gameObject.tag == "Enemy")
+        {
+            touchFlag = false;
+        }
     }
     /*-------------------------------------------------------------------*/
-
 }
