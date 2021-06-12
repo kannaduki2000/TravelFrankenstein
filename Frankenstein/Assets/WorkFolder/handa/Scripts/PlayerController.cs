@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
                 jump();
             }
         }
-        /*-----------------------------------------------------------------*/
+        /*--------------------------------------------------------------------------*/
 
         /*拾う、投げるの入力処理----------------------------------------------------*/
         if (aa)
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
                 this.gameObject.transform.DetachChildren();
             }
         }
-        /*-----------------------------------------------------------------*/
+        /*-------------------------------------------------------------------------------*/
 
         /*体力の減増処理-----------------------------------------------------------------*/
         if (touchFlag || enemyTouchFlag || enemyFollowFlg)
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
             // 電気を流す
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                //HP -= 30;// HPを減らす
+                HP -= 20;// HPを減らす
                 // モック版熊倉:HPバー
                 hp.fillAmount = HP / maxHP;
                 Debug.Log(HP);
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
             // 電気を充電
              if (Input.GetKeyDown(KeyCode.RightShift))
             {
-                //HP += 30;// HPを増やす
+                HP += 20;// HPを増やす
                 hp.fillAmount = HP / maxHP;
                 Debug.Log(HP);
                 // ここに処理を加える
