@@ -1,10 +1,16 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameSceneDebug : MonoBehaviour
 {
+    [SerializeField] private bool debugMode = false;
+
+
     void Update()
     {
+        if (!debugMode) return;
         #if UNITY_EDITOR
             // 左コントロールキー
             if (Input.GetKeyDown(KeyCode.LeftControl))
