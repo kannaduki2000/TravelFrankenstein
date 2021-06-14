@@ -20,17 +20,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer; // モック版熊倉:敵のLayer取得用
     private bool jumpFlg = false;
 
-    //public Vector2 Speed = new Vector2(1, 1);   //速度
-    private int presskeyFrames = 0;             //長押しフレーム数
-    private int PressLong = 300;                 //長押し判定の閾値
-    private int PressShort = 100;                //軽く押した判定の閾値
-    private bool aa = false;
-    Item item;
-
     [SerializeField] int maxHP = 100;
     [SerializeField] float HP = 100;
     [SerializeField] private bool touchFlag = false;
     [SerializeField] private bool enemyTouchFlag = false; // モック版熊倉:フラグ追加
+    private bool onElectricity = true;
     public GameObject hpCanvas;
     private float hpCanvasScale_x;
 
@@ -84,41 +78,6 @@ public class PlayerController : MonoBehaviour
         }
         /*--------------------------------------------------------------------------*/
 
-        /*拾う、投げるの入力処理----------------------------------------------------*/
-        if (aa)
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                //スペースの判定
-                presskeyFrames += (Input.GetKey(KeyCode.LeftShift)) ? 1 : 0;
-                Debug.Log(presskeyFrames);
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                //もしスペースが長押しされたら高めに投げる
-                if (PressLong <= presskeyFrames)
-                {
-                    item.Hight();
-                    Debug.Log("長め");
-                    this.gameObject.transform.DetachChildren();
-                }
-                //もしスペースが押されたら低めに投げる
-                else if (PressShort <= presskeyFrames)
-                {
-                    item.Low();
-                    Debug.Log("短め");
-                    this.gameObject.transform.DetachChildren();
-                }
-            }
-
-            if (Input.GetKeyUp(KeyCode.W))
-            {
-                this.gameObject.transform.DetachChildren();
-            }
-        }
-        /*-------------------------------------------------------------------------------*/
-
         /*体力の減増処理-----------------------------------------------------------------*/
         if (touchFlag || enemyTouchFlag || enemyFollowFlg)
         {
@@ -128,33 +87,42 @@ public class PlayerController : MonoBehaviour
             // 電気を流す
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                HP -= 20;// HPを減らす
-                // モック版熊倉:HPバー
-                hp.fillAmount = HP / maxHP;
-                Debug.Log(HP);
-                
-                // モック版熊倉:追加しますた
-                // 触れている物がEnemyの場合
-                if (enemyTouchFlag)
+                if(onElectricity == true)
                 {
-                    // 追従開始
-                    enemyCon.isFollowing = true;
-                    // 充電したのでこれ以上充電出来ないように
-                    enemyCon.isCharging = false;
-                    hpCanvas.SetActive(false);
+                    HP -= 20;// HPを減らす
+                             // モック版熊倉:HPバー
+                    hp.fillAmount = HP / maxHP;
+                    Debug.Log(HP);
+                    onElectricity = false;
+
+                    // モック版熊倉:追加しますた
+                    // 触れている物がEnemyの場合
+                    if (enemyTouchFlag)
+                    {
+                        // 追従開始
+                        enemyCon.isFollowing = true;
+                        // 充電したのでこれ以上充電出来ないように
+                        enemyCon.isCharging = false;
+                        hpCanvas.SetActive(false);
+                    }
                 }
+                
             }
             // 電気を充電
-             if (Input.GetKeyDown(KeyCode.RightShift))
+            if (Input.GetKeyDown(KeyCode.RightShift))
             {
-                HP += 20;// HPを増やす
-                hp.fillAmount = HP / maxHP;
-                Debug.Log(HP);
-                // ここに処理を加える
-
-                if(enemyFollowFlg)
+                if(onElectricity == false)
                 {
-                    enemyCon.isFollowing = false;
+                    HP += 20;// HPを増やす
+                    hp.fillAmount = HP / maxHP;
+                    Debug.Log(HP);
+                    // ここに処理を加える
+                    onElectricity = true;
+
+                    if (enemyFollowFlg)
+                    {
+                        enemyCon.isFollowing = false;
+                    }
                 }
             }
         }
@@ -228,46 +196,6 @@ public class PlayerController : MonoBehaviour
         //Debug.DrawLine(left, right);
         return Physics2D.Linecast(left, right, enemyLayer);
     }
-
-
-    /*---------------------------*/
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Item")
-        {
-            aa = false;
-            Debug.Log("exit");
-        }
-    }
-    /*-------------------------------------------------------------------*/
-
-    /*-------------------------------------------------------------------*/
-    //アイテムに当たり続けたら
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Item")
-        {
-            Debug.Log("stay");
-
-            //Wを押していたら
-            if (Input.GetKey(KeyCode.W))
-            {
-                aa = true;
-                //アイテムクラスの取得
-                item = collision.gameObject.GetComponent<Item>();
-
-                //アイテムのY軸が上がる
-                // ここでこのオブジェクトをプレイヤーの子供にする
-                item.gameObject.transform.parent = this.transform;
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            this.gameObject.transform.DetachChildren();
-        }
-    }
-    /*-------------------------------------------------------------------*/
 
     /*HPバーを表示するタグの判定-----------------------------------------*/
     private void OnTriggerEnter2D(Collider2D collision)
