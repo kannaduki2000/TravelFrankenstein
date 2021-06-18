@@ -8,13 +8,16 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
 
     public GameObject Player;
+    public GameObject enemy;
 
-    private float x_val;
-    private float speed;
+    public float speed;//速度
+    public float jumpPower;//ジャンプ
+    private float vx = 0;
+    private bool leftFlag = false;
+    private bool jumpFlag = false;
+    private bool groundCheck = false;//接地判定 
+    private bool pushFlag = false;
 
-    //プレイヤーの動作の数値を入力（歩く、ジャンプ）
-    public float inputSpeed;
-    public float jumpingPower;
     //
     public LayerMask CollisionLayer;
     [SerializeField] private LayerMask enemyLayer; // モック版熊倉:敵のLayer取得用
@@ -31,9 +34,6 @@ public class PlayerController : MonoBehaviour
     public bool player_Move = false;
 
     private bool enemyFollowFlg = false;
-
-    public GameObject enemy;
-
     // モック版熊倉:GetCompornent重いんで直で取得、ここ敵の数増えるはずなので書き換えること
     [SerializeField] private EnemyController enemyCon;
     [SerializeField] private Image hp;
@@ -43,8 +43,6 @@ public class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         hpCanvasScale_x = hpCanvas.transform.localScale.x;
-        // 熊倉:ここいらないと思うで
-        //enemy = GameObject.Find("Enemy");
     }
 
     // Update is called once per frame
@@ -65,15 +63,27 @@ public class PlayerController : MonoBehaviour
 
 
         /*プレイヤーの移動入力処理--------------------------------------------*/
-        if (player_Move == false)
+        vx = 0;
+        if (Input.GetKey("right"))
         {
-            //矢印キーが押された場合
-            x_val = Input.GetAxis("Horizontal");
-            jumpFlg = IsCollision();
-            //Spaceキーが押された場合
-            if (Input.GetKeyDown("space") && jumpFlg)
+            vx = speed;
+            leftFlag = false;
+        }
+        if (Input.GetKey("left"))
+        {
+            vx = -speed;
+            leftFlag = true;
+        }
+        if (Input.GetKey("space") && groundCheck)
+        {
+            if (pushFlag == false)
             {
-                jump();
+                jumpFlag = true;
+                pushFlag = true;
+            }
+            else
+            {
+                pushFlag = false;
             }
         }
         /*--------------------------------------------------------------------------*/
@@ -94,19 +104,18 @@ public class PlayerController : MonoBehaviour
                     hp.fillAmount = HP / maxHP;
                     Debug.Log(HP);
                     onElectricity = false;
-
-                    // モック版熊倉:追加しますた
-                    // 触れている物がEnemyの場合
-                    if (enemyTouchFlag)
-                    {
-                        // 追従開始
-                        enemyCon.isFollowing = true;
-                        // 充電したのでこれ以上充電出来ないように
-                        enemyCon.isCharging = false;
-                        hpCanvas.SetActive(false);
-                    }
                 }
-                
+
+                // モック版熊倉:追加しますた
+                // 触れている物がEnemyの場合
+                if (enemyTouchFlag)
+                {
+                    // 追従開始
+                    enemyCon.isFollowing = true;
+                    // 充電したのでこれ以上充電出来ないように
+                    enemyCon.isCharging = false;
+                    hpCanvas.SetActive(false);
+                }
             }
             // 電気を充電
             if (Input.GetKeyDown(KeyCode.RightShift))
@@ -118,11 +127,11 @@ public class PlayerController : MonoBehaviour
                     Debug.Log(HP);
                     // ここに処理を加える
                     onElectricity = true;
+                }
 
-                    if (enemyFollowFlg)
-                    {
-                        enemyCon.isFollowing = false;
-                    }
+                if (enemyFollowFlg)
+                {
+                    enemyCon.isFollowing = false;
                 }
             }
         }
@@ -134,53 +143,16 @@ public class PlayerController : MonoBehaviour
         /*-----------------------------------------------------------------*/
     }
 
-    /*プレイヤーの方向処理--------------------------------------------------*/
-    void FixedUpdate()
-    {
-        //待機
-        if (x_val == 0)
-        {
-            speed = 0;
-        }
-        //右に移動
-        else if (x_val > 0)
-        {
-            speed = inputSpeed;
-            transform.localScale = new Vector3(1, 1, 1);//右を向を向く
-            // モック版熊倉:HPバーの向きの調整
-            Vector3 hpTransform = new Vector3(hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.z);
-            hpCanvas.transform.localScale = hpTransform;
-        }
-        //左に移動
-        else if (x_val < 0)
-        {
-            speed = inputSpeed * -1;
-            transform.localScale = new Vector3(-1, 1, 1);//左を向を向く
-            // モック版熊倉:HPバーの向きの調整
-            Vector3 hpTransform = new Vector3(-hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.z);
-            hpCanvas.transform.localScale = hpTransform;
-        }
-        // キャラクターを移動 Vextor2(x軸スピード、y軸スピード(元のまま))
-        rb2d.velocity = new Vector2(speed, rb2d.velocity.y);
-    }
-    /*-----------------------------------------------------------------*/
-
-    /*-----------------------------------------------------------------*/
-    void jump()
-    {
-        rb2d.AddForce(Vector2.up * jumpingPower);
-        jumpFlg = false;
-    }
-    /*------------------------------------------------------------------*/
-
     /*無限ジャンプを防ぐ処理------------------------------------------------*/
-    bool IsCollision()
+    private void FixedUpdate()
     {
-        Vector3 left_SP = transform.position - Vector3.right * 0.2f;
-        Vector3 right_SP = transform.position + Vector3.right * 0.2f;
-        Vector3 EP = transform.position - Vector3.up * 1.3f;
-        return Physics2D.Linecast(left_SP, EP, CollisionLayer)
-               || Physics2D.Linecast(right_SP, EP, CollisionLayer);
+        rb2d.velocity = new Vector2(vx, rb2d.velocity.y);
+        this.GetComponent<SpriteRenderer>().flipX = leftFlag;
+        if (jumpFlag)
+        {
+            jumpFlag = false;
+            rb2d.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
+        }
     }
     /*-------------------------------------------------------------------*/
 
@@ -197,7 +169,11 @@ public class PlayerController : MonoBehaviour
         return Physics2D.Linecast(left, right, enemyLayer);
     }
 
-    /*HPバーを表示するタグの判定-----------------------------------------*/
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        groundCheck = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "HomeApp")
@@ -212,6 +188,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        groundCheck = false;
+
         if (collision.gameObject.tag == "HomeApp")
         {
             touchFlag = false;
@@ -222,5 +200,4 @@ public class PlayerController : MonoBehaviour
             touchFlag = false;
         }
     }
-    /*-------------------------------------------------------------------*/
 }

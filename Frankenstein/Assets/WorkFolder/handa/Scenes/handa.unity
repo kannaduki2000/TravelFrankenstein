@@ -786,6 +786,7 @@ GameObject:
   - component: {fileID: 1424296314}
   - component: {fileID: 1424296313}
   - component: {fileID: 1424296312}
+  - component: {fileID: 1424296318}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -806,8 +807,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1424296311}
-  inputSpeed: 20
-  jumpingPower: 2100
+  enemy: {fileID: 6879938}
+  speed: 20
+  jumpPower: 50
   CollisionLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -820,7 +822,6 @@ MonoBehaviour:
   enemyTouchFlag: 0
   hpCanvas: {fileID: 1184609474}
   player_Move: 0
-  enemy: {fileID: 6879938}
   enemyCon: {fileID: 6879941}
   hp: {fileID: 216511967}
 --- !u!50 &1424296313
@@ -945,13 +946,39 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1424296311}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -49.8, y: 1.8, z: 0}
+  m_LocalPosition: {x: -49.8, y: 1.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1184609478}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1424296318
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424296311}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 5, y: 5}
+    newSize: {x: 5, y: 5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.2, y: 0.5}
+  m_EdgeRadius: 0
 --- !u!1 &1648054116
 GameObject:
   m_ObjectHideFlags: 0
