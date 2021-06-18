@@ -445,7 +445,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  pointArray: []
 --- !u!1 &2163535760378323633
 GameObject:
   m_ObjectHideFlags: 0
