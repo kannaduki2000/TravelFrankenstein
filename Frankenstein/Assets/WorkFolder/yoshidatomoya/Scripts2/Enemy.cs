@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
+
+[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
 
@@ -14,17 +17,14 @@ public class Enemy : MonoBehaviour
     private float UpdateTimer = 0f;
     private float TimeRimit = 2.0f;
     private bool move = false;
-    private float UpdateTimer2 = 0f;
-    private float TimeRimit2 = 4.0f;
-    private bool move2 = false;
-    private float UpdateTimer3 = 0f;
-    private float TimeRimit3 = 2.0f;
+
 
     private Rigidbody2D rd;
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        navMeshAgent = GetComponent<NavMeshAgent>(); // NavMeshAgentを保持しておく
 
         // StartPosを初期位置に設定
         transform.position = StartPos;
@@ -83,41 +83,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private NavMeshAgent navMeshAgent;
+
+
+    // CollisionDetector.csのonTriggerStayにセットし、衝突中に実行される。
+    public void OnDetectObject(Collider collider)
     {
-        // フランケンがエネミーの視線察知内に入る
-        if (collision.gameObject.tag == "Player")
+        // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
+        if (collider.CompareTag("Player"))
         {
-            // エネミーがフランケンのいた場所に突進する
-
-            // 突進成功したら4秒間待機
-            if ()
-            {
-                UpdateTimer2 += Time.deltaTime;
-                // 4秒間待機したら元のテリトリーに戻る
-                if (UpdateTimer2 >= TimeRimit2)
-                {
-                    UpdateTimer2 = 0;
-
-                }
-            }
-            // 突進失敗したら2秒間待機
-            else if ()
-            {
-                UpdateTimer3 += Time.deltaTime;
-
-                // 2秒間待機後、フランケンが視線察知内にいたらもう１回突進する
-
-                // 2秒間待機したら元のテリトリーに戻る
-                if (UpdateTimer3 >= TimeRimit3)
-                {
-                    UpdateTimer3 = 0;
-                }
-
-            }
-
+            navMeshAgent.destination = collider.transform.position;
         }
     }
+
 }
 
 // エネミー自身のテリトリー間を行き来する〇
