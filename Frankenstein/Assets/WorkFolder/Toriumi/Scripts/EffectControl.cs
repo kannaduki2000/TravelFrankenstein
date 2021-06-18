@@ -4,75 +4,46 @@ using UnityEngine;
 
 public class EffectControl : MonoBehaviour
 {
-    private ParticleSystem Particle;
-    public GameObject m_particle1;
-    public GameObject m_particle2;
-    public GameObject m_particle3;
-    public GameObject m_particle4;
 
-    // Start is called before the first frame update
+    private ParticleSystem Particle;
+    public GameObject m_effect;         //プレハブ
+
+    // Effectを非アクティブ化
     void Start()
     {
-       
+        m_effect = GameObject.Find("Effect");   //非表示にしても見つかるように
+        m_effect.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        var pos = GetComponent<Transform>().localPosition;
-        //左矢印キーを押している
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            pos.x -= 0.01f;
-        }
-        //右矢印キーを押している
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            pos.x += 0.01f;
-        }
-        GetComponent<Transform>().localPosition = pos;
+
     }
 
-
+    //Effectをアクティブ化
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")   //中身の変更お願いします。
         {
-            Instantiate(m_particle1.gameObject, transform.position, transform.rotation);
-            Instantiate(m_particle2.gameObject, transform.position, transform.rotation);
-            Instantiate(m_particle3.gameObject, transform.position, transform.rotation);
-            Instantiate(m_particle4.gameObject, transform.position, transform.rotation);
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            Destroy(m_particle1.gameObject);
-            Destroy(m_particle2.gameObject);
-            Destroy(m_particle3.gameObject);
-            Destroy(m_particle4.gameObject);
+           m_effect.SetActive(true);
         }
     }
 
 }
 
-    
 
-    //電気の入出時にエフェクトが発生
 
-    /*組み立て*/
+//電気の入出時にエフェクトが発生
 
-    // 1 電気を入れる時にエフェクトを流す
-    // if(電気を入れたら)
-    // {
-    //  電気エフェクトを再生する
-    //  ※必要？再生時間を0にする
-    // }
+/*構造*/
 
-    // 2 フランケンのダメージ
-    // if(Enemyからダメージを受けたら)
-    // {
-    //  ダメージエフェクトを再生する
-    //  ※必要？再生時間を0にする
-    // }
+// 1 電気を入れる時にエフェクトを流す
+
+// Effectを非アクティブ化
+//
+// if(電気を入れたら)
+// {
+//    Effectアクティブ化  
+// }
+
