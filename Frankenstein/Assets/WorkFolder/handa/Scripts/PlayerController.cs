@@ -19,9 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool pushFlag = false;
 
     //
-    public LayerMask CollisionLayer;
     [SerializeField] private LayerMask enemyLayer; // ƒ‚ƒbƒN”ÅŒF‘q:“G‚ÌLayerŽæ“¾—p
-    private bool jumpFlg = false;
 
     [SerializeField] int maxHP = 100;
     [SerializeField] float HP = 100;
@@ -188,8 +186,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        groundCheck = false;
-
         if (collision.gameObject.tag == "HomeApp")
         {
             touchFlag = false;
@@ -198,6 +194,10 @@ public class PlayerController : MonoBehaviour
         else if(collision.gameObject.tag == "Enemy")
         {
             touchFlag = false;
+        }
+        else
+        {
+            groundCheck = false;
         }
     }
 }
