@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool jumpFlag = false;
     private bool groundCheck = false;//接地判定 
     private bool pushFlag = false;
+    public bool player_Move = false;
 
     //
     [SerializeField] private LayerMask enemyLayer; // モック版熊倉:敵のLayer取得用
@@ -29,7 +30,6 @@ public class PlayerController : MonoBehaviour
     public GameObject hpCanvas;
     private float hpCanvasScale_x;
 
-    public bool player_Move = false;
 
     private bool enemyFollowFlg = false;
     // モック版熊倉:GetCompornent重いんで直で取得、ここ敵の数増えるはずなので書き換えること
@@ -61,27 +61,30 @@ public class PlayerController : MonoBehaviour
 
 
         /*プレイヤーの移動入力処理--------------------------------------------*/
-        vx = 0;
-        if (Input.GetKey("right"))
+        if(player_Move == false)
         {
-            vx = speed;
-            leftFlag = false;
-        }
-        if (Input.GetKey("left"))
-        {
-            vx = -speed;
-            leftFlag = true;
-        }
-        if (Input.GetKey("space") && groundCheck)
-        {
-            if (pushFlag == false)
+            vx = 0;
+            if (Input.GetKey("right"))
             {
-                jumpFlag = true;
-                pushFlag = true;
+                vx = speed;
+                leftFlag = false;
             }
-            else
+            if (Input.GetKey("left"))
             {
-                pushFlag = false;
+                vx = -speed;
+                leftFlag = true;
+            }
+            if (Input.GetKey("space") && groundCheck)
+            {
+                if (pushFlag == false)
+                {
+                    jumpFlag = true;
+                    pushFlag = true;
+                }
+                else
+                {
+                    pushFlag = false;
+                }
             }
         }
         /*--------------------------------------------------------------------------*/
@@ -169,7 +172,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        groundCheck = true;
+        if(collision.gameObject.tag == "Ground")
+        {
+            groundCheck = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
