@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 627592282}
   - component: {fileID: 627592283}
   - component: {fileID: 627592279}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 1771939805}
   - component: {fileID: 1771939809}
   - component: {fileID: 1771939808}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Object
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -549,18 +549,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.056687832}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.33, y: 2.05}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 2.020383}
   m_EdgeRadius: 0
 --- !u!212 &1771939806
 SpriteRenderer:
@@ -602,7 +602,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b6d8676b2f1ac54091654d3f5835fb5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -621,7 +621,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771939804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -723, y: 99.8, z: 0}
+  m_LocalPosition: {x: -723, y: 128, z: 0}
   m_LocalScale: {x: 50, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -636,9 +636,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1771939804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1caee5e46f0d873489b9b04b16ad4fe7, type: 3}
+  m_Script: {fileID: 11500000, guid: 502f22bc97ed2894c8959b78ad3d6871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ThrowX: 25
+  ThrowY: 64
+  Throwx: 30
+  Throwy: 50
 --- !u!50 &1771939809
 Rigidbody2D:
   serializedVersion: 4
