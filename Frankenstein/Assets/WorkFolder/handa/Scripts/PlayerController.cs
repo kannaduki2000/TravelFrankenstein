@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
                     hp.fillAmount = HP / maxHP;
                     Debug.Log(HP);
                     onElectricity = false;
+
                 }
 
                 // ƒ‚ƒbƒN”ÅŒF‘q:’Ç‰Á‚µ‚Ü‚·‚½
