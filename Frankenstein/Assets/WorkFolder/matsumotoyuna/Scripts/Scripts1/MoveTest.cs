@@ -12,6 +12,9 @@ public class MoveTest : MonoBehaviour
     Rigidbody2D rigid2D;
     float jumpForce = 300.0f;
 
+    public SceneChange sc;
+    public FadeControl fadeControl;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Jump = false;
@@ -22,13 +25,13 @@ public class MoveTest : MonoBehaviour
     void Start()
     {
         this.rigid2D = GetComponent<Rigidbody2D>();
+        sc = FindObjectOfType<SceneChange>();
+        fadeControl = FindObjectOfType<FadeControl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //isControlChange = !isControlChange;
-
         if (playerMove == false)
         {
             if (Input.GetKey(KeyCode.LeftArrow))
@@ -48,6 +51,20 @@ public class MoveTest : MonoBehaviour
                 this.rigid2D.AddForce(transform.up * this.jumpForce);
                 Jump = !Jump;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //”»’è‚ÌêŠ‚ð’Ê‰ß‚µ‚½‚ç”­¶
+        if (collision.gameObject.tag == "GoTitleLogo")
+        {
+            fadeControl.Fade("wout", () => fadeControl.sceneChange.SceneSwitching("TitleLogo", true));
+        }
+
+        if (collision.gameObject.tag == "GoMap2")
+        {
+            fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("TentativeTitle"));
         }
     }
 }

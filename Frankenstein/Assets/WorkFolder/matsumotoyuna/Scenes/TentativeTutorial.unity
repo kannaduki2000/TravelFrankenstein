@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 15917189}
   - component: {fileID: 15917190}
   - component: {fileID: 15917192}
+  - component: {fileID: 15917191}
   m_Layer: 6
   m_Name: player
   m_TagString: Player
@@ -224,6 +225,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 15917184}
   playerMove: 0
+  sc: {fileID: 628313863}
+  fadeControl: {fileID: 0}
 --- !u!61 &15917188
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -289,6 +292,22 @@ MonoBehaviour:
   stopDistance: 0
   mt: {fileID: 15917187}
   enemyMove: 1
+--- !u!114 &15917191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15917184}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801612450ce57948a4567e5a1b879c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeSpeed: 1
+  fadeImage: {fileID: 1172054586}
+  sceneChange: {fileID: 15917192}
+  hiyoko: 0
 --- !u!114 &15917192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,15 +315,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15917184}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4589febd896def46b3e65cadbe2a496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fm: {fileID: 1172054588}
+  fadeControl: {fileID: 0}
   Title: 0
   Tutorial: 0
   Map1: 0
+  Map12: 0
   Logo: 0
   Map2: 0
 --- !u!1 &157192283
@@ -537,15 +558,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 516543913}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4589febd896def46b3e65cadbe2a496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fm: {fileID: 1172054588}
+  fadeControl: {fileID: 0}
   Title: 0
   Tutorial: 0
   Map1: 0
+  Map12: 0
   Logo: 0
   Map2: 0
 --- !u!1 &618090195
@@ -655,15 +678,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 628313862}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4589febd896def46b3e65cadbe2a496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fm: {fileID: 1172054588}
+  fadeControl: {fileID: 0}
   Title: 0
   Tutorial: 0
   Map1: 0
+  Map12: 0
   Logo: 0
   Map2: 0
 --- !u!61 &628313864
@@ -718,6 +743,7 @@ GameObject:
   - component: {fileID: 1172054587}
   - component: {fileID: 1172054586}
   - component: {fileID: 1172054588}
+  - component: {fileID: 1172054589}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -789,7 +815,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172054584}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 077373f887b3ae849bf894f46bb1afa5, type: 3}
   m_Name: 
@@ -799,6 +825,22 @@ MonoBehaviour:
   isWhiteout: 0
   canvas: {fileID: 1230595160}
   sc: {fileID: 15917192}
+--- !u!114 &1172054589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172054584}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801612450ce57948a4567e5a1b879c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeSpeed: 1
+  fadeImage: {fileID: 1172054586}
+  sceneChange: {fileID: 628313863}
+  hiyoko: 0
 --- !u!1 &1230595160
 GameObject:
   m_ObjectHideFlags: 0

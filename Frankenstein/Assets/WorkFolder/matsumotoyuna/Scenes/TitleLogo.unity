@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 618998340}
   - component: {fileID: 618998339}
   - component: {fileID: 618998341}
+  - component: {fileID: 618998342}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -206,7 +207,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618998337}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 077373f887b3ae849bf894f46bb1afa5, type: 3}
   m_Name: 
@@ -216,6 +217,22 @@ MonoBehaviour:
   isWhiteout: 0
   canvas: {fileID: 1911517162}
   sc: {fileID: 1895130999}
+--- !u!114 &618998342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618998337}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2801612450ce57948a4567e5a1b879c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeSpeed: 1
+  fadeImage: {fileID: 618998339}
+  sceneChange: {fileID: 1895130999}
+  hiyoko: 0
 --- !u!1 &1502987878
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,15 +422,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895130998}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4589febd896def46b3e65cadbe2a496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fm: {fileID: 618998341}
+  fadeControl: {fileID: 0}
   Title: 0
   Tutorial: 0
   Map1: 0
+  Map12: 0
   Logo: 0
   Map2: 0
 --- !u!4 &1895131000
@@ -448,7 +467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1911517163
 MonoBehaviour:
   m_ObjectHideFlags: 0

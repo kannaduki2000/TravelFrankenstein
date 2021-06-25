@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class FadeManager : MonoBehaviour
 {
-    float fadeSpeed = 0.0005f; //遷移速度
+    float fadeSpeed = 0.001f; //遷移速度
     float red, green, blue, alpha;
 
     //bool型　～3種のフェードを添えて～
@@ -22,10 +22,6 @@ public class FadeManager : MonoBehaviour
     //秘技：SceneChange召喚
     public SceneChange sc;
 
-    //Dont～の呼びすぎ防止
-    private static bool dontDestroy = false;
-
-    // Start is called before the first frame update
     void Start()
     {
         fadeImage = GetComponent<Image>();
@@ -33,29 +29,29 @@ public class FadeManager : MonoBehaviour
         green = fadeImage.color.g;
         blue = fadeImage.color.b;
         alpha = fadeImage.color.a;
+    }
 
-        if (!dontDestroy)
-        {
-            DontDestroyOnLoad(canvas);
-            dontDestroy = true;
-        }
+    private void Awake()
+    {
+        DontDestroyOnLoad(canvas);
+        //無限増殖編
     }
 
     // Update is called once per frame
     void Update()
     {
         //それぞれのフェードに飛ぶお
-        if(isFadein)
+        if (isFadein)
         {
             StartFadeIn();
         }
 
-        if(isFadeout)
+        if (isFadeout)
         {
             StartFadeOut();
         }
 
-        if(isWhiteout)
+        if (isWhiteout)
         {
             StartWhiteOut();
         }
@@ -67,16 +63,18 @@ public class FadeManager : MonoBehaviour
         alpha -= fadeSpeed;
         SetAlpha();
 
-        if(alpha <= 0)
+        if (alpha <= 0)
         {
             isFadein = false;
             fadeImage.enabled = false;
 
-            /*if(来週の何か == true)
+            if (sc.Map12 == true)
             {
-                SceneManager.LoadScene("TentativeMap1");
-                sc.Map1 = false;
-            }*/
+                //ロゴとMap1の間
+                isFadeout = true;
+                sc.Map12 = false;
+                sc.Map1 = true;
+            }
         }
     }
 
@@ -87,35 +85,41 @@ public class FadeManager : MonoBehaviour
         alpha += fadeSpeed;
         SetAlpha();
 
-        if(alpha >= 1)
+        if (alpha >= 1)
         {
             //同時にフェードインも済ませちまうze
             isFadeout = false;
             isFadein = true;
 
-            if(sc.Tutorial == true)
-            {
-                //チュートリアルへ
-                SceneManager.LoadScene("TentativeTutorial");
-                sc.Tutorial = false;
-            }
-
-            if(sc.Title == true)
+            if (sc.Title == true)
             {
                 //タイトルへ
+                Debug.Log("TentativeTitle");
                 SceneManager.LoadScene("TentativeTitle");
                 sc.Title = false;
             }
 
-            if(sc.Map1 == true)
+            if (sc.Tutorial == true)
             {
-                //来週何か作ってね、いや作れ
+                //チュートリアルへ
+                Debug.Log("TentativeTutorial");
+                SceneManager.LoadScene("TentativeTutorial");
+                sc.Tutorial = false;
+            }
+
+            if (sc.Map1 == true)
+            {
+                //Map1へ
+                Debug.Log("TentativeMap1");
+                SceneManager.LoadScene("TentativeMap1");
+                sc.Map1 = false;
             }
 
             if (sc.Map2 == true)
             {
                 //Map2へ
                 //本来はマップ3に遷移
+                Debug.Log("TentativeTitle");
                 SceneManager.LoadScene("TentativeTitle");
                 sc.Map2 = false;
             }
@@ -128,7 +132,7 @@ public class FadeManager : MonoBehaviour
         alpha += fadeSpeed;
         SetAlpha();
 
-        if(alpha >= 1)
+        if (alpha >= 1)
         {
             //同時にフェードインも済ましマスオ
             isFadein = true;
@@ -139,8 +143,7 @@ public class FadeManager : MonoBehaviour
                 //タイトルロゴ→Map1へ
                 SceneManager.LoadScene("TitleLogo");
                 sc.Logo = false;
-                isFadeout = true;
-                sc.Map1 = true;
+                sc.Map12 = true;
             }
         }
     }
