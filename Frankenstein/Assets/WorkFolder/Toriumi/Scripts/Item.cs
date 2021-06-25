@@ -19,6 +19,7 @@ public class Item : MonoBehaviour
     //低く投げる
     public void Low()
     {
+
         // 親のxスケールを取得
         // xスケールが、0よりも大きい。すなわち + ならば右方向へ
         // xスケールが、0よりも小さい。すなわち - ならば左方向へ
@@ -83,9 +84,10 @@ public class Item : MonoBehaviour
     //高く投げる
     public void Hight()
     {
+
         Vector2 vec = GameObject.Find("Player").transform.localScale;
         float x = vec.x;
-        if(x > 0)
+        if (x > 0)
         {
             float I_speed = 55f;
             float I_degree = 60f; // 60°
@@ -101,11 +103,11 @@ public class Item : MonoBehaviour
             vel.y = I_Speed * Mathf.Sin(I_Degree * Mathf.PI / 180f);
             rb.velocity = vel;
         }
-        else if(x < 0)
+        else if (x < 0)
         {
-            float I_speed  = 55f;
+            float I_speed = 55f;
             float I_degree = 120f; // 60°
-            float I_Speed  = 70f;
+            float I_Speed = 70f;
             float I_Degree = 120f; // 60°
 
             Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
@@ -117,8 +119,5 @@ public class Item : MonoBehaviour
             vel.y = I_Speed * Mathf.Sin(I_Degree * Mathf.PI / 180f);
             rb.velocity = vel;
         }
-        
-       
-      
     }
 }
