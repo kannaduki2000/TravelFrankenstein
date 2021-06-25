@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 
-[RequireComponent(typeof(NavMeshAgent))]
+//[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
 
@@ -18,13 +17,19 @@ public class Enemy : MonoBehaviour
     private float TimeRimit = 2.0f;
     private bool move = false;
 
+    //private NavMeshAgent navMeshAgent;
+
+    public Vector3 playerPos;
+    public float moveSpeed = 1.0f;
+    bool tossinFlag = false;
+
 
     private Rigidbody2D rd;
     // Start is called before the first frame update
     void Start()
     {
 
-        navMeshAgent = GetComponent<NavMeshAgent>(); // NavMeshAgentを保持しておく
+        //navMeshAgent = GetComponent<NavMeshAgent>(); // NavMeshAgentを保持しておく
 
         // StartPosを初期位置に設定
         transform.position = StartPos;
@@ -37,6 +42,22 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (tossinFlag)
+        {
+            float speed = moveSpeed * Time.deltaTime;
+            Vector2.MoveTowards(transform.position, playerPos, speed);
+            if (this.transform.position == playerPos)
+            {
+                Debug.Log("loopEnd");
+                tossinFlag = false;
+            }
+            else
+            {
+                Debug.Log("loop");
+                return;
+            }
+        }
+        Debug.Log("looooooooop");
         if(move == false)
         {
             UpdateTimer += Time.deltaTime;
@@ -83,18 +104,52 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private NavMeshAgent navMeshAgent;
+
 
 
     // CollisionDetector.csのonTriggerStayにセットし、衝突中に実行される。
     public void OnDetectObject(Collider collider)
     {
+        Debug.Log("start");
         // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
         if (collider.CompareTag("Player"))
         {
-            navMeshAgent.destination = collider.transform.position;
+            //playerPos = collider.transform.position;
+            //enemy.StartCoroutine(Tossin());
+            //navMeshAgent.destination = collider.transform.position;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player" && !tossinFlag)
+        {
+            tossinFlag = true;
+            playerPos = collision.transform.position;
+            //StartCoroutine(Tossin());
+        }
+
+    }
+
+    //public IEnumerator Tossin()
+    //{
+    //    tossinFlag = true;
+    //    Debug.Log("PlayerPos : " + playerPos);
+    //    while (this.transform.position != playerPos)
+    //    {
+    //        Debug.Log("bbb");
+    //        Vector2.MoveTowards(transform.position, playerPos, moveSpeed);
+    //        yield return null;
+    //    }
+    //    tossinFlag = false;
+    //    yield break;
+    //}
+
+    // 使い分けができる便利な関数
+    //public override void Following()
+    //{
+    //    int a = 0;
+    //}
 
 }
 
