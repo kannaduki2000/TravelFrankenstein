@@ -7,10 +7,10 @@ public class KeyPlessThrow : MonoBehaviour
     public float ThrowX = 25;                   //’·‰Ÿ‚µ‚Ì“Š‚°‚é—Í
     public float ThrowY = 65;                   //’·‰Ÿ‚µ‚Ì“Š‚°‚é—Í
 
-    public float Throwx = 30;                    //’Z‰Ÿ‚µ‚Ì“Š‚°‚é—Í
-    public float Throwy = 50;                    //’Z‰Ÿ‚µ‚Ì“Š‚°‚é—Í
+    public float Throwx = 30;                   //’Z‰Ÿ‚µ‚Ì“Š‚°‚é—Í
+    public float Throwy = 50;                   //’Z‰Ÿ‚µ‚Ì“Š‚°‚é—Í
 
-    private bool left = false;                    //¶‰E‚Ìƒtƒ‰ƒO
+    private bool left = false;                   //¶‰E‚Ìƒtƒ‰ƒO
 
     Rigidbody2D rb;
     // Start is called before the first frame update
@@ -36,7 +36,7 @@ public class KeyPlessThrow : MonoBehaviour
     public void Low()
     {
         rb = GetComponent<Rigidbody2D>();
-        Debug.Log("’Z‚ß");
+        Debug.Log("’á‚¢");
         if (left)
         {
             rb.AddForce(new Vector2(-Throwx, Throwy), ForceMode2D.Impulse);
@@ -51,6 +51,7 @@ public class KeyPlessThrow : MonoBehaviour
     public void Hight()
     {
         rb = GetComponent<Rigidbody2D>();
+        Debug.Log("‚‚¢");
         if (left)
         {
             rb.AddForce(new Vector2(-ThrowX, ThrowY), ForceMode2D.Impulse);
