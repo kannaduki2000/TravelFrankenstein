@@ -4,27 +4,31 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    Rigidbody2D rb2d;
+    public PlayerController mt;
     public GameObject Player;
     public GameObject enemy;
-    public float stopDistance;         //止まるときの距離
-
-    public PlayerController mt;
+    public float stopDistance;  //止まるときの距離
+    public float inputSpeed;    //移動速度
+    public float jumpingPower;  //ジャンプ
 
     // モック版熊倉:充電可能かどうかを判別するフラグ
     public bool isCharging = true; // HPが0になったらtrueにするようにしてください
-
     public bool isFollowing = true;   //追従するかどうか
     public bool enemyMove = true;      //エネミーの動き
     private bool enemyJump = false;         //ジャンプ用
     [SerializeField] private bool Follow = false;       //二度目の入力でのついてくるか否か
 
-    Rigidbody2D rb2d;
+    // ずっと、往復する
+    public float speedX = 1; // スピードX
+    public float speedY = 0; // スピードY
+    public float speedZ = 0; // スピードZ
+    public float second = 1; // かかる秒数
+    private float UpdateTimer = 0f;
+    private float TimeRimit = 2.0f;
+    private bool move = false;
 
-    public float inputSpeed;
-    public float jumpingPower;
-    
-
-    //public LayerMask CollisionLayer;
+    float time = 0f;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -48,8 +52,20 @@ public class EnemyController : MonoBehaviour
         //距離
         float distance = Vector2.Distance(transform.position, Player.transform.position);
 
+        if (move == false)
+        {
+            UpdateTimer += Time.deltaTime;
+        }
+        if (UpdateTimer >= TimeRimit)
+        {
+            move = true;
+            UpdateTimer = 0;
+        }
+
         if (isFollowing)
         {
+            move = false;
+
             //if(間の距離が止まるときの距離以上なら?)
             if (distance > stopDistance)
             {
@@ -127,6 +143,18 @@ public class EnemyController : MonoBehaviour
             isFollowing = true;
             Follow = !Follow;
         }
+    }
+
+    private void FixedUpdate() // ずっと、往復する
+    {
+        if (move == true)
+        {
+            time += Time.deltaTime;
+            float s = Mathf.Sin(time * 3.14f / second); // 移動量を求める
+            this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
+        }
+
+
     }
 
     // かつて追従の切り替えだったもの

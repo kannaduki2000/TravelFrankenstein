@@ -202,16 +202,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36496b70a51827449250f70963d147b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mt: {fileID: 809519327}
   Player: {fileID: 809519324}
   enemy: {fileID: 6879938}
   stopDistance: 5
-  mt: {fileID: 809519327}
+  inputSpeed: 20
+  jumpingPower: 2400
   isCharging: 1
   isFollowing: 0
   enemyMove: 1
   Follow: 0
-  inputSpeed: 20
-  jumpingPower: 2400
+  speedX: 10
+  speedY: 0
+  speedZ: 0
+  second: 3
 --- !u!212 &6879942
 SpriteRenderer:
   m_ObjectHideFlags: 0
