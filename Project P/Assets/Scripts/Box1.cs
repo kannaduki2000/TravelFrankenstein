@@ -6,69 +6,24 @@ using UnityEngine.UI;
 public class Box1 : MonoBehaviour
 {
     public GameObject uiButton;
-    [SerializeField] private bool touchFlag = false;
-    [SerializeField] private bool enemyTouchFlag = false;
-    
 
-
-    public GameObject box;
-
-    
-
-    void update()
-    { 
-
-
-        if (touchFlag || enemyTouchFlag)
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
         {
-            // ?\??
             uiButton.SetActive(true);
-
-            // ?d?C??????
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-
-                if (enemyTouchFlag)
-                {
-
-
-
-                    uiButton.SetActive(false);
-                }
-
-            }
-
-            // ???b?N???F?q:HP?\??????Object?????????????????I??HP?o?[?????\??????????
-            else
-            {
-                uiButton.SetActive(false);
-            }
-
         }
+
     }
 
-    
-    
-
-        void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
         {
-            if (collision.gameObject.tag == "Player")
-            {
-                touchFlag = true;
-            }
+            uiButton.SetActive(false);
         }
 
-        void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.gameObject.tag == "Player")
-            {
-                touchFlag = false;
-                uiButton.SetActive(false);
-            }
-        }
+    }
 }
-
-
-
 
 

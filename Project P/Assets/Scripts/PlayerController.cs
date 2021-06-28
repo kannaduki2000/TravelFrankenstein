@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
         else if (x_val > 0)
         {
             speed = inputSpeed  ;
-            transform.localScale = new Vector3(50, 50, 100);//?E??????????
+            transform.localScale = new Vector3(1, 1, 0);//?E??????????
             // ???b?N???F?q:HP?o?[????????????
             Vector3 hpTransform = new Vector3(hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.z);
             hpCanvas.transform.localScale = hpTransform;
@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
         else if (x_val < 0)
         {
             speed = inputSpeed * -1;
-            transform.localScale = new Vector3(-50, 50, 100);//????????????
+            transform.localScale = new Vector3(-1, 1, 0);//????????????
             // ???b?N???F?q:HP?o?[????????????
             Vector3 hpTransform = new Vector3(-hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.z);
             hpCanvas.transform.localScale = hpTransform;
