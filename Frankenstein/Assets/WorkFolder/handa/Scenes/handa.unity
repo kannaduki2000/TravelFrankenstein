@@ -206,16 +206,17 @@ MonoBehaviour:
   Player: {fileID: 809519324}
   enemy: {fileID: 6879938}
   stopDistance: 5
-  inputSpeed: 20
+  inputSpeed: 10
   jumpingPower: 2400
   isCharging: 1
   isFollowing: 0
   enemyMove: 1
   Follow: 0
-  speedX: 10
+  speedX: 5
   speedY: 0
   speedZ: 0
-  second: 3
+  second: 2
+  isWandering: 1
 --- !u!212 &6879942
 SpriteRenderer:
   m_ObjectHideFlags: 0

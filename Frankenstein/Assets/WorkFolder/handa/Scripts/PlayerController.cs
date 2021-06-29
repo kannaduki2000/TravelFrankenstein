@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb2d;
-
+    Animator anim;
     public GameObject Player;
     public GameObject enemy;
 
@@ -40,12 +41,15 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         hpCanvasScale_x = hpCanvas.transform.localScale.x;
     }
 
     // Update is called once per frame
     void Update()
     {
+        anim = gameObject.GetComponent<Animator>();
+
         // ƒ‚ƒbƒN”ÅŒF‘q:Layer‚Å‚â‚Á‚Ä‚½‚Á‚Û‚¢‚Ì‚ÅLinecast‚ÅŽæ“¾
         if (GetEnemyLayer())
         {
@@ -68,12 +72,19 @@ public class PlayerController : MonoBehaviour
             {
                 vx = speed;
                 leftFlag = false;
+                anim.SetBool("Walking", true);
             }
             if (Input.GetKey("left"))
             {
                 vx = -speed;
                 leftFlag = true;
+                anim.SetBool("Walking", true);
             }
+            else
+            {
+                anim.SetBool("Walking", false);
+            }
+
             if (Input.GetKey("space") && groundCheck)
             {
                 if (pushFlag == false)
@@ -86,6 +97,7 @@ public class PlayerController : MonoBehaviour
                     pushFlag = false;
                 }
             }
+            
         }
         /*--------------------------------------------------------------------------*/
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,10 +25,7 @@ public class EnemyController : MonoBehaviour
     public float speedY = 0; // スピードY
     public float speedZ = 0; // スピードZ
     public float second = 1; // かかる秒数
-    private float UpdateTimer = 0f;
-    private float TimeRimit = 2.0f;
-    private bool move = false;
-
+    public bool isWandering = true;//徘徊するかどうか
     float time = 0f;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -52,19 +50,10 @@ public class EnemyController : MonoBehaviour
         //距離
         float distance = Vector2.Distance(transform.position, Player.transform.position);
 
-        if (move == false)
-        {
-            UpdateTimer += Time.deltaTime;
-        }
-        if (UpdateTimer >= TimeRimit)
-        {
-            move = true;
-            UpdateTimer = 0;
-        }
 
         if (isFollowing)
         {
-            move = false;
+           
 
             //if(間の距離が止まるときの距離以上なら?)
             if (distance > stopDistance)
@@ -147,13 +136,28 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate() // ずっと、往復する
     {
-        if (move == true)
+        
+        if(isWandering == true)
         {
             time += Time.deltaTime;
-            float s = Mathf.Sin(time * 3.14f / second); // 移動量を求める
+            float s = Mathf.Sin(Time.time);
             this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
+            Vector3 scale = transform.localScale;
+            if (s >= 0)
+            {
+                scale.x = 1;
+            }
+            else
+            {
+                scale.x = -1;
+            }
+            transform.localScale = scale;
         }
-
+        if(isFollowing == true)
+        {
+            isWandering = false;
+        }
+        
 
     }
 
