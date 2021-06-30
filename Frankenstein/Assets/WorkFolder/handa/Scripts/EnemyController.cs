@@ -53,8 +53,6 @@ public class EnemyController : MonoBehaviour
 
         if (isFollowing)
         {
-           
-
             //if(ä‘ÇÃãóó£Ç™é~Ç‹ÇÈÇ∆Ç´ÇÃãóó£à»è„Ç»ÇÁ?)
             if (distance > stopDistance)
             {
@@ -136,8 +134,8 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate() // Ç∏Ç¡Ç∆ÅAâùïúÇ∑ÇÈ
     {
-        
-        if(isWandering == true)
+
+        if (isWandering == true)
         {
             time += Time.deltaTime;
             float s = Mathf.Sin(Time.time);
@@ -153,11 +151,11 @@ public class EnemyController : MonoBehaviour
             }
             transform.localScale = scale;
         }
-        if(isFollowing == true)
+        if (isFollowing == true)
         {
             isWandering = false;
         }
-        
+
 
     }
 
