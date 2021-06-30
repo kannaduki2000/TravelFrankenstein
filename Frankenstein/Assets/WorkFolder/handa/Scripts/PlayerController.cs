@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
                 leftFlag = false;
                 anim.SetBool("Walking", true);
             }
-            if (Input.GetKey("left"))
+            else if (Input.GetKey("left"))
             {
                 vx = -speed;
                 leftFlag = true;
