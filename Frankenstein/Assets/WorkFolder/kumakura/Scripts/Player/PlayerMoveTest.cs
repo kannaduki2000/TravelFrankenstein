@@ -7,8 +7,9 @@ using UnityEngine;
 /// </summary>
 public class PlayerMoveTest : MonoBehaviour
 {
-    public ElectricCable electricCable;
+    public ElectricCableController electricCableCon;
     [SerializeField] private bool startPoint = true;
+    [SerializeField] private int id = 0;
 
     void Start()
     {
@@ -20,7 +21,7 @@ public class PlayerMoveTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            electricCable.CablePointMove(gameObject, startPoint);
+            electricCableCon.CablePointMove(gameObject, id, startPoint);
         }
     }
 }
