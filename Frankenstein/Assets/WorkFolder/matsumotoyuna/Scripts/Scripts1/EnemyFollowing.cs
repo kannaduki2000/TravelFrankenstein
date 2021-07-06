@@ -19,10 +19,12 @@ public class EnemyFollowing : MonoBehaviour
     private bool isFollowing = true;   //追従するかどうか
 
     public MoveTest mt;
+    public CarPush cp;
 
     public bool enemyMove = true;      //エネミーの動き
     private bool Jump = false;         //ジャンプ用
     private bool Follow = false;       //二度目の入力でのついてくるか否か
+    private bool car = false;
 
     Rigidbody2D rigid2D;
     float jumpForce = 300.0f;          //ジャンプ力
@@ -30,6 +32,11 @@ public class EnemyFollowing : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Jump = false;
+
+        if(collision.gameObject.tag == "Car")
+        {
+            car = true;
+        }
     }
     //↑床に着くまでジャンプさせないマン
 
@@ -107,6 +114,16 @@ public class EnemyFollowing : MonoBehaviour
             {
                 this.rigid2D.AddForce(transform.up * this.jumpForce);
                 Jump = !Jump;
+            }
+
+            if(Input.GetKeyDown(KeyCode.R) && car == true)
+            {
+                cp.crash = true;
+            }
+
+            if (Input.GetKeyUp(KeyCode.R) && car == true)
+            {
+                cp.crash = false;
             }
         }
 
