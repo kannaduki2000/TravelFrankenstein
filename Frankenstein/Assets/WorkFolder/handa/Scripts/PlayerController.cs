@@ -197,10 +197,7 @@ public class PlayerController : MonoBehaviour
         {
             touchFlag = true;
         }
-        else if (collision.gameObject.tag == "Enemy")
-        {
-            touchFlag = true;
-        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -210,13 +207,27 @@ public class PlayerController : MonoBehaviour
             touchFlag = false;
             hpCanvas.SetActive(false);
         }
-        else if(collision.gameObject.tag == "Enemy")
-        {
-            touchFlag = false;
-        }
         else
         {
             groundCheck = false;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            touchFlag = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            touchFlag = false;
+        }
+    }
 }
+
+
