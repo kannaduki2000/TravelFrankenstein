@@ -28,6 +28,8 @@ public class EnemyController : MonoBehaviour
     public bool isWandering = true;//œpœj‚·‚é‚©‚Ç‚¤‚©
     float time = 0f;
 
+    Vector3 enemyScale;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         enemyJump = false;
@@ -38,6 +40,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         this.rb2d = GetComponent<Rigidbody2D>();
+        enemyScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -65,13 +68,13 @@ public class EnemyController : MonoBehaviour
             // ‰E
             if (Player.transform.position.x < transform.position.x)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
             // ¶
             else if (Player.transform.position.x > transform.position.x)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = enemyScale;
             }
 
             //ƒWƒƒƒ“ƒv
@@ -176,4 +179,11 @@ public class EnemyController : MonoBehaviour
         enemyMove = !enemyMove;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "ElectricCable")
+        {
+            //EventFlagManager.Instance.SetFlagState(EventFlagName.ElectricCableFlag, true);
+        }
+    }
 }

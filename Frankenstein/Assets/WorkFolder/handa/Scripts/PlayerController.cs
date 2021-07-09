@@ -57,10 +57,12 @@ public class PlayerController : MonoBehaviour
             {
                 enemyTouchFlag = true;
             }
+            hpCanvas.SetActive(true);
         }
         else
         {
             enemyTouchFlag = false;
+            hpCanvas.SetActive(false);
         }
 
 
@@ -97,7 +99,7 @@ public class PlayerController : MonoBehaviour
                     pushFlag = false;
                 }
             }
-            
+
         }
         /*--------------------------------------------------------------------------*/
 
@@ -176,12 +178,14 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     private bool GetEnemyLayer()
     {
-        Vector3 left = transform.position + Vector3.up * 1f - Vector3.right * 3.5f;
-        Vector3 right = transform.position + Vector3.up * 1f + Vector3.right * 3.5f;
+        Vector3 left = transform.position + Vector3.up * 0.5f - Vector3.right * 3.5f;
+        Vector3 right = transform.position + Vector3.up * 0.5f + Vector3.right * 3.5f;
         // ここのコメント消せばデバッグ用の線が見えます
-        //Debug.DrawLine(left, right);
+        Debug.DrawLine(left, right);
         return Physics2D.Linecast(left, right, enemyLayer);
     }
+
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {
