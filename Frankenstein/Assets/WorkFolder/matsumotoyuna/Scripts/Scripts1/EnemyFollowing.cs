@@ -26,6 +26,8 @@ public class EnemyFollowing : MonoBehaviour
     private bool Follow = false;       //二度目の入力でのついてくるか否か
     private bool car = false;
 
+    Vector3 enemyScale;
+
     Rigidbody2D rigid2D;
     float jumpForce = 300.0f;          //ジャンプ力
 
@@ -36,6 +38,7 @@ public class EnemyFollowing : MonoBehaviour
         if(collision.gameObject.tag == "Car")
         {
             car = true;
+            cp.rigid2D.constraints = RigidbodyConstraints2D.None;
         }
     }
     //↑床に着くまでジャンプさせないマン
@@ -47,6 +50,7 @@ public class EnemyFollowing : MonoBehaviour
         //player = GameObject.Find("player");
         //enemy = GameObject.Find("enemy");
         this.rigid2D = GetComponent<Rigidbody2D>();
+        enemyScale = this.transform.localScale;
     }
 
     // Update is called once per frame
@@ -78,13 +82,13 @@ public class EnemyFollowing : MonoBehaviour
             // 右
             if (player.transform.position.x < transform.position.x)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
             // 左
             else if (player.transform.position.x > transform.position.x)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = enemyScale;
             }
 
             //ジャンプ

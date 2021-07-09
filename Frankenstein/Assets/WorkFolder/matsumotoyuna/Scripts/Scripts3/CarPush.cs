@@ -4,33 +4,43 @@ using UnityEngine;
 
 public class CarPush : MonoBehaviour
 {
-    Rigidbody2D rigid2D;
+    public Rigidbody2D rigid2D;
+
+    [SerializeField] GameObject gareki;
+
     public bool crash = true;
     public bool garekiCrash = false;
     void Start()
     {
-        this.rigid2D = GetComponent<Rigidbody2D>();
+        rigid2D = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        if (crash == true)
-        {
-            rigid2D.mass = 5;
-            Crash();
-        }
+        //重さ変更だよ
+        //if (crash == true)
+        //{
+        //    rigid2D.mass = 5;
+        //    Crash();
+        //}
 
-        else if (crash == false)
-        {
-            rigid2D.mass = 500;
-        }
+        //else if (crash == false)
+        //{
+        //    rigid2D.mass = 500;
+        //    Crash();
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //がれきに当たったら
         if (collision.gameObject.tag == "Gareki")
         {
-            garekiCrash = true;
+            //garekiCrash = true;
+            //Destroy(gareki);
+            gareki.SetActive(false);
+            //時差発動「車破壊」
+            Invoke("CarCrash", 2.0f);
         }
     }
 
@@ -40,18 +50,19 @@ public class CarPush : MonoBehaviour
          //rigid2D.mass = 5;
          if (garekiCrash == true)
          {
-             GameObject gareki = GameObject.Find("Garekiiiiiiiiiiiiiiiiii");
-             Destroy(gareki);
-             // GetComponent<ParticleSystem>().Play();みたいなものを書く
-             //時差発動「車破壊」
-             Invoke("CarCrash", 2.0f);
+            Destroy(gareki);
+
+
+            //時差発動「車破壊」
+            Invoke("CarCrash", 2.0f);
          }
     }
 
     private void CarCrash()
     {
         //車破壊
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        gameObject.SetActive(false);
     }
 }
 
