@@ -1,30 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    Rigidbody2D rb2d;
+    public PlayerController mt;
     public GameObject Player;
     public GameObject enemy;
-    public float stopDistance;         //止まるときの距離
-
-    public PlayerController mt;
+    public float stopDistance;  //止まるときの距離
+    public float inputSpeed;    //移動速度
+    public float jumpingPower;  //ジャンプ
 
     // モック版熊倉:充電可能かどうかを判別するフラグ
     public bool isCharging = true; // HPが0になったらtrueにするようにしてください
-
     public bool isFollowing = true;   //追従するかどうか
     public bool enemyMove = true;      //エネミーの動き
     private bool enemyJump = false;         //ジャンプ用
     [SerializeField] private bool Follow = false;       //二度目の入力でのついてくるか否か
 
-    Rigidbody2D rb2d;
+    // ずっと、往復する
+    public float speedX = 1; // スピードX
+    public float speedY = 0; // スピードY
+    public float speedZ = 0; // スピードZ
+    public float second = 1; // かかる秒数
+    public bool isWandering = true;//徘徊するかどうか
+    float time = 0f;
 
-    public float inputSpeed;
-    public float jumpingPower;
-    
-
-    //public LayerMask CollisionLayer;
+    Vector3 enemyScale;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -36,6 +40,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         this.rb2d = GetComponent<Rigidbody2D>();
+        enemyScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -47,6 +52,7 @@ public class EnemyController : MonoBehaviour
 
         //距離
         float distance = Vector2.Distance(transform.position, Player.transform.position);
+
 
         if (isFollowing)
         {
@@ -62,13 +68,13 @@ public class EnemyController : MonoBehaviour
             // 右
             if (Player.transform.position.x < transform.position.x)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
             // 左
             else if (Player.transform.position.x > transform.position.x)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = enemyScale;
             }
 
             //ジャンプ
@@ -129,6 +135,33 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate() // ずっと、往復する
+    {
+
+        if (isWandering == true)
+        {
+            time += Time.deltaTime;
+            float s = Mathf.Sin(Time.time);
+            this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
+            Vector3 scale = transform.localScale;
+            if (s >= 0)
+            {
+                scale.x = 1;
+            }
+            else
+            {
+                scale.x = -1;
+            }
+            transform.localScale = scale;
+        }
+        if (isFollowing == true)
+        {
+            isWandering = false;
+        }
+
+
+    }
+
     // かつて追従の切り替えだったもの
     public void Following()
     {
@@ -146,4 +179,11 @@ public class EnemyController : MonoBehaviour
         enemyMove = !enemyMove;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "ElectricCable")
+        {
+            //EventFlagManager.Instance.SetFlagState(EventFlagName.ElectricCableFlag, true);
+        }
+    }
 }
