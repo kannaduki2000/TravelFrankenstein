@@ -9,6 +9,7 @@ public class test_PCController : MonoBehaviour
 	float distance = 0.0f;		// 距離をしまっちゃおうねしておく変数
 
 	bool Y_ButtonPushFlag = false;		// Yボタンを押しちゃおうねしてもいいかのフラグ
+	bool PCSwitchFlag = false;				// PCがオンかオフかのフラグ
 
 	int player_hp = 0;			// 別のスクリプトの変数をしまっちゃおうねしておく変数
 	int power_cn = 30;			// PCを点けたときの消費電力
@@ -53,14 +54,15 @@ public class test_PCController : MonoBehaviour
 
 	private void Y_ButtonFlagChange()			// Y_ButtonPushFlag を変える関数
 	{
-		if (distance <= 400)        // プレイヤーとPCの距離が400m以下ですか？
+		if (distance <= 400)		// プレイヤーとPCの距離が400m以下ですか？
 		{
 			// YES
-			Y_ButtonPushFlag = true;        // Yボタンを押すことを許した
+			Y_ButtonPushFlag = true;		// Yボタンを押すことを許した
 		}
 		else
 		{
 			// NO
+			Y_ButtonPushFlag = false;		// Yボタンを押すことを許さない
 		}
 	}
 
@@ -71,6 +73,10 @@ public class test_PCController : MonoBehaviour
 		{
 			// YES
 			PlayerHPProc();
+
+			/*なんかここら辺にいい感じにエフェクトを入れてください*/
+
+
 		}
 		else
 		{
@@ -84,6 +90,11 @@ public class test_PCController : MonoBehaviour
 		player_hp = PlayerScript.HP;            // プレイヤーのHPをしまっちゃおうね
 		player_hp -= power_cn;                  // プレイヤーのHPを消費電力分、減らす
 		PlayerScript.HP = player_hp;            // 減ったプレイヤーのHPをvalueに入れる
+	}
+
+	private void PCSwitch()
+	{
+
 	}
 
 	/*----------------------------------------------------------------------------------------------------*/

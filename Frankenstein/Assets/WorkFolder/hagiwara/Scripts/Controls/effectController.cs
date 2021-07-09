@@ -7,33 +7,28 @@ public class effectController : MonoBehaviour
 {
 	/*----------------------------------------------------------------------------------------------------*/
 
-	[SerializeField]			// エフェクトに使用する画像をしまっておく配列
-	Sprite[] effect_sprites;
-	[SerializeField]			// 画像がアップデートされる時間を指定する
-	float speed;
+	RectTransform effect_size;
 
-	Image effect_image;		// イメージをしまっちゃおうねしておくやつ
-
-	float current = 0.0f;		// 現在のタイム
+	float width = 100f;
+	float height = 100f;
+	float timer = 0.0f;
 
 	/*----------------------------------------------------------------------------------------------------*/
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		effect_image = GetComponent<Image>();		// effect_imageにイメージをしまっちゃおう
-		effect_image.sprite = effect_sprites[0];				// effect_sprites の0番目のものを、effect_image に入っているイメージのスプライトにしまっちゃおう
-
-
-
+		effect_size = GameObject.Find("effect").GetComponent<RectTransform>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		
+		width += 10;
+		height += 10;
+
+		effect_size.sizeDelta = new Vector2(width, height);
 	}
 	/*----------------------------------------------------------------------------------------------------*/
-
 
 }
