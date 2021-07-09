@@ -6,7 +6,7 @@ public class Enemy2 : MonoBehaviour
 {
     //CharacterController Controller;
     //Transform Target;
-    //GameObject Player;
+    GameObject Ground;
 
     //[SerializeField]
     //float MoveSpeed = 2.0f;
@@ -18,73 +18,73 @@ public class Enemy2 : MonoBehaviour
     public float speedY = 0; // スピードY
     public float speedZ = 0; // スピードZ
     public float second = 1; // かかる秒数
+    private bool move = false;
     private float UpdateTimer = 0f;
     private float TimeRimit = 2.0f;
-    private bool move = false;
 
     private float time = 0f;
 
+
+ 
     // ずっと、往復する
     void FixedUpdate() 
     { 
-        time += Time.deltaTime;
-        float s = Mathf.Sin(Time.time); // 移動量を求める
-        this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
-        // デフォルトが右向きの画像の場合
-        // スケール値取り出し
-        Vector3 scale = transform.localScale;
-        if (s >= 0)
-        {
-            // 右方向に移動中
-            scale.x = 1; // そのまま（右向き）
-        }
-        else
-        {
-            // 左方向に移動中
-            scale.x = -1; // 反転する（左向き）
-        }
-        // 代入し直す
-        transform.localScale = scale;
-
-    }
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        /*
-        if (move == false)
+        if(move == false)
         {
             UpdateTimer += Time.deltaTime;
+            float s = Mathf.Sin(Time.time); // 移動量を求める
+            this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
+            // デフォルトが右向きの場合
+            // スケール値取り出し
+            Vector3 scale = transform.localScale;
+            
+            if (s >= 0)
+            {
+                // 右方向に移動中
+                scale.x = 1; // そのまま（右向き）
+            }
+            else
+            {
+                // 左方向に移動中
+                scale.x = -1; // 反転する（左向き）
+            }
+            // 代入し直す
+            transform.localScale = scale;
         }
-        if (UpdateTimer >= TimeRimit)
-        {
-            move = true;
-            UpdateTimer = 0;
-        }
-        */
 
     }
 
-
+    // 石に当たったら動きを止める処理
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+       // Stoneのタグが付いているものに当たったら
+       if (collision.gameObject.tag == "Stone")
+       {
+            move = true;
+            speedX = 0;
+            // 右向きの状態で当たったら
+           if (this.transform.localScale.x == 1)
+           {
+               transform.localScale = new Vector3(1, 1, 1);
+           }
+           // 左向きの状態で当たったら
+           else
+           {
+               transform.localScale = new Vector3(-1, 1, 1);
+           }
+       }  
+    }
 }
 
 // エネミー自身のテリトリー間を行き来する〇
-// 待機時間あり（2秒間）〇
+// 待機時間あり（2秒間）
 // フランケンが近づいてきたら突進する
 // フランケンの視線察知はエネミーを中心にする（エネミーが動いたら視線察知も一緒に動く）多分〇
 // 突進成功したら４秒間待機　そのあと自分のテリトリーに戻る
 // ４秒間待機後、視線察知内にフランケンがいたらフランケンに再び突進
 // 突進した場所にフランケンがいなかったら２秒間待機して自分のテリトリーに戻る
-// 
+
+// 石に当たったら動きを完全に止める〇
 
 // プレイヤータグの取得
 // Player = GameObject.FindWithTag("Player");
