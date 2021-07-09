@@ -5,6 +5,7 @@ using UnityEngine;
 public class CarPush : MonoBehaviour
 {
     public Rigidbody2D rigid2D;
+    private float speed = 2f;
 
     [SerializeField] GameObject gareki;
 
@@ -29,6 +30,11 @@ public class CarPush : MonoBehaviour
         //    rigid2D.mass = 500;
         //    Crash();
         //}
+
+        if (crash == true)
+        {
+            Crash();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -36,6 +42,14 @@ public class CarPush : MonoBehaviour
         //‚ª‚ê‚«‚É“–‚½‚Á‚½‚ç
         if (collision.gameObject.tag == "Gareki")
         {
+            //transform.Rotate(0f, 0f, -120.0f * Time.deltaTime);
+            //this.transform.rotation = new Quaternion(10f * Time.deltaTime, 0f, 0f, 0f);
+            if(transform.rotation.x == -30)
+            {
+                //this.transform.rotation = new Quaternion(-1f * Time.deltaTime, 0f, 0f, 0f);
+            }
+
+            //rigid2D.velocity = Vector2.zero;
             //garekiCrash = true;
             //Destroy(gareki);
             gareki.SetActive(false);
@@ -46,16 +60,12 @@ public class CarPush : MonoBehaviour
 
     private void Crash()
     {
-         //R‚ğ‰Ÿ‚µ‚½‚ç‰Ÿ‚¹‚éAŠ¢âI‚Ì”j‰ó
-         //rigid2D.mass = 5;
-         if (garekiCrash == true)
-         {
-            Destroy(gareki);
+        rigid2D.bodyType = RigidbodyType2D.Dynamic;
+        Transform go = this.transform;
+        Vector2 carposition = go.position;
 
-
-            //·”­“®uÔ”j‰óv
-            Invoke("CarCrash", 2.0f);
-         }
+        carposition.x = Mathf.MoveTowards(carposition.x, 5.5f, Time.deltaTime * speed);
+        go.position = carposition;
     }
 
     private void CarCrash()
@@ -65,10 +75,3 @@ public class CarPush : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
-
-
-/*
- ƒGƒlƒ~[‚ªÔ‚ğ‰Ÿ‚·
- Š¢âI‚É“–‚½‚é
- ”šU‚·‚é
- */

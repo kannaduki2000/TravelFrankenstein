@@ -42,8 +42,6 @@ public class EnemyFollowing : MonoBehaviour
         }
     }
     //↑床に着くまでジャンプさせないマン
-
-    // Start is called before the first frame update
     void Start()
     {
         //オブジェクトを探し出して取得するもの
@@ -120,14 +118,9 @@ public class EnemyFollowing : MonoBehaviour
                 Jump = !Jump;
             }
 
-            if(Input.GetKeyDown(KeyCode.R) && car == true)
+            if(Input.GetKey(KeyCode.R) && car == true)
             {
                 cp.crash = true;
-            }
-
-            if (Input.GetKeyUp(KeyCode.R) && car == true)
-            {
-                cp.crash = false;
             }
         }
 
