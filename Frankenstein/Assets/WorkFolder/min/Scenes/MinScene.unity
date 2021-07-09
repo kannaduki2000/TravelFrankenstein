@@ -229,7 +229,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bddbe7c615587854984753d730eb32c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 17c47f13759e9c240b96d21ad49239ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetToFollow: {fileID: 568367244}
@@ -322,11 +322,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 568367238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d7881853b0cc734f8ee9b2db65b6cf4, type: 3}
+  m_Script: {fileID: 11500000, guid: 9222ba75a9ee5ad40abc14f11f36db88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputSpeed: 20
-  jumpingPower: 1100
+  inputSpeed: 3.43
+  jumpingPower: 10.8
   CollisionLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -433,7 +433,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 9
-  m_Sprite: {fileID: 21300000, guid: a0486937aeffffa46a272e1e5a11958d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 07dfe34c5506e704393da3ebd1f66faa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
