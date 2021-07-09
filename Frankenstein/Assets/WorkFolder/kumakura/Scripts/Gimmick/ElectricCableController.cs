@@ -2,41 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricCable : MonoBehaviour
+public class ElectricCableController : MonoBehaviour
 {
+    [Header("移動出来る電柱の数だけ配列を増やしてアタッチしてください")]
+    [Header("アタッチした順番にIDが割り振られます")]
+    // 電線のオブジェクトをここにアタッチ
+    public ElectricCableArray[] electricCableArray;
 
     [SerializeField] private float moveSpeed = 10f;
-    private GameObject[] pointArray;
     private bool loopFlag = false;
-
-
-    void Start()
-    {
-        // 電線の経過地点の数を取得
-        pointArray = new GameObject[gameObject.transform.childCount];
-        // 電線の経過地点の回数分繰り返し文を回す
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            // 各経過地点の情報を配列に格納
-            pointArray[i] = gameObject.transform.GetChild(i).gameObject;
-        }
-    }
-
-    void Update()
-    {
-        
-    }
 
     /// <summary>
     /// 電線に触れたオブジェクトを移動させる処理
     /// </summary>
     /// <param name="_moveObject">移動させたいオブジェクト</param>
+    /// <param name="_id">どこの電柱を渡るか、電柱のID（移動出来る電柱を左側から0,1,2...として数える）</param>
     /// <param name="_startPoint">true:StartCable / false:EndCable</param>
-    public void CablePointMove(GameObject _moveObject, bool _startPoint = true)
+    public void CablePointMove(GameObject _moveObject, int _id,  bool _startPoint = true)
     {
         // Updateで呼ばれても大丈夫なようにフラグ管理
         if (loopFlag) { return; }
-        StartCoroutine(MoveLoop(_moveObject, _startPoint));
+        StartCoroutine(MoveLoop(_moveObject, _id, _startPoint));
     }
 
 
@@ -44,9 +30,10 @@ public class ElectricCable : MonoBehaviour
     /// 非同期で各電線を周回する処理
     /// </summary>
     /// <param name="_loopObject">移動させるオブジェクト</param>
+    /// /// <param name="_id">どこの電柱を渡るか、電柱のID（移動出来る電柱を左側から0,1,2...として数える）</param>
     /// <param name="_startPoint">true:StartCable / false:EndCable</param>
     /// <returns></returns>
-    private IEnumerator MoveLoop(GameObject _loopObject, bool _startPoint)
+    private IEnumerator MoveLoop(GameObject _loopObject, int _id, bool _startPoint)
     {
         // ループの開始
         loopFlag = true;
@@ -60,13 +47,13 @@ public class ElectricCable : MonoBehaviour
         if (_startPoint)
         {
             // pointの配列の数だけ繰り返す
-            for (int i = 0; i < pointArray.Length; i++)
+            for (int i = 0; i < electricCableArray[_id].pointArray.Length; i++)
             {
                 // 次のpointと座標が同じになるまで繰り返す
-                while (_loopObject.transform.position != pointArray[i].transform.position)
+                while (_loopObject.transform.position != electricCableArray[_id].pointArray[i].transform.position)
                 {
                     // 次のpointの座標に向かう処理
-                    _loopObject.transform.position = Vector2.MoveTowards(_loopObject.transform.position, pointArray[i].transform.position, moveSpeed * Time.deltaTime);
+                    _loopObject.transform.position = Vector2.MoveTowards(_loopObject.transform.position, electricCableArray[_id].pointArray[i].transform.position, moveSpeed * Time.deltaTime);
                     yield return null;
                 }
             }
@@ -74,13 +61,13 @@ public class ElectricCable : MonoBehaviour
         else
         {
             // pointの配列の数だけ繰り返す
-            for (int i = pointArray.Length - 1; i >= 0; i--)
+            for (int i = electricCableArray[_id].pointArray.Length - 1; i >= 0; i--)
             {
                 // 次のpointと座標が同じになるまで繰り返す
-                while (_loopObject.transform.position != pointArray[i].transform.position)
+                while (_loopObject.transform.position != electricCableArray[_id].pointArray[i].transform.position)
                 {
                     // 次のpointの座標に向かう処理
-                    _loopObject.transform.position = Vector2.MoveTowards(_loopObject.transform.position, pointArray[i].transform.position, moveSpeed * Time.deltaTime);
+                    _loopObject.transform.position = Vector2.MoveTowards(_loopObject.transform.position, electricCableArray[_id].pointArray[i].transform.position, moveSpeed * Time.deltaTime);
                     yield return null;
                 }
             }

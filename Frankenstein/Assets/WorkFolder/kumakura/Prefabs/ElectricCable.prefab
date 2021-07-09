@@ -534,7 +534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1343032435145367200}
   - component: {fileID: 1343032435145367203}
-  - component: {fileID: 2986541284598324854}
+  - component: {fileID: 1452085419887514757}
   m_Layer: 0
   m_Name: ElectricCable
   m_TagString: ElectricCable
@@ -632,7 +632,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2986541284598324854
+--- !u!114 &1452085419887514757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -641,10 +641,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1343032435145367202}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 263591f1921aae04f8b786a72751c472, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d466f0f865c4b54d89f0a02b9377dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  pointArray: []
 --- !u!1 &2163535760378323633
 GameObject:
   m_ObjectHideFlags: 0
