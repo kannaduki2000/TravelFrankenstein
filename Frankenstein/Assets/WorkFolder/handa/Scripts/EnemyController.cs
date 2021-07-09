@@ -30,10 +30,30 @@ public class EnemyController : MonoBehaviour
 
     Vector3 enemyScale;
 
+    bool cableFlag = false;
+    public ElectricCableController ECon;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         enemyJump = false;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ElectricCable")
+        {
+            cableFlag = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ElectricCable")
+        {
+            cableFlag = false;
+        }
+    }
+
     //↑床に着くまでジャンプさせないマン
 
     // Start is called before the first frame update
@@ -46,6 +66,15 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (cableFlag && enemyMove == false)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                ECon.CablePointMove(gameObject, 0);
+            }
+        }
+
+
         //箱を用意して、その中にY座標を入れる
         Vector2 targetPos = Player.transform.position;
         targetPos.y = transform.position.y;
@@ -109,14 +138,16 @@ public class EnemyController : MonoBehaviour
 
         //★操作の切り替え処理
         //1回目の切り替え時の動き
-        if (Input.GetKeyDown(KeyCode.F) && Follow == false)
+        if(isFollowing)
         {
-            mt.player_Move = !mt.player_Move;
-            Following();
-            enemyMove = !enemyMove;
-            Follow = !Follow;
+            if (Input.GetKeyDown(KeyCode.F) && Follow == false)
+            {
+                mt.player_Move = !mt.player_Move;
+                Following();
+                enemyMove = !enemyMove;
+                Follow = !Follow;
+            }
         }
-
         //2回目の切り替え時、プレイヤーだけ動いてエネミー不動堂
         //この状態だと何回Enter押してもプレイヤーしか動かんで
         else if (Input.GetKeyDown(KeyCode.F) && Follow == true)
@@ -133,6 +164,7 @@ public class EnemyController : MonoBehaviour
             isFollowing = true;
             Follow = !Follow;
         }
+
     }
 
     private void FixedUpdate() // ずっと、往復する
@@ -183,7 +215,7 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.tag == "ElectricCable")
         {
-            //EventFlagManager.Instance.SetFlagState(EventFlagName.ElectricCableFlag, true);
+            EventFlagManager.Instance.SetFlagState(EventFlagName.ElectricCableFlag, true);
         }
     }
 }

@@ -535,6 +535,7 @@ GameObject:
   - component: {fileID: 1343032435145367200}
   - component: {fileID: 1343032435145367203}
   - component: {fileID: 1452085419887514757}
+  - component: {fileID: 9035475987820118406}
   m_Layer: 0
   m_Name: ElectricCable
   m_TagString: ElectricCable
@@ -645,6 +646,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointArray: []
+--- !u!61 &9035475987820118406
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343032435145367202}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 22.33, y: 4.6121044}
+    newSize: {x: 45.190002, y: 13.040669}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 22.33, y: 4.6121044}
+  m_EdgeRadius: 0
 --- !u!1 &2163535760378323633
 GameObject:
   m_ObjectHideFlags: 0
