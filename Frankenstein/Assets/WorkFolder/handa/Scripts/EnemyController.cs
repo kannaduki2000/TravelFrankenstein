@@ -120,13 +120,13 @@ public class EnemyController : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow))
             {
                 this.transform.Translate(-0.01f, 0.0f, 0.0f);
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
             if (Input.GetKey(KeyCode.RightArrow))
             {
                 this.transform.Translate(0.01f, 0.0f, 0.0f);
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = enemyScale;
             }
 
             if (enemyJump == false && Input.GetKeyDown(KeyCode.Space))
@@ -159,7 +159,7 @@ public class EnemyController : MonoBehaviour
 
         //呼ぶボタン(Delete仮置き)を押した時の動き
         //Followを切り替えることでもう一度追従や切り替えができるお
-        if (Follow == true && Input.GetKeyDown(KeyCode.Delete))
+        if (Follow == true && Input.GetKeyDown(KeyCode.Delete ) && enemyMove == true)
         {
             isFollowing = true;
             Follow = !Follow;
@@ -178,11 +178,11 @@ public class EnemyController : MonoBehaviour
             Vector3 scale = transform.localScale;
             if (s >= 0)
             {
-                scale.x = 1;
+                scale.x = enemyScale.x;
             }
             else
             {
-                scale.x = -1;
+                scale.x = -enemyScale.x;
             }
             transform.localScale = scale;
         }
