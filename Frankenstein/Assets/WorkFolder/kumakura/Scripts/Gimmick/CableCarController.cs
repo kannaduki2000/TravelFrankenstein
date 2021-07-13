@@ -47,6 +47,7 @@ public class CableCarController : MonoBehaviour
         // 速度を強制的に0にする
         // PlayerControllerのRigitbody2Dがpublicになるまでコメント化しといても大丈夫
         playerCon.rb2d.velocity = Vector2.zero;
+        playerCon.vx = 0;
         ViewCableCar(true);
         StartCoroutine(Move());
     }
