@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb2d;
+    public Rigidbody2D rb2d;
     Animator anim;
     public GameObject Player;
     public GameObject enemy;
