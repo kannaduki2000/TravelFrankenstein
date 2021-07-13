@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     public float speed;//速度
     public float jumpPower;//ジャンプ
-    private float vx = 0;
+    public float vx = 0;
     private bool leftFlag = false;
     private bool jumpFlag = false;
     private bool groundCheck = false;//接地判定 
