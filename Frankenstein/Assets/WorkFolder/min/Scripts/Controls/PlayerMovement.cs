@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask CollisionLayer;
     private bool jumpFlg = false;
 
+    public int stop;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,38 +23,39 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //–îˆóƒL[‚ª‰Ÿ‚³‚ê‚½ê‡
+        //ï¿½ï¿½ï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ê‡
         x_val = Input.GetAxis("Horizontal");
         jumpFlg = IsCollision();
-        //SpaceƒL[‚ª‰Ÿ‚³‚ê‚½ê‡
+        //Spaceï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ê‡
         Debug.Log(jumpFlg);
         if (Input.GetKeyDown("space") && jumpFlg)
         {
             jump();
+            /*nomove();*/
         }
     }
     void FixedUpdate()
     {
-        //‘Ò‹@
+        //ï¿½Ò‹@
         if (x_val == 0)
         {
             speed = 0;
         }
-        //‰E‚ÉˆÚ“®
+        //ï¿½Eï¿½ÉˆÚ“ï¿½
         else if (x_val > 0)
         {
             speed = inputSpeed;
-            //‰E‚ğŒü‚ğŒü‚­
+            //ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             transform.localScale = new Vector3(2f, 2f, 2f);
         }
-        //¶‚ÉˆÚ“®
+        //ï¿½ï¿½ï¿½ÉˆÚ“ï¿½
         else if (x_val < 0)
         {
             speed = inputSpeed * -1;
-            //¶‚ğŒü‚ğŒü‚­
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             transform.localScale = new Vector3(-2f, 2f, 2f);
         }
-        // ƒLƒƒƒ‰ƒNƒ^[‚ğˆÚ“® Vextor2(x²ƒXƒs[ƒhAy²ƒXƒs[ƒh(Œ³‚Ì‚Ü‚Ü))
+        // ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½^ï¿½[ï¿½ï¿½ï¿½Ú“ï¿½ Vextor2(xï¿½ï¿½ï¿½Xï¿½sï¿½[ï¿½hï¿½Ayï¿½ï¿½ï¿½Xï¿½sï¿½[ï¿½h(ï¿½ï¿½ï¿½Ì‚Ü‚ï¿½))
         rb2d.velocity = new Vector2(speed, rb2d.velocity.y);
     }
     void jump()
@@ -60,6 +63,18 @@ public class PlayerMovement : MonoBehaviour
         rb2d.AddForce(Vector2.up * jumpingPower);
         jumpFlg = false;
     }
+
+    /*void nomove()
+    {
+        if(Input.GetKey(KeyCode.W))
+        {
+            stop = 0; //Player Stop from moving
+        }
+        else if(Input.GetKey(KeyCode.W))
+        {
+            stop = 3; //Player moving
+        }
+    }*/
 
     bool IsCollision()
     {
