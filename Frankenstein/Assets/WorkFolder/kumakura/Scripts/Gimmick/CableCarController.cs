@@ -10,12 +10,14 @@ public class CableCarController : MonoBehaviour
     [SerializeField] private GameObject[] colliders;
     [SerializeField, Header("’â~’n“_")] private GameObject cableCarStopPosition;   // ’â~’n“_
     [SerializeField] private float moveSpeed = 5.0f;
+    private PlayerController playerCon;
     private bool loopFlag = false;
 
     private bool trigger = false;
 
     void Start()
     {
+        playerCon = FindObjectOfType<PlayerController>();
         // Å‰‚Í“–‚½‚è”»’è‚ª‚È‚¢‚Ì‚ÅÁ‚·
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -40,6 +42,8 @@ public class CableCarController : MonoBehaviour
     public void CableCarMove()
     {
         if (loopFlag) { return; }
+        // Player‚Ì“®‚«‚ğ~‚ß‚é
+        playerCon.player_Move = true;
         ViewCableCar(true);
         StartCoroutine(Move());
     }
@@ -55,6 +59,7 @@ public class CableCarController : MonoBehaviour
         loopFlag = false;
         ColliderActive();
         eve.enabled = false;
+        playerCon.player_Move = false;
         EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStop, true);
         yield break;
     }
