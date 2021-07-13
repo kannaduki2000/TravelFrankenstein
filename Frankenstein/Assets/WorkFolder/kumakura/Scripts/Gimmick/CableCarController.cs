@@ -44,6 +44,9 @@ public class CableCarController : MonoBehaviour
         if (loopFlag) { return; }
         // Playerの動きを止める
         playerCon.player_Move = true;
+        // 速度を強制的に0にする
+        // PlayerControllerのRigitbody2Dがpublicになるまでコメント化しといても大丈夫
+        playerCon.rb2d.velocity = Vector2.zero;
         ViewCableCar(true);
         StartCoroutine(Move());
     }
