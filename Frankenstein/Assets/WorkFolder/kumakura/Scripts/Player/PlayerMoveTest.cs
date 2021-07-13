@@ -19,7 +19,7 @@ public class PlayerMoveTest : MonoBehaviour
 
     void Update()
     {
-
+        // 電線デバッグ
         if (Input.GetKeyDown(KeyCode.Return))
         {
             electricCableCon.CablePointMove(gameObject, id, startPoint);
@@ -32,8 +32,10 @@ public class PlayerMoveTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
+
         }
 
+        // ケーブルカーデバッグ
         if (Input.GetKeyDown(KeyCode.Q))
         {
             EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStart, true);
