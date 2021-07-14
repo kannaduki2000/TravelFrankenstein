@@ -4,35 +4,33 @@ using UnityEngine;
 
 public class StairsGimmick : MonoBehaviour
 {
-  
-    public GameObject stairs;
-    // Start is called before the first frame update
-    void Start()
-    {  
-        stairs = GameObject.Find("Stairs");
-        stairs.SetActive(false);
-    }
+    GameObject anim;
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
-
-    //仮アニメーション作成→挿入
+    //アニメーションはtransformで設定してあります。
     //電気を入れるの代わりにPを押す
+
     private void OnCollisionStay2D(Collision2D collision)
     {
+        //階段のオブジェクト取得
+        anim = GameObject.Find("Stairs");
+
         if (collision.gameObject.tag == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.P))
+            Debug.Log("物に当たってる");
+            if (Input.GetKey(KeyCode.P))
             {
-                stairs.gameObject.SetActive(true);
+                //StairsAnimからアニメーション再生スクリプト呼び出した
+                
+                anim.gameObject.GetComponent<StairsAnim>().Stairs();
+                Debug.Log("アニメーション再生");
 
             }
         }
     }
+
+   
+
+
 
 
     //アニメーション開始

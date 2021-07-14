@@ -64,11 +64,7 @@ public class PlayerThrow : MonoBehaviour
     //アイテムに当たったら
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Item")
-        {
-            //アニメーションが再生される
-            Debug.Log("アニメーション再生");
-        }
+
     }
 
 
@@ -87,6 +83,7 @@ public class PlayerThrow : MonoBehaviour
     //アイテムに当たり続けたら
     private void OnCollisionStay2D(Collision2D collision)
     {
+
         if (collision.gameObject.tag == "Item")
         {
             Debug.Log("stay");
