@@ -10,6 +10,7 @@ public class PlayerThrow : MonoBehaviour
     private bool Throw = false;                 //投げのフラグ
     Rigidbody2D rb;
     KeyPlessThrow item;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +69,7 @@ public class PlayerThrow : MonoBehaviour
     }
 
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Item")
         {
@@ -81,8 +82,9 @@ public class PlayerThrow : MonoBehaviour
 
 
     //アイテムに当たり続けたら
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
+  
 
         if (collision.gameObject.tag == "Item")
         {
