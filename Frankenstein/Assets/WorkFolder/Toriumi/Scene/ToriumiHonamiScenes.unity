@@ -393,9 +393,10 @@ GameObject:
   - component: {fileID: 627592280}
   - component: {fileID: 627592282}
   - component: {fileID: 627592285}
-  - component: {fileID: 627592283}
   - component: {fileID: 627592284}
+  - component: {fileID: 627592283}
   - component: {fileID: 627592279}
+  - component: {fileID: 627592286}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -488,7 +489,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 627592278}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -527, y: 148.1, z: 0}
+  m_LocalPosition: {x: -626.9, y: 148.1, z: 0}
   m_LocalScale: {x: 15, y: 15, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -559,6 +560,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1139f7ff93a312942abf9eebf2edc9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &627592286
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627592278}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 2.4472265, y: 0.19652843}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10.42, y: 10.42}
+    newSize: {x: 10.42, y: 10.42}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.3427572, y: 10.026943}
+  m_EdgeRadius: 0
 --- !u!1 &1771939804
 GameObject:
   m_ObjectHideFlags: 0
