@@ -6,10 +6,11 @@ public class CameraClamp : MonoBehaviour
 {
     [SerializeField]
     private Transform targetToFollow;
-    private float LeftX = -8.88f;
-    private float RightX = 100f;
-    private float UpY = -10f;
-    private float DownY = -8.024302f;
+   
+    public float LeftX = -16.88f;
+    public float RightX = 87f;
+    public float UpY = -10f;
+    public float DownY = -5.024302f;
     // Update is called once per frame
     void Update()
     {
