@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 568367240}
   - component: {fileID: 568367245}
   - component: {fileID: 568367239}
+  - component: {fileID: 568367246}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -325,11 +326,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9222ba75a9ee5ad40abc14f11f36db88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputSpeed: 3.43
+  inputSpeed: 10
   jumpingPower: 10.8
   CollisionLayer:
     serializedVersion: 2
     m_Bits: 64
+  stop: 0
 --- !u!58 &568367240
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -355,7 +357,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 568367238}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 265ade1be411a49a4a19f7471aa9d1a0, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -471,6 +473,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ecba2807fcc3d4498cd59d1c246ef99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &568367246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568367238}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde0b2191106240648a3875e1c4c9d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nomove: 2
 --- !u!1 &615821710
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +603,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615821710}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b93b6ef99f5f82d4d9feeef6174e41c6, type: 3}
   m_Name: 
@@ -1252,6 +1267,7 @@ GameObject:
   - component: {fileID: 2030424646}
   - component: {fileID: 2030424645}
   - component: {fileID: 2030424647}
+  - component: {fileID: 2030424648}
   m_Layer: 0
   m_Name: bookdesk
   m_TagString: Untagged
@@ -1331,7 +1347,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2030424644}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b93b6ef99f5f82d4d9feeef6174e41c6, type: 3}
   m_Name: 
@@ -1339,3 +1355,16 @@ MonoBehaviour:
   mainCameraPosition: {fileID: 519420032}
   backgroundMovementSpeed: 5
   offsetByX: 161
+--- !u!114 &2030424648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030424644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde0b2191106240648a3875e1c4c9d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nomove: 1

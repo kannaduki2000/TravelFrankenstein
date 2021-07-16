@@ -1113,9 +1113,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 1d628203956c6574a9c57305618080d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetToFollow: {fileID: 308974785}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
