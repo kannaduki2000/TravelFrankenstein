@@ -22,7 +22,7 @@ public class StairsAnim : MonoBehaviour
     {
         //アニメーションが再生
         //ループを切っているので一回のみ再生。
-        //判定は滅茶苦茶ある。
+        //判定はある。
         anim.SetBool("Stairs", true);
     }
 

@@ -19,7 +19,7 @@ public class StairsGimmick : MonoBehaviour
             Debug.Log("物に当たってる");
             if (Input.GetKey(KeyCode.P))
             {
-                //StairsAnimからアニメーション再生スクリプト呼び出した
+                //StairsAnimからアニメーション再生スクリプト呼び出し
                 
                 anim.gameObject.GetComponent<StairsAnim>().Stairs();
                 Debug.Log("アニメーション再生");

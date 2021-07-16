@@ -36,7 +36,7 @@ public class KeyPlessThrow : MonoBehaviour
     public void Low()
     {
         rb = GetComponent<Rigidbody2D>();
-        Debug.Log("í·Ç¢");
+        Debug.Log("í·Çﬂ");
         if (left)
         {
             rb.AddForce(new Vector2(-Throwx, Throwy), ForceMode2D.Impulse);
@@ -51,7 +51,7 @@ public class KeyPlessThrow : MonoBehaviour
     public void Hight()
     {
         rb = GetComponent<Rigidbody2D>();
-        Debug.Log("çÇÇ¢");
+        Debug.Log("çÇÇﬂ");
         if (left)
         {
             rb.AddForce(new Vector2(-ThrowX, ThrowY), ForceMode2D.Impulse);
