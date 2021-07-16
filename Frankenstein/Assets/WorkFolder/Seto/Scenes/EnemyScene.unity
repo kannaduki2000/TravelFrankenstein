@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 97606577}
   - component: {fileID: 97606576}
   - component: {fileID: 97606575}
+  - component: {fileID: 97606578}
   m_Layer: 0
   m_Name: Gear
   m_TagString: Untagged
@@ -225,6 +226,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &97606578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97606574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c9616cd0197345de9af69228daeec70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: 200
+  ClockwiseRotation: 0
 --- !u!1 &294329363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1552,30 +1567,6 @@ MonoBehaviour:
             m_StringArgument: GearAnimation
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1935934190}
-          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-          m_MethodName: SetTrigger
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: Gear2Animation
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1932493324}
-          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-          m_MethodName: SetTrigger
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: Gear3Animation
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1932493321
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,6 +1578,7 @@ GameObject:
   - component: {fileID: 1932493323}
   - component: {fileID: 1932493322}
   - component: {fileID: 1932493324}
+  - component: {fileID: 1932493325}
   m_Layer: 0
   m_Name: Gear3
   m_TagString: Untagged
@@ -1678,6 +1670,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1932493325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932493321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c9616cd0197345de9af69228daeec70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: 200
+  ClockwiseRotation: 0
 --- !u!1 &1935934187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,6 +1695,7 @@ GameObject:
   - component: {fileID: 1935934189}
   - component: {fileID: 1935934188}
   - component: {fileID: 1935934190}
+  - component: {fileID: 1935934191}
   m_Layer: 0
   m_Name: Gear2
   m_TagString: Untagged
@@ -1780,3 +1787,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1935934191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935934187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c9616cd0197345de9af69228daeec70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: -200
+  ClockwiseRotation: 0
