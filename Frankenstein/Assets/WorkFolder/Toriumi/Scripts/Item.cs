@@ -19,7 +19,7 @@ public class Item : MonoBehaviour
     //低く投げる
     public void Low()
     {
-
+        
         // 親のxスケールを取得
         // xスケールが、0よりも大きい。すなわち + ならば右方向へ
         // xスケールが、0よりも小さい。すなわち - ならば左方向へ

@@ -18,6 +18,7 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         anim = gameObject.GetComponent<Animator>();
+        
         //ˆÚ“®
         Vector2 Position = transform.position;
         if (Input.GetKey(KeyCode.A))
