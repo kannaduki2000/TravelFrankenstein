@@ -14,7 +14,7 @@ public class EventFlag
 
 public class EventFlagManager : MonoBehaviour
 {
-    private static string objectName = "FlagManager";
+    private static string objectName = "EventFlagManager";
     private static EventFlagManager instance = null;
     public static EventFlagManager Instance
     {
@@ -28,6 +28,14 @@ public class EventFlagManager : MonoBehaviour
             return instance;
         }
     }
+
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
+    // イベント実行中かどうかを判別するフラグ
+    public bool EventFlag { get; set; }
 
     private EventFlag[] flags = new EventFlag[0];
 
