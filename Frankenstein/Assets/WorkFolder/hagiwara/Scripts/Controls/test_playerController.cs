@@ -20,16 +20,14 @@ public class test_playerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		Debug.Log(hp);
-
 		if (Input.GetKey(KeyCode.LeftArrow))
 		{
-			transform.Translate(-5.0f, 0.0f, 0.0f);
+			transform.Translate(-7.5f, 0.0f, 0.0f);
 		}
 
 		if (Input.GetKey(KeyCode.RightArrow))
 		{
-			transform.Translate(5.0f, 0.0f, 0.0f);
+			transform.Translate(7.5f, 0.0f, 0.0f);
 		}
 	}
 
