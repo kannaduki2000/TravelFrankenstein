@@ -17,7 +17,7 @@ public class RotationEnemy : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Q) && kasokudekiru == false)
         {
-            this.speed = 1;
+            this.speed = 0.001f;
             kasokuuuuuu = true;
             kasokudekiru = true;
         }
@@ -27,9 +27,11 @@ public class RotationEnemy : MonoBehaviour
             transform.Rotate(0, 0, this.speed);
         }
 
-        if(speed <= 10)
+        if (speed <= 0.1)
         {
-            this.speed += 0.0009f;
+            this.speed += 0.002f;
         }
     }
+
+    //‰ñ“]” = ‘å‚«‚³ / 2
 }

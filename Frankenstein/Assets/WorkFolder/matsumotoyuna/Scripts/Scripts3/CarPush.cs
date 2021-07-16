@@ -9,48 +9,58 @@ public class CarPush : MonoBehaviour
 
     [SerializeField] GameObject gareki;
 
+    public PhysicsMaterial2D pm;
+    GameObject front;
+
     public bool crash = true;
     public bool garekiCrash = false;
+    public bool rot = false;
+
+    public PhysicMaterial material;
     void Start()
     {
         rigid2D = GetComponent<Rigidbody2D>();
+        pm = Resources.Load("yuka") as PhysicsMaterial2D;
+        pm = GetComponent<PhysicsMaterial2D>();
     }
 
     void Update()
     {
-        //重さ変更だよ
-        //if (crash == true)
-        //{
-        //    rigid2D.mass = 5;
-        //    Crash();
-        //}
-
-        //else if (crash == false)
-        //{
-        //    rigid2D.mass = 500;
-        //    Crash();
-        //}
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            crash = true;
+        }
         if (crash == true)
         {
             Crash();
         }
-    }
 
+        if(rot == true)
+        {
+            transform.Rotate(0f, 0f, -this.speed / 6);
+        }
+
+        if (rot == true && transform.rotation.z >= 0)
+        {
+            transform.rotation = new Quaternion(0, 0, 0, 0);
+            rot = false;
+        }
+    }
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //がれきに当たったら
         if (collision.gameObject.tag == "Gareki")
         {
-            //transform.Rotate(0f, 0f, -120.0f * Time.deltaTime);
-            //this.transform.rotation = new Quaternion(10f * Time.deltaTime, 0f, 0f, 0f);
-            if(transform.rotation.x == -30)
-            {
-                //this.transform.rotation = new Quaternion(-1f * Time.deltaTime, 0f, 0f, 0f);
-            }
-
+            //rigid2D.sharedMaterial = pm;
+            //pm.friction = 10000000;
+            //pm.dynamicFriction = 500000000000000000;
+            //pm.staticFriction = 1;
+            rigid2D.constraints = RigidbodyConstraints2D.FreezePositionX;
+            rigid2D.velocity = Vector3.zero;
+            rigid2D.angularVelocity = 0;
+            rot = true;
             //rigid2D.velocity = Vector2.zero;
-            //garekiCrash = true;
             //Destroy(gareki);
             gareki.SetActive(false);
             //時差発動「車破壊」
@@ -70,8 +80,7 @@ public class CarPush : MonoBehaviour
 
     private void CarCrash()
     {
-        //車破壊
-        //Destroy(this.gameObject);
+        //車消す
         gameObject.SetActive(false);
     }
 }
