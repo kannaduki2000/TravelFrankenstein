@@ -2,7 +2,9 @@
 [System.Serializable]
 public enum EventFlagName
 {
+    StairsUp,
 
+    ElectricCableFlag,
 
 
     cableCarStart,  // “¥Ø‚É“d‹C‚ğ“ü‚ê‚½Œã
@@ -12,5 +14,5 @@ public enum EventFlagName
 
 
 
-    FlagEnd,
+    FlagEnd,        // Á‚³‚È‚¢‚Å
 }
