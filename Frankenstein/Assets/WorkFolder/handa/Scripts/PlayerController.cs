@@ -23,13 +23,20 @@ public class PlayerController : MonoBehaviour
     //
     [SerializeField] private LayerMask enemyLayer; // モック版熊倉:敵のLayer取得用
 
-    [SerializeField] int maxHP = 100;
-    [SerializeField] float HP = 100;
-    [SerializeField] private bool touchFlag = false;
-    [SerializeField] private bool enemyTouchFlag = false; // モック版熊倉:フラグ追加
-    private bool onElectricity = true;
+    public int maxHP = 100;
+    public float HP = 100;
+    public bool touchFlag = false;
+    public bool enemyTouchFlag = false; // モック版熊倉:フラグ追加
+    public bool onElectricity = true;
     public GameObject hpCanvas;
     private float hpCanvasScale_x;
+
+    private int presskeyFrames = 0;             //長押しフレーム数
+    private int PressLong = 300;                //長押し
+    private int PressShort = 100;               //軽押し
+    private bool Throw = false;                 //投げのフラグ
+    Rigidbody2D rb;
+    KeyPlessThrow item;
 
 
     private bool enemyFollowFlg = false;
@@ -49,7 +56,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         anim = gameObject.GetComponent<Animator>();
-
         // モック版熊倉:LayerでやってたっぽいのでLinecastで取得
         if (GetEnemyLayer())
         {
@@ -73,19 +79,19 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey("right"))
             {
                 vx = speed;
-                leftFlag = false;
                 anim.SetBool("Walking", true);
             }
             else if (Input.GetKey("left"))
             {
                 vx = -speed;
-                leftFlag = true;
                 anim.SetBool("Walking", true);
             }
             else
             {
                 anim.SetBool("Walking", false);
             }
+
+           
 
             if (Input.GetKey("space") && groundCheck)
             {
@@ -100,6 +106,18 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+        }
+
+        //
+        float x = Input.GetAxisRaw("Horizontal");
+        if(x != 0)
+        {
+            Vector2 Iscale = gameObject.transform.localScale;
+            if ((Iscale.x > 0 && x < 0) || (Iscale.x < 0 && x > 0))
+            {
+                Iscale.x *= -1;
+                gameObject.transform.localScale = Iscale;
+            }
         }
         /*--------------------------------------------------------------------------*/
 
@@ -157,13 +175,54 @@ public class PlayerController : MonoBehaviour
             hpCanvas.SetActive(false);
         }
         /*-----------------------------------------------------------------*/
+
+        /*アイテムを持つ入力処理---------------------------------------------*/
+        if (Throw)
+        {
+            if (Input.GetKey(KeyCode.R))//半田：SpaceからRに変更
+            {
+                //スペースの判定
+                //memo  『? true:false』
+                presskeyFrames += (Input.GetKey(KeyCode.R)) ? 1 : 0;//半田：SpaceからRに変更
+                Debug.Log(presskeyFrames);
+            }
+
+            if (Input.GetKeyUp(KeyCode.R))//半田：SpaceからRに変更
+            {
+                //もしスペースが長押しされたら
+                if (PressLong <= presskeyFrames)
+
+                //高めに投げる
+                {
+                    item.Hight();
+                    Debug.Log("長め");
+                }
+
+                //もしスペースが押されたら
+                else if (PressShort <= presskeyFrames)
+
+                //低めに投げる
+                {
+                    item.Low();
+                    Debug.Log("短め");
+                }
+            }
+
+            //if (Input.GetKeyUp(KeyCode.W))
+            //{
+            //    this.gameObject.transform.DetachChildren();
+            //}
+        }
+        /*-----------------------------------------------------------------*/
+
     }
+
+
 
     /*無限ジャンプを防ぐ処理------------------------------------------------*/
     private void FixedUpdate()
     {
         rb2d.velocity = new Vector2(vx, rb2d.velocity.y);
-        this.GetComponent<SpriteRenderer>().flipX = leftFlag;
         if (jumpFlag)
         {
             jumpFlag = false;
@@ -193,6 +252,28 @@ public class PlayerController : MonoBehaviour
         {
             groundCheck = true;
         }
+
+        if (collision.gameObject.tag == "Item")
+        {
+            Debug.Log("stay");
+
+            //item = collision.gameObject.GetComponent<Item>();
+            //Wを押していたら
+            if (Input.GetKey(KeyCode.W))
+            {
+                Throw = true;
+                //アイテムクラスの取得
+                item = collision.gameObject.GetComponent<KeyPlessThrow>();
+
+                //アイテムのY軸が上がる
+                // ここでこのオブジェクトをプレイヤーの子供にする
+                item.gameObject.transform.parent = this.transform;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            item.transform.parent = null;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -214,6 +295,14 @@ public class PlayerController : MonoBehaviour
         else
         {
             groundCheck = false;
+        }
+
+        if (collision.gameObject.tag == "Item")
+        {
+            Throw = false;
+            presskeyFrames = 0;
+            item.transform.parent = null;
+            Debug.Log("exit");
         }
     }
 
