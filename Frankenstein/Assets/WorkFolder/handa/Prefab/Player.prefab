@@ -329,15 +329,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 94e0b4a21c44e304592d274b105660af, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 61d8b2dc796aa084a874632876891855, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5, y: 5}
+  m_Size: {x: 10.43, y: 10.43}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!70 &1356326465420944899
@@ -403,6 +403,7 @@ MonoBehaviour:
   HP: 100
   touchFlag: 0
   enemyTouchFlag: 0
+  onElectricity: 1
   hpCanvas: {fileID: 1356326464335050599}
   enemyCon: {fileID: 0}
   hp: {fileID: 1356326464137568156}
@@ -423,8 +424,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.63, y: 10.42}
-    newSize: {x: 10.42, y: 10.42}
+    oldSize: {x: 10.43, y: 10.43}
+    newSize: {x: 10.43, y: 10.43}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -442,7 +443,7 @@ Animator:
   m_GameObject: {fileID: 1356326465420944911}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 96d50500604eaba41a7777e8efd9b82f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -468,8 +469,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.63, y: 10.42}
-    newSize: {x: 10.42, y: 10.42}
+    oldSize: {x: 10.43, y: 10.43}
+    newSize: {x: 10.43, y: 10.43}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
