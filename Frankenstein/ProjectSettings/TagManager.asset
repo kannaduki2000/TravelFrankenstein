@@ -8,6 +8,10 @@ TagManager:
   - Enemy
   - HomeApp
   - Item
+  - GoMap2
+  - GoTitleLogo
+  - Gareki
+  - Car
   layers:
   - Default
   - TransparentFX
