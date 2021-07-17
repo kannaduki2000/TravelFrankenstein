@@ -35,7 +35,7 @@ public class PC_Controller : MonoBehaviour
 
 	SpriteRenderer PC_SpriteRenderer;			// スプライトレンダラーを閉まっちゃおうねやつ
 
-	test_playerController PlayerScript;		// プレイヤーのスクリプトをしまっちゃおうねしておくやつ
+	PlayerController PlayerScript;		// プレイヤーのスクリプトをしまっちゃおうねしておくやつ
 
 	/*----------------------------------------------------------------------------------------------------*/
 
