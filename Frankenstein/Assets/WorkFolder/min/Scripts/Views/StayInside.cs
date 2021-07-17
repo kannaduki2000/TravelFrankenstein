@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class StayInside : MonoBehaviour
 {
-    [SerializeField]
-    private float LeftX = -53f;
-    private float RightX = 128f;
-    private float UpY = -100f;
-    private float DownY = 21f;
+    
+    public float LeftX = -53f;
+    public float RightX = 128f;
+    public float DownY = -100f;
+    public float UpY = 21f;
 
     // Update is called once per frame
     void Update()

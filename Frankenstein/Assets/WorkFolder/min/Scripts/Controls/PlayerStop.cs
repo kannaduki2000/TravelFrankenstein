@@ -32,6 +32,9 @@ public class PlayerStop : MonoBehaviour
         else if(Input.GetKeyUp(KeyCode.Space))
         {
             nomove = 3; //Player moving
+
         }
     }
+
+    
 }
