@@ -44,12 +44,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private EnemyController enemyCon;
     [SerializeField] private Image hp;
 
+    public SceneChange sc;
+    public FadeControl fadeControl;
+
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         hpCanvasScale_x = hpCanvas.transform.localScale.x;
+        sc = FindObjectOfType<SceneChange>();
+        fadeControl = FindObjectOfType<FadeControl>();
     }
 
     // Update is called once per frame
@@ -282,7 +287,18 @@ public class PlayerController : MonoBehaviour
         {
             touchFlag = true;
         }
-        
+
+        //”»’è‚ÌêŠ‚ð’Ê‰ß‚µ‚½‚ç”­¶
+        if (collision.gameObject.tag == "GoTitleLogo")
+        {
+            fadeControl.Fade("wout", () => fadeControl.sceneChange.SceneSwitching("TitleLogo", true));
+        }
+
+        if (collision.gameObject.tag == "GoMap2")
+        {
+            fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("TentativeTitle"));
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
