@@ -22,15 +22,15 @@ public class PlayerThrow : MonoBehaviour
     {
         if (Throw)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.R))//半田：SpaceからRに変更
             {
                 //スペースの判定
                 //memo  『? true:false』
-                presskeyFrames += (Input.GetKey(KeyCode.Space)) ? 1 : 0;
+                presskeyFrames += (Input.GetKey(KeyCode.R)) ? 1 : 0;//半田：SpaceからRに変更
                 Debug.Log(presskeyFrames);
             }
 
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeyCode.R))//半田：SpaceからRに変更
             {
                 //もしスペースが長押しされたら
                 if (PressLong <= presskeyFrames)

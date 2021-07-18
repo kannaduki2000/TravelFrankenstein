@@ -159,7 +159,10 @@ MonoBehaviour:
   enemy: {fileID: 31433410}
   stopDistance: 5
   mt: {fileID: 393275485}
+  isCharging: 1
+  isFollowing: 1
   enemyMove: 1
+  Follow: 0
   inputSpeed: 20
   jumpingPower: 2400
 --- !u!61 &31433412
@@ -553,8 +556,18 @@ MonoBehaviour:
   CollisionLayer:
     serializedVersion: 2
     m_Bits: 128
-  hpBar: {fileID: 2102359542}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  maxHP: 100
+  HP: 100
+  touchFlag: 0
+  enemyTouchFlag: 0
+  hpCanvas: {fileID: 0}
   player_Move: 0
+  enemy: {fileID: 0}
+  enemyCon: {fileID: 0}
+  hp: {fileID: 0}
 --- !u!4 &393275486
 Transform:
   m_ObjectHideFlags: 0
