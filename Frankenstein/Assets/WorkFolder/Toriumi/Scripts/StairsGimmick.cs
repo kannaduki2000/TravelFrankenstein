@@ -9,7 +9,7 @@ public class StairsGimmick : MonoBehaviour
     //アニメーションはtransformで設定してあります。
     //電気を入れるの代わりにPを押す
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)//半田:OnCollisionからOnTriggerに変更
     {
         //階段のオブジェクト取得
         anim = GameObject.Find("Stairs");
@@ -20,7 +20,7 @@ public class StairsGimmick : MonoBehaviour
             if (Input.GetKey(KeyCode.P))
             {
                 //StairsAnimからアニメーション再生スクリプト呼び出し
-                
+
                 anim.gameObject.GetComponent<StairsAnim>().Stairs();
                 Debug.Log("アニメーション再生");
 
@@ -28,7 +28,8 @@ public class StairsGimmick : MonoBehaviour
         }
     }
 
-   
+
+
 
 
 

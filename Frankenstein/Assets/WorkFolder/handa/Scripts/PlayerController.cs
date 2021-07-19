@@ -317,7 +317,7 @@ public class PlayerController : MonoBehaviour
         {
             Throw = false;
             presskeyFrames = 0;
-            item.transform.parent = null;
+            //item.transform.parent = null;
             Debug.Log("exit");
         }
     }
