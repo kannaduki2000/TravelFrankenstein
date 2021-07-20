@@ -4,6 +4,33 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UI;
 
+
+[System.Serializable]
+public enum AnnounceName
+{
+    // Tutorial
+    T_Put_Electric_Enemy,           // エネミーの死体に電気を入れる
+    T_Throw_Having,                 // 投げる、持つ
+    T_Come_Out_Home,                // 家から出る
+    T_Release_Object,               // 長押しで上に投げる、離す
+    T_SquareButton,                 // 四角ボタン
+    T_CircleButton_StartUp,         // 丸ボタン：起動する
+    T_Leftstick_Move,               // 左スティック：移動
+    T_SquareButton_Absorption,      // 四角ボタン：電気を吸収する
+    T_SquareButton_Input,           // 四角ボタン：電気を入れる
+
+    // Stage1
+    S1_TriangleButton_Gear,         // 三角ボタン：歯車になる
+    S1_CircleButton_EnemyCall,      // 丸ボタン：エネミーを呼ぶ
+    S1_SquareButton_ElectricCable,  // 四角ボタン：電線を伝う
+    S1_LButton_EnemyChange,         // Lボタン：操作切り替え
+    S1_RButton_Push,                // Rボタン：押す
+    S1_SquareButton,                // 四角ボタン
+    S1_SquareButton_Input,          // 四角ボタン：電気を入れる
+    S1_SquareButton_Absorption,     // 四角ボタン：電気を吸収する
+
+}
+
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody2D rb2d;
@@ -38,6 +65,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     KeyPlessThrow item;
 
+    public Sprite[] AnnounceImageArray;
+    public Image AnnounceImage;
+
 
     private bool enemyFollowFlg = false;
     // モック版熊倉:GetCompornent重いんで直で取得、ここ敵の数増えるはずなので書き換えること
@@ -46,6 +76,8 @@ public class PlayerController : MonoBehaviour
 
     public SceneChange sc;
     public FadeControl fadeControl;
+
+    private bool getUpTrigger = true;
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +92,35 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        anim = gameObject.GetComponent<Animator>();
+
+        // フランケンがまだ起き上がっていなければ
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.frankensteinGetUp) == false)
+        {
+            return;
+        }
+        else
+        {
+            // 一度でも起き上がったことがあれば起きるアニメーションのスキップ
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.getupFlag))
+            {
+                anim.SetBool("GetUpFlag", true);
+                getUpTrigger = false;
+            }
+
+            if (getUpTrigger)
+            {
+                SetAnnounceImage(AnnounceName.T_CircleButton_StartUp);
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
+                    ViewAnnounceImage(false);
+                    getUpTrigger = false;
+                    anim.SetTrigger("isGetUp");
+                }
+            }
+        }
+
+        //anim = gameObject.GetComponent<Animator>();
         // モック版熊倉:LayerでやってたっぽいのでLinecastで取得
         if (GetEnemyLayer())
         {
@@ -249,7 +309,24 @@ public class PlayerController : MonoBehaviour
         return Physics2D.Linecast(left, right, enemyLayer);
     }
 
+    /// <summary>
+    /// アナウンス画像を入れてから表示
+    /// </summary>
+    /// <param name="name"></param>
+    public void SetAnnounceImage(AnnounceName name)
+    {
+        AnnounceImage.sprite = AnnounceImageArray[(int)name];
+        ViewAnnounceImage(true);
+    }
 
+    /// <summary>
+    /// アナウンス画像の表示/非表示
+    /// </summary>
+    /// <param name="isView"></param>
+    public void ViewAnnounceImage(bool isView)
+    {
+        AnnounceImage.enabled = isView;
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
