@@ -102,16 +102,16 @@ public class FadeManager : MonoBehaviour
             if (sc.Tutorial == true)
             {
                 //チュートリアルへ
-                Debug.Log("TentativeTutorial");
-                SceneManager.LoadScene("TentativeTutorial");
+                Debug.Log("handa");//半田:シーンの変更
+                SceneManager.LoadScene("handa");//半田:シーンの変更
                 sc.Tutorial = false;
             }
 
             if (sc.Map1 == true)
             {
                 //Map1へ
-                Debug.Log("TentativeMap1");
-                SceneManager.LoadScene("TentativeMap1");
+                Debug.Log("Stag1");//半田:シーンの変更
+                SceneManager.LoadScene("Stag1");//半田:シーンの変更
                 sc.Map1 = false;
             }
 

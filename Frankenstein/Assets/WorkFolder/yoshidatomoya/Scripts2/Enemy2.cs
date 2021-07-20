@@ -6,7 +6,7 @@ public class Enemy2 : MonoBehaviour
 {
     //CharacterController Controller;
     //Transform Target;
-    //GameObject Player;
+    GameObject Ground;
 
     //[SerializeField]
     //float MoveSpeed = 2.0f;
@@ -18,63 +18,123 @@ public class Enemy2 : MonoBehaviour
     public float speedY = 0; // スピードY
     public float speedZ = 0; // スピードZ
     public float second = 1; // かかる秒数
-    private float UpdateTimer = 0f;
-    private float TimeRimit = 2.0f;
     private bool move = false;
+    public float Stop = 2;
 
-    private float time = 0f;
+    public Transform targetPos; // 行きたい場所
+    public Vector3 startPos;  // 元の場所
+
+    public bool isSearch = false;
+    public bool isloop = false;
+    private bool move2 = false;
+
+    private float thisXScale;
+
+    public float time = 0;
+
+    private void Update()
+    {
+        if (isloop) { return; }
+        // 右
+        if (isSearch)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos.position, 1f * Time.deltaTime);
+            if (targetPos.position.x - transform.position.x <= Mathf.Abs(0.1f))
+            {
+                time += Time.deltaTime;
+                // 2秒停止
+                if (time >= 2)
+                {
+                    time = 0;
+                    Vector3 left = new Vector3(-thisXScale, transform.localScale.y, transform.localScale.z);
+                    transform.localScale = left;
+                    isSearch = false;
+                    move = false;
+                }
+            }
+        }
+        // 左
+        else
+        {            
+            transform.position = Vector3.MoveTowards(transform.position, startPos, 1f * Time.deltaTime);
+            if (transform.position.x - startPos.x <= Mathf.Abs(0.1f)) 
+            {
+                time += Time.deltaTime;
+                // 2秒停止
+                if (time >= 2)
+                {
+                    time = 0;
+                    Vector3 right = new Vector3(thisXScale, transform.localScale.y, transform.localScale.z);
+                    transform.localScale = right;
+                    isSearch = true;
+                }
+               
+            }
+        }
+    }
 
     // ずっと、往復する
     void FixedUpdate() 
-    { 
-        time += Time.deltaTime;
-        float s = Mathf.Sin(Time.time); // 移動量を求める
-        this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
-        // デフォルトが右向きの画像の場合
-        // スケール値取り出し
-        Vector3 scale = transform.localScale;
-        if (s >= 0)
-        {
-            // 右方向に移動中
-            scale.x = 1; // そのまま（右向き）
-        }
-        else
-        {
-            // 左方向に移動中
-            scale.x = -1; // 反転する（左向き）
-        }
-        // 代入し直す
-        transform.localScale = scale;
-
-    }
-
-
-
-    // Start is called before the first frame update
-    void Start()
     {
-
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    Debug.Log("E");
+        //    StartCoroutine(Move());
+        //}
+        //if (move == true)
+        //{
+            
+        //    float s = Mathf.Sin(Time.time); // 移動量を求める
+        //    this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
+        //    // デフォルトが右向きの場合
+        //    // スケール値取り出し
+        //    Vector3 scale = transform.localScale;
+            
+        //    if (s >= 0)
+        //    {
+                
+        //        // 右方向に移動中
+        //        scale.x = 1; // そのまま（右向き）
+        //    }
+        //    else
+        //    {
+        //        // 左方向に移動中
+        //        scale.x = -1; // 反転する（左向き）
+        //    }
+        //    // 代入し直す
+        //    transform.localScale = scale;
+        //}
 
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        /*
-        if (move == false)
-        {
-            UpdateTimer += Time.deltaTime;
-        }
-        if (UpdateTimer >= TimeRimit)
-        {
-            move = true;
-            UpdateTimer = 0;
-        }
-        */
-
+        startPos = this.transform.position;
+        Debug.Log(startPos);
+ 
+        thisXScale = transform.localScale.x;
     }
 
-
+    // 石に当たったら動きを止める処理
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+       // Stoneのタグが付いているものに当たったら
+       if (collision.gameObject.tag == "Stone")
+       {
+            move = false;
+            speedX = 0;
+            // 右向きの状態で当たったら
+           if (this.transform.localScale.x == 1)
+           {
+               transform.localScale = new Vector3(1, 1, 1);
+           }
+           // 左向きの状態で当たったら
+           else
+           {
+               transform.localScale = new Vector3(-1, 1, 1);
+           }
+       }  
+    }
 }
 
 // エネミー自身のテリトリー間を行き来する〇
@@ -84,7 +144,8 @@ public class Enemy2 : MonoBehaviour
 // 突進成功したら４秒間待機　そのあと自分のテリトリーに戻る
 // ４秒間待機後、視線察知内にフランケンがいたらフランケンに再び突進
 // 突進した場所にフランケンがいなかったら２秒間待機して自分のテリトリーに戻る
-// 
+
+// 石に当たったら動きを完全に止める〇
 
 // プレイヤータグの取得
 // Player = GameObject.FindWithTag("Player");
@@ -138,3 +199,5 @@ private void OnTriggerEnter2D(Collider2D collision)
     InArea = true;
 }
 */
+
+// 2秒停止

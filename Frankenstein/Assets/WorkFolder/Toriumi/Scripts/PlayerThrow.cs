@@ -10,6 +10,7 @@ public class PlayerThrow : MonoBehaviour
     private bool Throw = false;                 //投げのフラグ
     Rigidbody2D rb;
     KeyPlessThrow item;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,15 +22,15 @@ public class PlayerThrow : MonoBehaviour
     {
         if (Throw)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.R))//半田：SpaceからRに変更
             {
                 //スペースの判定
                 //memo  『? true:false』
-                presskeyFrames += (Input.GetKey(KeyCode.Space)) ? 1 : 0;
+                presskeyFrames += (Input.GetKey(KeyCode.R)) ? 1 : 0;//半田：SpaceからRに変更
                 Debug.Log(presskeyFrames);
             }
 
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeyCode.R))//半田：SpaceからRに変更
             {
                 //もしスペースが長押しされたら
                 if (PressLong <= presskeyFrames)
@@ -64,15 +65,11 @@ public class PlayerThrow : MonoBehaviour
     //アイテムに当たったら
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Item")
-        {
-            //アニメーションが再生される
-            Debug.Log("アニメーション再生");
-        }
+
     }
 
-
-    private void OnCollisionExit2D(Collision2D collision)
+    //アイテムから離れたら
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Item")
         {
@@ -85,8 +82,10 @@ public class PlayerThrow : MonoBehaviour
 
 
     //アイテムに当たり続けたら
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
+  
+
         if (collision.gameObject.tag == "Item")
         {
             Debug.Log("stay");

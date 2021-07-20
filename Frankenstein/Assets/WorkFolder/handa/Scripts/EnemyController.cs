@@ -28,21 +28,53 @@ public class EnemyController : MonoBehaviour
     public bool isWandering = true;//徘徊するかどうか
     float time = 0f;
 
+    Vector3 enemyScale;
+
+    bool cableFlag = false;
+    public ElectricCableController ECon;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         enemyJump = false;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ElectricCable")
+        {
+            cableFlag = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ElectricCable")
+        {
+            cableFlag = false;
+        }
+    }
+
     //↑床に着くまでジャンプさせないマン
 
     // Start is called before the first frame update
     void Start()
     {
         this.rb2d = GetComponent<Rigidbody2D>();
+        enemyScale = transform.localScale;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (cableFlag && enemyMove == false)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                ECon.CablePointMove(gameObject, 0);
+            }
+        }
+
+
         //箱を用意して、その中にY座標を入れる
         Vector2 targetPos = Player.transform.position;
         targetPos.y = transform.position.y;
@@ -65,13 +97,13 @@ public class EnemyController : MonoBehaviour
             // 右
             if (Player.transform.position.x < transform.position.x)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
             // 左
             else if (Player.transform.position.x > transform.position.x)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = enemyScale;
             }
 
             //ジャンプ
@@ -88,13 +120,13 @@ public class EnemyController : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow))
             {
                 this.transform.Translate(-0.01f, 0.0f, 0.0f);
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
             if (Input.GetKey(KeyCode.RightArrow))
             {
                 this.transform.Translate(0.01f, 0.0f, 0.0f);
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = enemyScale;
             }
 
             if (enemyJump == false && Input.GetKeyDown(KeyCode.Space))
@@ -106,14 +138,16 @@ public class EnemyController : MonoBehaviour
 
         //★操作の切り替え処理
         //1回目の切り替え時の動き
-        if (Input.GetKeyDown(KeyCode.F) && Follow == false)
+        if(isFollowing)
         {
-            mt.player_Move = !mt.player_Move;
-            Following();
-            enemyMove = !enemyMove;
-            Follow = !Follow;
+            if (Input.GetKeyDown(KeyCode.F) && Follow == false)
+            {
+                mt.player_Move = !mt.player_Move;
+                Following();
+                enemyMove = !enemyMove;
+                Follow = !Follow;
+            }
         }
-
         //2回目の切り替え時、プレイヤーだけ動いてエネミー不動堂
         //この状態だと何回Enter押してもプレイヤーしか動かんで
         else if (Input.GetKeyDown(KeyCode.F) && Follow == true)
@@ -125,11 +159,12 @@ public class EnemyController : MonoBehaviour
 
         //呼ぶボタン(Delete仮置き)を押した時の動き
         //Followを切り替えることでもう一度追従や切り替えができるお
-        if (Follow == true && Input.GetKeyDown(KeyCode.Delete))
+        if (Follow == true && Input.GetKeyDown(KeyCode.Delete ) && enemyMove == true)
         {
             isFollowing = true;
             Follow = !Follow;
         }
+
     }
 
     private void FixedUpdate() // ずっと、往復する
@@ -143,11 +178,11 @@ public class EnemyController : MonoBehaviour
             Vector3 scale = transform.localScale;
             if (s >= 0)
             {
-                scale.x = 1;
+                scale.x = enemyScale.x;
             }
             else
             {
-                scale.x = -1;
+                scale.x = -enemyScale.x;
             }
             transform.localScale = scale;
         }
@@ -176,4 +211,11 @@ public class EnemyController : MonoBehaviour
         enemyMove = !enemyMove;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "ElectricCable")
+        {
+            EventFlagManager.Instance.SetFlagState(EventFlagName.ElectricCableFlag, true);
+        }
+    }
 }
