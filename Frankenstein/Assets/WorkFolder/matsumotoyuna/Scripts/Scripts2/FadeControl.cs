@@ -29,7 +29,7 @@ public class FadeControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return) && hiyoko == false)
         {
-            Fade("out", ()=> sceneChange.SceneSwitching("handa"));//”¼“cFscene–¼‚Ì•ÏX
+            Fade("out", ()=> sceneChange.SceneSwitching("MainTutorial"));
             hiyoko = true;
         }
     }

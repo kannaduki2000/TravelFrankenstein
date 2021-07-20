@@ -33,7 +33,7 @@ public class SceneChange : MonoBehaviour
             //”’‚­‚È‚éŽžŒÀ’è
             if (isWhite)
             {
-                fadeControl.Fade("win", ()=> fadeControl.Fade("out", ()=> fadeControl.sceneChange.SceneSwitching("Stag1")));
+                fadeControl.Fade("win", ()=> fadeControl.Fade("out", ()=> fadeControl.sceneChange.SceneSwitching("MainStage_1")));
                 return;
             }
             fadeControl.Fade("in");

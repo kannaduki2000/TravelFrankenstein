@@ -215,7 +215,7 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.tag == "ElectricCable")
         {
-            EventFlagManager.Instance.SetFlagState(EventFlagName.ElectricCableFlag, true);
+            //EventFlagManager.Instance.SetFlagState(EventFlagName.ElectricCableFlag, true);
         }
     }
 }
