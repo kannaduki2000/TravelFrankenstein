@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
     public Sprite[] AnnounceImageArray;
     public Image AnnounceImage;
+    public Canvas TitleLogo;
 
 
     private bool enemyFollowFlg = false;
@@ -76,6 +77,12 @@ public class PlayerController : MonoBehaviour
 
     public SceneChange sc;
     public FadeControl fadeControl;
+
+    // シーン遷移が多重で呼ばれないようにする
+    private bool titleLogoflag = false;
+    private bool map2Flag = false;
+
+    public TextController textCon;
 
     private bool getUpTrigger = true;
 
@@ -109,6 +116,7 @@ public class PlayerController : MonoBehaviour
 
             if (getUpTrigger)
             {
+                player_Move = true;
                 SetAnnounceImage(AnnounceName.T_CircleButton_StartUp);
                 if (Input.GetKeyDown(KeyCode.P))
                 {
@@ -143,13 +151,18 @@ public class PlayerController : MonoBehaviour
             vx = 0;
             if (Input.GetKey("right"))
             {
+                SystemTextEndPlayerMove();
                 vx = speed;
                 anim.SetBool("Walking", true);
+                // HPバーの向き
+                hpCanvas.transform.localScale = new Vector3(hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.x);
             }
             else if (Input.GetKey("left"))
             {
+                SystemTextEndPlayerMove();
                 vx = -speed;
                 anim.SetBool("Walking", true);
+                hpCanvas.transform.localScale = new Vector3(-hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.x);
             }
             else
             {
@@ -160,6 +173,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey("space") && groundCheck)
             {
+                SystemTextEndPlayerMove();
                 if (pushFlag == false)
                 {
                     jumpFlag = true;
@@ -171,19 +185,20 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-        }
-
-        //
-        float x = Input.GetAxisRaw("Horizontal");
-        if(x != 0)
-        {
-            Vector2 Iscale = gameObject.transform.localScale;
-            if ((Iscale.x > 0 && x < 0) || (Iscale.x < 0 && x > 0))
+            //
+            float x = Input.GetAxisRaw("Horizontal");
+            if(x != 0)
             {
-                Iscale.x *= -1;
-                gameObject.transform.localScale = Iscale;
+                SystemTextEndPlayerMove();
+                Vector2 Iscale = gameObject.transform.localScale;
+                if ((Iscale.x > 0 && x < 0) || (Iscale.x < 0 && x > 0))
+                {
+                    Iscale.x *= -1;
+                    gameObject.transform.localScale = Iscale;
+                }
             }
         }
+
         /*--------------------------------------------------------------------------*/
 
         /*体力の減増処理-----------------------------------------------------------------*/
@@ -195,6 +210,7 @@ public class PlayerController : MonoBehaviour
             // 電気を流す
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                ViewAnnounceImage(false);
                 if(onElectricity == true)
                 {
                     HP -= 20;// HPを減らす
@@ -218,6 +234,7 @@ public class PlayerController : MonoBehaviour
             }
             // 電気を充電
             if (Input.GetKeyDown(KeyCode.RightShift))
+
             {
                 if(onElectricity == false)
                 {
@@ -328,6 +345,43 @@ public class PlayerController : MonoBehaviour
         AnnounceImage.enabled = isView;
     }
 
+    /// <summary>
+    /// テキストの表示後にプレイヤーが動いたらアナウンス画像を非表示にする　名前が適当すぎる
+    /// </summary>
+    private void SystemTextEndPlayerMove()
+    {
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.text_System) && 
+            EventFlagManager.Instance.GetFlagState(EventFlagName.text_SystemEnd) == false)
+        {
+            EventFlagManager.Instance.SetFlagState(EventFlagName.text_SystemEnd, true);
+            ViewAnnounceImage(false);
+        }
+    }
+
+    /// <summary>
+    /// テキストの表示
+    /// </summary>
+    public void TextAnim()
+    {
+        textCon.SetTextActive(true);
+    }
+
+    /// <summary>
+    /// 移動可能(実質アニメーション用)
+    /// </summary>
+    public void PlayerMove()
+    {
+        player_Move = false;
+    }
+
+    /// <summary>
+    /// 移動不可能
+    /// </summary>
+    public void PlayerNotMove()
+    {
+        player_Move = true;
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Ground")
@@ -358,21 +412,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "HomeApp")
         {
+            //SetAnnounceImage(AnnounceName.T_SquareButton_Input);
             touchFlag = true;
         }
 
         //判定の場所を通過したら発生
-        if (collision.gameObject.tag == "GoTitleLogo")
+        if (collision.gameObject.tag == "GoTitleLogo" && titleLogoflag == false)
         {
-            fadeControl.Fade("wout", () => fadeControl.sceneChange.SceneSwitching("TitleLogo", true));
+            titleLogoflag = true;
+            fadeControl.Fade("wout", () => sc.SceneSwitching("TitleLogo", true));
         }
 
         if (collision.gameObject.tag == "GoMap2")
         {
+            map2Flag = true;
             fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("TentativeTitle"));
         }
 
