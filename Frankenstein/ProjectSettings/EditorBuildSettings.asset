@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/WorkFolder/matsumotoyuna/Scenes/TentativeTitle.unity
+    guid: 6f5927c01d01be144b0f17ea22a3fd98
+  - enabled: 1
+    path: Assets/WorkFolder/handa/Scenes/handa.unity
+    guid: b72216c55be682f4b88c9390e79adbee
+  - enabled: 1
+    path: Assets/WorkFolder/matsumotoyuna/Scenes/TitleLogo.unity
+    guid: 36164211cf65d074d96637269a662bef
+  - enabled: 1
+    path: Assets/WorkFolder/handa/Scenes/Stag1.unity
+    guid: 04c9f1c4cfa13934595b92910a2e8ed8
   m_configObjects: {}
