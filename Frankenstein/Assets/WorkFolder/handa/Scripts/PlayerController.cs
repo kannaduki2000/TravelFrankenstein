@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // è[ìdÇ∑ÇÈ
-                else if (onElectricity == false || electricItem.ChargeFlag)
+                else if ((onElectricity == false || electricItem.ChargeFlag) && electricItem.IsCharge)
                 {
                     HP += electricItem.Power;
                     //HP += 20;// HPÇëùÇ‚Ç∑
