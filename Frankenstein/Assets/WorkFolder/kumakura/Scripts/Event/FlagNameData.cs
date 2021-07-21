@@ -9,7 +9,8 @@ public enum EventFlagName
     text_SystemEnd,     // 移動可能になった後に移動する　Textの非表示
     eveReport,          // レポート表示終了後　Textの表示
     text_Eve,           // イヴのテキスト表示終了後　電気の吸収が可能になる　もしかしたらいらない
-    electricAabsorption,// 電気を吸収した後　エネミーに電気を入れる事が可能になる                      
+    electricAabsorption,// 電気を吸収した後　エネミーに電気を入れる事が可能になる    
+    enemyCharge,        // エネミーに電気を入れた後　シーン遷移が可能になる　本来と違う挙動なので注意
                         // ここに投げる関係のフラグが追加されるかも
 
     isFade,             // 

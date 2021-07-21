@@ -27,6 +27,7 @@ public class PCObject : ElectricItem
         {
             AnnounceImage[i] = announceImage[i];
         }
+        IsThrow = false;
     }
 
     void Update()
@@ -74,6 +75,7 @@ public class PCObject : ElectricItem
     /// </summary>
     public override void ChargeEvent()
     {
+        // これでエネミーへの充電フラグが立つ
         EventFlagManager.Instance.SetFlagState(EventFlagName.electricAabsorption, true);
     }
 

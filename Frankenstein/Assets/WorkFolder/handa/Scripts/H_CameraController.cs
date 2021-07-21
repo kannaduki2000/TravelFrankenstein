@@ -16,7 +16,7 @@ public class H_CameraController : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(
-            Mathf.Clamp(targetToFollow.position.x, -32f, 39f), // モック版熊倉:ここらへん少し書き換えました
+            Mathf.Clamp(targetToFollow.position.x, -38.5f, 38.5f), // モック版熊倉:ここらへん少し書き換えました
             Mathf.Clamp(targetToFollow.position.y, 10f, 10f),
             transform.position.z);
     }

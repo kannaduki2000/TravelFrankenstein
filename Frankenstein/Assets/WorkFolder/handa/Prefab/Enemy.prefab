@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9180793296739935}
   - component: {fileID: 9180793296739934}
   - component: {fileID: 9180793296739933}
+  - component: {fileID: 6326749918772115940}
   - component: {fileID: 9180793296739932}
   - component: {fileID: 9180793296739931}
   m_Layer: 3
@@ -112,6 +113,23 @@ MonoBehaviour:
   speedZ: 0
   second: 2
   isWandering: 1
+  ECon: {fileID: 0}
+--- !u!114 &6326749918772115940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180793296739930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502f22bc97ed2894c8959b78ad3d6871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThrowX: 25
+  ThrowY: 65
+  Throwx: 30
+  Throwy: 50
 --- !u!61 &9180793296739932
 BoxCollider2D:
   m_ObjectHideFlags: 0

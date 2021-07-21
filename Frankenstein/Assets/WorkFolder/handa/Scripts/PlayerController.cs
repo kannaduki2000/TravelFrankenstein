@@ -136,18 +136,24 @@ public class PlayerController : MonoBehaviour
         // モック版熊倉:LayerでやってたっぽいのでLinecastで取得
         if (GetEnemyLayer())
         {
-            electricItem = enemy.GetComponent<ElectricItem>();
-            item = enemy.GetComponent<KeyPlessThrow>();
-            if (enemyCon.isCharging)
+            // 電気の吸収イベントが終了してからでないとHPバーすら表示しない
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption))
             {
+                electricItem = enemy.GetComponent<ElectricItem>();
+                //@item = enemy.GetComponent<KeyPlessThrow>();
+                //@if (electricItem.IsThrow) Throw = true;
+                if (enemyCon.isCharging)
+                {
+                }
+                enemyTouchFlag = true;
+                hpCanvas.SetActive(true);
             }
-            enemyTouchFlag = true;
-            hpCanvas.SetActive(true);
         }
         else
         {
             if (enemyTouchFlag) electricItem = null;
-            item = null;
+            //@item = null;
+            //@Throw = false;
             enemyTouchFlag = false;
             hpCanvas.SetActive(false);
         }
@@ -246,8 +252,9 @@ public class PlayerController : MonoBehaviour
 
                 // モック版熊倉:追加しますた
                 // 触れている物がEnemyの場合
-                if (enemyTouchFlag)
+                if (enemyTouchFlag && EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption))
                 {
+                    EventFlagManager.Instance.SetFlagState(EventFlagName.enemyCharge, true);
                     // 追従開始
                     enemyCon.isFollowing = true;
                     // 充電したのでこれ以上充電出来ないように
@@ -323,23 +330,24 @@ public class PlayerController : MonoBehaviour
         /*-----------------------------------------------------------------*/
 
 
-
-        if (electricItem != null)
-        {
-            if (electricItem.IsThrow)
-            {
-                if (Input.GetKey(KeyCode.W))
-                {
-                    // ここでこのオブジェクトをプレイヤーの子供にする
-                    item.gameObject.transform.parent = this.transform;
-                }
-                if (Input.GetKeyUp(KeyCode.W))
-                {
-                    item.transform.parent = null;
-                }
-            }
-            
-        }
+        // @投げる処理
+        //if (electricItem != null)
+        //{
+        //    if (electricItem.IsThrow)
+        //    {
+        //        if (Input.GetKey(KeyCode.W))
+        //        {
+        //            Debug.Log("掴んだ");
+        //            // ここでこのオブジェクトをプレイヤーの子供にする
+        //            item.gameObject.transform.parent = this.transform;
+        //        }
+        //        if (Input.GetKeyUp(KeyCode.W))
+        //        {
+        //            Debug.Log("離した");
+        //            item.transform.parent = null;
+        //        }
+        //    }
+        //}
 
 
 
@@ -435,28 +443,27 @@ public class PlayerController : MonoBehaviour
             groundCheck = true;
         }
 
-        // 一旦消す
-        //if (collision.gameObject.tag == "Item")
-        //{
-        //    Debug.Log("stay");
+        if (collision.gameObject.tag == "Item")
+        {
+            Debug.Log("stay");
 
-        //    //item = collision.gameObject.GetComponent<Item>();
-        //    //Wを押していたら
-        //    if (Input.GetKey(KeyCode.W))
-        //    {
-        //        Throw = true;
-        //        //アイテムクラスの取得
-        //        item = collision.gameObject.GetComponent<KeyPlessThrow>();
+            //item = collision.gameObject.GetComponent<Item>();
+            //Wを押していたら
+            if (Input.GetKey(KeyCode.W))
+            {
+                Throw = true;
+                //アイテムクラスの取得
+                item = collision.gameObject.GetComponent<KeyPlessThrow>();
 
-        //        //アイテムのY軸が上がる
-        //        // ここでこのオブジェクトをプレイヤーの子供にする
-        //        item.gameObject.transform.parent = this.transform;
-        //    }
-        //}
-        //if (Input.GetKeyUp(KeyCode.W))
-        //{
-        //    item.transform.parent = null;
-        //}
+                //アイテムのY軸が上がる
+                // ここでこのオブジェクトをプレイヤーの子供にする
+                item.gameObject.transform.parent = this.transform;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            item.transform.parent = null;
+        }
     }
 
     
@@ -469,12 +476,12 @@ public class PlayerController : MonoBehaviour
             electricItem = collision.gameObject.GetComponent<ElectricItem>();
 
             // 投げれるObjectなら情報を取得
-            if (electricItem.IsThrow)
-            {
-                Throw = true;
-                //アイテムクラスの取得
-                item = collision.gameObject.GetComponent<KeyPlessThrow>();
-            }
+            //if (electricItem.IsThrow)
+            //{
+            //    Throw = true;
+            //    //アイテムクラスの取得
+            //    item = collision.gameObject.GetComponent<KeyPlessThrow>();
+            //}
         }
 
         if (collision.gameObject.tag == "HomeApp")
@@ -484,7 +491,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //判定の場所を通過したら発生
-        if (collision.gameObject.tag == "GoTitleLogo" && titleLogoflag == false)
+        if (collision.gameObject.tag == "GoTitleLogo" && titleLogoflag == false && EventFlagManager.Instance.GetFlagState(EventFlagName.enemyCharge))
         {
             titleLogoflag = true;
             fadeControl.Fade("wout", () => sc.SceneSwitching("TitleLogo", true));
@@ -502,12 +509,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<ElectricItem>() != null)
         {
-            if (electricItem != null && electricItem.IsThrow)
-            {
-                Throw = false;
-                presskeyFrames = 0;
-                item = null;
-            }
+            //if (electricItem != null && electricItem.IsThrow)
+            //{
+            //    Throw = false;
+            //    presskeyFrames = 0;
+            //    item = null;
+            //}
             electricItem = null;
         }
 
