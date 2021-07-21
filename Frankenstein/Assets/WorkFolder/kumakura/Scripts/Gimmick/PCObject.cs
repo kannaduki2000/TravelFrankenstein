@@ -28,6 +28,7 @@ public class PCObject : ElectricItem
             AnnounceImage[i] = announceImage[i];
         }
         IsThrow = false;
+        IsCharge = true;
     }
 
     void Update()
