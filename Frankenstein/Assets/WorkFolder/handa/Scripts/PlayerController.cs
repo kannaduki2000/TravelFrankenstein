@@ -84,6 +84,8 @@ public class PlayerController : MonoBehaviour
 
     public TextController textCon;
 
+    public ElectricItem electricItem;
+
     private bool getUpTrigger = true;
 
     // Start is called before the first frame update
@@ -118,7 +120,8 @@ public class PlayerController : MonoBehaviour
             {
                 player_Move = true;
                 SetAnnounceImage(AnnounceName.T_CircleButton_StartUp);
-                if (Input.GetKeyDown(KeyCode.P))
+                // 〇ボタン対応しなきゃ
+                if (Input.GetKeyDown(KeyCode.Return))
                 {
                     EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
                     ViewAnnounceImage(false);
@@ -200,25 +203,42 @@ public class PlayerController : MonoBehaviour
         }
 
         /*--------------------------------------------------------------------------*/
-
+        
         /*体力の減増処理-----------------------------------------------------------------*/
-        if (touchFlag || enemyTouchFlag || enemyFollowFlg)
+        if (touchFlag || enemyTouchFlag || enemyFollowFlg || electricItem != null)
         {
             // 表示
             hpCanvas.SetActive(true);
 
-            // 電気を流す
-            if (Input.GetKeyDown(KeyCode.Return))
+            
+            if (Input.GetKeyDown(KeyCode.Backspace)) // □対応したい
             {
                 ViewAnnounceImage(false);
-                if(onElectricity == true)
-                {
-                    HP -= 20;// HPを減らす
-                             // モック版熊倉:HPバー
-                    hp.fillAmount = HP / maxHP;
-                    Debug.Log(HP);
-                    onElectricity = false;
 
+                // 電気を流す
+                if (onElectricity == true || electricItem.ChargeFlag == false)
+                {
+                    Debug.Log("電気を入れたい");
+                    electricItem.ChargeFlag = true;
+                    HP -= electricItem.Power;
+                    hp.fillAmount = HP / maxHP;
+                    onElectricity = false; // これいるんかな
+                    // 入れたObject毎のイベントの実行
+                    electricItem.Event();
+                    electricItem.IsChargeEvent = true;
+                }
+
+                // 充電する
+                else if (onElectricity == false || electricItem.ChargeFlag)
+                {
+                    Debug.Log("充電したい");
+                    HP += electricItem.Power;
+                    //HP += 20;// HPを増やす
+                    hp.fillAmount = HP / maxHP;
+                    // ここに処理を加える
+                    onElectricity = true;
+                    electricItem.ChargeEvent();
+                    electricItem.ChargeFlag = false;
                 }
 
                 // モック版熊倉:追加しますた
@@ -233,17 +253,18 @@ public class PlayerController : MonoBehaviour
                 }
             }
             // 電気を充電
-            if (Input.GetKeyDown(KeyCode.RightShift))
-
+            else if (Input.GetKeyDown(KeyCode.Backspace))
             {
-                if(onElectricity == false)
-                {
-                    HP += 20;// HPを増やす
-                    hp.fillAmount = HP / maxHP;
-                    Debug.Log(HP);
-                    // ここに処理を加える
-                    onElectricity = true;
-                }
+                //if (onElectricity == false || electricItem.ChargeFlag)
+                //{
+                //    Debug.Log("充電したい");
+                //    HP += electricItem.Power;
+                //    //HP += 20;// HPを増やす
+                //    hp.fillAmount = HP / maxHP;
+                //    // ここに処理を加える
+                //    onElectricity = true;
+                //    electricItem.ChargeFlag = false;
+                //}
 
                 if (enemyFollowFlg)
                 {
@@ -417,6 +438,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.GetComponent<ElectricItem>() != null)
+        {
+            electricItem = collision.gameObject.GetComponent<ElectricItem>();
+        }
+
         if (collision.gameObject.tag == "HomeApp")
         {
             //SetAnnounceImage(AnnounceName.T_SquareButton_Input);
@@ -440,6 +466,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.gameObject.GetComponent<ElectricItem>() != null)
+        {
+            electricItem = null;
+        }
+
         if (collision.gameObject.tag == "HomeApp")
         {
             touchFlag = false;

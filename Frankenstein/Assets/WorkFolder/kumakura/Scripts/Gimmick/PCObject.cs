@@ -6,46 +6,127 @@ using UnityEngine.UI;
 public class PCObject : ElectricItem
 {
     [SerializeField] private int power;
-    [SerializeField] private Image announceImage;
+    [SerializeField] private Image announceObject;
+    [SerializeField] private Sprite[] announceImage;
     [SerializeField] private Sprite eveReport;
     [SerializeField] private Image image;
     [SerializeField] private PlayerController player;
+
+    // ここらへん萩原さんの処理用の変数
+    [SerializeField] SpriteRenderer PC_SpriteRenderer;  // PC画面
+    [SerializeField] Sprite PC_ON_Sprite;               // On画像
+    [SerializeField] Sprite PC_OFF_Sprite;              // Off画像
+    bool PCSwitchFlag;
 
 
     void Start()
     {
         Power = power;
-        AnnounceImage = announceImage;
+        AnnounceImage = new Sprite[announceImage.Length];
+        for (int i = 0; i < announceImage.Length; i++)
+        {
+            AnnounceImage[i] = announceImage[i];
+        }
     }
 
     void Update()
     {
         if (IsChargeEvent)
         {
-            AnnounceImage.enabled = false;
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.text_Eve) == false)
+            {
+                announceObject.enabled = false;
+                // 〇ボタン対応予定
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    // レポートの非表示、テキストイベントの実行
+                    EveReportUnEnabled();
+                }
+            }
+        }
+        PCSwitchFlag = ChargeFlag;
+        if (ChargeFlag)
+        {
+            announceObject.sprite = AnnounceImage[1];
+            PCSwitch();
+        }
+        else
+        {
+            announceObject.sprite = AnnounceImage[0];
+            PCSwitch();
         }
     }
 
+    /// <summary>
+    /// 電気を入れたときのイベント
+    /// </summary>
     public override void Event()
     {
-        IsElectricEvent = true;
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.text_Eve)) { return; }
         player.PlayerNotMove();
         // イヴのレポートの表示
         image.enabled = true;
         image.sprite = eveReport;
     }
 
+    /// <summary>
+    /// 充電した時のイベント
+    /// </summary>
+    public override void ChargeEvent()
+    {
+        EventFlagManager.Instance.SetFlagState(EventFlagName.electricAabsorption, true);
+    }
+
     public void EveReportUnEnabled()
     {
         image.enabled = false;
-        player.textCon.SetTextActive(true, ()=> player.PlayerMove());
+        // テキストイベント実行後にPlayerが動けるようにする
+        //player.textCon.SetTextActive(true, ()=> player.PlayerMove());
+        player.textCon.SetTextActive(true, ()=> 
+        {
+            player.PlayerMove();
+            EventFlagManager.Instance.SetFlagState(EventFlagName.text_Eve, true);
+            announceObject.enabled = true;
+        });
+        
     }
+    
+    #region 萩原さん　PCの電源及びSpriteに関する処理
+    // ---------------------------------------------------------------------------------------------------------------------
+    private void PCSwitch()         // PCの電源に関する関数
+    {
+        if (PCSwitchFlag == false)          // PCSwitchFlag が false ですか？
+        {
+            // YES
+            PCSwitch_ON();
+        }
+        else if (PCSwitchFlag == true)          // PCSwitchFlag が true ですか？
+        {
+            // YES
+            PCSwitch_OFF();
+        }
+    }
+
+    private void PCSwitch_ON()          // PCに電源が入る関数
+    {
+        PC_SpriteRenderer.sprite = PC_ON_Sprite;            // PC_ON_Sprite にしまっちゃおうねしておいたスプライトを PC_SpriteRenderer のスプライトに入れる
+        //PCSwitchFlag = true; // ここ一旦消します
+    }
+
+    private void PCSwitch_OFF()         // PCの電源が切れる関数
+    {
+        PC_SpriteRenderer.sprite = PC_OFF_Sprite;            // PC_ON_Sprite にしまっちゃおうねしておいたスプライトを PC_SpriteRenderer のスプライトに入れる
+        //PCSwitchFlag = false; // ここ一旦消します
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    #endregion
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            AnnounceImage.enabled = true;
+            announceObject.enabled = true;
         }
     }
 
@@ -53,7 +134,7 @@ public class PCObject : ElectricItem
     {
         if (collision.gameObject.tag == "Player")
         {
-            AnnounceImage.enabled = false;
+            announceObject.enabled = false;
         }
     }
 }
