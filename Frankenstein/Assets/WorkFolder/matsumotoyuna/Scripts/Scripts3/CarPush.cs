@@ -70,6 +70,7 @@ public class CarPush : MonoBehaviour
 
     private void Crash()
     {
+        GetComponent<Collider2D>().isTrigger = false;
         rigid2D.bodyType = RigidbodyType2D.Dynamic;
         Transform go = this.transform;
         Vector2 carposition = go.position;

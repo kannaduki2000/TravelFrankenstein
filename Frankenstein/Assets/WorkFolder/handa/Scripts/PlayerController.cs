@@ -34,7 +34,7 @@ public enum AnnounceName
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody2D rb2d;
-    Animator anim;
+    public Animator anim;
     public GameObject Player;
     public GameObject enemy;
 
@@ -501,6 +501,18 @@ public class PlayerController : MonoBehaviour
         {
             map2Flag = true;
             fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("TentativeTitle"));
+        }
+
+        // ケーブルカーが来るフラグ
+        if (collision.gameObject.tag == "CableCarEvent")
+        {
+            EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStart, true);
+        }
+
+        // ケーブルカーに乗車or降車
+        if (collision.gameObject.tag == "CableCarEventCollider")
+        {
+            collision.gameObject.GetComponent<BusEventCollider>().BusEvent(gameObject);
         }
 
     }
