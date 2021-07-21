@@ -56,14 +56,15 @@ public class PlayerController : MonoBehaviour
     public bool enemyTouchFlag = false; // モック版熊倉:フラグ追加
     public bool onElectricity = true;
     public GameObject hpCanvas;
-    private float hpCanvasScale_x;
+    public GameObject canvasParent;
+    private float canvasParentScale_x;
 
     private int presskeyFrames = 0;             //長押しフレーム数
     private int PressLong = 300;                //長押し
     private int PressShort = 100;               //軽押し
     private bool Throw = false;                 //投げのフラグ
     Rigidbody2D rb;
-    KeyPlessThrow item;
+    [SerializeField] KeyPlessThrow item;
 
     public Sprite[] AnnounceImageArray;
     public Image AnnounceImage;
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        hpCanvasScale_x = hpCanvas.transform.localScale.x;
+        canvasParentScale_x = canvasParent.transform.localScale.x;
         sc = FindObjectOfType<SceneChange>();
         fadeControl = FindObjectOfType<FadeControl>();
     }
@@ -135,14 +136,18 @@ public class PlayerController : MonoBehaviour
         // モック版熊倉:LayerでやってたっぽいのでLinecastで取得
         if (GetEnemyLayer())
         {
+            electricItem = enemy.GetComponent<ElectricItem>();
+            item = enemy.GetComponent<KeyPlessThrow>();
             if (enemyCon.isCharging)
             {
-                enemyTouchFlag = true;
             }
+            enemyTouchFlag = true;
             hpCanvas.SetActive(true);
         }
         else
         {
+            if (enemyTouchFlag) electricItem = null;
+            item = null;
             enemyTouchFlag = false;
             hpCanvas.SetActive(false);
         }
@@ -158,14 +163,14 @@ public class PlayerController : MonoBehaviour
                 vx = speed;
                 anim.SetBool("Walking", true);
                 // HPバーの向き
-                hpCanvas.transform.localScale = new Vector3(hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.x);
+                canvasParent.transform.localScale = new Vector3(canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
             }
             else if (Input.GetKey("left"))
             {
                 SystemTextEndPlayerMove();
                 vx = -speed;
                 anim.SetBool("Walking", true);
-                hpCanvas.transform.localScale = new Vector3(-hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.x);
+                canvasParent.transform.localScale = new Vector3(-canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
             }
             else
             {
@@ -203,7 +208,7 @@ public class PlayerController : MonoBehaviour
         }
 
         /*--------------------------------------------------------------------------*/
-        
+        Debug.Log(electricItem);
         /*体力の減増処理-----------------------------------------------------------------*/
         if (touchFlag || enemyTouchFlag || enemyFollowFlg || electricItem != null)
         {
@@ -218,7 +223,6 @@ public class PlayerController : MonoBehaviour
                 // 電気を流す
                 if (onElectricity == true || electricItem.ChargeFlag == false)
                 {
-                    Debug.Log("電気を入れたい");
                     electricItem.ChargeFlag = true;
                     HP -= electricItem.Power;
                     hp.fillAmount = HP / maxHP;
@@ -231,7 +235,6 @@ public class PlayerController : MonoBehaviour
                 // 充電する
                 else if (onElectricity == false || electricItem.ChargeFlag)
                 {
-                    Debug.Log("充電したい");
                     HP += electricItem.Power;
                     //HP += 20;// HPを増やす
                     hp.fillAmount = HP / maxHP;
@@ -266,6 +269,7 @@ public class PlayerController : MonoBehaviour
                 //    electricItem.ChargeFlag = false;
                 //}
 
+                // ？？？
                 if (enemyFollowFlg)
                 {
                     enemyCon.isFollowing = false;
@@ -317,6 +321,27 @@ public class PlayerController : MonoBehaviour
             //}
         }
         /*-----------------------------------------------------------------*/
+
+
+
+        if (electricItem != null)
+        {
+            if (electricItem.IsThrow)
+            {
+                if (Input.GetKey(KeyCode.W))
+                {
+                    // ここでこのオブジェクトをプレイヤーの子供にする
+                    item.gameObject.transform.parent = this.transform;
+                }
+                if (Input.GetKeyUp(KeyCode.W))
+                {
+                    item.transform.parent = null;
+                }
+            }
+            
+        }
+
+
 
     }
 
@@ -380,7 +405,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// テキストの表示
+    /// テキストの表示(実質アニメーション用)
     /// </summary>
     public void TextAnim()
     {
@@ -410,27 +435,28 @@ public class PlayerController : MonoBehaviour
             groundCheck = true;
         }
 
-        if (collision.gameObject.tag == "Item")
-        {
-            Debug.Log("stay");
+        // 一旦消す
+        //if (collision.gameObject.tag == "Item")
+        //{
+        //    Debug.Log("stay");
 
-            //item = collision.gameObject.GetComponent<Item>();
-            //Wを押していたら
-            if (Input.GetKey(KeyCode.W))
-            {
-                Throw = true;
-                //アイテムクラスの取得
-                item = collision.gameObject.GetComponent<KeyPlessThrow>();
+        //    //item = collision.gameObject.GetComponent<Item>();
+        //    //Wを押していたら
+        //    if (Input.GetKey(KeyCode.W))
+        //    {
+        //        Throw = true;
+        //        //アイテムクラスの取得
+        //        item = collision.gameObject.GetComponent<KeyPlessThrow>();
 
-                //アイテムのY軸が上がる
-                // ここでこのオブジェクトをプレイヤーの子供にする
-                item.gameObject.transform.parent = this.transform;
-            }
-        }
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            item.transform.parent = null;
-        }
+        //        //アイテムのY軸が上がる
+        //        // ここでこのオブジェクトをプレイヤーの子供にする
+        //        item.gameObject.transform.parent = this.transform;
+        //    }
+        //}
+        //if (Input.GetKeyUp(KeyCode.W))
+        //{
+        //    item.transform.parent = null;
+        //}
     }
 
     
@@ -441,6 +467,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.GetComponent<ElectricItem>() != null)
         {
             electricItem = collision.gameObject.GetComponent<ElectricItem>();
+
+            // 投げれるObjectなら情報を取得
+            if (electricItem.IsThrow)
+            {
+                Throw = true;
+                //アイテムクラスの取得
+                item = collision.gameObject.GetComponent<KeyPlessThrow>();
+            }
         }
 
         if (collision.gameObject.tag == "HomeApp")
@@ -468,6 +502,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<ElectricItem>() != null)
         {
+            if (electricItem != null && electricItem.IsThrow)
+            {
+                Throw = false;
+                presskeyFrames = 0;
+                item = null;
+            }
             electricItem = null;
         }
 
@@ -481,13 +521,14 @@ public class PlayerController : MonoBehaviour
             groundCheck = false;
         }
 
-        if (collision.gameObject.tag == "Item")
-        {
-            Throw = false;
-            presskeyFrames = 0;
-            //item.transform.parent = null;
-            Debug.Log("exit");
-        }
+        // 一旦消す
+        //if (collision.gameObject.tag == "Item")
+        //{
+        //    Throw = false;
+        //    presskeyFrames = 0;
+        //    //item.transform.parent = null;
+        //    Debug.Log("exit");
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : ElectricItem
 {
     Rigidbody2D rb2d;
     public PlayerController mt;
@@ -61,6 +61,7 @@ public class EnemyController : MonoBehaviour
     {
         this.rb2d = GetComponent<Rigidbody2D>();
         enemyScale = transform.localScale;
+        IsThrow = true;
     }
 
     // Update is called once per frame
