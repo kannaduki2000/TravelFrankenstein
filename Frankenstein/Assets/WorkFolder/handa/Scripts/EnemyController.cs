@@ -144,7 +144,7 @@ public class EnemyController : ElectricItem
         //1回目の切り替え時の動き
         if(isFollowing)
         {
-            if (Input.GetKeyDown(KeyCode.F) && Follow == false)
+            if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)) && Follow == false)
             {
                 mt.player_Move = !mt.player_Move;
                 Following();
@@ -154,7 +154,7 @@ public class EnemyController : ElectricItem
         }
         //2回目の切り替え時、プレイヤーだけ動いてエネミー不動堂
         //この状態だと何回Enter押してもプレイヤーしか動かんで
-        else if (Input.GetKeyDown(KeyCode.F) && Follow == true)
+        else if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)) && Follow == true)
         {
             isFollowing = false;
             enemyMove = true;
@@ -163,7 +163,7 @@ public class EnemyController : ElectricItem
 
         //呼ぶボタン(Delete仮置き)を押した時の動き
         //Followを切り替えることでもう一度追従や切り替えができるお
-        if (Follow == true && Input.GetKeyDown(KeyCode.Delete ) && enemyMove == true)
+        if (Follow == true && (Input.GetKeyDown(KeyCode.Delete ) || DSInput.PushDown(DSButton.R1)) && enemyMove == true)
         {
             isFollowing = true;
             Follow = !Follow;
