@@ -28,7 +28,7 @@ public class FadeControl : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle) && hiyoko == false)
+        if ((Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle)) && hiyoko == false)
         {
             Fade("out", ()=> sceneChange.SceneSwitching("MainTutorial"));
             hiyoko = true;

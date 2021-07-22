@@ -12,7 +12,7 @@ public class BusEventCollider : MonoBehaviour
 {
     [SerializeField] private GameObject[] movingPoint = new GameObject[2];
     [SerializeField] private EventCollider eventCollider;
-    int playerNowLayer = 2;
+    int playerNowLayer = 3;
 
     // Player側がTagで管理してOntriggerEnterとかから呼んであげてください
     // Destination_Position_XXX　の位置適当なんで調整オネシャス

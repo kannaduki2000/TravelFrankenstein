@@ -21,6 +21,8 @@ public class EnemyController : ElectricItem
     private bool enemyJump = false;         //ジャンプ用
     [SerializeField] private bool Follow = false;       //二度目の入力でのついてくるか否か
 
+    public Camera camera;
+
     // ずっと、往復する
     public float speedX = 1; // スピードX
     public float speedY = 0; // スピードY
@@ -34,6 +36,9 @@ public class EnemyController : ElectricItem
     bool cableFlag = false;
     public ElectricCableController ECon;
 
+    CableData cableData;
+    [SerializeField] float moveSpeed;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         enemyJump = false;
@@ -44,6 +49,8 @@ public class EnemyController : ElectricItem
         if (collision.gameObject.tag == "ElectricCable")
         {
             cableFlag = true;
+            cableData = collision.gameObject.GetComponent<CableData>(); // 電線の情報取得
+            // 電線を伝う表示
         }
     }
 
@@ -52,6 +59,7 @@ public class EnemyController : ElectricItem
         if (collision.gameObject.tag == "ElectricCable")
         {
             cableFlag = false;
+            cableData = null;
         }
     }
 
@@ -70,9 +78,10 @@ public class EnemyController : ElectricItem
     {
         if (cableFlag && enemyMove == false)
         {
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.P) || DSInput.PushDown(DSButton.Square))
             {
-                ECon.CablePointMove(gameObject, 0);
+                if (cableData.point == CablePoint.start) ECon.CablePointMove(gameObject, cableData.CableNum);
+                else ECon.CablePointMove(gameObject, cableData.CableNum, false);
             }
         }
 
@@ -121,7 +130,7 @@ public class EnemyController : ElectricItem
         {
             var input = Input.GetAxis("J_Horizontal");
             if (Input.GetKey(KeyCode.LeftArrow) || input < -0.5)
-            {
+            {   
                 this.transform.Translate(-0.01f, 0.0f, 0.0f);
                 transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
@@ -146,6 +155,8 @@ public class EnemyController : ElectricItem
         {
             if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)) && Follow == false)
             {
+                // カメラ追従の対象をエネミーに変更
+                camera.GetComponent<CameraClamp>().targetToFollow = gameObject.transform;
                 mt.player_Move = !mt.player_Move;
                 Following();
                 enemyMove = !enemyMove;
@@ -156,6 +167,7 @@ public class EnemyController : ElectricItem
         //この状態だと何回Enter押してもプレイヤーしか動かんで
         else if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)) && Follow == true)
         {
+            camera.GetComponent<CameraClamp>().targetToFollow = Player.transform;
             isFollowing = false;
             enemyMove = true;
             mt.player_Move = false;

@@ -340,6 +340,7 @@ GameObject:
   - component: {fileID: 1343032434196641451}
   - component: {fileID: 7411502222145777822}
   - component: {fileID: 4472960792453773698}
+  - component: {fileID: 5146733991299433242}
   m_Layer: 0
   m_Name: StartCable
   m_TagString: ElectricCable
@@ -403,6 +404,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5146733991299433242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343032434196641450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08da4bc858d80bb4890fcd78fab26782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cableArray: {fileID: 1452085419887514757}
+  point: 0
+  CableNum: 0
 --- !u!1 &1343032434483553568
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,6 +430,7 @@ GameObject:
   - component: {fileID: 1343032434483553569}
   - component: {fileID: 6377893450174615363}
   - component: {fileID: 5832785553346851920}
+  - component: {fileID: 8605521425595883699}
   m_Layer: 0
   m_Name: EndCable
   m_TagString: ElectricCable
@@ -477,6 +494,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8605521425595883699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343032434483553568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08da4bc858d80bb4890fcd78fab26782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cableArray: {fileID: 1452085419887514757}
+  point: 1
+  CableNum: 0
 --- !u!1 &1343032434748175845
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,6 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointArray: []
+  cableNum: 0
 --- !u!61 &9035475987820118406
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -653,7 +686,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343032435145367202}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

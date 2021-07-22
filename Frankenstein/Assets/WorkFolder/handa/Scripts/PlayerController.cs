@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
 
     private bool getUpTrigger = true;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -104,6 +105,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if (enemyCon.isFollowing) { return; }
 
         // フランケンがまだ起き上がっていなければ
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.frankensteinGetUp) == false)
@@ -145,6 +147,7 @@ public class PlayerController : MonoBehaviour
         // モック版熊倉:LayerでやってたっぽいのでLinecastで取得
         if (GetEnemyLayer())
         {
+            
             // 電気の吸収イベントが終了してからでないとHPバーすら表示しない
             if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption))
             {
@@ -155,9 +158,7 @@ public class PlayerController : MonoBehaviour
                 }
                 //@item = enemy.GetComponent<KeyPlessThrow>();
                 //@if (electricItem.IsThrow) Throw = true;
-                if (enemyCon.isCharging)
-                {
-                }
+
                 enemyTouchFlag = true;
                 hpCanvas.SetActive(true);
             }
@@ -168,7 +169,6 @@ public class PlayerController : MonoBehaviour
             {
                 electricItem = null;
                 ViewAnnounceImage(false);
-                Debug.Log("false1");
             }
             //@item = null;
             //@Throw = false;
@@ -233,10 +233,12 @@ public class PlayerController : MonoBehaviour
         }
 
         /*--------------------------------------------------------------------------*/
-        Debug.Log(electricItem);
+        
         /*体力の減増処理-----------------------------------------------------------------*/
         if (touchFlag || enemyTouchFlag || enemyFollowFlg || electricItem != null)
         {
+            if (enemyCon.isFollowing) { return; }
+
             // 表示
             hpCanvas.SetActive(true);
 
@@ -244,7 +246,6 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
             {
                 ViewAnnounceImage(false);
-                Debug.Log("false2");
 
                 // 電気を流す
                 if (onElectricity == true || electricItem.ChargeFlag == false)
@@ -429,7 +430,6 @@ public class PlayerController : MonoBehaviour
         {
             EventFlagManager.Instance.SetFlagState(EventFlagName.text_SystemEnd, true);
             ViewAnnounceImage(false);
-            Debug.Log("false3");
         }
     }
 
