@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UI;
+using DualShockInput;
 
 
 [System.Serializable]
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
     //
     [SerializeField] private LayerMask enemyLayer; // モック版熊倉:敵のLayer取得用
 
+    [SerializeField] private float inputRange = 0.5f;
     public int maxHP = 100;
     public float HP = 100;
     public bool touchFlag = false;
@@ -122,7 +124,7 @@ public class PlayerController : MonoBehaviour
                 player_Move = true;
                 SetAnnounceImage(AnnounceName.T_CircleButton_StartUp);
                 // 〇ボタン対応しなきゃ
-                if (Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
                 {
                     EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
                     ViewAnnounceImage(false);
@@ -132,6 +134,13 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.isFade))
+        {
+            PlayerNotMove();
+            return;
+        }
+
+
         //anim = gameObject.GetComponent<Animator>();
         // モック版熊倉:LayerでやってたっぽいのでLinecastで取得
         if (GetEnemyLayer())
@@ -140,6 +149,10 @@ public class PlayerController : MonoBehaviour
             if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption))
             {
                 electricItem = enemy.GetComponent<ElectricItem>();
+                if (electricItem.IsChargeEvent == false && EventFlagManager.Instance.GetFlagState(EventFlagName.enemyCharge) == false)
+                {
+                    SetAnnounceImage(AnnounceName.T_Put_Electric_Enemy);
+                }
                 //@item = enemy.GetComponent<KeyPlessThrow>();
                 //@if (electricItem.IsThrow) Throw = true;
                 if (enemyCon.isCharging)
@@ -151,7 +164,12 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (enemyTouchFlag) electricItem = null;
+            if (enemyTouchFlag)
+            {
+                electricItem = null;
+                ViewAnnounceImage(false);
+                Debug.Log("false1");
+            }
             //@item = null;
             //@Throw = false;
             enemyTouchFlag = false;
@@ -163,7 +181,8 @@ public class PlayerController : MonoBehaviour
         if(player_Move == false)
         {
             vx = 0;
-            if (Input.GetKey("right"))
+            var input = Input.GetAxis("J_Horizontal");
+            if (Input.GetKey("right") || inputRange < input)
             {
                 SystemTextEndPlayerMove();
                 vx = speed;
@@ -171,7 +190,7 @@ public class PlayerController : MonoBehaviour
                 // HPバーの向き
                 canvasParent.transform.localScale = new Vector3(canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
             }
-            else if (Input.GetKey("left"))
+            else if (Input.GetKey("left") || input < -inputRange)
             {
                 SystemTextEndPlayerMove();
                 vx = -speed;
@@ -182,10 +201,9 @@ public class PlayerController : MonoBehaviour
             {
                 anim.SetBool("Walking", false);
             }
-
            
 
-            if (Input.GetKey("space") && groundCheck)
+            if ((Input.GetKey("space") || DSInput.PushDown(DSButton.Cross)) && groundCheck)
             {
                 SystemTextEndPlayerMove();
                 if (pushFlag == false)
@@ -201,16 +219,17 @@ public class PlayerController : MonoBehaviour
 
             //
             float x = Input.GetAxisRaw("Horizontal");
-            if(x != 0)
+            if(input != 0)
             {
-                SystemTextEndPlayerMove();
+                //SystemTextEndPlayerMove();
                 Vector2 Iscale = gameObject.transform.localScale;
-                if ((Iscale.x > 0 && x < 0) || (Iscale.x < 0 && x > 0))
+                if ((Iscale.x < 0 && inputRange < input) || (Iscale.x > 0 && input < -inputRange))
                 {
                     Iscale.x *= -1;
                     gameObject.transform.localScale = Iscale;
                 }
             }
+            input = 0;
         }
 
         /*--------------------------------------------------------------------------*/
@@ -222,9 +241,10 @@ public class PlayerController : MonoBehaviour
             hpCanvas.SetActive(true);
 
             
-            if (Input.GetKeyDown(KeyCode.Backspace)) // □対応したい
+            if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
             {
                 ViewAnnounceImage(false);
+                Debug.Log("false2");
 
                 // 電気を流す
                 if (onElectricity == true || electricItem.ChargeFlag == false)
@@ -263,7 +283,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
             // 電気を充電
-            else if (Input.GetKeyDown(KeyCode.Backspace))
+            else if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
             {
                 //if (onElectricity == false || electricItem.ChargeFlag)
                 //{
@@ -409,6 +429,7 @@ public class PlayerController : MonoBehaviour
         {
             EventFlagManager.Instance.SetFlagState(EventFlagName.text_SystemEnd, true);
             ViewAnnounceImage(false);
+            Debug.Log("false3");
         }
     }
 
@@ -434,6 +455,9 @@ public class PlayerController : MonoBehaviour
     public void PlayerNotMove()
     {
         player_Move = true;
+        vx = 0;
+        rb2d.velocity = Vector2.zero;
+        anim.SetBool("Walking", false);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -493,6 +517,7 @@ public class PlayerController : MonoBehaviour
         //判定の場所を通過したら発生
         if (collision.gameObject.tag == "GoTitleLogo" && titleLogoflag == false && EventFlagManager.Instance.GetFlagState(EventFlagName.enemyCharge))
         {
+            // 複数判定を防ぐ為のフラグ
             titleLogoflag = true;
             fadeControl.Fade("wout", () => sc.SceneSwitching("TitleLogo", true));
         }

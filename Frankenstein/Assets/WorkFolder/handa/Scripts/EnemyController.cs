@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DualShockInput;
 
 public class EnemyController : ElectricItem
 {
@@ -108,7 +109,7 @@ public class EnemyController : ElectricItem
             }
 
             //ジャンプ
-            if (enemyJump == false && Input.GetKeyDown(KeyCode.Space))
+            if (enemyJump == false && (Input.GetKeyDown(KeyCode.Space) || DSInput.PushDown(DSButton.Cross)))
             {
                 this.rb2d.AddForce(transform.up * this.jumpingPower);
                 enemyJump = !enemyJump;
@@ -118,23 +119,25 @@ public class EnemyController : ElectricItem
         //エネミーの動き用
         if (enemyMove == false)
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
+            var input = Input.GetAxis("J_Horizontal");
+            if (Input.GetKey(KeyCode.LeftArrow) || input < -0.5)
             {
                 this.transform.Translate(-0.01f, 0.0f, 0.0f);
                 transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow) || 0.5 < input)
             {
                 this.transform.Translate(0.01f, 0.0f, 0.0f);
                 transform.localScale = enemyScale;
             }
 
-            if (enemyJump == false && Input.GetKeyDown(KeyCode.Space))
+            if (enemyJump == false && (Input.GetKeyDown(KeyCode.Space) || DSInput.PushDown(DSButton.Cross)))
             {
                 this.rb2d.AddForce(transform.up * this.jumpingPower);
                 enemyJump = !enemyJump;
             }
+            input = 0;
         }
 
         //★操作の切り替え処理

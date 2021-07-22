@@ -50,9 +50,9 @@ public class CableCarController : MonoBehaviour
         // Player‚Ì“®‚«‚ğ~‚ß‚é
         playerCon.PlayerNotMove();
         // ‘¬“x‚ğ‹­§“I‚É0‚É‚·‚é
-        playerCon.rb2d.velocity = Vector2.zero;
+        //playerCon.rb2d.velocity = Vector2.zero;
         // 
-        playerCon.vx = 0;
+        //playerCon.vx = 0;
         ViewCableCar(true);
         StartCoroutine(Move());
     }

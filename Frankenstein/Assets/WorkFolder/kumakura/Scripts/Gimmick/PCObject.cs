@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DualShockInput;
 
 public class PCObject : ElectricItem
 {
@@ -39,7 +40,7 @@ public class PCObject : ElectricItem
             {
                 announceObject.enabled = false;
                 // 〇ボタン対応予定
-                if (Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
                 {
                     // レポートの非表示、テキストイベントの実行
                     EveReportUnEnabled();
