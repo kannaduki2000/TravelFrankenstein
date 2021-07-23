@@ -19,7 +19,7 @@ public class EnemyController : ElectricItem
     public bool isFollowing = true;   //追従するかどうか
     public bool enemyMove = true;      //エネミーの動き
     private bool enemyJump = false;         //ジャンプ用
-    [SerializeField] private bool Follow = false;       //二度目の入力でのついてくるか否か
+    public bool Follow = false;       //二度目の入力でのついてくるか否か
 
     public Camera camera;
 
@@ -37,7 +37,10 @@ public class EnemyController : ElectricItem
     public ElectricCableController ECon;
 
     CableData cableData;
-    [SerializeField] float moveSpeed;
+    [SerializeField] private float moveSpeed;
+    private float vx;
+    private bool carFlag = false;
+    [SerializeField] private CarPush car;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -52,6 +55,12 @@ public class EnemyController : ElectricItem
             cableData = collision.gameObject.GetComponent<CableData>(); // 電線の情報取得
             // 電線を伝う表示
         }
+
+        if (collision.gameObject.tag == "Car")
+        {
+            carFlag = true;
+            //Follow = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -60,6 +69,12 @@ public class EnemyController : ElectricItem
         {
             cableFlag = false;
             cableData = null;
+        }
+
+        if (collision.gameObject.tag == "Car")
+        {
+            carFlag = false;
+            //Follow = true;
         }
     }
 
@@ -76,6 +91,10 @@ public class EnemyController : ElectricItem
     // Update is called once per frame
     void Update()
     {
+        // 移動
+        rb2d.velocity = new Vector2(vx, rb2d.velocity.y);
+
+
         if (cableFlag && enemyMove == false)
         {
             if (Input.GetKeyDown(KeyCode.P) || DSInput.PushDown(DSButton.Square))
@@ -85,6 +104,16 @@ public class EnemyController : ElectricItem
             }
         }
 
+        if (carFlag)
+        {
+            // 画像の表示
+            if (Input.GetKeyDown(KeyCode.R) || DSInput.PushDown(DSButton.R1))
+            {
+                EnemyNotMove();
+                car.crash = true;
+                carFlag = false;
+            }
+        }
 
         //箱を用意して、その中にY座標を入れる
         Vector2 targetPos = Player.transform.position;
@@ -93,7 +122,7 @@ public class EnemyController : ElectricItem
         //距離
         float distance = Vector2.Distance(transform.position, Player.transform.position);
 
-
+        // 追従用
         if (isFollowing)
         {
             //if(間の距離が止まるときの距離以上なら?)
@@ -128,16 +157,19 @@ public class EnemyController : ElectricItem
         //エネミーの動き用
         if (enemyMove == false)
         {
+            vx = 0;
             var input = Input.GetAxis("J_Horizontal");
             if (Input.GetKey(KeyCode.LeftArrow) || input < -0.5)
-            {   
-                this.transform.Translate(-0.01f, 0.0f, 0.0f);
+            {
+                vx = -moveSpeed;
+                //this.transform.Translate(-0.01f, 0.0f, 0.0f);
                 transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
             if (Input.GetKey(KeyCode.RightArrow) || 0.5 < input)
             {
-                this.transform.Translate(0.01f, 0.0f, 0.0f);
+                vx = moveSpeed;
+                //this.transform.Translate(0.01f, 0.0f, 0.0f);
                 transform.localScale = enemyScale;
             }
 
@@ -175,7 +207,7 @@ public class EnemyController : ElectricItem
 
         //呼ぶボタン(Delete仮置き)を押した時の動き
         //Followを切り替えることでもう一度追従や切り替えができるお
-        if (Follow == true && (Input.GetKeyDown(KeyCode.Delete ) || DSInput.PushDown(DSButton.R1)) && enemyMove == true)
+        if (Follow == true && (Input.GetKeyDown(KeyCode.Delete ) || DSInput.PushDown(DSButton.R1)) && enemyMove == true && isFollowing)
         {
             isFollowing = true;
             Follow = !Follow;
@@ -210,6 +242,18 @@ public class EnemyController : ElectricItem
 
     }
 
+    public void EnemyMove()
+    {
+        enemyMove = false;
+    }
+
+    public void EnemyNotMove()
+    {
+        enemyMove = true;
+        vx = 0;
+        rb2d.velocity = Vector2.zero;
+    }
+
     // かつて追従の切り替えだったもの
     public void Following()
     {
@@ -225,13 +269,5 @@ public class EnemyController : ElectricItem
         // 操作権を敵に移動させる
         Following();
         enemyMove = !enemyMove;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "ElectricCable")
-        {
-            //EventFlagManager.Instance.SetFlagState(EventFlagName.ElectricCableFlag, true);
-        }
     }
 }

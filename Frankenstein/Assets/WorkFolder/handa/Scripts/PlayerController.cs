@@ -522,6 +522,11 @@ public class PlayerController : MonoBehaviour
             fadeControl.Fade("wout", () => sc.SceneSwitching("TitleLogo", true));
         }
 
+        if (collision.gameObject.tag == "GoTitle")
+        {
+            fadeControl.Fade("out", () => sc.SceneSwitching("MainTitle"));
+        }
+
         if (collision.gameObject.tag == "GoMap2")
         {
             map2Flag = true;

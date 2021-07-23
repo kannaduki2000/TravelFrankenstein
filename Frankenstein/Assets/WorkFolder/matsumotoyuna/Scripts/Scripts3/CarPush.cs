@@ -15,6 +15,7 @@ public class CarPush : MonoBehaviour
     public bool crash = true;
     public bool garekiCrash = false;
     public bool rot = false;
+    [SerializeField] private EnemyController enemy;
 
     public PhysicMaterial material;
     void Start()
@@ -26,10 +27,10 @@ public class CarPush : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            crash = true;
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    crash = true;
+        //}
         if (crash == true)
         {
             Crash();
@@ -68,7 +69,7 @@ public class CarPush : MonoBehaviour
         }
     }
 
-    private void Crash()
+    public void Crash()
     {
         GetComponent<Collider2D>().isTrigger = false;
         rigid2D.bodyType = RigidbodyType2D.Dynamic;
@@ -81,6 +82,16 @@ public class CarPush : MonoBehaviour
 
     private void CarCrash()
     {
+        // エネミーが歩けるようにする
+        //enemy.EnemyMove();
+        // 操作権を強制的にPlayerにする
+        //enemy.isFollowing = false;
+        //enemy.Follow = true;
+
+        enemy.isFollowing = false;
+        enemy.enemyMove = true;
+        enemy.mt.player_Move = false;
+        enemy.camera.GetComponent<CameraClamp>().targetToFollow = enemy.Player.transform;
         //車消す
         gameObject.SetActive(false);
     }
