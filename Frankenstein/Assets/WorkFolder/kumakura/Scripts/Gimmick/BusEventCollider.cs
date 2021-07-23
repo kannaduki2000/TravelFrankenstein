@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 enum EventCollider
@@ -12,7 +13,13 @@ public class BusEventCollider : MonoBehaviour
 {
     [SerializeField] private GameObject[] movingPoint = new GameObject[2];
     [SerializeField] private EventCollider eventCollider;
-    int playerNowLayer = 3;
+    [SerializeField] private SpriteRenderer playerCon;
+    int playerNowLayer;
+
+    private void Start()
+    {
+        playerNowLayer = playerCon.sortingOrder;
+    }
 
     // Player側がTagで管理してOntriggerEnterとかから呼んであげてください
     // Destination_Position_XXX　の位置適当なんで調整オネシャス
@@ -26,7 +33,7 @@ public class BusEventCollider : MonoBehaviour
         // EventColliderに応じてplayerを移動させる
         player.transform.position = movingPoint[(int)eventCollider].transform.position;
 
-        // EventColliderの応じてplayerのLayerを蛙　（現状 初期:0 / 乗車時:2）
+        // EventColliderの応じてplayerのLayerを蛙
         switch (eventCollider)
         {
             case EventCollider.strat:

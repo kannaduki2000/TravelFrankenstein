@@ -44,7 +44,10 @@ public class EnemyController : ElectricItem
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        enemyJump = false;
+        if (collision.gameObject.tag == "Ground")
+        {
+            enemyJump = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -107,6 +110,7 @@ public class EnemyController : ElectricItem
         if (carFlag)
         {
             // ‰æ‘œ‚Ì•\Ž¦
+
             if (Input.GetKeyDown(KeyCode.R) || DSInput.PushDown(DSButton.R1))
             {
                 EnemyNotMove();

@@ -328,7 +328,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 57fd51886853f0e4cb263df32158da5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   Player: {fileID: 1356326465420944911}
   enemy: {fileID: 0}
-  speed: 20
+  speed: 7.5
   jumpPower: 40
   vx: 0
   player_Move: 0
@@ -726,6 +726,7 @@ MonoBehaviour:
   text: {fileID: 3678740193704593340}
   textTime: 0.05
   loadTime: 1.25
+  textFlag: 0
   active: 0
 --- !u!1 &8471384143695049920
 GameObject:

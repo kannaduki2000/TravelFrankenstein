@@ -7,10 +7,10 @@ using DualShockInput;
 public class PCObject : ElectricItem
 {
     [SerializeField] private int power;
-    [SerializeField] private Image announceObject;
-    [SerializeField] private Sprite[] announceImage;
+    [SerializeField] private Image announceObject;      // 指示表示画像を入れるObject
+    [SerializeField] private Image image;               // レポートを入れるObject　表示する場所が違うので分けました
+    [SerializeField] private ImageData imageData; 
     [SerializeField] private Sprite eveReport;
-    [SerializeField] private Image image;
     [SerializeField] private PlayerController player;
 
     // ここらへん萩原さんの処理用の変数
@@ -23,13 +23,9 @@ public class PCObject : ElectricItem
     void Start()
     {
         Power = power;
-        AnnounceImage = new Sprite[announceImage.Length];
-        for (int i = 0; i < announceImage.Length; i++)
-        {
-            AnnounceImage[i] = announceImage[i];
-        }
         IsThrow = false;
         IsCharge = true;
+        imageData = FindObjectOfType<ImageData>();
     }
 
     void Update()
@@ -50,12 +46,12 @@ public class PCObject : ElectricItem
         PCSwitchFlag = ChargeFlag;
         if (ChargeFlag)
         {
-            announceObject.sprite = AnnounceImage[1];
+            announceObject.sprite = imageData.GetAnnounceImage(AnnounceName.T_SquareButton_Absorption);
             PCSwitch();
         }
         else
         {
-            announceObject.sprite = AnnounceImage[0];
+            announceObject.sprite = imageData.GetAnnounceImage(AnnounceName.T_SquareButton_Input);
             PCSwitch();
         }
     }
@@ -69,7 +65,7 @@ public class PCObject : ElectricItem
         player.PlayerNotMove();
         // イヴのレポートの表示
         image.enabled = true;
-        image.sprite = eveReport;
+        image.sprite = imageData.GetReportImage(ReportName.eveReport);
     }
 
     /// <summary>

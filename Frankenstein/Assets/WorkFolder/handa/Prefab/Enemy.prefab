@@ -115,7 +115,8 @@ MonoBehaviour:
   second: 2
   isWandering: 1
   ECon: {fileID: 0}
-  moveSpeed: 20
+  moveSpeed: 7.5
+  car: {fileID: 0}
 --- !u!114 &6326749918772115940
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,31 +6,7 @@ using UnityEngine.UI;
 using DualShockInput;
 
 
-[System.Serializable]
-public enum AnnounceName
-{
-    // Tutorial
-    T_Put_Electric_Enemy,           // エネミーの死体に電気を入れる
-    T_Throw_Having,                 // 投げる、持つ
-    T_Come_Out_Home,                // 家から出る
-    T_Release_Object,               // 長押しで上に投げる、離す
-    T_SquareButton,                 // 四角ボタン
-    T_CircleButton_StartUp,         // 丸ボタン：起動する
-    T_Leftstick_Move,               // 左スティック：移動
-    T_SquareButton_Absorption,      // 四角ボタン：電気を吸収する
-    T_SquareButton_Input,           // 四角ボタン：電気を入れる
 
-    // Stage1
-    S1_TriangleButton_Gear,         // 三角ボタン：歯車になる
-    S1_CircleButton_EnemyCall,      // 丸ボタン：エネミーを呼ぶ
-    S1_SquareButton_ElectricCable,  // 四角ボタン：電線を伝う
-    S1_LButton_EnemyChange,         // Lボタン：操作切り替え
-    S1_RButton_Push,                // Rボタン：押す
-    S1_SquareButton,                // 四角ボタン
-    S1_SquareButton_Input,          // 四角ボタン：電気を入れる
-    S1_SquareButton_Absorption,     // 四角ボタン：電気を吸収する
-
-}
 
 public class PlayerController : MonoBehaviour
 {
@@ -68,7 +44,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField] KeyPlessThrow item;
 
-    public Sprite[] AnnounceImageArray;
+    [SerializeField] private ImageData imageData;
     public Image AnnounceImage;
     public Canvas TitleLogo;
 
@@ -100,6 +76,7 @@ public class PlayerController : MonoBehaviour
         canvasParentScale_x = canvasParent.transform.localScale.x;
         sc = FindObjectOfType<SceneChange>();
         fadeControl = FindObjectOfType<FadeControl>();
+        imageData = FindObjectOfType<ImageData>();
     }
 
     // Update is called once per frame
@@ -124,7 +101,7 @@ public class PlayerController : MonoBehaviour
             if (getUpTrigger)
             {
                 player_Move = true;
-                SetAnnounceImage(AnnounceName.T_CircleButton_StartUp);
+                PlayerSetAnnounceImage(AnnounceName.T_CircleButton_StartUp);
                 // 〇ボタン対応しなきゃ
                 if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
                 {
@@ -154,7 +131,7 @@ public class PlayerController : MonoBehaviour
                 electricItem = enemy.GetComponent<ElectricItem>();
                 if (electricItem.IsChargeEvent == false && EventFlagManager.Instance.GetFlagState(EventFlagName.enemyCharge) == false)
                 {
-                    SetAnnounceImage(AnnounceName.T_Put_Electric_Enemy);
+                    PlayerSetAnnounceImage(AnnounceName.T_Put_Electric_Enemy);
                 }
                 //@item = enemy.GetComponent<KeyPlessThrow>();
                 //@if (electricItem.IsThrow) Throw = true;
@@ -237,7 +214,7 @@ public class PlayerController : MonoBehaviour
         /*体力の減増処理-----------------------------------------------------------------*/
         if (touchFlag || enemyTouchFlag || enemyFollowFlg || electricItem != null)
         {
-            if (enemyCon.isFollowing) { return; }
+            if (enemyCon.isFollowing || textCon.textFlag) { return; }
 
             // 表示
             hpCanvas.SetActive(true);
@@ -273,7 +250,7 @@ public class PlayerController : MonoBehaviour
 
                 // モック版熊倉:追加しますた
                 // 触れている物がEnemyの場合
-                if (enemyTouchFlag && EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption))
+                if (enemyTouchFlag && EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption)) // チュートリアルの吸収フラグがないと追従しないように
                 {
                     EventFlagManager.Instance.SetFlagState(EventFlagName.enemyCharge, true);
                     // 追従開始
@@ -405,10 +382,11 @@ public class PlayerController : MonoBehaviour
     /// アナウンス画像を入れてから表示
     /// </summary>
     /// <param name="name"></param>
-    public void SetAnnounceImage(AnnounceName name)
+    public void PlayerSetAnnounceImage(AnnounceName name)
     {
-        AnnounceImage.sprite = AnnounceImageArray[(int)name];
+        AnnounceImage.sprite = imageData.GetAnnounceImage(name);
         ViewAnnounceImage(true);
+
     }
 
     /// <summary>

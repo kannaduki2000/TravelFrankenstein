@@ -9,13 +9,14 @@ public class StairsGimmick : ElectricItem
     [SerializeField] private PlayerController player;
     [SerializeField] private GameObject wall;
     [SerializeField] private Sprite announceImage;
+    [SerializeField] private ImageData imageData;
     [SerializeField] private Image announceObject;
 
     private void Start()
     {
         Power = 30;
-        AnnounceImage = new Sprite[1];
-        AnnounceImage[0] = announceImage;
+        imageData = FindObjectOfType<ImageData>();
+        announceImage = imageData.GetAnnounceImage(AnnounceName.S1_SquareButton_Input);
         anim = GameObject.Find("Stairs");
     }
 
