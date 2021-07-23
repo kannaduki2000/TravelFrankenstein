@@ -724,8 +724,8 @@ MonoBehaviour:
     - "\u3053\u308C\u3088\u308A"
     - "\u751F\u547D\u4F53\u300C\u30A4\u30F4\u300D\u306E\u63A2\u7D22\u3092\u958B\u59CB\u3059\u308B"
   text: {fileID: 3678740193704593340}
-  textTime: 0.0001
-  loadTime: 0
+  textTime: 0.05
+  loadTime: 1.25
   active: 0
 --- !u!1 &8471384143695049920
 GameObject:
