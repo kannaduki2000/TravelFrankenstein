@@ -32,7 +32,7 @@ public class PCObject : ElectricItem
     {
         if (IsChargeEvent)
         {
-            if (EventFlagManager.Instance.GetFlagState(EventFlagName.text_Eve) == false)
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.textEve) == false)
             {
                 announceObject.enabled = false;
                 // 〇ボタン対応予定
@@ -61,7 +61,7 @@ public class PCObject : ElectricItem
     /// </summary>
     public override void Event()
     {
-        if (EventFlagManager.Instance.GetFlagState(EventFlagName.text_Eve)) { return; }
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.textEve)) { return; }
         player.PlayerNotMove();
         // イヴのレポートの表示
         image.enabled = true;
@@ -85,7 +85,7 @@ public class PCObject : ElectricItem
         player.textCon.SetTextActive(true, ()=> 
         {
             player.PlayerMove();
-            EventFlagManager.Instance.SetFlagState(EventFlagName.text_Eve, true);
+            EventFlagManager.Instance.SetFlagState(EventFlagName.textEve, true);
             announceObject.enabled = true;
         });
         

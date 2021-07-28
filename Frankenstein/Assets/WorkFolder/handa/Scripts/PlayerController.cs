@@ -402,10 +402,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void SystemTextEndPlayerMove()
     {
-        if (EventFlagManager.Instance.GetFlagState(EventFlagName.text_System) && 
-            EventFlagManager.Instance.GetFlagState(EventFlagName.text_SystemEnd) == false)
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.textSystem) && 
+            EventFlagManager.Instance.GetFlagState(EventFlagName.textSystemEnd) == false)
         {
-            EventFlagManager.Instance.SetFlagState(EventFlagName.text_SystemEnd, true);
+            EventFlagManager.Instance.SetFlagState(EventFlagName.textSystemEnd, true);
             ViewAnnounceImage(false);
         }
     }
