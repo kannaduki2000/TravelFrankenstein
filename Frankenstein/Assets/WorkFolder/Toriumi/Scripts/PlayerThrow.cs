@@ -30,7 +30,7 @@ public class PlayerThrow : MonoBehaviour
                 Debug.Log(presskeyFrames);
             }
 
-            if (Input.GetKeyUp(KeyCode.R))//半田：SpaceからRに変更
+            else if (Input.GetKeyUp(KeyCode.R))//半田：SpaceからRに変更
             {
                 //もしスペースが長押しされたら
                 if (PressLong <= presskeyFrames)
@@ -42,7 +42,7 @@ public class PlayerThrow : MonoBehaviour
                 }
 
                 //もしスペースが押されたら
-                else if (PressShort <= presskeyFrames)
+                else if (presskeyFrames <= PressShort)
 
                 //低めに投げる
                 {

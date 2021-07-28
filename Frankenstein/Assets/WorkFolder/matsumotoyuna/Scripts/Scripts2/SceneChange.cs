@@ -33,7 +33,16 @@ public class SceneChange : MonoBehaviour
             //白くなる時限定
             if (isWhite)
             {
-                fadeControl.Fade("win", ()=> fadeControl.Fade("out", ()=> fadeControl.sceneChange.SceneSwitching("Stag1")));
+                // くま：ここディレイかけた方がいいかも
+                fadeControl.Fade("win", ()=> fadeControl.Fade("out", ()=> SceneSwitching("MainStage_1")));
+                return;
+            }
+
+            // くま：書き方汚いんで書き直す
+            if (sceneName == "MainTutorial")
+            {
+                // FadeIn終わったらフラグを立てる
+                fadeControl.Fade("in", ()=> EventFlagManager.Instance.SetFlagState(EventFlagName.frankensteinGetUp, true));
                 return;
             }
             fadeControl.Fade("in");

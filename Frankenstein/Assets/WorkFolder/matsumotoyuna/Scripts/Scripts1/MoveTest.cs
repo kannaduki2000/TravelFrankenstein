@@ -64,7 +64,7 @@ public class MoveTest : MonoBehaviour
 
         if (collision.gameObject.tag == "GoMap2")
         {
-            fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("TentativeTitle"));
+            fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("MainTitle"));
         }
     }
 }

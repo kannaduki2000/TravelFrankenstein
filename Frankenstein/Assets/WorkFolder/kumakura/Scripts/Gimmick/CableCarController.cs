@@ -10,6 +10,7 @@ public class CableCarController : MonoBehaviour
     [SerializeField] private GameObject[] colliders;
     [SerializeField, Header("停止地点")] private GameObject cableCarStopPosition;   // 停止地点
     [SerializeField] private float moveSpeed = 5.0f;
+    [SerializeField] private Collider2D rubble;
     private PlayerController playerCon;
     private bool loopFlag = false;
 
@@ -31,6 +32,8 @@ public class CableCarController : MonoBehaviour
         if (trigger) { return; }
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.cableCarStart))
         {
+            Debug.Log("CableCar");
+            // 一度でも呼ばれたら二度目は呼ばれないようにする処理
             trigger = true;
             CableCarMove();
         }
@@ -42,12 +45,14 @@ public class CableCarController : MonoBehaviour
     public void CableCarMove()
     {
         if (loopFlag) { return; }
+        // Playerを待機モーションに変更
+        playerCon.anim.SetBool("Walking", false);
         // Playerの動きを止める
-        playerCon.player_Move = true;
+        playerCon.PlayerNotMove();
         // 速度を強制的に0にする
-        // PlayerControllerのRigitbody2Dがpublicになるまでコメント化しといても大丈夫
-        playerCon.rb2d.velocity = Vector2.zero;
-        playerCon.vx = 0;
+        //playerCon.rb2d.velocity = Vector2.zero;
+        // 
+        //playerCon.vx = 0;
         ViewCableCar(true);
         StartCoroutine(Move());
     }
@@ -57,13 +62,19 @@ public class CableCarController : MonoBehaviour
         loopFlag = true;
         while (gameObject.transform.position != cableCarStopPosition.transform.position)
         {
-            gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, cableCarStopPosition.transform.position, moveSpeed * Time.deltaTime);
+            gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position,
+                cableCarStopPosition.transform.position, moveSpeed * Time.deltaTime);
             yield return null;
         }
+        Debug.Log("MoveEnd");
         loopFlag = false;
+        // ケーブルカーの当たり判定をActiveにする
         ColliderActive();
+        // イヴの非表示
         eve.enabled = false;
-        playerCon.player_Move = false;
+        // ガレキの当たり判定の消滅
+        rubble.enabled = false;
+        playerCon.PlayerMove();
         EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStop, true);
         yield break;
     }
@@ -71,13 +82,13 @@ public class CableCarController : MonoBehaviour
     /// <summary>
     /// ケーブルカーの表示/非表示
     /// </summary>
-    /// <param name="enabled">enable</param>
-    public void ViewCableCar(bool enabled)
+    /// <param name="isEnabled">enable</param>
+    public void ViewCableCar(bool isEnabled)
     {
-        eve.enabled = enabled;
+        eve.enabled = isEnabled;
         for (int i = 0; i < cableCars.Length; i++)
         {
-            cableCars[i].enabled = enabled;
+            cableCars[i].enabled = isEnabled;
         }
     }
 

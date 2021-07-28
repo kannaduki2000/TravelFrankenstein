@@ -40,6 +40,8 @@ public class EnemyFollowing : MonoBehaviour
             car = true;
             cp.rigid2D.constraints = RigidbodyConstraints2D.None;
         }
+
+        
     }
     //ª°‚É’…‚­‚Ü‚ÅƒWƒƒƒ“ƒv‚³‚¹‚È‚¢ƒ}ƒ“
     void Start()

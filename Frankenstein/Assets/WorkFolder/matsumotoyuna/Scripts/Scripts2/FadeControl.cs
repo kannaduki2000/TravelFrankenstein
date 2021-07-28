@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DualShockInput;
 
 public class FadeControl : MonoBehaviour
 {
@@ -27,15 +28,16 @@ public class FadeControl : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && hiyoko == false)
+        if ((Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle)) && hiyoko == false)
         {
-            Fade("out", ()=> sceneChange.SceneSwitching("handa"));//”¼“cFscene–¼‚Ì•ÏX
+            Fade("out", ()=> sceneChange.SceneSwitching("MainTutorial"));
             hiyoko = true;
         }
     }
 
     IEnumerator FadeIn()
     {
+        //EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, true);
         alpha = fadeImage.color.a;
         while (0 < alpha)
         {
@@ -44,11 +46,13 @@ public class FadeControl : MonoBehaviour
             yield return null;
         }
         if (_callback != null) _callback();
+        EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, false);
         yield break;
     }
 
     IEnumerator FadeOut()
     {
+        EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, true);
         alpha = fadeImage.color.a;
         while (alpha < 1)
         {
@@ -57,11 +61,13 @@ public class FadeControl : MonoBehaviour
             yield return null;
         }
         if (_callback != null) _callback();
+        //EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, false);
         yield break;
     }
 
     IEnumerator WhiteFadeIn()
     {
+        //EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, true);
         Debug.Log("honntouno fadein takoyaki");
         alpha = fadeImage.color.a;
         while (0 < alpha)
@@ -71,11 +77,13 @@ public class FadeControl : MonoBehaviour
             yield return null;
         }
         if (_callback != null) _callback();
+        EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, false);
         yield break;
     }
 
     IEnumerator WhiteFadeOut()
     {
+        EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, true);
         alpha = fadeImage.color.a;
         while (alpha < 1)
         {
@@ -84,6 +92,7 @@ public class FadeControl : MonoBehaviour
             yield return null;
         }
         if (_callback != null) _callback();
+        //EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, false);
         yield break;
     }
 

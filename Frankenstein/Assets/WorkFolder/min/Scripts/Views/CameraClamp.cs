@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CameraClamp : MonoBehaviour
 {
-    [SerializeField]
-    private Transform targetToFollow;
+    public Transform targetToFollow;
    
     public float LeftX = -16.88f;
     public float RightX = 87f;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ElectricCableArray : MonoBehaviour
 {
     public GameObject[] pointArray;
+    public int cableNum;
 
     void Start()
     {

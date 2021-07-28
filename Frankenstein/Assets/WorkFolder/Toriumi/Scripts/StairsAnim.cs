@@ -6,6 +6,9 @@ public class StairsAnim : MonoBehaviour
 {
     Animator anim;
     GameObject wall;
+
+    public StairsGimmick stairs;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,8 @@ public class StairsAnim : MonoBehaviour
     {
         wall = GameObject.Find("TransparentWall");
         wall.SetActive(false);
+        // Player‚ğ“®‚©‚¹‚é‚æ‚¤‚É
+        stairs.AnimationEnd();
         Debug.Log("•ÇA”ñ•\¦");
     }
 
