@@ -131,6 +131,7 @@ MonoBehaviour:
   - {fileID: 1670951968279576325}
   - {fileID: 1672251895494656864}
   eventCollider: 1
+  playerCon: {fileID: 0}
 --- !u!1 &1670951968279576325
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +250,7 @@ MonoBehaviour:
   - {fileID: 8159942749863912532}
   - {fileID: 5880589119703744370}
   cableCarStopPosition: {fileID: 0}
-  moveSpeed: 5
+  moveSpeed: 10
   rubble: {fileID: 0}
 --- !u!1 &2275954657311963686
 GameObject:
@@ -382,6 +383,7 @@ MonoBehaviour:
   - {fileID: 1670951968279576325}
   - {fileID: 1672251895494656864}
   eventCollider: 0
+  playerCon: {fileID: 0}
 --- !u!1 &3699738913893650788
 GameObject:
   m_ObjectHideFlags: 0

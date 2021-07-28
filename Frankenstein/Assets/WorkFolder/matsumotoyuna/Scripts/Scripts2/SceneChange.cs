@@ -33,8 +33,12 @@ public class SceneChange : MonoBehaviour
             //白くなる時限定
             if (isWhite)
             {
-                // くま：ここディレイかけた方がいいかも
-                fadeControl.Fade("win", ()=> fadeControl.Fade("out", ()=> SceneSwitching("MainStage_1")));
+                // シーン遷移後フラグを立てる
+                fadeControl.Fade("win", ()=> fadeControl.Fade("out", ()=> 
+                {
+                    SceneSwitching("MainStage_1");
+                }
+                ));
                 return;
             }
 

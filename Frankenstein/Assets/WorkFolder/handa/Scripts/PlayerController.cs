@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
             {
                 player_Move = true;
                 PlayerSetAnnounceImage(AnnounceName.T_CircleButton_StartUp);
-                // 〇ボタン対応しなきゃ
+                // 〇ボタン
                 if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
                 {
                     EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
@@ -112,7 +112,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.isFade))
         {
             PlayerNotMove();
@@ -403,10 +402,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void SystemTextEndPlayerMove()
     {
-        if (EventFlagManager.Instance.GetFlagState(EventFlagName.text_System) && 
-            EventFlagManager.Instance.GetFlagState(EventFlagName.text_SystemEnd) == false)
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.textSystem) && 
+            EventFlagManager.Instance.GetFlagState(EventFlagName.textSystemEnd) == false)
         {
-            EventFlagManager.Instance.SetFlagState(EventFlagName.text_SystemEnd, true);
+            EventFlagManager.Instance.SetFlagState(EventFlagName.textSystemEnd, true);
             ViewAnnounceImage(false);
         }
     }
