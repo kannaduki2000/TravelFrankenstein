@@ -17,7 +17,8 @@ public enum EventFlagName
 
 
     // Stage1
-    stage1_Title,       // ステージ１のタイトルが表示された後　フランケンの操作が可能になる
+    stage1_Title,       // シーン遷移後のフェードイン終了時　ステージ１のタイトルが表示が可能になる
+    stage1_TitleEnd,    // ステージ１のタイトルが表示された後　フランケンの操作が可能になる
     stage1_ControlPanel,// 操作盤に電気を入れた後　床が出てきて崖の当たり判定の消滅
     cableCarStart,      // 踏切に電気を入れた後　ケーブルカーのイベントの実行
     cableCarStop,       // ケーブルカーが停車した後　フランケンが移動可能になる
