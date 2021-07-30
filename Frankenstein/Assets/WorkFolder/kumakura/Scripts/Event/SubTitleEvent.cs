@@ -40,7 +40,7 @@ public class SubTitleEvent : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            // このフラグをカメラ移動でフランケンを移した後にtrueにすればsubTitle表示されます。現状はコマンドで実行します
+            // このフラグをカメラ移動でフランケンを移した後にtrueにすればsubTitle表示されます、現状はコマンドで実行します
             EventFlagManager.Instance.SetFlagState(EventFlagName.stage1Title, true);
         }
 
