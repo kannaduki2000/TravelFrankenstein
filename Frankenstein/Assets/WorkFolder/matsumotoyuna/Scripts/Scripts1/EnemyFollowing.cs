@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+更新履歴メモ
+7月31日　enemyMove内のVector3を1から0.5fに変更
+         boolにminecart追加
+         public MinecartPush mcp追加
+         OnCollisionEnter2D内にminecart追加
+         Rを押したときの動きを追加
+*/
+
 //Edit→Project Settings→Physics2D下のチェック
 //その前にレイヤー分けすると、
 //プレイヤーとエネミーですれ違い通信ができるようになるよ！
@@ -20,11 +29,13 @@ public class EnemyFollowing : MonoBehaviour
 
     public MoveTest mt;
     public CarPush cp;
+    public MinecartPush mcp;
 
     public bool enemyMove = true;      //エネミーの動き
     private bool Jump = false;         //ジャンプ用
     private bool Follow = false;       //二度目の入力でのついてくるか否か
     private bool car = false;
+    private bool minecart = false;
 
     Vector3 enemyScale;
 
@@ -41,7 +52,10 @@ public class EnemyFollowing : MonoBehaviour
             cp.rigid2D.constraints = RigidbodyConstraints2D.None;
         }
 
-        
+        if(collision.gameObject.name == "MineCart")
+        {
+            minecart = true;
+        }
     }
     //↑床に着くまでジャンプさせないマン
     void Start()
@@ -105,13 +119,13 @@ public class EnemyFollowing : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow))
             {
                 this.transform.Translate(-0.01f, 0.0f, 0.0f);
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
             }
 
             if (Input.GetKey(KeyCode.RightArrow))
             {
                 this.transform.Translate(0.01f, 0.0f, 0.0f);
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             }
 
             if (Jump == false && Input.GetKeyDown(KeyCode.Space))
@@ -123,6 +137,11 @@ public class EnemyFollowing : MonoBehaviour
             if(Input.GetKey(KeyCode.R) && car == true)
             {
                 cp.crash = true;
+            }
+
+            if (Input.GetKey(KeyCode.R) && minecart == true)
+            {
+                mcp.minecartpush = true;
             }
         }
 
