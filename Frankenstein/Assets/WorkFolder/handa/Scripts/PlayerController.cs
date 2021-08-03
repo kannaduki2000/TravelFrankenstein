@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private int PressLong = 300;                //長押し
     private int PressShort = 100;               //軽押し
     private bool Throw = false;                 //投げのフラグ
+    private bool Getitem = false;               //半田：itemを持っているflag
     Rigidbody2D rb;
     [SerializeField] KeyPlessThrow item;
 
@@ -290,11 +291,11 @@ public class PlayerController : MonoBehaviour
         /*アイテムを持つ入力処理---------------------------------------------*/
         if (Throw)
         {
-            if (Input.GetKey(KeyCode.R))//半田：SpaceからRに変更
+            if (Input.GetKey(KeyCode.R) || DSInput.PushDown(DSButton.Circle))//半田：SpaceからRに変更
             {
                 //スペースの判定
                 //memo  『? true:false』
-                presskeyFrames += (Input.GetKey(KeyCode.R)) ? 1 : 0;//半田：SpaceからRに変更
+                presskeyFrames += (Input.GetKey(KeyCode.R) || DSInput.PushDown(DSButton.Circle)) ? 1 : 0;//半田：SpaceからRに変更
                 Debug.Log(presskeyFrames);
             }
 
@@ -307,6 +308,9 @@ public class PlayerController : MonoBehaviour
                 {
                     item.Hight();
                     Debug.Log("長め");
+
+                    Getitem = false;
+                    item.gameObject.transform.parent = null;
                 }
 
                 //もしスペースが押されたら
@@ -316,6 +320,9 @@ public class PlayerController : MonoBehaviour
                 {
                     item.Low();
                     Debug.Log("短め");
+
+                    Getitem = false;
+                    item.gameObject.transform.parent = null;
                 }
             }
 
@@ -450,7 +457,7 @@ public class PlayerController : MonoBehaviour
 
             //item = collision.gameObject.GetComponent<Item>();
             //Wを押していたら
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W) || DSInput.Push(DSButton.R1))
             {
                 Throw = true;
                 //アイテムクラスの取得
@@ -459,11 +466,21 @@ public class PlayerController : MonoBehaviour
                 //アイテムのY軸が上がる
                 // ここでこのオブジェクトをプレイヤーの子供にする
                 item.gameObject.transform.parent = this.transform;
+
+                //itemを持ったらtrue
+                Getitem = true;
             }
-        }
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            item.transform.parent = null;
+
+            if (Getitem == true)
+            {
+                if (Input.GetKeyUp(KeyCode.W) || DSInput.PushUp(DSButton.R1))
+                {
+                    item.gameObject.transform.parent = null;
+
+                    //tiemを放したらfalse
+                    Getitem = false;
+                }
+            }
         }
     }
 
