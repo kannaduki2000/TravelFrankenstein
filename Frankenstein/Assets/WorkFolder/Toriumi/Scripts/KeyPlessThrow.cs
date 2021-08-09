@@ -10,7 +10,7 @@ public class KeyPlessThrow : MonoBehaviour
     public float Throwx = 30;                   //短押しの投げる力
     public float Throwy = 50;                   //短押しの投げる力
 
-    private bool left = false;                   //左右のフラグ
+    public bool left = false;                   //左右のフラグ
 
     Rigidbody2D rb;
     // Start is called before the first frame update
@@ -22,11 +22,11 @@ public class KeyPlessThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey("right"))//入力名の変更：半田
         {
             left = false;
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey("left"))//入力名の変更：半田
         {
             left = true;
         }

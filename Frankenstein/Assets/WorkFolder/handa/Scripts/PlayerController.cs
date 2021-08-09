@@ -166,6 +166,9 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Walking", true);
                 // HPバーの向き
                 canvasParent.transform.localScale = new Vector3(canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
+
+                //物を持った時に方向を確認する：半田
+                item.left = false;
             }
             else if (Input.GetKey("left") || input < -inputRange)
             {
@@ -173,6 +176,9 @@ public class PlayerController : MonoBehaviour
                 vx = -speed;
                 anim.SetBool("Walking", true);
                 canvasParent.transform.localScale = new Vector3(-canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
+
+                //物を持った時に方向を確認する：半田
+                item.left = true;
             }
             else
             {
@@ -451,7 +457,7 @@ public class PlayerController : MonoBehaviour
             groundCheck = true;
         }
 
-        if (collision.gameObject.tag == "Item")
+        if (collision.gameObject.tag == "Item" || collision.gameObject.tag == "Enemy")
         {
             Debug.Log("stay");
 
