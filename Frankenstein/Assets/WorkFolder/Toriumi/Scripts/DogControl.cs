@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DogControl : MonoBehaviour
 {
+
+    // 仮で作ったスクリプト
+
     public Vector2 Speed = new Vector2(1, 1);   //速度
     public float jumpForce = 300.0f;            //ジャンプ力
     private bool Jump = false;
