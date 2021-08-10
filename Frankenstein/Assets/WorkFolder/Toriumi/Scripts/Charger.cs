@@ -5,35 +5,43 @@ using UnityEngine.UI;
 
 public class Charger : MonoBehaviour
 {
-    LineRenderer line;
-    EdgeCollider2D edge;
+    GameObject Ra1;                //イベント発生範囲 
+    GameObject Ra2;                //壁
 
 
     Vector2 startPos;              // 初期位置
 
-    private int count;             // 頂点の数
-    private bool Chager = false;
-    private Vector2[] points = new Vector2[2];
+    private bool Remove = false;   // 親子解除、初期位置に戻る、ケーブルのスケールを0にするフラグ
 
-    // 充電ケーブルの距離制限
-
-    // Range1: 設定された位置
-    // Range2: 初期位置でない場合
-    //        Triggerで動ける範囲を決定
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Start()
     {
-        if (collision.gameObject.tag == "Range2")
-        {
-            Debug.Log("!!");
-            this.gameObject.transform.parent = null;
-            Chager = true;
-        }
+        startPos = transform.position;      // 初期位置を格納
 
-        if (collision.gameObject.tag == "Range1")
+        Remove = true;                      
+
+        this.Ra1 = GameObject.Find("Range1");
+        this.Ra2 = GameObject.Find("Range2");
+
+        Ra1.SetActive(false);   //  イベント範囲非表示
+        Ra2.SetActive(false);   //　壁非表示
+    }
+
+    private void Update()
+    {
+        if (Remove)
         {
-            Debug.Log("Event");
-            this.gameObject.transform.parent = null;
-            Chager = false;
+            if (Input.GetKeyUp(KeyCode.W))
+            {
+                Debug.Log("ok");
+                this.gameObject.transform.parent = null;                                    //親子関係の解除
+                transform.position = startPos;                                              //初期位置
+
+                Vector3 vec = GameObject.Find("Cabels").transform.localScale;
+                GameObject.Find("Cabels").transform.localScale = new Vector3(0, 0, 0);      //Cablesのスケールを0(非表示にする)
+
+                Ra1.SetActive(false);   //  イベント範囲非表示
+                Ra2.SetActive(false);   //　壁非表示
+            }
         }
     }
 
@@ -42,80 +50,70 @@ public class Charger : MonoBehaviour
     {
         if (collision.gameObject.tag == "Dog")
         {
+         
+            // Wキーを押していると親子関係になる
             if (Input.GetKey(KeyCode.W))
             {
-                this.gameObject.transform.parent = GameObject.Find("Dog").transform;
+                this.gameObject.transform.parent = GameObject.Find("Dog").transform;    //Dog を親にする
+
+                Vector3 vec = GameObject.Find("Cabels").transform.localScale;
+                GameObject.Find("Cabels").transform.localScale = new Vector3(1, 1, 1);  //Cablesのスケールを1(表示する)
+
+                Ra1.SetActive(true);    //　イベント範囲表示
+                Ra2.SetActive(true);    //　壁表示
 
             }
         }
-        Chager = true;
-
     }
 
-    // colliderつけたいけど無理
-    void AddCollider()
+    // 充電ケーブルの距離制限
+    // Triggerでイベント範囲を決定
+    // Collisionで壁を生成。
+
+    // Range1: 設定された位置
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-
-    }
-
-    private void Start()
-    {
-        line = GetComponent<LineRenderer>();
-        edge = gameObject.AddComponent<EdgeCollider2D>();
-        startPos = transform.position;      // 初期位置を格納
-    }
-
-
-
-
-    // Wキーを離したらケーブルが初期位置に戻る。
-    private void Update()
-    {
-        if (Chager)
-        {
-            if (Input.GetKeyUp(KeyCode.W))
+            if (collision.gameObject.tag == "Range1")
             {
-                Debug.Log("ok");
+                Remove = false;
+
+                Debug.Log("ok?");
+
                 this.gameObject.transform.parent = null;
-                transform.position = startPos;              //初期位置
-                count = 0;                                  //頂点の数をなくすため線の描画が消える。
+
+                Debug.Log("親子解除されない…");
             }
-        }
-
     }
 
-    // count を増やすことで頂点の数を増やす。
-    // 線を引く
-    private void FixedUpdate()
-    {
-        count += 1;
-        line.positionCount = count;
-        
-        line.SetPosition(count-1,transform.position);
-    }
-
-   
 
     /*
      　＊スクリプト内容＊
 
-      ・LineRendererを使って線を作成。
-    　　ケーブルの軌跡が作られる。
+    ・ Hinge Joint を使って四角をつなげてケーブルを作成。
+    ・ Dogのスクリプト内容がわからないため、仮の物を入れています。
+    ・ tagを3種類追加しました。
+        Dog、changer、Range1
+    
+       *距離制限*
+       ・Range1 でイベント判定を作っています。
+       ・Range2 で壁を作っています。
+       ・どちらも始めは非表示ですが、Dogとケーブルが親子になったら
+         表示されるようになっています。
+     
+       *ケーブルを伸ばす*
+       ・Hinge Jointを使ってつなげています。
+       ・SetActiveを使うとバグが発生するので、
+         スケールを0(非表示)と1(表示)で表示、非表示を設定しています。
+       ・Rigidbodyの関係とケーブルの位置でケーブルが荒ぶる可能性があります。
+         また、Rigidbodyの関係でケーブルが床をすり抜ける恐れが多いにあります。
+         ケーブルを増やせばすり抜けが減りますが、
+         代わりにケーブルがとんでもなく重なるので滅茶苦茶荒ぶります。
 
-      ・ケーブルにWを押すと犬？の子供にしてるため動きは同じ。
-    　　離すと解除される。
-
-    　・但しケーブルが一定の位置(ここでは1以上)ではないとき、
-    　　初期位置に戻りケーブルの後も消える。
-
-
-    　・線はTriggerで距離を制限。
-    　　Range1に当たりWキーを離してもその場に残る。
-        Range2に当たりWキーを離すと初期位置に戻る。
-    　
-    　・線自体に当たり判定はない。
-        どうやってつける？？？？？？？？？
-
+    　*初期位置に戻る*
+    　 ・範囲外や途中で離した場合、初期位置に戻ります。
+       ・初期位置はtransform.positionで設定しています。
+       
+        以上です、よろしくお願いします。
      */
 
 }
