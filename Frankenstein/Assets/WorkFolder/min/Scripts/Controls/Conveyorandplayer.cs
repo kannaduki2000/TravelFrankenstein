@@ -73,26 +73,26 @@ public class Conveyorandplayer : MonoBehaviour
         {
             istouchingpuller = true;
         }
-        if(Input.GetKeyDown("e") && isGrounded)
-        {
-            istouchingpuller = false;
-        }
+        //if(Input.GetKeyDown("e") && isGrounded)
+        //{
+        //    istouchingpuller = false;
+        //}
         ////////////////////////////////////////////////////////////
     }
     //////////////////////////////////////////////////////////////
-    //gameobjcet and to pull from pullingplatform
+    //gameobjcet and to pull from pulling platform
     void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "pull")
         {
-            istouchingpuller = true;
+            istouchingpuller = false;
         }
     }
     void OnCollisionExit2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "pull")
         {
-            istouchingpuller = false;
+            istouchingpuller = true;
         }
     }
     ///////////////////////////////////////////////////////////////////////
