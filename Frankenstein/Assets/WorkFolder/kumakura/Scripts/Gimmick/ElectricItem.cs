@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// 電気を入れるオブジェクトの親クラス
 public class ElectricItem : MonoBehaviour
 {
     public int Power { get; set; } = 0;                 // 消費電力
