@@ -32,6 +32,9 @@ public class Enemy2 : MonoBehaviour
 
     public float time = 0;
 
+    Transform Player;
+    Transform Bone;
+
     private void Update()
     {
         if (isloop) { return; }
@@ -41,15 +44,14 @@ public class Enemy2 : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPos.position, 1f * Time.deltaTime);
             if (targetPos.position.x - transform.position.x <= Mathf.Abs(0.1f))
             {
-                time += Time.deltaTime;
                 // 2秒停止
+                time += Time.deltaTime;
                 if (time >= 2)
                 {
                     time = 0;
                     Vector3 left = new Vector3(-thisXScale, transform.localScale.y, transform.localScale.z);
                     transform.localScale = left;
                     isSearch = false;
-                    move = false;
                 }
             }
         }
@@ -71,6 +73,7 @@ public class Enemy2 : MonoBehaviour
                
             }
         }
+        Vector3 direction = (Player.position - transform.position).normalized;
     }
 
     // ずっと、往復する
@@ -111,7 +114,12 @@ public class Enemy2 : MonoBehaviour
     {
         startPos = this.transform.position;
         Debug.Log(startPos);
- 
+
+        // プレイヤーの位置取得
+        Player = GameObject.Find("Player").transform;
+        // 骨の位置取得
+        Bone = GameObject.Find("Bone").transform;
+
         thisXScale = transform.localScale.x;
     }
 
@@ -121,7 +129,7 @@ public class Enemy2 : MonoBehaviour
        // Stoneのタグが付いているものに当たったら
        if (collision.gameObject.tag == "Stone")
        {
-            move = false;
+            isloop = true;
             speedX = 0;
             // 右向きの状態で当たったら
            if (this.transform.localScale.x == 1)
@@ -135,6 +143,38 @@ public class Enemy2 : MonoBehaviour
            }
        }  
     }
+
+    // 骨を取得
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Bone")
+        {
+
+        }
+    }
+
+
+    // 攻撃処理
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Playerタグが近づいてきたら
+        if (collision.gameObject.tag == "Player")
+        {
+            // 骨を持っていたら
+            if (Player.position == Bone.position)
+            {
+                isloop = false;
+            }
+            else
+            {
+                // フランケンにめがけて突進する
+                isloop = true;
+                transform.Translate(Player.position);
+            }
+        }
+
+    }
 }
 
 // エネミー自身のテリトリー間を行き来する〇
@@ -144,6 +184,8 @@ public class Enemy2 : MonoBehaviour
 // 突進成功したら４秒間待機　そのあと自分のテリトリーに戻る
 // ４秒間待機後、視線察知内にフランケンがいたらフランケンに再び突進
 // 突進した場所にフランケンがいなかったら２秒間待機して自分のテリトリーに戻る
+
+// 骨を持っている間は襲ってこない処理
 
 // 石に当たったら動きを完全に止める〇
 
