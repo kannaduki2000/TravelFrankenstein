@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class RotationEnemy : MonoBehaviour
 {
-    public Rigidbody2D rigid2D;
     private float speed = 0;
     private bool kasokuuuuuu = false;
-    private bool kasokudekiru = false;
-    void Start()
-    {
-        rigid2D = GetComponent<Rigidbody2D>();
-    }
+    public bool kasokudekiru = false;
+    public bool rothaguruma = false;
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q) && kasokudekiru == false)
+        //動くか否か
+        if (rothaguruma == false && kasokudekiru == false)
+        {
+            kasokuuuuuu = false;
+        }
+        
+        //若干加速するよ
+        if(rothaguruma == true && kasokudekiru == false)
         {
             this.speed = 0.001f;
             kasokuuuuuu = true;
             kasokudekiru = true;
         }
 
+        //回転スピード
         if(kasokuuuuuu == true)
         {
             transform.Rotate(0, 0, this.speed);
@@ -32,6 +36,4 @@ public class RotationEnemy : MonoBehaviour
             this.speed += 0.002f;
         }
     }
-
-    //回転数 = 大きさ / 2
 }

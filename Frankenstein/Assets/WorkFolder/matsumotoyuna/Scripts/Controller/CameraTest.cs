@@ -10,15 +10,12 @@ public class CameraTest : MonoBehaviour
 {
     public EnemyFollowing enemyfollowing;
     public MinecartPush mpush;
+    public PushButton pushb;
     public GameObject Player;
     public GameObject Enemy;
     public GameObject MineCart;
 
-    void Start()
-    {
-        
-    }
-
+    //îÒå¯ó¶ÇÃã…Ç›â≥èó
     void Update()
     {
         Vector2 playerPos = Player.transform.position;
@@ -30,7 +27,7 @@ public class CameraTest : MonoBehaviour
             transform.position = new Vector3(enemyPos.x, 0, -10);
         }
 
-        if (mpush.minecartpush == true)
+        if (mpush.minecartpush == true && pushb.notpushingbutton == false)
         {
             Vector2 minecartPos = MineCart.transform.position;
             transform.position = new Vector3(minecartPos.x, 0, -10);

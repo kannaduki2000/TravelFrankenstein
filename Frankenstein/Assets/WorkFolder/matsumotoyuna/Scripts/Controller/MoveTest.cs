@@ -8,6 +8,7 @@ public class MoveTest : MonoBehaviour
 
     public bool playerMove = false;
     private bool Jump = false;
+    public bool touchminecart = false;
 
     Rigidbody2D rigid2D;
     float jumpForce = 300.0f;
@@ -18,10 +19,14 @@ public class MoveTest : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Jump = false;
+        //↑床に着くまでジャンプさせないマン
+        if(collision.gameObject.name == "MineCart" && touchminecart == false)
+        {
+            rigid2D.constraints = RigidbodyConstraints2D.FreezeAll;
+            Invoke("Constraints", 2.0f);
+        }
     }
-    //↑床に着くまでジャンプさせないマン
 
-    // Start is called before the first frame update
     void Start()
     {
         this.rigid2D = GetComponent<Rigidbody2D>();
@@ -29,7 +34,6 @@ public class MoveTest : MonoBehaviour
         fadeControl = FindObjectOfType<FadeControl>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerMove == false)
@@ -66,5 +70,11 @@ public class MoveTest : MonoBehaviour
         {
             fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("MainTitle"));
         }
+    }
+
+    public void Constraints()
+    {
+        rigid2D.constraints = RigidbodyConstraints2D.None;
+        touchminecart = true;
     }
 }

@@ -21,6 +21,7 @@ public class EnemyFollowing : MonoBehaviour
 {
     public GameObject player;
     public GameObject enemy;
+    public GameObject MineCart;
     //public Transform target;
     public float speed = 3.0f;         //速度
     public float stopDistance;         //止まるときの距離
@@ -30,12 +31,14 @@ public class EnemyFollowing : MonoBehaviour
     public MoveTest mt;
     public CarPush cp;
     public MinecartPush mcp;
+    public PushButton pushb;
 
     public bool enemyMove = true;      //エネミーの動き
     private bool Jump = false;         //ジャンプ用
     private bool Follow = false;       //二度目の入力でのついてくるか否か
     private bool car = false;
     private bool minecart = false;
+    private bool okrpush = false;
 
     Vector3 enemyScale;
 
@@ -45,6 +48,7 @@ public class EnemyFollowing : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Jump = false;
+        //↑床に着くまでジャンプさせないマン
 
         if(collision.gameObject.tag == "Car")
         {
@@ -56,28 +60,24 @@ public class EnemyFollowing : MonoBehaviour
         {
             minecart = true;
         }
+
+        if (collision.gameObject.name == "MineCart" && pushb.rpush == true)
+        {
+            okrpush = true;
+        }
     }
-    //↑床に着くまでジャンプさせないマン
+
     void Start()
     {
-        //オブジェクトを探し出して取得するもの
-        //player = GameObject.Find("player");
-        //enemy = GameObject.Find("enemy");
         this.rigid2D = GetComponent<Rigidbody2D>();
         enemyScale = this.transform.localScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
         //箱を用意して、その中にY座標を入れる
         Vector2 targetPos = player.transform.position;
         targetPos.y = transform.position.y;
-
-        //targetの方向に向く
-        //アニメーションも同時に左右反転させたい→後ほど
-        //transform.LookAt(target);
-        //(targetPos);
 
         //距離
         float distance = Vector2.Distance(transform.position, player.transform.position);
@@ -142,6 +142,16 @@ public class EnemyFollowing : MonoBehaviour
             if (Input.GetKey(KeyCode.R) && minecart == true)
             {
                 mcp.minecartpush = true;
+            }
+
+            if(Input.GetKeyDown(KeyCode.R) && pushb.rpush == true && okrpush == true)
+            {
+                mcp.enemyrpush = true;
+            }
+
+            if (Input.GetKeyUp(KeyCode.R) && pushb.rpush == true && okrpush == true)
+            {
+                mcp.enemyrpush = false;
             }
         }
 
@@ -221,8 +231,4 @@ Lボタンで操作切り替え
 /*
 Lボタンを押した後にAボタンを押すと呼べる→機能オン
 (これはいらなさそう？)→(いるらしいですよあなた)
-*/
-
-/*
-足の上げ下げアニメーション→また今度
 */
