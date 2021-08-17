@@ -20,7 +20,17 @@ public class playercontrol : MonoBehaviour
         dirX = Input.GetAxis ("Horizontal");
         dirY = Input.GetAxis ("Vertical");
         
-        rb.velocity = new Vector2 ( dirX * 10, dirY * 10);
+        rb.velocity = new Vector2 ( dirX * 5, dirY * 10);
+        ///////////////////////////////////////////////////////////////////////////
+        //if player is stop animation is not working code
+        if(dirX > 0)
+        {
+            gamecontrol.disabled = false;
+        }
+        else{
+            gamecontrol.disabled = true;
+        }
+        ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////
     }
 
