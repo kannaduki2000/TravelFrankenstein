@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ public class ElectricCableArray : MonoBehaviour
         pointArray = new GameObject[gameObject.transform.childCount];
         for (int n = 0; n < gameObject.transform.childCount; n++)
         {
-            // ŠeŒo‰ß’n“_‚Ìî•ñ‚ð”z—ñ‚ÉŠi”[
+            // å„çµŒéŽåœ°ç‚¹ã®æƒ…å ±ã‚’é…åˆ—ã«æ ¼ç´
             pointArray[n] = gameObject.transform.GetChild(n).gameObject;
         }
     }

@@ -1,58 +1,58 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ElectricCableController : MonoBehaviour
 {
-    [Header("ˆÚ“®o—ˆ‚é“d’Œ‚Ì”‚¾‚¯”z—ñ‚ğ‘‚â‚µ‚ÄƒAƒ^ƒbƒ`‚µ‚Ä‚­‚¾‚³‚¢")]
-    [Header("ƒAƒ^ƒbƒ`‚µ‚½‡”Ô‚ÉID‚ªŠ„‚èU‚ç‚ê‚Ü‚·")]
-    // “dü‚ÌƒIƒuƒWƒFƒNƒg‚ğ‚±‚±‚ÉƒAƒ^ƒbƒ`
+    [Header("ç§»å‹•å‡ºæ¥ã‚‹é›»æŸ±ã®æ•°ã ã‘é…åˆ—ã‚’å¢—ã‚„ã—ã¦ã‚¢ã‚¿ãƒƒãƒã—ã¦ãã ã•ã„")]
+    [Header("ã‚¢ã‚¿ãƒƒãƒã—ãŸé †ç•ªã«IDãŒå‰²ã‚ŠæŒ¯ã‚‰ã‚Œã¾ã™")]
+    // é›»ç·šã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã“ã“ã«ã‚¢ã‚¿ãƒƒãƒ
     public ElectricCableArray[] electricCableArray;
 
     [SerializeField] private float moveSpeed = 10f;
     private bool loopFlag = false;
 
     /// <summary>
-    /// “dü‚ÉG‚ê‚½ƒIƒuƒWƒFƒNƒg‚ğˆÚ“®‚³‚¹‚éˆ—
+    /// é›»ç·šã«è§¦ã‚ŒãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç§»å‹•ã•ã›ã‚‹å‡¦ç†
     /// </summary>
-    /// <param name="_moveObject">ˆÚ“®‚³‚¹‚½‚¢ƒIƒuƒWƒFƒNƒg</param>
-    /// <param name="_id">‚Ç‚±‚Ì“d’Œ‚ğ“n‚é‚©A“d’Œ‚ÌIDiˆÚ“®o—ˆ‚é“d’Œ‚ğ¶‘¤‚©‚ç0,1,2...‚Æ‚µ‚Ä”‚¦‚éj</param>
+    /// <param name="_moveObject">ç§»å‹•ã•ã›ãŸã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+    /// <param name="_id">ã©ã“ã®é›»æŸ±ã‚’æ¸¡ã‚‹ã‹ã€é›»æŸ±ã®IDï¼ˆç§»å‹•å‡ºæ¥ã‚‹é›»æŸ±ã‚’å·¦å´ã‹ã‚‰0,1,2...ã¨ã—ã¦æ•°ãˆã‚‹ï¼‰</param>
     /// <param name="_startPoint">true:StartCable / false:EndCable</param>
     public void CablePointMove(GameObject _moveObject, int _id,  bool _startPoint = true)
     {
-        // Update‚ÅŒÄ‚Î‚ê‚Ä‚à‘åä•v‚È‚æ‚¤‚Éƒtƒ‰ƒOŠÇ—
+        // Updateã§å‘¼ã°ã‚Œã¦ã‚‚å¤§ä¸ˆå¤«ãªã‚ˆã†ã«ãƒ•ãƒ©ã‚°ç®¡ç†
         if (loopFlag) { return; }
         StartCoroutine(MoveLoop(_moveObject, _id, _startPoint));
     }
 
 
     /// <summary>
-    /// ”ñ“¯Šú‚ÅŠe“dü‚ğü‰ñ‚·‚éˆ—
+    /// éåŒæœŸã§å„é›»ç·šã‚’å‘¨å›ã™ã‚‹å‡¦ç†
     /// </summary>
-    /// <param name="_loopObject">ˆÚ“®‚³‚¹‚éƒIƒuƒWƒFƒNƒg</param>
-    /// /// <param name="_id">‚Ç‚±‚Ì“d’Œ‚ğ“n‚é‚©A“d’Œ‚ÌIDiˆÚ“®o—ˆ‚é“d’Œ‚ğ¶‘¤‚©‚ç0,1,2...‚Æ‚µ‚Ä”‚¦‚éj</param>
+    /// <param name="_loopObject">ç§»å‹•ã•ã›ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+    /// /// <param name="_id">ã©ã“ã®é›»æŸ±ã‚’æ¸¡ã‚‹ã‹ã€é›»æŸ±ã®IDï¼ˆç§»å‹•å‡ºæ¥ã‚‹é›»æŸ±ã‚’å·¦å´ã‹ã‚‰0,1,2...ã¨ã—ã¦æ•°ãˆã‚‹ï¼‰</param>
     /// <param name="_startPoint">true:StartCable / false:EndCable</param>
     /// <returns></returns>
     private IEnumerator MoveLoop(GameObject _loopObject, int _id, bool _startPoint)
     {
-        // ƒ‹[ƒv‚ÌŠJn
+        // ãƒ«ãƒ¼ãƒ—ã®é–‹å§‹
         loopFlag = true;
-        // RigitBody2D‚Ìæ“¾
+        // RigitBody2Dã®å–å¾—
         var body = _loopObject.GetComponent<Rigidbody2D>();
-        // Œ»İ‚ÌBodyType‚ğæ“¾
+        // ç¾åœ¨ã®BodyTypeã‚’å–å¾—
         var currentBodyType = body.bodyType;
-        // BodtType‚ğstatic‚É•ÏX
+        // BodtTypeã‚’staticã«å¤‰æ›´
         body.bodyType = RigidbodyType2D.Static;
-        // ŠJn’n“_‚Ì”»•Ê
+        // é–‹å§‹åœ°ç‚¹ã®åˆ¤åˆ¥
         if (_startPoint)
         {
-            // point‚Ì”z—ñ‚Ì”‚¾‚¯ŒJ‚è•Ô‚·
+            // pointã®é…åˆ—ã®æ•°ã ã‘ç¹°ã‚Šè¿”ã™
             for (int i = 0; i < electricCableArray[_id].pointArray.Length; i++)
             {
-                // Ÿ‚Ìpoint‚ÆÀ•W‚ª“¯‚¶‚É‚È‚é‚Ü‚ÅŒJ‚è•Ô‚·
+                // æ¬¡ã®pointã¨åº§æ¨™ãŒåŒã˜ã«ãªã‚‹ã¾ã§ç¹°ã‚Šè¿”ã™
                 while (_loopObject.transform.position != electricCableArray[_id].pointArray[i].transform.position)
                 {
-                    // Ÿ‚Ìpoint‚ÌÀ•W‚ÉŒü‚©‚¤ˆ—
+                    // æ¬¡ã®pointã®åº§æ¨™ã«å‘ã‹ã†å‡¦ç†
                     _loopObject.transform.position = Vector2.MoveTowards(_loopObject.transform.position, electricCableArray[_id].pointArray[i].transform.position, moveSpeed * Time.deltaTime);
                     yield return null;
                 }
@@ -60,21 +60,21 @@ public class ElectricCableController : MonoBehaviour
         }
         else
         {
-            // point‚Ì”z—ñ‚Ì”‚¾‚¯ŒJ‚è•Ô‚·
+            // pointã®é…åˆ—ã®æ•°ã ã‘ç¹°ã‚Šè¿”ã™
             for (int i = electricCableArray[_id].pointArray.Length - 1; i >= 0; i--)
             {
-                // Ÿ‚Ìpoint‚ÆÀ•W‚ª“¯‚¶‚É‚È‚é‚Ü‚ÅŒJ‚è•Ô‚·
+                // æ¬¡ã®pointã¨åº§æ¨™ãŒåŒã˜ã«ãªã‚‹ã¾ã§ç¹°ã‚Šè¿”ã™
                 while (_loopObject.transform.position != electricCableArray[_id].pointArray[i].transform.position)
                 {
-                    // Ÿ‚Ìpoint‚ÌÀ•W‚ÉŒü‚©‚¤ˆ—
+                    // æ¬¡ã®pointã®åº§æ¨™ã«å‘ã‹ã†å‡¦ç†
                     _loopObject.transform.position = Vector2.MoveTowards(_loopObject.transform.position, electricCableArray[_id].pointArray[i].transform.position, moveSpeed * Time.deltaTime);
                     yield return null;
                 }
             }
         }
-        // ƒ‹[ƒv‚ÌI—¹
+        // ãƒ«ãƒ¼ãƒ—ã®çµ‚äº†
         loopFlag = false;
-        // BodyType‚ğŒ³‚Ì•Ï”‚É–ß‚·
+        // BodyTypeã‚’å…ƒã®å¤‰æ•°ã«æˆ»ã™
         body.bodyType = currentBodyType;
         yield break;
     }

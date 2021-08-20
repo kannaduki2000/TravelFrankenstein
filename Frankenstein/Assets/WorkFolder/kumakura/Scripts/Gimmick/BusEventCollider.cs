@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,19 +21,19 @@ public class BusEventCollider : MonoBehaviour
         playerNowLayer = playerCon.sortingOrder;
     }
 
-    // Player‘¤‚ªTag‚ÅŠÇ—‚µ‚ÄOntriggerEnter‚Æ‚©‚©‚çŒÄ‚ñ‚Å‚ ‚°‚Ä‚­‚¾‚³‚¢
-    // Destination_Position_XXX@‚ÌˆÊ’u“K“–‚È‚ñ‚Å’²®ƒIƒlƒVƒƒƒX
+    // Playerå´ãŒTagã§ç®¡ç†ã—ã¦OntriggerEnterã¨ã‹ã‹ã‚‰å‘¼ã‚“ã§ã‚ã’ã¦ãã ã•ã„
+    // Destination_Position_XXXã€€ã®ä½ç½®é©å½“ãªã‚“ã§èª¿æ•´ã‚ªãƒã‚·ãƒ£ã‚¹
 
     /// <summary>
-    /// ƒoƒX‚Éæ‚Á‚½‚è~‚è‚½‚è‚·‚éˆ—
+    /// ãƒã‚¹ã«ä¹—ã£ãŸã‚Šé™ã‚ŠãŸã‚Šã™ã‚‹å‡¦ç†
     /// </summary>
-    /// <param name="player">æ‚¹‚½‚¢object</param>
+    /// <param name="player">ä¹—ã›ãŸã„object</param>
     public void BusEvent(GameObject player)
     {
-        // EventCollider‚É‰‚¶‚Äplayer‚ğˆÚ“®‚³‚¹‚é
+        // EventColliderã«å¿œã˜ã¦playerã‚’ç§»å‹•ã•ã›ã‚‹
         player.transform.position = movingPoint[(int)eventCollider].transform.position;
 
-        // EventCollider‚Ì‰‚¶‚Äplayer‚ÌLayer‚ğŠ^
+        // EventColliderã®å¿œã˜ã¦playerã®Layerã‚’è›™
         switch (eventCollider)
         {
             case EventCollider.strat:
