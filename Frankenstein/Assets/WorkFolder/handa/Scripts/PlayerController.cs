@@ -168,7 +168,10 @@ public class PlayerController : MonoBehaviour
                 canvasParent.transform.localScale = new Vector3(canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
 
                 //物を持った時に方向を確認する：半田
-                item.left = false;
+                if (Getitem == true)
+                {
+                    item.left = false;
+                }
             }
             else if (Input.GetKey("left") || input < -inputRange)
             {
@@ -178,7 +181,11 @@ public class PlayerController : MonoBehaviour
                 canvasParent.transform.localScale = new Vector3(-canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
 
                 //物を持った時に方向を確認する：半田
-                item.left = true;
+                if (Getitem == true)
+                {
+                    item.left = true;
+                }
+
             }
             else
             {
@@ -297,7 +304,7 @@ public class PlayerController : MonoBehaviour
         /*アイテムを持つ入力処理---------------------------------------------*/
         if (Throw)
         {
-            if (Input.GetKey(KeyCode.R) || DSInput.PushDown(DSButton.Circle))//半田：SpaceからRに変更
+            if (Input.GetKey(KeyCode.R) || Getitem == true && DSInput.PushDown(DSButton.Circle))//半田：SpaceからRに変更
             {
                 //スペースの判定
                 //memo  『? true:false』
@@ -305,11 +312,10 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(presskeyFrames);
             }
 
-            if (Input.GetKeyUp(KeyCode.R))//半田：SpaceからRに変更
+            if (Input.GetKeyUp(KeyCode.R) || Getitem == true && DSInput.PushDown(DSButton.Circle))//半田：SpaceからRに変更
             {
                 //もしスペースが長押しされたら
                 if (PressLong <= presskeyFrames)
-
                 //高めに投げる
                 {
                     item.Hight();
@@ -465,6 +471,8 @@ public class PlayerController : MonoBehaviour
             //Wを押していたら
             if (Input.GetKey(KeyCode.W) || DSInput.Push(DSButton.R1))
             {
+                Debug.Log("持っている");
+
                 Throw = true;
                 //アイテムクラスの取得
                 item = collision.gameObject.GetComponent<KeyPlessThrow>();
@@ -477,16 +485,16 @@ public class PlayerController : MonoBehaviour
                 Getitem = true;
             }
 
-            if (Getitem == true)
+            if (Input.GetKeyUp(KeyCode.W) || DSInput.PushUp(DSButton.R1))
             {
-                if (Input.GetKeyUp(KeyCode.W) || DSInput.PushUp(DSButton.R1))
-                {
-                    item.gameObject.transform.parent = null;
+                Debug.Log("放した");
+                
+                item.gameObject.transform.parent = null;
 
-                    //tiemを放したらfalse
-                    Getitem = false;
-                }
+                //tiemを放したらfalse
+                Getitem = false;
             }
+            
         }
     }
 
