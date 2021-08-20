@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +30,7 @@ public class StairsGimmick : ElectricItem
 
     public override void Event()
     {
-        // ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶
+        // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿ
         anim.gameObject.GetComponent<StairsAnim>().Stairs();
         player.PlayerNotMove();
     }
@@ -57,21 +57,21 @@ public class StairsGimmick : ElectricItem
     }
 
 
-    //ƒAƒjƒ[ƒVƒ‡ƒ“‚Ítransform‚Åİ’è‚µ‚Ä‚ ‚è‚Ü‚·B
-    //“d‹C‚ğ“ü‚ê‚é‚Ì‘ã‚í‚è‚ÉP‚ğ‰Ÿ‚·
+    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¯transformã§è¨­å®šã—ã¦ã‚ã‚Šã¾ã™ã€‚
+    //é›»æ°—ã‚’å…¥ã‚Œã‚‹ã®ä»£ã‚ã‚Šã«Pã‚’æŠ¼ã™
 
-    //private void OnTriggerStay2D(Collider2D collision)//”¼“c:OnCollision‚©‚çOnTrigger‚É•ÏX
+    //private void OnTriggerStay2D(Collider2D collision)//åŠç”°:OnCollisionã‹ã‚‰OnTriggerã«å¤‰æ›´
     //{
 
     //    if (collision.gameObject.tag == "Player")
     //    {
-    //        Debug.Log("•¨‚É“–‚½‚Á‚Ä‚é");
+    //        Debug.Log("ç‰©ã«å½“ãŸã£ã¦ã‚‹");
     //        if (Input.GetKey(KeyCode.P))
     //        {
-    //            //StairsAnim‚©‚çƒAƒjƒ[ƒVƒ‡ƒ“Ä¶ƒXƒNƒŠƒvƒgŒÄ‚Ño‚µ
+    //            //StairsAnimã‹ã‚‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿã‚¹ã‚¯ãƒªãƒ—ãƒˆå‘¼ã³å‡ºã—
 
     //            anim.gameObject.GetComponent<StairsAnim>().Stairs();
-    //            Debug.Log("ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶");
+    //            Debug.Log("ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿ");
 
     //        }
     //    }
@@ -83,7 +83,7 @@ public class StairsGimmick : ElectricItem
 
 
 
-    //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
-    //ƒAƒjƒ[ƒVƒ‡ƒ“I—¹
+    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹
+    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†
 
 }

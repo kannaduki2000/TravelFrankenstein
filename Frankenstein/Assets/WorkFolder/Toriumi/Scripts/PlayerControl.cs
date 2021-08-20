@@ -1,25 +1,25 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    public Vector2 Speed = new Vector2(1,1);   //‘¬“x
+    public Vector2 Speed = new Vector2(1,1);   //é€Ÿåº¦
     Animator anim;
    
     void Start()
     {
-        //AnimetorƒRƒ“ƒ|ƒl[ƒVƒ‡ƒ“‚ğæ“¾‚·‚é
+       // Animetorã‚³ãƒ³ãƒãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚’å–å¾—ã™ã‚‹
         anim = GetComponent<Animator>();
 
     }
 
-    // ƒAƒbƒvƒf[ƒg‚ÍƒtƒŒ[ƒ€‚²‚Æ‚É1‰ñŒÄ‚Ño‚³‚ê‚é
+    // ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã¯ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«1å›å‘¼ã³å‡ºã•ã‚Œã‚‹
     void Update()
     {
         anim = gameObject.GetComponent<Animator>();
         
-        //ˆÚ“®
+        //ç§»å‹•
         Vector2 Position = transform.position;
         if (Input.GetKey(KeyCode.A))
         {
@@ -37,7 +37,7 @@ public class PlayerControl : MonoBehaviour
         }
         transform.position = Position;
 
-        //Œü‚«”½“]
+        //å‘ãåè»¢
         float x = Input.GetAxisRaw("Horizontal");
         if (x != 0)
         {

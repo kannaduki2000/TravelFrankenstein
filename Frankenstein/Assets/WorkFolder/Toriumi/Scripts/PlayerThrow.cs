@@ -1,13 +1,13 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerThrow : MonoBehaviour
 {
-    private int presskeyFrames = 0;             //’·‰Ÿ‚µƒtƒŒ[ƒ€”
-    private int PressLong = 300;                //’·‰Ÿ‚µ
-    private int PressShort = 100;               //Œy‰Ÿ‚µ
-    private bool Throw = false;                 //“Š‚°‚Ìƒtƒ‰ƒO
+    private int presskeyFrames = 0;             //é•·æŠ¼ã—ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
+    private int PressLong = 300;                //é•·æŠ¼ã—
+    private int PressShort = 100;               //è»½æŠ¼ã—
+    private bool Throw = false;                 //æŠ•ã’ã®ãƒ•ãƒ©ã‚°
     Rigidbody2D rb;
     KeyPlessThrow item;
 
@@ -22,32 +22,32 @@ public class PlayerThrow : MonoBehaviour
     {
         if (Throw)
         {
-            if (Input.GetKey(KeyCode.R))//”¼“cFSpace‚©‚çR‚É•ÏX
+            if (Input.GetKey(KeyCode.R))//åŠç”°ï¼šSpaceã‹ã‚‰Rã«å¤‰æ›´
             {
-                //ƒXƒy[ƒX‚Ì”»’è
-                //memo  w? true:falsex
-                presskeyFrames += (Input.GetKey(KeyCode.R)) ? 1 : 0;//”¼“cFSpace‚©‚çR‚É•ÏX
+                //ã‚¹ãƒšãƒ¼ã‚¹ã®åˆ¤å®š
+                //memo  ã€? true:falseã€
+                presskeyFrames += (Input.GetKey(KeyCode.R)) ? 1 : 0;//åŠç”°ï¼šSpaceã‹ã‚‰Rã«å¤‰æ›´
                 Debug.Log(presskeyFrames);
             }
 
-            else if (Input.GetKeyUp(KeyCode.R))//”¼“cFSpace‚©‚çR‚É•ÏX
+            else if (Input.GetKeyUp(KeyCode.R))//åŠç”°ï¼šSpaceã‹ã‚‰Rã«å¤‰æ›´
             {
-                //‚à‚µƒXƒy[ƒX‚ª’·‰Ÿ‚µ‚³‚ê‚½‚ç
+                //ã‚‚ã—ã‚¹ãƒšãƒ¼ã‚¹ãŒé•·æŠ¼ã—ã•ã‚ŒãŸã‚‰
                 if (PressLong <= presskeyFrames)
 
-                //‚‚ß‚É“Š‚°‚é
+                //é«˜ã‚ã«æŠ•ã’ã‚‹
                 {
                     item.Hight();
-                    Debug.Log("’·‚ß");
+                    Debug.Log("é•·ã‚");
                 }
 
-                //‚à‚µƒXƒy[ƒX‚ª‰Ÿ‚³‚ê‚½‚ç
+                //ã‚‚ã—ã‚¹ãƒšãƒ¼ã‚¹ãŒæŠ¼ã•ã‚ŒãŸã‚‰
                 else if (presskeyFrames <= PressShort)
 
-                //’á‚ß‚É“Š‚°‚é
+                //ä½ã‚ã«æŠ•ã’ã‚‹
                 {
                     item.Low();
-                    Debug.Log("’Z‚ß");
+                    Debug.Log("çŸ­ã‚");
                 }
             }
 
@@ -62,13 +62,13 @@ public class PlayerThrow : MonoBehaviour
 
     }
 
-    //ƒAƒCƒeƒ€‚É“–‚½‚Á‚½‚ç
+    //ã‚¢ã‚¤ãƒ†ãƒ ã«å½“ãŸã£ãŸã‚‰
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
     }
 
-    //ƒAƒCƒeƒ€‚©‚ç—£‚ê‚½‚ç
+    //ã‚¢ã‚¤ãƒ†ãƒ ã‹ã‚‰é›¢ã‚ŒãŸã‚‰
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Item")
@@ -81,7 +81,7 @@ public class PlayerThrow : MonoBehaviour
     }
 
 
-    //ƒAƒCƒeƒ€‚É“–‚½‚è‘±‚¯‚½‚ç
+    //ã‚¢ã‚¤ãƒ†ãƒ ã«å½“ãŸã‚Šç¶šã‘ãŸã‚‰
     private void OnTriggerStay2D(Collider2D collision)
     {
   
@@ -91,15 +91,15 @@ public class PlayerThrow : MonoBehaviour
             Debug.Log("stay");
 
             //item = collision.gameObject.GetComponent<Item>();
-            //W‚ğ‰Ÿ‚µ‚Ä‚¢‚½‚ç
+            //Wã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
             if (Input.GetKey(KeyCode.W))
             {
                 Throw = true;
-                //ƒAƒCƒeƒ€ƒNƒ‰ƒX‚Ìæ“¾
+                //ã‚¢ã‚¤ãƒ†ãƒ ã‚¯ãƒ©ã‚¹ã®å–å¾—
                 item = collision.gameObject.GetComponent<KeyPlessThrow>();
 
-                //ƒAƒCƒeƒ€‚ÌY²‚ªã‚ª‚é
-                // ‚±‚±‚Å‚±‚ÌƒIƒuƒWƒFƒNƒg‚ğƒvƒŒƒCƒ„[‚Ìq‹Ÿ‚É‚·‚é
+                //ã‚¢ã‚¤ãƒ†ãƒ ã®Yè»¸ãŒä¸ŠãŒã‚‹
+                // ã“ã“ã§ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å­ä¾›ã«ã™ã‚‹
                 item.gameObject.transform.parent = this.transform;
             }
         }

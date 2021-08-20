@@ -1,14 +1,14 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DogControl : MonoBehaviour
 {
 
-    // ‰¼‚Åì‚Á‚½ƒXƒNƒŠƒvƒg
+    // ä»®ã§ä½œã£ãŸã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 
-    public Vector2 Speed = new Vector2(1, 1);   //‘¬“x
-    public float jumpForce = 300.0f;            //ƒWƒƒƒ“ƒv—Í
+    public Vector2 Speed = new Vector2(1, 1);   //é€Ÿåº¦
+    public float jumpForce = 300.0f;            //ã‚¸ãƒ£ãƒ³ãƒ—åŠ›
     private bool Jump = false;
     Rigidbody2D rigid2D;
     Charger Charger;
@@ -23,7 +23,7 @@ public class DogControl : MonoBehaviour
     void Update()
     {
 
-        //ˆÚ“®
+        //ç§»å‹•
         Vector2 Position = transform.position;
         if (Input.GetKey(KeyCode.A))
         {

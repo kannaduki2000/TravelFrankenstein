@@ -1,29 +1,29 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Charger : MonoBehaviour
 {
-    GameObject Ra1;                //ƒCƒxƒ“ƒg”­¶”ÍˆÍ 
-    GameObject Ra2;                //•Ç
+    GameObject Ra1;                //ã‚¤ãƒ™ãƒ³ãƒˆç™ºç”Ÿç¯„å›² 
+    GameObject Ra2;                //å£
 
 
-    Vector2 startPos;              // ‰ŠúˆÊ’u
+    Vector2 startPos;              // åˆæœŸä½ç½®
 
-    private bool Remove = false;   // eq‰ğœA‰ŠúˆÊ’u‚É–ß‚éAƒP[ƒuƒ‹‚ÌƒXƒP[ƒ‹‚ğ0‚É‚·‚éƒtƒ‰ƒO
+    private bool Remove = false;   // è¦ªå­è§£é™¤ã€åˆæœŸä½ç½®ã«æˆ»ã‚‹ã€ã‚±ãƒ¼ãƒ–ãƒ«ã®ã‚¹ã‚±ãƒ¼ãƒ«ã‚’0ã«ã™ã‚‹ãƒ•ãƒ©ã‚°
 
     private void Start()
     {
-        startPos = transform.position;      // ‰ŠúˆÊ’u‚ğŠi”[
+        startPos = transform.position;      // åˆæœŸä½ç½®ã‚’æ ¼ç´
 
         Remove = true;                      
 
         this.Ra1 = GameObject.Find("Range1");
         this.Ra2 = GameObject.Find("Range2");
 
-        Ra1.SetActive(false);   //  ƒCƒxƒ“ƒg”ÍˆÍ”ñ•\¦
-        Ra2.SetActive(false);   //@•Ç”ñ•\¦
+        Ra1.SetActive(false);   //  ã‚¤ãƒ™ãƒ³ãƒˆç¯„å›²éè¡¨ç¤º
+        Ra2.SetActive(false);   //ã€€å£éè¡¨ç¤º
     }
 
     private void Update()
@@ -33,44 +33,44 @@ public class Charger : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.W))
             {
                 Debug.Log("ok");
-                this.gameObject.transform.parent = null;                                    //eqŠÖŒW‚Ì‰ğœ
-                transform.position = startPos;                                              //‰ŠúˆÊ’u
+                this.gameObject.transform.parent = null;                                    //è¦ªå­é–¢ä¿‚ã®è§£é™¤
+                transform.position = startPos;                                              //åˆæœŸä½ç½®
 
                 Vector3 vec = GameObject.Find("Cabels").transform.localScale;
-                GameObject.Find("Cabels").transform.localScale = new Vector3(0, 0, 0);      //Cables‚ÌƒXƒP[ƒ‹‚ğ0(”ñ•\¦‚É‚·‚é)
+                GameObject.Find("Cabels").transform.localScale = new Vector3(0, 0, 0);      //Cablesã®ã‚¹ã‚±ãƒ¼ãƒ«ã‚’0(éè¡¨ç¤ºã«ã™ã‚‹)
 
-                Ra1.SetActive(false);   //  ƒCƒxƒ“ƒg”ÍˆÍ”ñ•\¦
-                Ra2.SetActive(false);   //@•Ç”ñ•\¦
+                Ra1.SetActive(false);   //  ã‚¤ãƒ™ãƒ³ãƒˆç¯„å›²éè¡¨ç¤º
+                Ra2.SetActive(false);   //ã€€å£éè¡¨ç¤º
             }
         }
     }
 
-    //@eqŠÖŒW‚É‚·‚é
+    //ã€€è¦ªå­é–¢ä¿‚ã«ã™ã‚‹
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Dog")
         {
          
-            // WƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚é‚ÆeqŠÖŒW‚É‚È‚é
+            // Wã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ã„ã‚‹ã¨è¦ªå­é–¢ä¿‚ã«ãªã‚‹
             if (Input.GetKey(KeyCode.W))
             {
-                this.gameObject.transform.parent = GameObject.Find("Dog").transform;    //Dog ‚ğe‚É‚·‚é
+                this.gameObject.transform.parent = GameObject.Find("Dog").transform;    //Dog ã‚’è¦ªã«ã™ã‚‹
 
                 Vector3 vec = GameObject.Find("Cabels").transform.localScale;
-                GameObject.Find("Cabels").transform.localScale = new Vector3(1, 1, 1);  //Cables‚ÌƒXƒP[ƒ‹‚ğ1(•\¦‚·‚é)
+                GameObject.Find("Cabels").transform.localScale = new Vector3(1, 1, 1);  //Cablesã®ã‚¹ã‚±ãƒ¼ãƒ«ã‚’1(è¡¨ç¤ºã™ã‚‹)
 
-                Ra1.SetActive(true);    //@ƒCƒxƒ“ƒg”ÍˆÍ•\¦
-                Ra2.SetActive(true);    //@•Ç•\¦
+                Ra1.SetActive(true);    //ã€€ã‚¤ãƒ™ãƒ³ãƒˆç¯„å›²è¡¨ç¤º
+                Ra2.SetActive(true);    //ã€€å£è¡¨ç¤º
 
             }
         }
     }
 
-    // [“dƒP[ƒuƒ‹‚Ì‹——£§ŒÀ
-    // Trigger‚ÅƒCƒxƒ“ƒg”ÍˆÍ‚ğŒˆ’è
-    // Collision‚Å•Ç‚ğ¶¬B
+    // å……é›»ã‚±ãƒ¼ãƒ–ãƒ«ã®è·é›¢åˆ¶é™
+    // Triggerã§ã‚¤ãƒ™ãƒ³ãƒˆç¯„å›²ã‚’æ±ºå®š
+    // Collisionã§å£ã‚’ç”Ÿæˆã€‚
 
-    // Range1: İ’è‚³‚ê‚½ˆÊ’u
+    // Range1: è¨­å®šã•ã‚ŒãŸä½ç½®
     private void OnTriggerEnter2D(Collider2D collision)
     {
             if (collision.gameObject.tag == "Range1")
@@ -81,39 +81,39 @@ public class Charger : MonoBehaviour
 
                 this.gameObject.transform.parent = null;
 
-                Debug.Log("eq‰ğœ‚³‚ê‚È‚¢c");
+                Debug.Log("è¦ªå­è§£é™¤ã•ã‚Œãªã„â€¦");
             }
     }
 
 
     /*
-     @–ƒXƒNƒŠƒvƒg“à—e–
+     ã€€ï¼Šã‚¹ã‚¯ãƒªãƒ—ãƒˆå†…å®¹ï¼Š
 
-    E Hinge Joint ‚ğg‚Á‚ÄlŠp‚ğ‚Â‚È‚°‚ÄƒP[ƒuƒ‹‚ğì¬B
-    E Dog‚ÌƒXƒNƒŠƒvƒg“à—e‚ª‚í‚©‚ç‚È‚¢‚½‚ßA‰¼‚Ì•¨‚ğ“ü‚ê‚Ä‚¢‚Ü‚·B
-    E tag‚ğ3í—Ş’Ç‰Á‚µ‚Ü‚µ‚½B
-        DogAchangerARange1
+    ãƒ» Hinge Joint ã‚’ä½¿ã£ã¦å››è§’ã‚’ã¤ãªã’ã¦ã‚±ãƒ¼ãƒ–ãƒ«ã‚’ä½œæˆã€‚
+    ãƒ» Dogã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆå†…å®¹ãŒã‚ã‹ã‚‰ãªã„ãŸã‚ã€ä»®ã®ç‰©ã‚’å…¥ã‚Œã¦ã„ã¾ã™ã€‚
+    ãƒ» tagã‚’3ç¨®é¡è¿½åŠ ã—ã¾ã—ãŸã€‚
+        Dogã€changerã€Range1
     
-       *‹——£§ŒÀ*
-       ERange1 ‚ÅƒCƒxƒ“ƒg”»’è‚ğì‚Á‚Ä‚¢‚Ü‚·B
-       ERange2 ‚Å•Ç‚ğì‚Á‚Ä‚¢‚Ü‚·B
-       E‚Ç‚¿‚ç‚àn‚ß‚Í”ñ•\¦‚Å‚·‚ªADog‚ÆƒP[ƒuƒ‹‚ªeq‚É‚È‚Á‚½‚ç
-         •\¦‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚Ä‚¢‚Ü‚·B
+       *è·é›¢åˆ¶é™*
+       ãƒ»Range1 ã§ã‚¤ãƒ™ãƒ³ãƒˆåˆ¤å®šã‚’ä½œã£ã¦ã„ã¾ã™ã€‚
+       ãƒ»Range2 ã§å£ã‚’ä½œã£ã¦ã„ã¾ã™ã€‚
+       ãƒ»ã©ã¡ã‚‰ã‚‚å§‹ã‚ã¯éè¡¨ç¤ºã§ã™ãŒã€Dogã¨ã‚±ãƒ¼ãƒ–ãƒ«ãŒè¦ªå­ã«ãªã£ãŸã‚‰
+         è¡¨ç¤ºã•ã‚Œã‚‹ã‚ˆã†ã«ãªã£ã¦ã„ã¾ã™ã€‚
      
-       *ƒP[ƒuƒ‹‚ğL‚Î‚·*
-       EHinge Joint‚ğg‚Á‚Ä‚Â‚È‚°‚Ä‚¢‚Ü‚·B
-       ESetActive‚ğg‚¤‚ÆƒoƒO‚ª”­¶‚·‚é‚Ì‚ÅA
-         ƒXƒP[ƒ‹‚ğ0(”ñ•\¦)‚Æ1(•\¦)‚Å•\¦A”ñ•\¦‚ğİ’è‚µ‚Ä‚¢‚Ü‚·B
-       ERigidbody‚ÌŠÖŒW‚ÆƒP[ƒuƒ‹‚ÌˆÊ’u‚ÅƒP[ƒuƒ‹‚ªr‚Ô‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
-         ‚Ü‚½ARigidbody‚ÌŠÖŒW‚ÅƒP[ƒuƒ‹‚ª°‚ğ‚·‚è”²‚¯‚é‹°‚ê‚ª‘½‚¢‚É‚ ‚è‚Ü‚·B
-         ƒP[ƒuƒ‹‚ğ‘‚â‚¹‚Î‚·‚è”²‚¯‚ªŒ¸‚è‚Ü‚·‚ªA
-         ‘ã‚í‚è‚ÉƒP[ƒuƒ‹‚ª‚Æ‚ñ‚Å‚à‚È‚­d‚È‚é‚Ì‚Å–Å’ƒ‹ê’ƒr‚Ô‚è‚Ü‚·B
+       *ã‚±ãƒ¼ãƒ–ãƒ«ã‚’ä¼¸ã°ã™*
+       ãƒ»Hinge Jointã‚’ä½¿ã£ã¦ã¤ãªã’ã¦ã„ã¾ã™ã€‚
+       ãƒ»SetActiveã‚’ä½¿ã†ã¨ãƒã‚°ãŒç™ºç”Ÿã™ã‚‹ã®ã§ã€
+         ã‚¹ã‚±ãƒ¼ãƒ«ã‚’0(éè¡¨ç¤º)ã¨1(è¡¨ç¤º)ã§è¡¨ç¤ºã€éè¡¨ç¤ºã‚’è¨­å®šã—ã¦ã„ã¾ã™ã€‚
+       ãƒ»Rigidbodyã®é–¢ä¿‚ã¨ã‚±ãƒ¼ãƒ–ãƒ«ã®ä½ç½®ã§ã‚±ãƒ¼ãƒ–ãƒ«ãŒè’ã¶ã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚
+         ã¾ãŸã€Rigidbodyã®é–¢ä¿‚ã§ã‚±ãƒ¼ãƒ–ãƒ«ãŒåºŠã‚’ã™ã‚ŠæŠœã‘ã‚‹æã‚ŒãŒå¤šã„ã«ã‚ã‚Šã¾ã™ã€‚
+         ã‚±ãƒ¼ãƒ–ãƒ«ã‚’å¢—ã‚„ã›ã°ã™ã‚ŠæŠœã‘ãŒæ¸›ã‚Šã¾ã™ãŒã€
+         ä»£ã‚ã‚Šã«ã‚±ãƒ¼ãƒ–ãƒ«ãŒã¨ã‚“ã§ã‚‚ãªãé‡ãªã‚‹ã®ã§æ»…èŒ¶è‹¦èŒ¶è’ã¶ã‚Šã¾ã™ã€‚
 
-    @*‰ŠúˆÊ’u‚É–ß‚é*
-    @ E”ÍˆÍŠO‚â“r’†‚Å—£‚µ‚½ê‡A‰ŠúˆÊ’u‚É–ß‚è‚Ü‚·B
-       E‰ŠúˆÊ’u‚Ítransform.position‚Åİ’è‚µ‚Ä‚¢‚Ü‚·B
+    ã€€*åˆæœŸä½ç½®ã«æˆ»ã‚‹*
+    ã€€ ãƒ»ç¯„å›²å¤–ã‚„é€”ä¸­ã§é›¢ã—ãŸå ´åˆã€åˆæœŸä½ç½®ã«æˆ»ã‚Šã¾ã™ã€‚
+       ãƒ»åˆæœŸä½ç½®ã¯transform.positionã§è¨­å®šã—ã¦ã„ã¾ã™ã€‚
        
-        ˆÈã‚Å‚·A‚æ‚ë‚µ‚­‚¨Šè‚¢‚µ‚Ü‚·B
+        ä»¥ä¸Šã§ã™ã€ã‚ˆã‚ã—ããŠé¡˜ã„ã—ã¾ã™ã€‚
      */
 
 }

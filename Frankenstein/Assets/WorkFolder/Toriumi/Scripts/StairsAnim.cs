@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,21 +23,21 @@ public class StairsAnim : MonoBehaviour
 
     public void Stairs()
     {
-        //ƒAƒjƒ[ƒVƒ‡ƒ“‚ªÄ¶
-        //ƒ‹[ƒv‚ğØ‚Á‚Ä‚¢‚é‚Ì‚Åˆê‰ñ‚Ì‚İÄ¶B
-        //”»’è‚Í‚ ‚éB
+        //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå†ç”Ÿ
+        //ãƒ«ãƒ¼ãƒ—ã‚’åˆ‡ã£ã¦ã„ã‚‹ã®ã§ä¸€å›ã®ã¿å†ç”Ÿã€‚
+        //åˆ¤å®šã¯ã‚ã‚‹ã€‚
         anim.SetBool("Stairs", true);
     }
 
-    //ƒAƒjƒ[ƒVƒ‡ƒ“ƒCƒxƒ“ƒg‚É‚Äİ’èB
-    //Ä¶ŒãA“§–¾‚È•Ç‚ª”ñ•\¦‚É‚È‚éB
+    //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆã«ã¦è¨­å®šã€‚
+    //å†ç”Ÿå¾Œã€é€æ˜ãªå£ãŒéè¡¨ç¤ºã«ãªã‚‹ã€‚
     private void Wall()
     {
         wall = GameObject.Find("TransparentWall");
         wall.SetActive(false);
-        // Player‚ğ“®‚©‚¹‚é‚æ‚¤‚É
+        // Playerã‚’å‹•ã‹ã›ã‚‹ã‚ˆã†ã«
         stairs.AnimationEnd();
-        Debug.Log("•ÇA”ñ•\¦");
+        Debug.Log("å£ã€éè¡¨ç¤º");
     }
 
     
