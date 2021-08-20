@@ -225,6 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 15917184}
   playerMove: 0
+  touchminecart: 0
   sc: {fileID: 628313863}
   fadeControl: {fileID: 0}
 --- !u!61 &15917188
@@ -288,10 +289,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 15917184}
   enemy: {fileID: 1625776880}
+  MineCart: {fileID: 0}
   speed: 3
   stopDistance: 0
   mt: {fileID: 15917187}
   cp: {fileID: 0}
+  mcp: {fileID: 0}
+  pushb: {fileID: 0}
   enemyMove: 1
 --- !u!114 &15917191
 MonoBehaviour:
@@ -591,7 +595,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 16.784632
+  orthographic size: 10.348665
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -615,7 +619,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157192283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 10.1, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -651,7 +655,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfaf2caa484d437448bd1dcf42c25334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigid2D: {fileID: 0}
+  kasokudekiru: 0
+  rothaguruma: 0
 --- !u!212 &243829505
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1027,6 +1032,8 @@ MonoBehaviour:
   crash: 0
   garekiCrash: 0
   rot: 0
+  carMove: 0
+  enemy: {fileID: 0}
   material: {fileID: 0}
 --- !u!1 &618090195
 GameObject:
@@ -1860,10 +1867,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 15917184}
   enemy: {fileID: 1625776880}
+  MineCart: {fileID: 0}
   speed: 3
   stopDistance: 3
   mt: {fileID: 15917187}
   cp: {fileID: 556644264}
+  mcp: {fileID: 0}
+  pushb: {fileID: 0}
   enemyMove: 1
 --- !u!61 &1625776884
 BoxCollider2D:

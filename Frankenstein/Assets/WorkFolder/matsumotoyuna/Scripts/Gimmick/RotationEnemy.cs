@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,13 +11,13 @@ public class RotationEnemy : MonoBehaviour
 
     void Update()
     {
-        //“®‚­‚©”Û‚©
+        //å‹•ãã‹å¦ã‹
         if (rothaguruma == false && kasokudekiru == false)
         {
             kasokuuuuuu = false;
         }
         
-        //áŠ±‰Á‘¬‚·‚é‚æ
+        //è‹¥å¹²åŠ é€Ÿã™ã‚‹ã‚ˆ
         if(rothaguruma == true && kasokudekiru == false)
         {
             this.speed = 0.001f;
@@ -25,7 +25,7 @@ public class RotationEnemy : MonoBehaviour
             kasokudekiru = true;
         }
 
-        //‰ñ“]ƒXƒs[ƒh
+        //å›è»¢ã‚¹ãƒ”ãƒ¼ãƒ‰
         if(kasokuuuuuu == true)
         {
             transform.Rotate(0, 0, this.speed);

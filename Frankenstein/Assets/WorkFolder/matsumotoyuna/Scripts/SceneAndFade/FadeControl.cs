@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -101,22 +101,22 @@ public class FadeControl : MonoBehaviour
         _callback = callback;
         if (name == "in")
         {
-            //•ƒtƒF[ƒhƒCƒ“
+            //é»’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
             StartCoroutine(FadeIn());
         }
         else if (name == "out")
         {
-            //•ƒtƒF[ƒhƒAƒEƒg
+            //é»’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
             StartCoroutine(FadeOut());
         }
         else if (name == "win")
         {
-            //”’ƒtƒF[ƒhƒCƒ“
+            //ç™½ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
             StartCoroutine(WhiteFadeIn());
         }
         else if (name == "wout")
         {
-            //”’ƒtƒF[ƒhƒAƒEƒg
+            //ç™½ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
             StartCoroutine(WhiteFadeOut());
         }
     }

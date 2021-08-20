@@ -1,9 +1,9 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//ƒJƒƒ‰—pA„‚ª‹C•ª‚Å‘‚¢‚½‚¾‚¯
-//ÀÛ‚Í—˜—p‚µ‚È‚¢‚æIg‚í‚È‚¢‚Å‚ËI
+//ã‚«ãƒ¡ãƒ©ç”¨ã€ç§ãŒæ°—åˆ†ã§æ›¸ã„ãŸã ã‘
+//å®Ÿéš›ã¯åˆ©ç”¨ã—ãªã„ã‚ˆï¼ä½¿ã‚ãªã„ã§ã­ï¼
 [RequireComponent(typeof(Camera))]
 
 public class CameraTest : MonoBehaviour
@@ -15,7 +15,7 @@ public class CameraTest : MonoBehaviour
     public GameObject Enemy;
     public GameObject MineCart;
 
-    //”ñŒø—¦‚Ì‹É‚İ‰³—
+    //éåŠ¹ç‡ã®æ¥µã¿ä¹™å¥³
     void Update()
     {
         Vector2 playerPos = Player.transform.position;

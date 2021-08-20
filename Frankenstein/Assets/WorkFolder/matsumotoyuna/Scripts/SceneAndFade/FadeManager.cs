@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,20 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class FadeManager : MonoBehaviour
 {
-    float fadeSpeed = 0.001f; //‘JˆÚ‘¬“x
+    float fadeSpeed = 0.001f; //é·ç§»é€Ÿåº¦
     float red, green, blue, alpha;
 
-    //boolŒ^@`3í‚ÌƒtƒF[ƒh‚ğ“Y‚¦‚Ä`
+    //boolå‹ã€€ï½3ç¨®ã®ãƒ•ã‚§ãƒ¼ãƒ‰ã‚’æ·»ãˆã¦ï½
     public bool isFadeout = false;
     public bool isFadein = false;
     public bool isWhiteout = false;
 
-    //ƒCƒ[ƒW‚âƒLƒƒƒ“ƒoƒX
+    //ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚„ã‚­ãƒ£ãƒ³ãƒã‚¹
     Image fadeImage;
 
     [SerializeField] private GameObject canvas;
 
-    //”é‹ZFSceneChange¢Š«
+    //ç§˜æŠ€ï¼šSceneChangeå¬å–š
     public SceneChange sc;
 
     void Start()
@@ -34,13 +34,13 @@ public class FadeManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(canvas);
-        //–³ŒÀ‘B•Ò
+        //ç„¡é™å¢—æ®–ç·¨
     }
 
     // Update is called once per frame
     void Update()
     {
-        //‚»‚ê‚¼‚ê‚ÌƒtƒF[ƒh‚É”ò‚Ô‚¨
+        //ãã‚Œãã‚Œã®ãƒ•ã‚§ãƒ¼ãƒ‰ã«é£›ã¶ãŠ
         if (isFadein)
         {
             StartFadeIn();
@@ -59,7 +59,7 @@ public class FadeManager : MonoBehaviour
 
     void StartFadeIn()
     {
-        //ƒtƒF[ƒhƒCƒ“
+        //ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
         alpha -= fadeSpeed;
         SetAlpha();
 
@@ -70,7 +70,7 @@ public class FadeManager : MonoBehaviour
 
             if (sc.Map12 == true)
             {
-                //ƒƒS‚ÆMap1‚ÌŠÔ
+                //ãƒ­ã‚´ã¨Map1ã®é–“
                 isFadeout = true;
                 sc.Map12 = false;
                 sc.Map1 = true;
@@ -80,20 +80,20 @@ public class FadeManager : MonoBehaviour
 
     public void StartFadeOut()
     {
-        //•‚­ƒtƒF[ƒhƒAƒEƒg
+        //é»’ããƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
         fadeImage.enabled = true;
         alpha += fadeSpeed;
         SetAlpha();
 
         if (alpha >= 1)
         {
-            //“¯‚ÉƒtƒF[ƒhƒCƒ“‚àÏ‚Ü‚¹‚¿‚Ü‚¤ze
+            //åŒæ™‚ã«ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã‚‚æ¸ˆã¾ã›ã¡ã¾ã†ze
             isFadeout = false;
             isFadein = true;
 
             if (sc.Title == true)
             {
-                //ƒ^ƒCƒgƒ‹‚Ö
+                //ã‚¿ã‚¤ãƒˆãƒ«ã¸
                 Debug.Log("TentativeTitle");
                 SceneManager.LoadScene("TentativeTitle");
                 sc.Title = false;
@@ -101,24 +101,24 @@ public class FadeManager : MonoBehaviour
 
             if (sc.Tutorial == true)
             {
-                //ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ö
-                Debug.Log("handa");//”¼“c:ƒV[ƒ“‚Ì•ÏX
-                SceneManager.LoadScene("handa");//”¼“c:ƒV[ƒ“‚Ì•ÏX
+                //ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã¸
+                Debug.Log("handa");//åŠç”°:ã‚·ãƒ¼ãƒ³ã®å¤‰æ›´
+                SceneManager.LoadScene("handa");//åŠç”°:ã‚·ãƒ¼ãƒ³ã®å¤‰æ›´
                 sc.Tutorial = false;
             }
 
             if (sc.Map1 == true)
             {
-                //Map1‚Ö
-                Debug.Log("Stag1");//”¼“c:ƒV[ƒ“‚Ì•ÏX
-                SceneManager.LoadScene("Stag1");//”¼“c:ƒV[ƒ“‚Ì•ÏX
+                //Map1ã¸
+                Debug.Log("Stag1");//åŠç”°:ã‚·ãƒ¼ãƒ³ã®å¤‰æ›´
+                SceneManager.LoadScene("Stag1");//åŠç”°:ã‚·ãƒ¼ãƒ³ã®å¤‰æ›´
                 sc.Map1 = false;
             }
 
             if (sc.Map2 == true)
             {
-                //Map2‚Ö
-                //–{—ˆ‚Íƒ}ƒbƒv3‚É‘JˆÚ
+                //Map2ã¸
+                //æœ¬æ¥ã¯ãƒãƒƒãƒ—3ã«é·ç§»
                 Debug.Log("TentativeTitle");
                 SceneManager.LoadScene("TentativeTitle");
                 sc.Map2 = false;
@@ -128,19 +128,19 @@ public class FadeManager : MonoBehaviour
 
     void StartWhiteOut()
     {
-        //”’‚­ƒtƒF[ƒhƒAƒEƒg
+        //ç™½ããƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
         alpha += fadeSpeed;
         SetAlpha();
 
         if (alpha >= 1)
         {
-            //“¯‚ÉƒtƒF[ƒhƒCƒ“‚àÏ‚Ü‚µƒ}ƒXƒI
+            //åŒæ™‚ã«ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã‚‚æ¸ˆã¾ã—ãƒã‚¹ã‚ª
             isFadein = true;
             isWhiteout = false;
 
             if (sc.Logo == true)
             {
-                //ƒ^ƒCƒgƒ‹ƒƒS¨Map1‚Ö
+                //ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´â†’Map1ã¸
                 SceneManager.LoadScene("TitleLogo");
                 sc.Logo = false;
                 sc.Map12 = true;

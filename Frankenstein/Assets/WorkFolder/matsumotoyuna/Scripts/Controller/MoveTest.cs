@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +19,7 @@ public class MoveTest : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Jump = false;
-        //ª°‚É’…‚­‚Ü‚ÅƒWƒƒƒ“ƒv‚³‚¹‚È‚¢ƒ}ƒ“
+        //â†‘åºŠã«ç€ãã¾ã§ã‚¸ãƒ£ãƒ³ãƒ—ã•ã›ãªã„ãƒžãƒ³
         if(collision.gameObject.name == "MineCart" && touchminecart == false)
         {
             rigid2D.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -60,7 +60,7 @@ public class MoveTest : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //”»’è‚ÌêŠ‚ð’Ê‰ß‚µ‚½‚ç”­¶
+        //åˆ¤å®šã®å ´æ‰€ã‚’é€šéŽã—ãŸã‚‰ç™ºç”Ÿ
         if (collision.gameObject.tag == "GoTitleLogo")
         {
             fadeControl.Fade("wout", () => fadeControl.sceneChange.SceneSwitching("TitleLogo", true));

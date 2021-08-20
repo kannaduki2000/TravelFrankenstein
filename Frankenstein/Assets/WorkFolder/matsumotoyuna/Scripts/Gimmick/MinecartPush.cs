@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Physics;
 
-//ƒGƒlƒ~[‚ªƒgƒƒbƒR‚Ì‘O‚ÅR‚ğ‰Ÿ‚·‚ÆA
-//ƒgƒƒbƒR‚ª“®‚­d‘g‚İ‚ÌƒXƒNƒŠƒvƒg‚¾‚æI
+//ã‚¨ãƒãƒŸãƒ¼ãŒãƒˆãƒ­ãƒƒã‚³ã®å‰ã§Rã‚’æŠ¼ã™ã¨ã€
+//ãƒˆãƒ­ãƒƒã‚³ãŒå‹•ãä»•çµ„ã¿ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã ã‚ˆï¼
 public class MinecartPush : MonoBehaviour
 {
     public Rigidbody2D rigid2D;
@@ -22,8 +22,8 @@ public class MinecartPush : MonoBehaviour
     {
         if (collision.gameObject.tag == "Floar")
         {
-            //“Á’è‚Ì°‚É’…‚­‚Ü‚Å‚ÍZ‰ñ“]‚ğŒÅ’è‚µ‚Ä‚Ü‚·
-            //‚»‚Ì°‚ÉFloarƒ^ƒO‚ğİ’è‚µ‚Ä‚­‚ê‚½‚Ü‚¦
+            //ç‰¹å®šã®åºŠã«ç€ãã¾ã§ã¯Zå›è»¢ã‚’å›ºå®šã—ã¦ã¾ã™
+            //ãã®åºŠã«Floarã‚¿ã‚°ã‚’è¨­å®šã—ã¦ãã‚ŒãŸã¾ãˆ
             rigid2D.constraints = RigidbodyConstraints2D.None;
             enemytouch = true;
         }
@@ -34,9 +34,9 @@ public class MinecartPush : MonoBehaviour
             Invoke("MoveStop", 0.5f);
         }
 
-        //ƒgƒƒbƒR‚ÆƒvƒŒƒCƒ„[‚Ì‚·‚êˆá‚¢‘Îô
-        //‚»‚Ì‘O‚ÉƒŒƒCƒ„[‚Ìİ’è‚µ‚Ä‚ËI
-        //(project setting? ‚Ì‚Æ‚±‚ë‚Ì‚â‚Â)
+        //ãƒˆãƒ­ãƒƒã‚³ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã™ã‚Œé•ã„å¯¾ç­–
+        //ãã®å‰ã«ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¨­å®šã—ã¦ã­ï¼
+        //(project setting? ã®ã¨ã“ã‚ã®ã‚„ã¤)
         else if (collision.gameObject.name == "Player" && playertouch == false)
         {
             aaa.SetActive(false);
@@ -68,7 +68,7 @@ public class MinecartPush : MonoBehaviour
             Invoke("SActive", 2.0f);
         }
 
-        //ƒGƒlƒ~[‚ªè‚ÅƒgƒƒbƒR‚ğ‰Ÿ‚¹‚é—p‚Éd‚³•ÏX
+        //ã‚¨ãƒãƒŸãƒ¼ãŒæ‰‹ã§ãƒˆãƒ­ãƒƒã‚³ã‚’æŠ¼ã›ã‚‹ç”¨ã«é‡ã•å¤‰æ›´
         if (enemyrpush == true)
         {
             rigid2D.mass = 1;

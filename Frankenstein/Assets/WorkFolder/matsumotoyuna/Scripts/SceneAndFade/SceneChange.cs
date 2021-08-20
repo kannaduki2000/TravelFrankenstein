@@ -1,16 +1,16 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour
 {
-    //¢Š«
+    //å¬å–š
     public FadeManager fm;
 
     public FadeControl fadeControl;
 
-    //FX
+    //è‰²ã€…
     public bool Title = false;
     public bool Tutorial = false;
     public bool Map1 = false;
@@ -26,14 +26,14 @@ public class SceneChange : MonoBehaviour
 
     public void SceneSwitching(string sceneName, bool isWhite = false, bool isFadeIn = true)
     {
-        //‘JˆÚ
+        //é·ç§»
         SceneManager.LoadScene(sceneName);
         if (isFadeIn)
         {
-            //”’‚­‚È‚éŽžŒÀ’è
+            //ç™½ããªã‚‹æ™‚é™å®š
             if (isWhite)
             {
-                // ƒV[ƒ“‘JˆÚŒãƒtƒ‰ƒO‚ð—§‚Ä‚é
+                // ã‚·ãƒ¼ãƒ³é·ç§»å¾Œãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
                 fadeControl.Fade("win", ()=> fadeControl.Fade("out", ()=> 
                 {
                     SceneSwitching("MainStage_1");
@@ -42,10 +42,10 @@ public class SceneChange : MonoBehaviour
                 return;
             }
 
-            // ‚­‚ÜF‘‚«•û‰˜‚¢‚ñ‚Å‘‚«’¼‚·
+            // ãã¾ï¼šæ›¸ãæ–¹æ±šã„ã‚“ã§æ›¸ãç›´ã™
             if (sceneName == "MainTutorial")
             {
-                // FadeInI‚í‚Á‚½‚çƒtƒ‰ƒO‚ð—§‚Ä‚é
+                // FadeInçµ‚ã‚ã£ãŸã‚‰ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
                 fadeControl.Fade("in", ()=> EventFlagManager.Instance.SetFlagState(EventFlagName.frankensteinGetUp, true));
                 return;
             }

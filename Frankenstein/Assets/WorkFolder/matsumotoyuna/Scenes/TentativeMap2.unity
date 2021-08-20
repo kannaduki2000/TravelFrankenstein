@@ -2132,7 +2132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mpush: {fileID: 965239765}
   rotenemy: {fileID: 1973790824}
-  rotladder: {fileID: 0}
+  rotladder: {fileID: 1559533796}
   Button2: {fileID: 1700811801}
   pushingbutton: 0
   rpush: 0

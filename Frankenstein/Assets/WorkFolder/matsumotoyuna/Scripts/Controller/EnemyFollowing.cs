@@ -1,21 +1,12 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-�X�V��������
-7��31���@enemyMove����Vector3��1����0.5f�ɕύX
-         bool��minecart�ǉ�
-         public MinecartPush mcp�ǉ�
-         OnCollisionEnter2D����minecart�ǉ�
-         R���������Ƃ��̓�����ǉ�
-*/
+//Edit→Project Settings→Physics2D下のチェック
+//その前にレイヤー分けすると、
+//プレイヤーとエネミーですれ違い通信ができるようになるよ！
 
-//Edit��Project Settings��Physics2D���̃`�F�b�N
-//���̑O�Ƀ��C���[��������ƁA
-//�v���C���[�ƃG�l�~�[�ł���Ⴂ�ʐM���ł���悤�ɂȂ��I
-
-//�ƂĂ��ƂĂ�������ȏ��������Ă�
+//とてもとても非効率な書き方してる
 
 public class EnemyFollowing : MonoBehaviour
 {
@@ -23,19 +14,19 @@ public class EnemyFollowing : MonoBehaviour
     public GameObject enemy;
     public GameObject MineCart;
     //public Transform target;
-    public float speed = 3.0f;         //���x
-    public float stopDistance;         //�~�܂�Ƃ��̋���
+    public float speed = 3.0f;         //速度
+    public float stopDistance;         //止まるときの距離
 
-    private bool isFollowing = true;   //�Ǐ]���邩�ǂ���
+    private bool isFollowing = true;   //追従するかどうか
 
     public MoveTest mt;
     public CarPush cp;
     public MinecartPush mcp;
     public PushButton pushb;
 
-    public bool enemyMove = true;      //�G�l�~�[�̓���
-    private bool Jump = false;         //�W�����v�p
-    private bool Follow = false;       //��x�ڂ̓��͂ł̂��Ă��邩�ۂ�
+    public bool enemyMove = true;      //エネミーの動き
+    private bool Jump = false;         //ジャンプ用
+    private bool Follow = false;       //二度目の入力でのついてくるか否か
     private bool car = false;
     private bool minecart = false;
     private bool okrpush = false;
@@ -43,12 +34,12 @@ public class EnemyFollowing : MonoBehaviour
     Vector3 enemyScale;
 
     Rigidbody2D rigid2D;
-    float jumpForce = 300.0f;          //�W�����v��
+    float jumpForce = 300.0f;          //ジャンプ力
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Jump = false;
-        //�����ɒ����܂ŃW�����v�����Ȃ��}��
+        //↑床に着くまでジャンプさせないマン
 
         if(collision.gameObject.tag == "Car")
         {
@@ -75,37 +66,37 @@ public class EnemyFollowing : MonoBehaviour
 
     void Update()
     {
-        //����p�ӂ��āA���̒���Y���W������
+        //箱を用意して、その中にY座標を入れる
         Vector2 targetPos = player.transform.position;
         targetPos.y = transform.position.y;
 
-        //����
+        //距離
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
         if (isFollowing)
         {
-            //if(�Ԃ̋������~�܂�Ƃ��̋����ȏ�Ȃ�?)
+            //if(間の距離が止まるときの距離以上なら?)
             if (distance > stopDistance)
             {
                 transform.position = Vector3.MoveTowards(transform.position,
                 new Vector2(player.transform.position.x, enemy.transform.position.y),
                 speed * Time.deltaTime);
             }
-            //enemy��player
+            //enemy→player
 
-            // �E
+            // 右
             if (player.transform.position.x < transform.position.x)
             {
                 transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
-            // ��
+            // 左
             else if (player.transform.position.x > transform.position.x)
             {
                 transform.localScale = enemyScale;
             }
 
-            //�W�����v
+            //ジャンプ
             if (Jump == false && Input.GetKeyDown(KeyCode.Space))
             {
                 this.rigid2D.AddForce(transform.up * this.jumpForce);
@@ -113,7 +104,7 @@ public class EnemyFollowing : MonoBehaviour
             }
         }
 
-        //�G�l�~�[�̓����p
+        //エネミーの動き用
         if (enemyMove == false)
         {
             if (Input.GetKey(KeyCode.LeftArrow))
@@ -155,80 +146,80 @@ public class EnemyFollowing : MonoBehaviour
             }
         }
 
-        // �Ǐ]�̐؂�ւ�����
+        // 追従の切り替え処理
         //if (Input.GetKey(KeyCode.A))
         //{
         //     //GetComponent<EnemyFollowing>().enabled = false;
         //     Following();
         //}
 
-        //������̐؂�ւ�����
-        //1��ڂ̐؂�ւ����̓���
+        //★操作の切り替え処理
+        //1回目の切り替え時の動き
         if (Input.GetKeyDown(KeyCode.Return) && Follow == false)
         {
             //GetComponent<EnemyFollowing>().enabled = false;
             mt.playerMove = !mt.playerMove;
             Following();
             enemyMove = !enemyMove;
-            //PlayerChange(); //���ɂ�����������ƂȂ�Ăł��܂���ł����B
+            //PlayerChange(); //私にこれを扱うことなんてできませんでした。
             Follow = !Follow;
         }
 
-        //2��ڂ̐؂�ւ����A�v���C���[���������ăG�l�~�[�s����
-        //���̏�Ԃ��Ɖ���Enter�����Ă��v���C���[�����������
+        //2回目の切り替え時、プレイヤーだけ動いてエネミー不動堂
+        //この状態だと何回Enter押してもプレイヤーしか動かんで
         else if(Input.GetKeyDown(KeyCode.Return) && Follow == true)
         {
-            //Following();  //����Ȃ̒m��܂���B
+            //Following();  //こんなの知りません。
             isFollowing = false;
             enemyMove = true;
             mt.playerMove = false;
         }
 
-        //�Ăԃ{�^��(Delete���u��)�����������̓���
-        //Follow��؂�ւ��邱�Ƃł�����x�Ǐ]��؂�ւ����ł��邨
+        //呼ぶボタン(Delete仮置き)を押した時の動き
+        //Followを切り替えることでもう一度追従や切り替えができるお
         if (Follow == true && Input.GetKeyDown(KeyCode.Delete))
         {
-            //Following();  //�����A�킩��Ȃ��B
+            //Following();  //あぁ、わからない。
             isFollowing = true;
             Follow = !Follow;
         }
     }
 
-    // ���ĒǏ]�̐؂�ւ�����������
+    // かつて追従の切り替えだったもの
     public void Following()
     {
         isFollowing = !isFollowing;
     }
 
-    // ���đ���̐؂�ւ�����������
+    // かつて操作の切り替えだったもの
     public void PlayerChange()
     {
-        // �v���C���[�̑�����ł��Ȃ�����
+        // プレイヤーの操作をできなくする
         mt.playerMove = !mt.playerMove;
 
-        // ���쌠��G�Ɉړ�������
+        // 操作権を敵に移動させる
         Following();
         enemyMove = !enemyMove;
 
-        //���̏�ԂŌ��̃{�^���������ƁA����؂�ւ��E�Ǐ]�Ȃ�
+        //この状態で元のボタンを押すと、操作切り替え・追従なし
 
-        // �J�����̒Ǐ]��G�Ɉڂ����N���撣���ăN�������X���͖{�莛
+        // カメラの追従を敵に移す→誰か頑張ってクレメンス他力本願寺
     }
 }
 
-/*����
-�G�̒Ǐ]
-�v���C���[�̍��W�Əd�Ȃ��Ă͂����Ȃ��I
-�v���C���[�ƃG�l�~�[�́A�����炩�̊Ԃ��J����C���[�W
-�i�s�����Ɣ��Α��ɂ��H(�v���C���[���E�ɐi��ł��鎞�͍����ɂ�)
+/*解決
+敵の追従
+プレイヤーの座標と重なってはいけない！
+プレイヤーとエネミーは、いくらかの間を開けるイメージ
+進行方向と反対側につく？(プレイヤーが右に進んでいる時は左側につく)
 */
 
 /*
-L�{�^���ő���؂�ւ�
-���̂��Ƃ͕t���Ă��Ȃ����@�\�I�t?
+Lボタンで操作切り替え
+そのあとは付いてこない→機能オフ?
 */
 
 /*
-L�{�^�������������A�{�^���������ƌĂׂ遨�@�\�I��
-(����͂���Ȃ������H)��(����炵���ł��悠�Ȃ�)
+Lボタンを押した後にAボタンを押すと呼べる→機能オン
+(これはいらなさそう？)→(いるらしいですよあなた)
 */
