@@ -1,10 +1,10 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 
 public class EventFlag
 {
-    public EventFlagName flagName;   // ƒtƒ‰ƒO‚Ì–¼‘O
-    public bool isTrue;              // ƒtƒ‰ƒO‚Ìó‘Ô
+    public EventFlagName flagName;   // ãƒ•ãƒ©ã‚°ã®åå‰
+    public bool isTrue;              // ãƒ•ãƒ©ã‚°ã®çŠ¶æ…‹
     public EventFlag(EventFlagName _flagName, bool _isTrue = true)
     {
         this.flagName = _flagName;
@@ -34,13 +34,13 @@ public class EventFlagManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // ƒCƒxƒ“ƒgÀs’†‚©‚Ç‚¤‚©‚ğ”»•Ê‚·‚éƒtƒ‰ƒO
+    // ã‚¤ãƒ™ãƒ³ãƒˆå®Ÿè¡Œä¸­ã‹ã©ã†ã‹ã‚’åˆ¤åˆ¥ã™ã‚‹ãƒ•ãƒ©ã‚°
     public bool EventFlag { get; set; }
 
     private EventFlag[] flags = new EventFlag[0];
 
     /// <summary>
-    /// w’è‚µ‚½–¼‘O‚Ìƒtƒ‰ƒOó‘Ô‚ğæ“¾‚·‚é
+    /// æŒ‡å®šã—ãŸåå‰ã®ãƒ•ãƒ©ã‚°çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
     /// </summary>
     /// <param name="flagName"></param>
     /// <returns></returns>
@@ -51,7 +51,7 @@ public class EventFlagManager : MonoBehaviour
 
         if (targetFlag == null)
         {
-            Debug.Log(flagName + "‚Æ‚¢‚¤–¼‘O‚Ìƒtƒ‰ƒO‚Í‚È‚¢‚æI");
+            Debug.Log(flagName + "ã¨ã„ã†åå‰ã®ãƒ•ãƒ©ã‚°ã¯ãªã„ã‚ˆï¼");
         }
         else
         {
@@ -62,7 +62,7 @@ public class EventFlagManager : MonoBehaviour
     }
 
     /// <summary>
-    /// w’è‚µ‚½–¼‘O‚Ìƒtƒ‰ƒO‚Ìó‘Ô‚ğİ’è‚·‚é
+    /// æŒ‡å®šã—ãŸåå‰ã®ãƒ•ãƒ©ã‚°ã®çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹
     /// </summary>
     /// <param name="flagName"></param>
     /// <param name="flag"></param>
@@ -75,7 +75,7 @@ public class EventFlagManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ‘S‚Ä‚Ìƒtƒ‰ƒO‚Ìó‘Ô‚ğƒRƒ“ƒ\[ƒ‹ã‚É•\¦‚·‚é
+    /// å…¨ã¦ã®ãƒ•ãƒ©ã‚°ã®çŠ¶æ…‹ã‚’ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ä¸Šã«è¡¨ç¤ºã™ã‚‹
     /// </summary>
     public void DumpAllFlag()
     {
@@ -88,7 +88,7 @@ public class EventFlagManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒtƒ‰ƒO‚ğ‘S‚ÄÁ‹‚·‚é
+    /// ãƒ•ãƒ©ã‚°ã‚’å…¨ã¦æ¶ˆå»ã™ã‚‹
     /// </summary>
     public void ClearAllFlag()
     {
@@ -96,7 +96,7 @@ public class EventFlagManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒtƒ‰ƒO‚ğ‘S‚Äfalse‚É‚·‚é
+    /// ãƒ•ãƒ©ã‚°ã‚’å…¨ã¦falseã«ã™ã‚‹
     /// </summary>
     public void ResetAllFlag()
     {
@@ -107,7 +107,7 @@ public class EventFlagManager : MonoBehaviour
     }
 
     /// <summary>
-    /// w’è‚µ‚½–¼‘O‚Ìƒtƒ‰ƒO‚ğŒŸõ‚·‚é
+    /// æŒ‡å®šã—ãŸåå‰ã®ãƒ•ãƒ©ã‚°ã‚’æ¤œç´¢ã™ã‚‹
     /// </summary>
     /// <param name="flagName"></param>
     /// <returns></returns>
@@ -127,7 +127,7 @@ public class EventFlagManager : MonoBehaviour
     }
 
     /// <summary>
-    /// w’è‚µ‚½–¼‘O‚Ìƒtƒ‰ƒO‚ğ’Ç‰Á‚·‚é
+    /// æŒ‡å®šã—ãŸåå‰ã®ãƒ•ãƒ©ã‚°ã‚’è¿½åŠ ã™ã‚‹
     /// </summary>
     /// <param name="flagName"></param>
     /// <returns></returns>

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +40,7 @@ public class SubTitleEvent : MonoBehaviour
     {
         //if (Input.GetKeyDown(KeyCode.Return))
         //{
-        //    // ‚±‚Ìƒtƒ‰ƒO‚ğƒJƒƒ‰ˆÚ“®‚Åƒtƒ‰ƒ“ƒPƒ“‚ğˆÚ‚µ‚½Œã‚Étrue‚É‚·‚ê‚ÎsubTitle•\¦‚³‚ê‚Ü‚·AŒ»ó‚ÍƒRƒ}ƒ“ƒh‚ÅÀs‚µ‚Ü‚·
+        //    // ã“ã®ãƒ•ãƒ©ã‚°ã‚’ã‚«ãƒ¡ãƒ©ç§»å‹•ã§ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã‚’ç§»ã—ãŸå¾Œã«trueã«ã™ã‚Œã°subTitleè¡¨ç¤ºã•ã‚Œã¾ã™ã€ç¾çŠ¶ã¯ã‚³ãƒãƒ³ãƒ‰ã§å®Ÿè¡Œã—ã¾ã™
         //    EventFlagManager.Instance.SetFlagState(EventFlagName.stage1Title, true);
         //}
 
@@ -48,7 +48,7 @@ public class SubTitleEvent : MonoBehaviour
 
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.stage1Title) && trigger)
         {
-            // ˜A‘±‚ÅƒCƒxƒ“ƒg‚ª—ˆ‚È‚¢‚æ‚¤‚É‚·‚é
+            // é€£ç¶šã§ã‚¤ãƒ™ãƒ³ãƒˆãŒæ¥ãªã„ã‚ˆã†ã«ã™ã‚‹
             trigger = false;
             Fade("in" , ()=> fadeOutFlag = true);
         }
@@ -98,12 +98,12 @@ public class SubTitleEvent : MonoBehaviour
         _callback = callback;
         if (name == "out")
         {
-            //•ƒtƒF[ƒhƒCƒ“
+            //é»’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
             StartCoroutine(FadeOut());
         }
         else if (name == "in")
         {
-            //•ƒtƒF[ƒhƒAƒEƒg
+            //é»’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
             StartCoroutine(FadeIn());
         }
     }
