@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,25 +10,25 @@ public class EnemyController : ElectricItem
     public PlayerController mt;
     public GameObject Player;
     public GameObject enemy;
-    public float stopDistance;  //~‚Ü‚é‚Æ‚«‚Ì‹——£
-    public float inputSpeed;    //ˆÚ“®‘¬“x
-    public float jumpingPower;  //ƒWƒƒƒ“ƒv
+    public float stopDistance;  //æ­¢ã¾ã‚‹ã¨ãã®è·é›¢
+    public float inputSpeed;    //ç§»å‹•é€Ÿåº¦
+    public float jumpingPower;  //ã‚¸ãƒ£ãƒ³ãƒ—
 
-    // ƒ‚ƒbƒN”ÅŒF‘q:[“d‰Â”\‚©‚Ç‚¤‚©‚ğ”»•Ê‚·‚éƒtƒ‰ƒO
-    public bool isCharging = true; // HP‚ª0‚É‚È‚Á‚½‚çtrue‚É‚·‚é‚æ‚¤‚É‚µ‚Ä‚­‚¾‚³‚¢
-    public bool isFollowing = true;   //’Ç]‚·‚é‚©‚Ç‚¤‚©
-    public bool enemyMove = true;      //ƒGƒlƒ~[‚Ì“®‚«
-    private bool enemyJump = false;         //ƒWƒƒƒ“ƒv—p
-    public bool Follow = false;       //“ñ“x–Ú‚Ì“ü—Í‚Å‚Ì‚Â‚¢‚Ä‚­‚é‚©”Û‚©
+    // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:å……é›»å¯èƒ½ã‹ã©ã†ã‹ã‚’åˆ¤åˆ¥ã™ã‚‹ãƒ•ãƒ©ã‚°
+    public bool isCharging = true; // HPãŒ0ã«ãªã£ãŸã‚‰trueã«ã™ã‚‹ã‚ˆã†ã«ã—ã¦ãã ã•ã„
+    public bool isFollowing = true;   //è¿½å¾“ã™ã‚‹ã‹ã©ã†ã‹
+    public bool enemyMove = true;      //ã‚¨ãƒãƒŸãƒ¼ã®å‹•ã
+    private bool enemyJump = false;         //ã‚¸ãƒ£ãƒ³ãƒ—ç”¨
+    public bool Follow = false;       //äºŒåº¦ç›®ã®å…¥åŠ›ã§ã®ã¤ã„ã¦ãã‚‹ã‹å¦ã‹
 
     public Camera camera;
 
-    // ‚¸‚Á‚ÆA‰•œ‚·‚é
-    public float speedX = 1; // ƒXƒs[ƒhX
-    public float speedY = 0; // ƒXƒs[ƒhY
-    public float speedZ = 0; // ƒXƒs[ƒhZ
-    public float second = 1; // ‚©‚©‚é•b”
-    public bool isWandering = true;//œpœj‚·‚é‚©‚Ç‚¤‚©
+    // ãšã£ã¨ã€å¾€å¾©ã™ã‚‹
+    public float speedX = 1; // ã‚¹ãƒ”ãƒ¼ãƒ‰X
+    public float speedY = 0; // ã‚¹ãƒ”ãƒ¼ãƒ‰Y
+    public float speedZ = 0; // ã‚¹ãƒ”ãƒ¼ãƒ‰Z
+    public float second = 1; // ã‹ã‹ã‚‹ç§’æ•°
+    public bool isWandering = true;//å¾˜å¾Šã™ã‚‹ã‹ã©ã†ã‹
     float time = 0f;
 
     Vector3 enemyScale;
@@ -55,8 +55,8 @@ public class EnemyController : ElectricItem
         if (collision.gameObject.tag == "ElectricCable")
         {
             cableFlag = true;
-            cableData = collision.gameObject.GetComponent<CableData>(); // “dü‚Ìî•ñæ“¾
-            // “dü‚ğ“`‚¤•\¦
+            cableData = collision.gameObject.GetComponent<CableData>(); // é›»ç·šã®æƒ…å ±å–å¾—
+            // é›»ç·šã‚’ä¼ã†è¡¨ç¤º
         }
 
         if (collision.gameObject.tag == "Car")
@@ -81,7 +81,7 @@ public class EnemyController : ElectricItem
         }
     }
 
-    //ª°‚É’…‚­‚Ü‚ÅƒWƒƒƒ“ƒv‚³‚¹‚È‚¢ƒ}ƒ“
+    //â†‘åºŠã«ç€ãã¾ã§ã‚¸ãƒ£ãƒ³ãƒ—ã•ã›ãªã„ãƒãƒ³
 
     // Start is called before the first frame update
     void Start()
@@ -94,7 +94,7 @@ public class EnemyController : ElectricItem
     // Update is called once per frame
     void Update()
     {
-        // ˆÚ“®
+        // ç§»å‹•
         rb2d.velocity = new Vector2(vx, rb2d.velocity.y);
 
 
@@ -109,7 +109,7 @@ public class EnemyController : ElectricItem
 
         if (carFlag)
         {
-            // ‰æ‘œ‚Ì•\¦
+            // ç”»åƒã®è¡¨ç¤º
 
             if (Input.GetKeyDown(KeyCode.R) || DSInput.PushDown(DSButton.R1))
             {
@@ -119,38 +119,38 @@ public class EnemyController : ElectricItem
             }
         }
 
-        //” ‚ğ—pˆÓ‚µ‚ÄA‚»‚Ì’†‚ÉYÀ•W‚ğ“ü‚ê‚é
+        //ç®±ã‚’ç”¨æ„ã—ã¦ã€ãã®ä¸­ã«Yåº§æ¨™ã‚’å…¥ã‚Œã‚‹
         Vector2 targetPos = Player.transform.position;
         targetPos.y = transform.position.y;
 
-        //‹——£
+        //è·é›¢
         float distance = Vector2.Distance(transform.position, Player.transform.position);
 
-        // ’Ç]—p
+        // è¿½å¾“ç”¨
         if (isFollowing)
         {
-            //if(ŠÔ‚Ì‹——£‚ª~‚Ü‚é‚Æ‚«‚Ì‹——£ˆÈã‚È‚ç?)
+            //if(é–“ã®è·é›¢ãŒæ­¢ã¾ã‚‹ã¨ãã®è·é›¢ä»¥ä¸Šãªã‚‰?)
             if (distance > stopDistance)
             {
                 transform.position = Vector3.MoveTowards(transform.position,
                 new Vector2(Player.transform.position.x, enemy.transform.position.y),
                 inputSpeed * Time.deltaTime);
             }
-            //enemy¨player
+            //enemyâ†’player
 
-            // ‰E
+            // å³
             if (Player.transform.position.x < transform.position.x)
             {
                 transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
-            // ¶
+            // å·¦
             else if (Player.transform.position.x > transform.position.x)
             {
                 transform.localScale = enemyScale;
             }
 
-            //ƒWƒƒƒ“ƒv
+            //ã‚¸ãƒ£ãƒ³ãƒ—
             if (enemyJump == false && (Input.GetKeyDown(KeyCode.Space) || DSInput.PushDown(DSButton.Cross)))
             {
                 this.rb2d.AddForce(transform.up * this.jumpingPower);
@@ -158,7 +158,7 @@ public class EnemyController : ElectricItem
             }
         }
 
-        //ƒGƒlƒ~[‚Ì“®‚«—p
+        //ã‚¨ãƒãƒŸãƒ¼ã®å‹•ãç”¨
         if (enemyMove == false)
         {
             vx = 0;
@@ -185,13 +185,13 @@ public class EnemyController : ElectricItem
             input = 0;
         }
 
-        //š‘€ì‚ÌØ‚è‘Ö‚¦ˆ—
-        //1‰ñ–Ú‚ÌØ‚è‘Ö‚¦‚Ì“®‚«
+        //â˜…æ“ä½œã®åˆ‡ã‚Šæ›¿ãˆå‡¦ç†
+        //1å›ç›®ã®åˆ‡ã‚Šæ›¿ãˆæ™‚ã®å‹•ã
         if(isFollowing)
         {
             if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)) && Follow == false)
             {
-                // ƒJƒƒ‰’Ç]‚Ì‘ÎÛ‚ğƒGƒlƒ~[‚É•ÏX
+                // ã‚«ãƒ¡ãƒ©è¿½å¾“ã®å¯¾è±¡ã‚’ã‚¨ãƒãƒŸãƒ¼ã«å¤‰æ›´
                 camera.GetComponent<CameraClamp>().targetToFollow = gameObject.transform;
                 mt.player_Move = !mt.player_Move;
                 Following();
@@ -199,8 +199,8 @@ public class EnemyController : ElectricItem
                 Follow = !Follow;
             }
         }
-        //2‰ñ–Ú‚ÌØ‚è‘Ö‚¦AƒvƒŒƒCƒ„[‚¾‚¯“®‚¢‚ÄƒGƒlƒ~[•s“®“°
-        //‚±‚Ìó‘Ô‚¾‚Æ‰½‰ñEnter‰Ÿ‚µ‚Ä‚àƒvƒŒƒCƒ„[‚µ‚©“®‚©‚ñ‚Å
+        //2å›ç›®ã®åˆ‡ã‚Šæ›¿ãˆæ™‚ã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã ã‘å‹•ã„ã¦ã‚¨ãƒãƒŸãƒ¼ä¸å‹•å ‚
+        //ã“ã®çŠ¶æ…‹ã ã¨ä½•å›EnteræŠ¼ã—ã¦ã‚‚ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã—ã‹å‹•ã‹ã‚“ã§
         else if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)) && Follow == true)
         {
             camera.GetComponent<CameraClamp>().targetToFollow = Player.transform;
@@ -209,8 +209,8 @@ public class EnemyController : ElectricItem
             mt.player_Move = false;
         }
 
-        //ŒÄ‚Ôƒ{ƒ^ƒ“(Delete‰¼’u‚«)‚ğ‰Ÿ‚µ‚½‚Ì“®‚«
-        //Follow‚ğØ‚è‘Ö‚¦‚é‚±‚Æ‚Å‚à‚¤ˆê“x’Ç]‚âØ‚è‘Ö‚¦‚ª‚Å‚«‚é‚¨
+        //å‘¼ã¶ãƒœã‚¿ãƒ³(Deleteä»®ç½®ã)ã‚’æŠ¼ã—ãŸæ™‚ã®å‹•ã
+        //Followã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹ã“ã¨ã§ã‚‚ã†ä¸€åº¦è¿½å¾“ã‚„åˆ‡ã‚Šæ›¿ãˆãŒã§ãã‚‹ãŠ
         if (Follow == true && (Input.GetKeyDown(KeyCode.Delete ) || DSInput.PushDown(DSButton.R1)) && enemyMove == true && isFollowing)
         {
             isFollowing = true;
@@ -219,7 +219,7 @@ public class EnemyController : ElectricItem
 
     }
 
-    private void FixedUpdate() // ‚¸‚Á‚ÆA‰•œ‚·‚é
+    private void FixedUpdate() // ãšã£ã¨ã€å¾€å¾©ã™ã‚‹
     {
 
         if (isWandering == true)
@@ -258,19 +258,19 @@ public class EnemyController : ElectricItem
         rb2d.velocity = Vector2.zero;
     }
 
-    // ‚©‚Â‚Ä’Ç]‚ÌØ‚è‘Ö‚¦‚¾‚Á‚½‚à‚Ì
+    // ã‹ã¤ã¦è¿½å¾“ã®åˆ‡ã‚Šæ›¿ãˆã ã£ãŸã‚‚ã®
     public void Following()
     {
         isFollowing = !isFollowing;
     }
 
-    // ‚©‚Â‚Ä‘€ì‚ÌØ‚è‘Ö‚¦‚¾‚Á‚½‚à‚Ì
+    // ã‹ã¤ã¦æ“ä½œã®åˆ‡ã‚Šæ›¿ãˆã ã£ãŸã‚‚ã®
     public void PlayerChange()
     {
-        // ƒvƒŒƒCƒ„[‚Ì‘€ì‚ğ‚Å‚«‚È‚­‚·‚é
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ“ä½œã‚’ã§ããªãã™ã‚‹
         mt.player_Move = !mt.player_Move;
 
-        // ‘€ìŒ ‚ğ“G‚ÉˆÚ“®‚³‚¹‚é
+        // æ“ä½œæ¨©ã‚’æ•µã«ç§»å‹•ã•ã›ã‚‹
         Following();
         enemyMove = !enemyMove;
     }

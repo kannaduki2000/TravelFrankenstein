@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -15,33 +15,33 @@ public class PlayerController : MonoBehaviour
     public GameObject Player;
     public GameObject enemy;
 
-    public float speed;//‘¬“x
-    public float jumpPower;//ƒWƒƒƒ“ƒv
+    public float speed;//é€Ÿåº¦
+    public float jumpPower;//ã‚¸ãƒ£ãƒ³ãƒ—
     public float vx = 0;
     private bool leftFlag = false;
     private bool jumpFlag = false;
-    private bool groundCheck = false;//Ú’n”»’è 
+    private bool groundCheck = false;//æ¥åœ°åˆ¤å®š 
     private bool pushFlag = false;
     public bool player_Move = false;
 
     //
-    [SerializeField] private LayerMask enemyLayer; // ƒ‚ƒbƒN”ÅŒF‘q:“G‚ÌLayeræ“¾—p
+    [SerializeField] private LayerMask enemyLayer; // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:æ•µã®Layerå–å¾—ç”¨
 
     [SerializeField] private float inputRange = 0.5f;
     public int maxHP = 100;
     public float HP = 100;
     public bool touchFlag = false;
-    public bool enemyTouchFlag = false; // ƒ‚ƒbƒN”ÅŒF‘q:ƒtƒ‰ƒO’Ç‰Á
+    public bool enemyTouchFlag = false; // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:ãƒ•ãƒ©ã‚°è¿½åŠ 
     public bool onElectricity = true;
     public GameObject hpCanvas;
     public GameObject canvasParent;
     private float canvasParentScale_x;
 
-    private int presskeyFrames = 0;             //’·‰Ÿ‚µƒtƒŒ[ƒ€”
-    private int PressLong = 300;                //’·‰Ÿ‚µ
-    private int PressShort = 100;               //Œy‰Ÿ‚µ
-    private bool Throw = false;                 //“Š‚°‚Ìƒtƒ‰ƒO
-    private bool Getitem = false;               //”¼“cFitem‚ğ‚Á‚Ä‚¢‚éflag
+    private int presskeyFrames = 0;             //é•·æŠ¼ã—ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
+    private int PressLong = 300;                //é•·æŠ¼ã—
+    private int PressShort = 100;               //è»½æŠ¼ã—
+    private bool Throw = false;                 //æŠ•ã’ã®ãƒ•ãƒ©ã‚°
+    private bool Getitem = false;               //åŠç”°ï¼šitemã‚’æŒã£ã¦ã„ã‚‹flag
     Rigidbody2D rb;
     [SerializeField] KeyPlessThrow item;
 
@@ -51,14 +51,14 @@ public class PlayerController : MonoBehaviour
 
 
     private bool enemyFollowFlg = false;
-    // ƒ‚ƒbƒN”ÅŒF‘q:GetCompornentd‚¢‚ñ‚Å’¼‚Åæ“¾A‚±‚±“G‚Ì”‘‚¦‚é‚Í‚¸‚È‚Ì‚Å‘‚«Š·‚¦‚é‚±‚Æ
+    // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:GetCompornenté‡ã„ã‚“ã§ç›´ã§å–å¾—ã€ã“ã“æ•µã®æ•°å¢—ãˆã‚‹ã¯ãšãªã®ã§æ›¸ãæ›ãˆã‚‹ã“ã¨
     [SerializeField] private EnemyController enemyCon;
     [SerializeField] private Image hp;
 
     public SceneChange sc;
     public FadeControl fadeControl;
 
-    // ƒV[ƒ“‘JˆÚ‚ª‘½d‚ÅŒÄ‚Î‚ê‚È‚¢‚æ‚¤‚É‚·‚é
+    // ã‚·ãƒ¼ãƒ³é·ç§»ãŒå¤šé‡ã§å‘¼ã°ã‚Œãªã„ã‚ˆã†ã«ã™ã‚‹
     private bool titleLogoflag = false;
     private bool map2Flag = false;
 
@@ -85,14 +85,14 @@ public class PlayerController : MonoBehaviour
     {
         //if (enemyCon.isFollowing) { return; }
 
-        // ƒtƒ‰ƒ“ƒPƒ“‚ª‚Ü‚¾‹N‚«ã‚ª‚Á‚Ä‚¢‚È‚¯‚ê‚Î
+        // ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ãŒã¾ã èµ·ãä¸ŠãŒã£ã¦ã„ãªã‘ã‚Œã°
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.frankensteinGetUp) == false)
         {
             return;
         }
         else
         {
-            // ˆê“x‚Å‚à‹N‚«ã‚ª‚Á‚½‚±‚Æ‚ª‚ ‚ê‚Î‹N‚«‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒXƒLƒbƒv
+            // ä¸€åº¦ã§ã‚‚èµ·ãä¸ŠãŒã£ãŸã“ã¨ãŒã‚ã‚Œã°èµ·ãã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¹ã‚­ãƒƒãƒ—
             if (EventFlagManager.Instance.GetFlagState(EventFlagName.getupFlag))
             {
                 anim.SetBool("GetUpFlag", true);
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
             {
                 player_Move = true;
                 PlayerSetAnnounceImage(AnnounceName.T_CircleButton_StartUp);
-                // Zƒ{ƒ^ƒ“
+                // ã€‡ãƒœã‚¿ãƒ³
                 if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
                 {
                     EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
@@ -121,11 +121,11 @@ public class PlayerController : MonoBehaviour
 
 
         //anim = gameObject.GetComponent<Animator>();
-        // ƒ‚ƒbƒN”ÅŒF‘q:Layer‚Å‚â‚Á‚Ä‚½‚Á‚Û‚¢‚Ì‚ÅLinecast‚Åæ“¾
+        // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:Layerã§ã‚„ã£ã¦ãŸã£ã½ã„ã®ã§Linecastã§å–å¾—
         if (GetEnemyLayer())
         {
             
-            // “d‹C‚Ì‹zûƒCƒxƒ“ƒg‚ªI—¹‚µ‚Ä‚©‚ç‚Å‚È‚¢‚ÆHPƒo[‚·‚ç•\¦‚µ‚È‚¢
+            // é›»æ°—ã®å¸åã‚¤ãƒ™ãƒ³ãƒˆãŒçµ‚äº†ã—ã¦ã‹ã‚‰ã§ãªã„ã¨HPãƒãƒ¼ã™ã‚‰è¡¨ç¤ºã—ãªã„
             if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption))
             {
                 electricItem = enemy.GetComponent<ElectricItem>();
@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        /*ƒvƒŒƒCƒ„[‚ÌˆÚ“®“ü—Íˆ—--------------------------------------------*/
+        /*ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•å…¥åŠ›å‡¦ç†--------------------------------------------*/
         if(player_Move == false)
         {
             vx = 0;
@@ -164,10 +164,10 @@ public class PlayerController : MonoBehaviour
                 SystemTextEndPlayerMove();
                 vx = speed;
                 anim.SetBool("Walking", true);
-                // HPƒo[‚ÌŒü‚«
+                // HPãƒãƒ¼ã®å‘ã
                 canvasParent.transform.localScale = new Vector3(canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
 
-                //•¨‚ğ‚Á‚½‚É•ûŒü‚ğŠm”F‚·‚éF”¼“c
+                //ç‰©ã‚’æŒã£ãŸæ™‚ã«æ–¹å‘ã‚’ç¢ºèªã™ã‚‹ï¼šåŠç”°
                 if (Getitem == true)
                 {
                     item.left = false;
@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Walking", true);
                 canvasParent.transform.localScale = new Vector3(-canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
 
-                //•¨‚ğ‚Á‚½‚É•ûŒü‚ğŠm”F‚·‚éF”¼“c
+                //ç‰©ã‚’æŒã£ãŸæ™‚ã«æ–¹å‘ã‚’ç¢ºèªã™ã‚‹ï¼šåŠç”°
                 if (Getitem == true)
                 {
                     item.left = true;
@@ -224,12 +224,12 @@ public class PlayerController : MonoBehaviour
 
         /*--------------------------------------------------------------------------*/
         
-        /*‘Ì—Í‚ÌŒ¸‘ˆ—-----------------------------------------------------------------*/
+        /*ä½“åŠ›ã®æ¸›å¢—å‡¦ç†-----------------------------------------------------------------*/
         if (touchFlag || enemyTouchFlag || enemyFollowFlg || electricItem != null)
         {
             if (enemyCon.isFollowing || textCon.textFlag) { return; }
 
-            // •\¦
+            // è¡¨ç¤º
             hpCanvas.SetActive(true);
 
             
@@ -237,101 +237,101 @@ public class PlayerController : MonoBehaviour
             {
                 ViewAnnounceImage(false);
 
-                // “d‹C‚ğ—¬‚·
+                // é›»æ°—ã‚’æµã™
                 if (onElectricity == true || electricItem.ChargeFlag == false)
                 {
                     electricItem.ChargeFlag = true;
                     HP -= electricItem.Power;
                     hp.fillAmount = HP / maxHP;
-                    onElectricity = false; // ‚±‚ê‚¢‚é‚ñ‚©‚È
-                    // “ü‚ê‚½Object–ˆ‚ÌƒCƒxƒ“ƒg‚ÌÀs
+                    onElectricity = false; // ã“ã‚Œã„ã‚‹ã‚“ã‹ãª
+                    // å…¥ã‚ŒãŸObjectæ¯ã®ã‚¤ãƒ™ãƒ³ãƒˆã®å®Ÿè¡Œ
                     electricItem.Event();
                     electricItem.IsChargeEvent = true;
                 }
 
-                // [“d‚·‚é
+                // å……é›»ã™ã‚‹
                 else if ((onElectricity == false || electricItem.ChargeFlag) && electricItem.IsCharge)
                 {
                     HP += electricItem.Power;
-                    //HP += 20;// HP‚ğ‘‚â‚·
+                    //HP += 20;// HPã‚’å¢—ã‚„ã™
                     hp.fillAmount = HP / maxHP;
-                    // ‚±‚±‚Éˆ—‚ğ‰Á‚¦‚é
+                    // ã“ã“ã«å‡¦ç†ã‚’åŠ ãˆã‚‹
                     onElectricity = true;
                     electricItem.ChargeEvent();
                     electricItem.ChargeFlag = false;
                 }
 
-                // ƒ‚ƒbƒN”ÅŒF‘q:’Ç‰Á‚µ‚Ü‚·‚½
-                // G‚ê‚Ä‚¢‚é•¨‚ªEnemy‚Ìê‡
-                if (enemyTouchFlag && EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption)) // ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ì‹zûƒtƒ‰ƒO‚ª‚È‚¢‚Æ’Ç]‚µ‚È‚¢‚æ‚¤‚É
+                // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:è¿½åŠ ã—ã¾ã™ãŸ
+                // è§¦ã‚Œã¦ã„ã‚‹ç‰©ãŒEnemyã®å ´åˆ
+                if (enemyTouchFlag && EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption)) // ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã®å¸åãƒ•ãƒ©ã‚°ãŒãªã„ã¨è¿½å¾“ã—ãªã„ã‚ˆã†ã«
                 {
                     EventFlagManager.Instance.SetFlagState(EventFlagName.enemyCharge, true);
-                    // ’Ç]ŠJn
+                    // è¿½å¾“é–‹å§‹
                     enemyCon.isFollowing = true;
-                    // [“d‚µ‚½‚Ì‚Å‚±‚êˆÈã[“do—ˆ‚È‚¢‚æ‚¤‚É
+                    // å……é›»ã—ãŸã®ã§ã“ã‚Œä»¥ä¸Šå……é›»å‡ºæ¥ãªã„ã‚ˆã†ã«
                     enemyCon.isCharging = false;
                     hpCanvas.SetActive(false);
                 }
             }
-            // “d‹C‚ğ[“d
+            // é›»æ°—ã‚’å……é›»
             else if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
             {
                 //if (onElectricity == false || electricItem.ChargeFlag)
                 //{
-                //    Debug.Log("[“d‚µ‚½‚¢");
+                //    Debug.Log("å……é›»ã—ãŸã„");
                 //    HP += electricItem.Power;
-                //    //HP += 20;// HP‚ğ‘‚â‚·
+                //    //HP += 20;// HPã‚’å¢—ã‚„ã™
                 //    hp.fillAmount = HP / maxHP;
-                //    // ‚±‚±‚Éˆ—‚ğ‰Á‚¦‚é
+                //    // ã“ã“ã«å‡¦ç†ã‚’åŠ ãˆã‚‹
                 //    onElectricity = true;
                 //    electricItem.ChargeFlag = false;
                 //}
 
-                // HHH
+                // ï¼Ÿï¼Ÿï¼Ÿ
                 if (enemyFollowFlg)
                 {
                     enemyCon.isFollowing = false;
                 }
             }
         }
-        // ƒ‚ƒbƒN”ÅŒF‘q:HP•\¦‚·‚éObject‚©‚ç—£‚ê‚½‚ç‹­§“I‚ÉHPƒo[‚ğ”ñ•\¦‚É‚µ‚Ü‚·
+        // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:HPè¡¨ç¤ºã™ã‚‹Objectã‹ã‚‰é›¢ã‚ŒãŸã‚‰å¼·åˆ¶çš„ã«HPãƒãƒ¼ã‚’éè¡¨ç¤ºã«ã—ã¾ã™
         else
         {
             hpCanvas.SetActive(false);
         }
         /*-----------------------------------------------------------------*/
 
-        /*ƒAƒCƒeƒ€‚ğ‚Â“ü—Íˆ—---------------------------------------------*/
+        /*ã‚¢ã‚¤ãƒ†ãƒ ã‚’æŒã¤å…¥åŠ›å‡¦ç†---------------------------------------------*/
         if (Throw)
         {
-            if (Input.GetKey(KeyCode.R) || Getitem == true && DSInput.PushDown(DSButton.Circle))//”¼“cFSpace‚©‚çR‚É•ÏX
+            if (Input.GetKey(KeyCode.R) || Getitem == true && DSInput.PushDown(DSButton.Circle))//åŠç”°ï¼šSpaceã‹ã‚‰Rã«å¤‰æ›´
             {
-                //ƒXƒy[ƒX‚Ì”»’è
-                //memo  w? true:falsex
-                presskeyFrames += (Input.GetKey(KeyCode.R) || DSInput.PushDown(DSButton.Circle)) ? 1 : 0;//”¼“cFSpace‚©‚çR‚É•ÏX
+                //ã‚¹ãƒšãƒ¼ã‚¹ã®åˆ¤å®š
+                //memo  ã€? true:falseã€
+                presskeyFrames += (Input.GetKey(KeyCode.R) || DSInput.PushDown(DSButton.Circle)) ? 1 : 0;//åŠç”°ï¼šSpaceã‹ã‚‰Rã«å¤‰æ›´
                 Debug.Log(presskeyFrames);
             }
 
-            if (Input.GetKeyUp(KeyCode.R) || Getitem == true && DSInput.PushDown(DSButton.Circle))//”¼“cFSpace‚©‚çR‚É•ÏX
+            if (Input.GetKeyUp(KeyCode.R) || Getitem == true && DSInput.PushDown(DSButton.Circle))//åŠç”°ï¼šSpaceã‹ã‚‰Rã«å¤‰æ›´
             {
-                //‚à‚µƒXƒy[ƒX‚ª’·‰Ÿ‚µ‚³‚ê‚½‚ç
+                //ã‚‚ã—ã‚¹ãƒšãƒ¼ã‚¹ãŒé•·æŠ¼ã—ã•ã‚ŒãŸã‚‰
                 if (PressLong <= presskeyFrames)
-                //‚‚ß‚É“Š‚°‚é
+                //é«˜ã‚ã«æŠ•ã’ã‚‹
                 {
                     item.Hight();
-                    Debug.Log("’·‚ß");
+                    Debug.Log("é•·ã‚");
 
                     Getitem = false;
                     item.gameObject.transform.parent = null;
                 }
 
-                //‚à‚µƒXƒy[ƒX‚ª‰Ÿ‚³‚ê‚½‚ç
+                //ã‚‚ã—ã‚¹ãƒšãƒ¼ã‚¹ãŒæŠ¼ã•ã‚ŒãŸã‚‰
                 else if (PressShort <= presskeyFrames)
 
-                //’á‚ß‚É“Š‚°‚é
+                //ä½ã‚ã«æŠ•ã’ã‚‹
                 {
                     item.Low();
-                    Debug.Log("’Z‚ß");
+                    Debug.Log("çŸ­ã‚");
 
                     Getitem = false;
                     item.gameObject.transform.parent = null;
@@ -346,20 +346,20 @@ public class PlayerController : MonoBehaviour
         /*-----------------------------------------------------------------*/
 
 
-        // @“Š‚°‚éˆ—
+        // @æŠ•ã’ã‚‹å‡¦ç†
         //if (electricItem != null)
         //{
         //    if (electricItem.IsThrow)
         //    {
         //        if (Input.GetKey(KeyCode.W))
         //        {
-        //            Debug.Log("’Í‚ñ‚¾");
-        //            // ‚±‚±‚Å‚±‚ÌƒIƒuƒWƒFƒNƒg‚ğƒvƒŒƒCƒ„[‚Ìq‹Ÿ‚É‚·‚é
+        //            Debug.Log("æ´ã‚“ã ");
+        //            // ã“ã“ã§ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å­ä¾›ã«ã™ã‚‹
         //            item.gameObject.transform.parent = this.transform;
         //        }
         //        if (Input.GetKeyUp(KeyCode.W))
         //        {
-        //            Debug.Log("—£‚µ‚½");
+        //            Debug.Log("é›¢ã—ãŸ");
         //            item.transform.parent = null;
         //        }
         //    }
@@ -371,7 +371,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    /*–³ŒÀƒWƒƒƒ“ƒv‚ğ–h‚®ˆ—------------------------------------------------*/
+    /*ç„¡é™ã‚¸ãƒ£ãƒ³ãƒ—ã‚’é˜²ãå‡¦ç†------------------------------------------------*/
     private void FixedUpdate()
     {
         rb2d.velocity = new Vector2(vx, rb2d.velocity.y);
@@ -384,20 +384,20 @@ public class PlayerController : MonoBehaviour
     /*-------------------------------------------------------------------*/
 
     /// <summary>
-    /// “G‚ÌƒŒƒCƒ„[‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğæ“¾‚·‚éŠÖ”
+    /// æ•µã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
     /// </summary>
     /// <returns></returns>
     private bool GetEnemyLayer()
     {
         Vector3 left = transform.position + Vector3.up * 0.5f - Vector3.right * 3.5f;
         Vector3 right = transform.position + Vector3.up * 0.5f + Vector3.right * 3.5f;
-        // ‚±‚±‚ÌƒRƒƒ“ƒgÁ‚¹‚ÎƒfƒoƒbƒO—p‚Ìü‚ªŒ©‚¦‚Ü‚·
+        // ã“ã“ã®ã‚³ãƒ¡ãƒ³ãƒˆæ¶ˆã›ã°ãƒ‡ãƒãƒƒã‚°ç”¨ã®ç·šãŒè¦‹ãˆã¾ã™
         Debug.DrawLine(left, right);
         return Physics2D.Linecast(left, right, enemyLayer);
     }
 
     /// <summary>
-    /// ƒAƒiƒEƒ“ƒX‰æ‘œ‚ğ“ü‚ê‚Ä‚©‚ç•\¦
+    /// ã‚¢ãƒŠã‚¦ãƒ³ã‚¹ç”»åƒã‚’å…¥ã‚Œã¦ã‹ã‚‰è¡¨ç¤º
     /// </summary>
     /// <param name="name"></param>
     public void PlayerSetAnnounceImage(AnnounceName name)
@@ -408,7 +408,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒAƒiƒEƒ“ƒX‰æ‘œ‚Ì•\¦/”ñ•\¦
+    /// ã‚¢ãƒŠã‚¦ãƒ³ã‚¹ç”»åƒã®è¡¨ç¤º/éè¡¨ç¤º
     /// </summary>
     /// <param name="isView"></param>
     public void ViewAnnounceImage(bool isView)
@@ -417,7 +417,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒeƒLƒXƒg‚Ì•\¦Œã‚ÉƒvƒŒƒCƒ„[‚ª“®‚¢‚½‚çƒAƒiƒEƒ“ƒX‰æ‘œ‚ğ”ñ•\¦‚É‚·‚é@–¼‘O‚ª“K“–‚·‚¬‚é
+    /// ãƒ†ã‚­ã‚¹ãƒˆã®è¡¨ç¤ºå¾Œã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå‹•ã„ãŸã‚‰ã‚¢ãƒŠã‚¦ãƒ³ã‚¹ç”»åƒã‚’éè¡¨ç¤ºã«ã™ã‚‹ã€€åå‰ãŒé©å½“ã™ãã‚‹
     /// </summary>
     private void SystemTextEndPlayerMove()
     {
@@ -430,7 +430,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒeƒLƒXƒg‚Ì•\¦(À¿ƒAƒjƒ[ƒVƒ‡ƒ“—p)
+    /// ãƒ†ã‚­ã‚¹ãƒˆã®è¡¨ç¤º(å®Ÿè³ªã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨)
     /// </summary>
     public void TextAnim()
     {
@@ -438,7 +438,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// ˆÚ“®‰Â”\(À¿ƒAƒjƒ[ƒVƒ‡ƒ“—p)
+    /// ç§»å‹•å¯èƒ½(å®Ÿè³ªã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨)
     /// </summary>
     public void PlayerMove()
     {
@@ -446,7 +446,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// ˆÚ“®•s‰Â”\
+    /// ç§»å‹•ä¸å¯èƒ½
     /// </summary>
     public void PlayerNotMove()
     {
@@ -468,30 +468,30 @@ public class PlayerController : MonoBehaviour
             Debug.Log("stay");
 
             //item = collision.gameObject.GetComponent<Item>();
-            //W‚ğ‰Ÿ‚µ‚Ä‚¢‚½‚ç
+            //Wã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
             if (Input.GetKey(KeyCode.W) || DSInput.Push(DSButton.R1))
             {
-                Debug.Log("‚Á‚Ä‚¢‚é");
+                Debug.Log("æŒã£ã¦ã„ã‚‹");
 
                 Throw = true;
-                //ƒAƒCƒeƒ€ƒNƒ‰ƒX‚Ìæ“¾
+                //ã‚¢ã‚¤ãƒ†ãƒ ã‚¯ãƒ©ã‚¹ã®å–å¾—
                 item = collision.gameObject.GetComponent<KeyPlessThrow>();
 
-                //ƒAƒCƒeƒ€‚ÌY²‚ªã‚ª‚é
-                // ‚±‚±‚Å‚±‚ÌƒIƒuƒWƒFƒNƒg‚ğƒvƒŒƒCƒ„[‚Ìq‹Ÿ‚É‚·‚é
+                //ã‚¢ã‚¤ãƒ†ãƒ ã®Yè»¸ãŒä¸ŠãŒã‚‹
+                // ã“ã“ã§ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å­ä¾›ã«ã™ã‚‹
                 item.gameObject.transform.parent = this.transform;
 
-                //item‚ğ‚Á‚½‚çtrue
+                //itemã‚’æŒã£ãŸã‚‰true
                 Getitem = true;
             }
 
             if (Input.GetKeyUp(KeyCode.W) || DSInput.PushUp(DSButton.R1))
             {
-                Debug.Log("•ú‚µ‚½");
+                Debug.Log("æ”¾ã—ãŸ");
                 
                 item.gameObject.transform.parent = null;
 
-                //tiem‚ğ•ú‚µ‚½‚çfalse
+                //tiemã‚’æ”¾ã—ãŸã‚‰false
                 Getitem = false;
             }
             
@@ -507,11 +507,11 @@ public class PlayerController : MonoBehaviour
         {
             electricItem = collision.gameObject.GetComponent<ElectricItem>();
 
-            // “Š‚°‚ê‚éObject‚È‚çî•ñ‚ğæ“¾
+            // æŠ•ã’ã‚Œã‚‹Objectãªã‚‰æƒ…å ±ã‚’å–å¾—
             //if (electricItem.IsThrow)
             //{
             //    Throw = true;
-            //    //ƒAƒCƒeƒ€ƒNƒ‰ƒX‚Ìæ“¾
+            //    //ã‚¢ã‚¤ãƒ†ãƒ ã‚¯ãƒ©ã‚¹ã®å–å¾—
             //    item = collision.gameObject.GetComponent<KeyPlessThrow>();
             //}
         }
@@ -522,10 +522,10 @@ public class PlayerController : MonoBehaviour
             touchFlag = true;
         }
 
-        //”»’è‚ÌêŠ‚ğ’Ê‰ß‚µ‚½‚ç”­¶
+        //åˆ¤å®šã®å ´æ‰€ã‚’é€šéã—ãŸã‚‰ç™ºç”Ÿ
         if (collision.gameObject.tag == "GoTitleLogo" && titleLogoflag == false && EventFlagManager.Instance.GetFlagState(EventFlagName.enemyCharge))
         {
-            // •¡””»’è‚ğ–h‚®ˆ×‚Ìƒtƒ‰ƒO
+            // è¤‡æ•°åˆ¤å®šã‚’é˜²ãç‚ºã®ãƒ•ãƒ©ã‚°
             titleLogoflag = true;
             fadeControl.Fade("wout", () => sc.SceneSwitching("TitleLogo", true));
         }
@@ -541,13 +541,13 @@ public class PlayerController : MonoBehaviour
             fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("TentativeTitle"));
         }
 
-        // ƒP[ƒuƒ‹ƒJ[‚ª—ˆ‚éƒtƒ‰ƒO
+        // ã‚±ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ãŒæ¥ã‚‹ãƒ•ãƒ©ã‚°
         if (collision.gameObject.tag == "CableCarEvent")
         {
             EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStart, true);
         }
 
-        // ƒP[ƒuƒ‹ƒJ[‚ÉæÔor~Ô
+        // ã‚±ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ã«ä¹—è»Šoré™è»Š
         if (collision.gameObject.tag == "CableCarEventCollider")
         {
             collision.gameObject.GetComponent<BusEventCollider>().BusEvent(gameObject);
@@ -578,7 +578,7 @@ public class PlayerController : MonoBehaviour
             groundCheck = false;
         }
 
-        // ˆê’UÁ‚·
+        // ä¸€æ—¦æ¶ˆã™
         //if (collision.gameObject.tag == "Item")
         //{
         //    Throw = false;

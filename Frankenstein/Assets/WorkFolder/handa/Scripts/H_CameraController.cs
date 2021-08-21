@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +16,7 @@ public class H_CameraController : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(
-            Mathf.Clamp(targetToFollow.position.x, -38.5f, 38.5f), // ƒ‚ƒbƒN”ÅŒF‘q:‚±‚±‚ç‚Ö‚ñ­‚µ‘‚«Š·‚¦‚Ü‚µ‚½
+            Mathf.Clamp(targetToFollow.position.x, -38.5f, 38.5f), // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:ã“ã“ã‚‰ã¸ã‚“å°‘ã—æ›¸ãæ›ãˆã¾ã—ãŸ
             Mathf.Clamp(targetToFollow.position.y, 10f, 10f),
             transform.position.z);
     }
