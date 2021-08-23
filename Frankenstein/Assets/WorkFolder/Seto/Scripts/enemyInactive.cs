@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KureenButton : MonoBehaviour
+public class enemyInactive : MonoBehaviour
 {
-    public GameObject Button;
-    public GameObject enemy;
-    public GameObject enemy1;
+    public GameObject enem1;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +14,9 @@ public class KureenButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+         if(Input.GetKeyDown("e"))
+        {
+            enem1.SetActive (true);
+        }
     }
-    
 }
