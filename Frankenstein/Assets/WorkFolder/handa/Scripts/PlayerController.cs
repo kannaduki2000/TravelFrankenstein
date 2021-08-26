@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour
                 //物を持った時に方向を確認する：半田
                 if (Getitem == true)
                 {
-                    item.left = false;
+                    //item.left = false;
                 }
             }
             else if (Input.GetKey("left") || input < -inputRange)
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
                 //物を持った時に方向を確認する：半田
                 if (Getitem == true)
                 {
-                    item.left = true;
+                    //item.left = true;
                 }
 
             }
