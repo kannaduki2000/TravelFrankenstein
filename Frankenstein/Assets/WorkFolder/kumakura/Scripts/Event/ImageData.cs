@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,33 +6,33 @@ using UnityEngine;
 public enum AnnounceName
 {
     // Tutorial
-    T_Put_Electric_Enemy,           // ƒGƒlƒ~[‚Ì€‘Ì‚É“d‹C‚ğ“ü‚ê‚é
-    T_Throw_Having,                 // “Š‚°‚éA‚Â
-    T_Come_Out_Home,                // ‰Æ‚©‚ço‚é
-    T_Release_Object,               // ’·‰Ÿ‚µ‚Åã‚É“Š‚°‚éA—£‚·
-    T_SquareButton,                 // lŠpƒ{ƒ^ƒ“
-    T_CircleButton_StartUp,         // ŠÛƒ{ƒ^ƒ“F‹N“®‚·‚é
-    T_Leftstick_Move,               // ¶ƒXƒeƒBƒbƒNFˆÚ“®
-    T_SquareButton_Absorption,      // lŠpƒ{ƒ^ƒ“F“d‹C‚ğ‹zû‚·‚é
-    T_SquareButton_Input,           // lŠpƒ{ƒ^ƒ“F“d‹C‚ğ“ü‚ê‚é
+    T_Put_Electric_Enemy,           // ã‚¨ãƒãƒŸãƒ¼ã®æ­»ä½“ã«é›»æ°—ã‚’å…¥ã‚Œã‚‹
+    T_Throw_Having,                 // æŠ•ã’ã‚‹ã€æŒã¤
+    T_Come_Out_Home,                // å®¶ã‹ã‚‰å‡ºã‚‹
+    T_Release_Object,               // é•·æŠ¼ã—ã§ä¸Šã«æŠ•ã’ã‚‹ã€é›¢ã™
+    T_SquareButton,                 // å››è§’ãƒœã‚¿ãƒ³
+    T_CircleButton_StartUp,         // ä¸¸ãƒœã‚¿ãƒ³ï¼šèµ·å‹•ã™ã‚‹
+    T_Leftstick_Move,               // å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ï¼šç§»å‹•
+    T_SquareButton_Absorption,      // å››è§’ãƒœã‚¿ãƒ³ï¼šé›»æ°—ã‚’å¸åã™ã‚‹
+    T_SquareButton_Input,           // å››è§’ãƒœã‚¿ãƒ³ï¼šé›»æ°—ã‚’å…¥ã‚Œã‚‹
 
     // Stage1
-    S1_TriangleButton_Gear,         // OŠpƒ{ƒ^ƒ“F•Ô‚É‚È‚é
-    S1_CircleButton_EnemyCall,      // ŠÛƒ{ƒ^ƒ“FƒGƒlƒ~[‚ğŒÄ‚Ô
-    S1_SquareButton_ElectricCable,  // lŠpƒ{ƒ^ƒ“F“dü‚ğ“`‚¤
-    S1_LButton_EnemyChange,         // Lƒ{ƒ^ƒ“F‘€ìØ‚è‘Ö‚¦
-    S1_RButton_Push,                // Rƒ{ƒ^ƒ“F‰Ÿ‚·
-    S1_SquareButton,                // lŠpƒ{ƒ^ƒ“
-    S1_SquareButton_Input,          // lŠpƒ{ƒ^ƒ“F“d‹C‚ğ“ü‚ê‚é
-    S1_SquareButton_Absorption,     // lŠpƒ{ƒ^ƒ“F“d‹C‚ğ‹zû‚·‚é
+    S1_TriangleButton_Gear,         // ä¸‰è§’ãƒœã‚¿ãƒ³ï¼šæ­¯è»Šã«ãªã‚‹
+    S1_CircleButton_EnemyCall,      // ä¸¸ãƒœã‚¿ãƒ³ï¼šã‚¨ãƒãƒŸãƒ¼ã‚’å‘¼ã¶
+    S1_SquareButton_ElectricCable,  // å››è§’ãƒœã‚¿ãƒ³ï¼šé›»ç·šã‚’ä¼ã†
+    S1_LButton_EnemyChange,         // Lãƒœã‚¿ãƒ³ï¼šæ“ä½œåˆ‡ã‚Šæ›¿ãˆ
+    S1_RButton_Push,                // Rãƒœã‚¿ãƒ³ï¼šæŠ¼ã™
+    S1_SquareButton,                // å››è§’ãƒœã‚¿ãƒ³
+    S1_SquareButton_Input,          // å››è§’ãƒœã‚¿ãƒ³ï¼šé›»æ°—ã‚’å…¥ã‚Œã‚‹
+    S1_SquareButton_Absorption,     // å››è§’ãƒœã‚¿ãƒ³ï¼šé›»æ°—ã‚’å¸åã™ã‚‹
 
 }
 
 [System.Serializable]
 public enum ReportName
 {
-    eveReport,          // ƒCƒ”ƒŒƒ|[ƒg
-    gearHertsReport,    // ƒMƒAƒn[ƒcƒŒƒ|[ƒg
+    eveReport,          // ã‚¤ãƒ´ãƒ¬ãƒãƒ¼ãƒˆ
+    gearHertsReport,    // ã‚®ã‚¢ãƒãƒ¼ãƒ„ãƒ¬ãƒãƒ¼ãƒˆ
 
 }
 
@@ -47,10 +47,10 @@ public class ImageData : MonoBehaviour
     }
 
     /// <summary>
-    /// w¦•\¦‚Ì‰æ‘œ‚ğƒZƒbƒg
+    /// æŒ‡ç¤ºè¡¨ç¤ºã®ç”»åƒã‚’ã‚»ãƒƒãƒˆ
     /// </summary>
-    /// <param name="annouceSprite">ƒZƒbƒg‚·‚éObject</param>
-    /// <param name="announceName">ƒZƒbƒg‚µ‚½‚¢‰æ‘œ‚Ì–¼‘O</param>
+    /// <param name="annouceSprite">ã‚»ãƒƒãƒˆã™ã‚‹Object</param>
+    /// <param name="announceName">ã‚»ãƒƒãƒˆã—ãŸã„ç”»åƒã®åå‰</param>
     public Sprite GetAnnounceImage(AnnounceName announceName)
     {
         return AnnounceImageArray[(int)announceName];

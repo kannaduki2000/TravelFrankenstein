@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,16 +7,16 @@ using DualShockInput;
 public class PCObject : ElectricItem
 {
     [SerializeField] private int power;
-    [SerializeField] private Image announceObject;      // w¦•\¦‰æ‘œ‚ğ“ü‚ê‚éObject
-    [SerializeField] private Image image;               // ƒŒƒ|[ƒg‚ğ“ü‚ê‚éObject@•\¦‚·‚éêŠ‚ªˆá‚¤‚Ì‚Å•ª‚¯‚Ü‚µ‚½
+    [SerializeField] private Image announceObject;      // æŒ‡ç¤ºè¡¨ç¤ºç”»åƒã‚’å…¥ã‚Œã‚‹Object
+    [SerializeField] private Image image;               // ãƒ¬ãƒãƒ¼ãƒˆã‚’å…¥ã‚Œã‚‹Objectã€€è¡¨ç¤ºã™ã‚‹å ´æ‰€ãŒé•ã†ã®ã§åˆ†ã‘ã¾ã—ãŸ
     [SerializeField] private ImageData imageData; 
     [SerializeField] private Sprite eveReport;
     [SerializeField] private PlayerController player;
 
-    // ‚±‚±‚ç‚Ö‚ñ”‹Œ´‚³‚ñ‚Ìˆ——p‚Ì•Ï”
-    [SerializeField] SpriteRenderer PC_SpriteRenderer;  // PC‰æ–Ê
-    [SerializeField] Sprite PC_ON_Sprite;               // On‰æ‘œ
-    [SerializeField] Sprite PC_OFF_Sprite;              // Off‰æ‘œ
+    // ã“ã“ã‚‰ã¸ã‚“è©åŸã•ã‚“ã®å‡¦ç†ç”¨ã®å¤‰æ•°
+    [SerializeField] SpriteRenderer PC_SpriteRenderer;  // PCç”»é¢
+    [SerializeField] Sprite PC_ON_Sprite;               // Onç”»åƒ
+    [SerializeField] Sprite PC_OFF_Sprite;              // Offç”»åƒ
     bool PCSwitchFlag;
 
 
@@ -35,10 +35,10 @@ public class PCObject : ElectricItem
             if (EventFlagManager.Instance.GetFlagState(EventFlagName.textEve) == false)
             {
                 announceObject.enabled = false;
-                // Zƒ{ƒ^ƒ“‘Î‰—\’è
+                // ã€‡ãƒœã‚¿ãƒ³å¯¾å¿œäºˆå®š
                 if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
                 {
-                    // ƒŒƒ|[ƒg‚Ì”ñ•\¦AƒeƒLƒXƒgƒCƒxƒ“ƒg‚ÌÀs
+                    // ãƒ¬ãƒãƒ¼ãƒˆã®éè¡¨ç¤ºã€ãƒ†ã‚­ã‚¹ãƒˆã‚¤ãƒ™ãƒ³ãƒˆã®å®Ÿè¡Œ
                     EveReportUnEnabled();
                 }
             }
@@ -57,30 +57,30 @@ public class PCObject : ElectricItem
     }
 
     /// <summary>
-    /// “d‹C‚ğ“ü‚ê‚½‚Æ‚«‚ÌƒCƒxƒ“ƒg
+    /// é›»æ°—ã‚’å…¥ã‚ŒãŸã¨ãã®ã‚¤ãƒ™ãƒ³ãƒˆ
     /// </summary>
     public override void Event()
     {
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.textEve)) { return; }
         player.PlayerNotMove();
-        // ƒCƒ”‚ÌƒŒƒ|[ƒg‚Ì•\¦
+        // ã‚¤ãƒ´ã®ãƒ¬ãƒãƒ¼ãƒˆã®è¡¨ç¤º
         image.enabled = true;
         image.sprite = imageData.GetReportImage(ReportName.eveReport);
     }
 
     /// <summary>
-    /// [“d‚µ‚½‚ÌƒCƒxƒ“ƒg
+    /// å……é›»ã—ãŸæ™‚ã®ã‚¤ãƒ™ãƒ³ãƒˆ
     /// </summary>
     public override void ChargeEvent()
     {
-        // ‚±‚ê‚ÅƒGƒlƒ~[‚Ö‚Ì[“dƒtƒ‰ƒO‚ª—§‚Â
+        // ã“ã‚Œã§ã‚¨ãƒãƒŸãƒ¼ã¸ã®å……é›»ãƒ•ãƒ©ã‚°ãŒç«‹ã¤
         EventFlagManager.Instance.SetFlagState(EventFlagName.electricAabsorption, true);
     }
 
     public void EveReportUnEnabled()
     {
         image.enabled = false;
-        // ƒeƒLƒXƒgƒCƒxƒ“ƒgÀsŒã‚ÉPlayer‚ª“®‚¯‚é‚æ‚¤‚É‚·‚é
+        // ãƒ†ã‚­ã‚¹ãƒˆã‚¤ãƒ™ãƒ³ãƒˆå®Ÿè¡Œå¾Œã«PlayerãŒå‹•ã‘ã‚‹ã‚ˆã†ã«ã™ã‚‹
         //player.textCon.SetTextActive(true, ()=> player.PlayerMove());
         player.textCon.SetTextActive(true, ()=> 
         {
@@ -91,32 +91,32 @@ public class PCObject : ElectricItem
         
     }
     
-    #region ”‹Œ´‚³‚ñ@PC‚Ì“dŒ¹‹y‚ÑSprite‚ÉŠÖ‚·‚éˆ—
+    #region è©åŸã•ã‚“ã€€PCã®é›»æºåŠã³Spriteã«é–¢ã™ã‚‹å‡¦ç†
     // ---------------------------------------------------------------------------------------------------------------------
-    private void PCSwitch()         // PC‚Ì“dŒ¹‚ÉŠÖ‚·‚éŠÖ”
+    private void PCSwitch()         // PCã®é›»æºã«é–¢ã™ã‚‹é–¢æ•°
     {
-        if (PCSwitchFlag == false)          // PCSwitchFlag ‚ª false ‚Å‚·‚©H
+        if (PCSwitchFlag == false)          // PCSwitchFlag ãŒ false ã§ã™ã‹ï¼Ÿ
         {
             // YES
             PCSwitch_ON();
         }
-        else if (PCSwitchFlag == true)          // PCSwitchFlag ‚ª true ‚Å‚·‚©H
+        else if (PCSwitchFlag == true)          // PCSwitchFlag ãŒ true ã§ã™ã‹ï¼Ÿ
         {
             // YES
             PCSwitch_OFF();
         }
     }
 
-    private void PCSwitch_ON()          // PC‚É“dŒ¹‚ª“ü‚éŠÖ”
+    private void PCSwitch_ON()          // PCã«é›»æºãŒå…¥ã‚‹é–¢æ•°
     {
-        PC_SpriteRenderer.sprite = PC_ON_Sprite;            // PC_ON_Sprite ‚É‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚¢‚½ƒXƒvƒ‰ƒCƒg‚ğ PC_SpriteRenderer ‚ÌƒXƒvƒ‰ƒCƒg‚É“ü‚ê‚é
-        //PCSwitchFlag = true; // ‚±‚±ˆê’UÁ‚µ‚Ü‚·
+        PC_SpriteRenderer.sprite = PC_ON_Sprite;            // PC_ON_Sprite ã«ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠã„ãŸã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ PC_SpriteRenderer ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«å…¥ã‚Œã‚‹
+        //PCSwitchFlag = true; // ã“ã“ä¸€æ—¦æ¶ˆã—ã¾ã™
     }
 
-    private void PCSwitch_OFF()         // PC‚Ì“dŒ¹‚ªØ‚ê‚éŠÖ”
+    private void PCSwitch_OFF()         // PCã®é›»æºãŒåˆ‡ã‚Œã‚‹é–¢æ•°
     {
-        PC_SpriteRenderer.sprite = PC_OFF_Sprite;            // PC_ON_Sprite ‚É‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚¢‚½ƒXƒvƒ‰ƒCƒg‚ğ PC_SpriteRenderer ‚ÌƒXƒvƒ‰ƒCƒg‚É“ü‚ê‚é
-        //PCSwitchFlag = false; // ‚±‚±ˆê’UÁ‚µ‚Ü‚·
+        PC_SpriteRenderer.sprite = PC_OFF_Sprite;            // PC_ON_Sprite ã«ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠã„ãŸã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ PC_SpriteRenderer ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«å…¥ã‚Œã‚‹
+        //PCSwitchFlag = false; // ã“ã“ä¸€æ—¦æ¶ˆã—ã¾ã™
     }
     // ---------------------------------------------------------------------------------------------------------------------
     #endregion

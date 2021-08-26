@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +8,7 @@ public class CableCarController : MonoBehaviour
     [SerializeField] private Renderer eve;
     [SerializeField] private Renderer[] cableCars;
     [SerializeField] private GameObject[] colliders;
-    [SerializeField, Header("’â~’n“_")] private GameObject cableCarStopPosition;   // ’â~’n“_
+    [SerializeField, Header("åœæ­¢åœ°ç‚¹")] private GameObject cableCarStopPosition;   // åœæ­¢åœ°ç‚¹
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private Collider2D rubble;
     private PlayerController playerCon;
@@ -19,7 +19,7 @@ public class CableCarController : MonoBehaviour
     void Start()
     {
         playerCon = FindObjectOfType<PlayerController>();
-        // Å‰‚Í“–‚½‚è”»’è‚ª‚È‚¢‚Ì‚ÅÁ‚·
+        // æœ€åˆã¯å½“ãŸã‚Šåˆ¤å®šãŒãªã„ã®ã§æ¶ˆã™
         for (int i = 0; i < colliders.Length; i++)
         {
             colliders[i].gameObject.SetActive(false);
@@ -33,23 +33,23 @@ public class CableCarController : MonoBehaviour
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.cableCarStart))
         {
             Debug.Log("CableCar");
-            // ˆê“x‚Å‚àŒÄ‚Î‚ê‚½‚ç“ñ“x–Ú‚ÍŒÄ‚Î‚ê‚È‚¢‚æ‚¤‚É‚·‚éˆ—
+            // ä¸€åº¦ã§ã‚‚å‘¼ã°ã‚ŒãŸã‚‰äºŒåº¦ç›®ã¯å‘¼ã°ã‚Œãªã„ã‚ˆã†ã«ã™ã‚‹å‡¦ç†
             trigger = true;
             CableCarMove();
         }
     }
 
     /// <summary>
-    /// ƒP[ƒuƒ‹ƒJ[‚ğ“Á’è‚Ì’n“_‚Ü‚ÅˆÚ“®‚³‚¹‚é
+    /// ã‚±ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ã‚’ç‰¹å®šã®åœ°ç‚¹ã¾ã§ç§»å‹•ã•ã›ã‚‹
     /// </summary>
     public void CableCarMove()
     {
         if (loopFlag) { return; }
-        // Player‚ğ‘Ò‹@ƒ‚[ƒVƒ‡ƒ“‚É•ÏX
+        // Playerã‚’å¾…æ©Ÿãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã«å¤‰æ›´
         playerCon.anim.SetBool("Walking", false);
-        // Player‚Ì“®‚«‚ğ~‚ß‚é
+        // Playerã®å‹•ãã‚’æ­¢ã‚ã‚‹
         playerCon.PlayerNotMove();
-        // ‘¬“x‚ğ‹­§“I‚É0‚É‚·‚é
+        // é€Ÿåº¦ã‚’å¼·åˆ¶çš„ã«0ã«ã™ã‚‹
         //playerCon.rb2d.velocity = Vector2.zero;
         // 
         //playerCon.vx = 0;
@@ -68,11 +68,11 @@ public class CableCarController : MonoBehaviour
         }
         Debug.Log("MoveEnd");
         loopFlag = false;
-        // ƒP[ƒuƒ‹ƒJ[‚Ì“–‚½‚è”»’è‚ğActive‚É‚·‚é
+        // ã‚±ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ã®å½“ãŸã‚Šåˆ¤å®šã‚’Activeã«ã™ã‚‹
         ColliderActive();
-        // ƒCƒ”‚Ì”ñ•\¦
+        // ã‚¤ãƒ´ã®éè¡¨ç¤º
         eve.enabled = false;
-        // ƒKƒŒƒL‚Ì“–‚½‚è”»’è‚ÌÁ–Å
+        // ã‚¬ãƒ¬ã‚­ã®å½“ãŸã‚Šåˆ¤å®šã®æ¶ˆæ»…
         rubble.enabled = false;
         playerCon.PlayerMove();
         EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStop, true);
@@ -80,7 +80,7 @@ public class CableCarController : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒP[ƒuƒ‹ƒJ[‚Ì•\¦/”ñ•\¦
+    /// ã‚±ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ã®è¡¨ç¤º/éè¡¨ç¤º
     /// </summary>
     /// <param name="isEnabled">enable</param>
     public void ViewCableCar(bool isEnabled)

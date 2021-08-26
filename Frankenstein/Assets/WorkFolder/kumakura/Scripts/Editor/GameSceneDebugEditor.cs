@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -13,14 +13,14 @@ public class GameSceneDebugEditor : Editor
         base.OnInspectorGUI();
         EditorGUILayout.HelpBox(
         "DebugMode\n" +
-        "true : ƒfƒoƒbƒOƒ‚[ƒh‚Ì—LŒø‰»\n" +
-        "false : ƒfƒoƒbƒOƒ‚[ƒh‚Ì–³Œø‰»\n\n", MessageType.Info);
+        "true : ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã®æœ‰åŠ¹åŒ–\n" +
+        "false : ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã®ç„¡åŠ¹åŒ–\n\n", MessageType.Info);
         EditorGUILayout.HelpBox(
-        "`g‚¢•û`\n" +
-        "¶CtrlƒL[ : ƒV[ƒ“‚ÌÄ“Ç‚İ‚İ\n" +
-        "¶ShiftƒL[ : ƒQ[ƒ€“àŠÔ3”{‚É•ÏX\n" +
-        "‰EShiftƒL[ : ƒQ[ƒ€“àŠÔ0.5”{‚É•ÏX\n" +
-        "ShiftƒL[‚ğ—£‚·‚Æ’Êí‚ÌƒQ[ƒ€“àŠÔ‚É–ß‚è‚Ü‚·", MessageType.Info);
-        EditorGUILayout.HelpBox("BuildError‚ª‹N‚±‚éê‡‚Í‚±‚ÌGameObject‚ğ”jŠü‚µ‚Ä‚­‚¾‚³‚¢", MessageType.Warning);
+        "ï½ä½¿ã„æ–¹ï½\n" +
+        "å·¦Ctrlã‚­ãƒ¼ : ã‚·ãƒ¼ãƒ³ã®å†èª­ã¿è¾¼ã¿\n" +
+        "å·¦Shiftã‚­ãƒ¼ : ã‚²ãƒ¼ãƒ å†…æ™‚é–“3å€ã«å¤‰æ›´\n" +
+        "å³Shiftã‚­ãƒ¼ : ã‚²ãƒ¼ãƒ å†…æ™‚é–“0.5å€ã«å¤‰æ›´\n" +
+        "Shiftã‚­ãƒ¼ã‚’é›¢ã™ã¨é€šå¸¸ã®ã‚²ãƒ¼ãƒ å†…æ™‚é–“ã«æˆ»ã‚Šã¾ã™", MessageType.Info);
+        EditorGUILayout.HelpBox("BuildErrorãŒèµ·ã“ã‚‹å ´åˆã¯ã“ã®GameObjectã‚’ç ´æ£„ã—ã¦ãã ã•ã„", MessageType.Warning);
     }
 }

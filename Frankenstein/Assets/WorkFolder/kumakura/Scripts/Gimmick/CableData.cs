@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +11,8 @@ public enum CablePoint
 public class CableData : MonoBehaviour
 {
     [SerializeField] private ElectricCableArray cableArray;
-    public CablePoint point; // ŠJn’n“_
-    public int CableNum;     // “dü‚Ì”Ô†
+    public CablePoint point; // é–‹å§‹åœ°ç‚¹
+    public int CableNum;     // é›»ç·šã®ç•ªå·
 
 
     void Start()

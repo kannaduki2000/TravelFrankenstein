@@ -1,34 +1,34 @@
-
+﻿
 [System.Serializable]
 public enum EventFlagName
 {
     // Tutorial
-    frankensteinGetUp,  // �t�����P�����N���オ������@Text�̕\��
-    getupFlag,          // �A�j���[�V�����p�@��x�ł��N���オ�������ǂ���
-    textSystem,        // �ŏ��̃e�L�X�g�\����@�ړ��\�ɂȂ�
-    textSystemEnd,     // �ړ��\�ɂȂ�����Ɉړ�����@Text�̔�\��
-    eveReport,          // ���|�[�g�\���I����@Text�̕\��
-    textEve,           // �C���̃e�L�X�g�\���I����@�d�C�̋z�����\�ɂȂ�@�����������炢��Ȃ�
-    electricAabsorption,// �d�C���z��������@�G�l�~�[�ɓd�C�����鎖���\�ɂȂ�    
-    enemyCharge,        // �G�l�~�[�ɓd�C����ꂽ��@�V�[���J�ڂ��\�ɂȂ�@�{���ƈႤ�����Ȃ̂Œ���
-                        // �����ɓ�����֌W�̃t���O���ǉ�����邩��
+    frankensteinGetUp,  // フランケンが起き上がった後　Textの表示
+    getupFlag,          // アニメーション用　一度でも起き上がったかどうか
+    textSystem,        // 最初のテキスト表示後　移動可能になる
+    textSystemEnd,     // 移動可能になった後に移動する　Textの非表示
+    eveReport,          // レポート表示終了後　Textの表示
+    textEve,           // イヴのテキスト表示終了後　電気の吸収が可能になる　もしかしたらいらない
+    electricAabsorption,// 電気を吸収した後　エネミーに電気を入れる事が可能になる    
+    enemyCharge,        // エネミーに電気を入れた後　シーン遷移が可能になる　本来と違う挙動なので注意
+                        // ここに投げる関係のフラグが追加されるかも
 
     isFade,             // 
 
 
     // Stage1
-    stage1Title,       // �V�[���J�ڌ�̃t�F�[�h�C���I�����@�X�e�[�W�P�̃^�C�g�����\�����\�ɂȂ�
-    stage1TitleEnd,    // �X�e�[�W�P�̃^�C�g�����\�����ꂽ��@�t�����P���̑��삪�\�ɂȂ�
-    stage1ControlPanel,// ����Ղɓd�C����ꂽ��@�����o�Ă��ĊR�̓����蔻��̏���
-    cableCarStart,      // ���؂ɓd�C����ꂽ��@�P�[�u���J�[�̃C�x���g�̎��s
-    cableCarStop,       // �P�[�u���J�[����Ԃ�����@�t�����P�����ړ��\�ɂȂ�
-    enemyEscape,        // cableCarStop��true�̎��ɃG�l�~�[���|���ꂽ���@���̃G�l�~�[�������o��
-    enemyElectricCharge,// �ŏ��̃G�l�~�[�Ǐ]�̎��@�M�A�n�[�c�̐��̊m�FUI�̕\��
-    enemyReport,        // �M�A�n�[�c�̐��̊m�F�I����@����؂�ւ����\�ɂȂ�
-    pushCar,            // �Ԃ���������������@���쌠���t�����P���ɋ����I�ɕύX�A�G�l�~�[���Ăԕ\���@�J�����̈ړ���������
-    shoppingMall,       // �V���b�s���O���[���ɋߕt������@�e�L�X�g�̕\��
-    stage1Gear,        // ���ԂɂȂ����������@�V���b�s���O���[���̔����J��
+    stage1Title,       // シーン遷移後のフェードイン終了時　ステージ１のタイトルが表示が可能になる
+    stage1TitleEnd,    // ステージ１のタイトルが表示された後　フランケンの操作が可能になる
+    stage1ControlPanel,// 操作盤に電気を入れた後　床が出てきて崖の当たり判定の消滅
+    cableCarStart,      // 踏切に電気を入れた後　ケーブルカーのイベントの実行
+    cableCarStop,       // ケーブルカーが停車した後　フランケンが移動可能になる
+    enemyEscape,        // cableCarStopがtrueの時にエネミーが倒された時　他のエネミーが逃げ出す
+    enemyElectricCharge,// 最初のエネミー追従の時　ギアハーツの生体確認UIの表示
+    enemyReport,        // ギアハーツの生体確認終了後　操作切り替えが可能になる
+    pushCar,            // 車を押すを押した後　操作権をフランケンに強制的に変更、エネミーを呼ぶ表示　カメラの移動がしたい
+    shoppingMall,       // ショッピングモールに近付いたら　テキストの表示
+    stage1Gear,        // 歯車になるを押した後　ショッピングモールの扉が開く
 
     // End
-    FlagEnd,            // �t���O���X�g�̍Ō���Ӗ�����̂ŏ����Ȃ����ʒu���炳�Ȃ���
+    FlagEnd,            // フラグリストの最後を意味するので消さない＆位置ずらさないで
 }

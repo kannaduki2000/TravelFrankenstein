@@ -1,14 +1,14 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
-// “d‹C‚ğ“ü‚ê‚éƒIƒuƒWƒFƒNƒg‚ÌeƒNƒ‰ƒX
+// é›»æ°—ã‚’å…¥ã‚Œã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è¦ªã‚¯ãƒ©ã‚¹
 public class ElectricItem : MonoBehaviour
 {
-    public int Power { get; set; } = 0;                 // Á”ï“d—Í
-    public bool ChargeFlag { get; set; } = false;       // “d‹C‚ğ“ü‚ê‚Ä‚ ‚é‚©‚Ç‚¤‚©@OnOff‰Â”\
-    public bool IsCharge { get; set; } = false;         // Player‚ª[“d‚Å‚«‚é‚©
-    public bool IsChargeEvent { get; set; } = false;    // EventÀsÏ‚©‚Ç‚¤‚©@On‚Ì‚İ
-    public bool IsThrow { get; set; } = false;          // “Š‚°‚ê‚éObject‚©‚Ç‚¤‚©
+    public int Power { get; set; } = 0;                 // æ¶ˆè²»é›»åŠ›
+    public bool ChargeFlag { get; set; } = false;       // é›»æ°—ã‚’å…¥ã‚Œã¦ã‚ã‚‹ã‹ã©ã†ã‹ã€€OnOffå¯èƒ½
+    public bool IsCharge { get; set; } = false;         // PlayerãŒå……é›»ã§ãã‚‹ã‹
+    public bool IsChargeEvent { get; set; } = false;    // Eventå®Ÿè¡Œæ¸ˆã‹ã©ã†ã‹ã€€Onã®ã¿
+    public bool IsThrow { get; set; } = false;          // æŠ•ã’ã‚Œã‚‹Objectã‹ã©ã†ã‹
 
     public virtual void Event() { }
     public virtual void ChargeEvent() { }

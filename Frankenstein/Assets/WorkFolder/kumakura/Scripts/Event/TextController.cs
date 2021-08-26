@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,15 +20,15 @@ public class TextController : MonoBehaviour
     public Text text;
 
     private float time;
-    public float textTime;          // Text‘—‚è‚ÌŠÔ
-    public float loadTime;          // Ÿ‚Ì•¶Í‚ÉØ‚è‘Ö‚í‚é‚Ü‚Å‚ÌŠÔ
-    private int textNum = 0;        // •\¦’†‚ÌƒeƒLƒXƒg
-    private int parentArrayNum = 0; // e”z—ñ‚Ì”Ô†
-    private int childArrayNum = 0;  // q”z—ñ‚Ì”Ô†
-    private bool loadFlag = false;  // ƒ[ƒh’†‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
-    public bool textFlag = false;   // Text‘—‚è’†‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+    public float textTime;          // Texté€ã‚Šã®æ™‚é–“
+    public float loadTime;          // æ¬¡ã®æ–‡ç« ã«åˆ‡ã‚Šæ›¿ã‚ã‚‹ã¾ã§ã®æ™‚é–“
+    private int textNum = 0;        // è¡¨ç¤ºä¸­ã®ãƒ†ã‚­ã‚¹ãƒˆ
+    private int parentArrayNum = 0; // è¦ªé…åˆ—ã®ç•ªå·
+    private int childArrayNum = 0;  // å­é…åˆ—ã®ç•ªå·
+    private bool loadFlag = false;  // ãƒ­ãƒ¼ãƒ‰ä¸­ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
+    public bool textFlag = false;   // Texté€ã‚Šä¸­ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
     private bool aaa = false;
-    public bool active = false;     // ƒeƒLƒXƒg‘—‚è’†ˆÈŠO‚Í”ñƒAƒNƒeƒBƒu
+    public bool active = false;     // ãƒ†ã‚­ã‚¹ãƒˆé€ã‚Šä¸­ä»¥å¤–ã¯éã‚¢ã‚¯ãƒ†ã‚£ãƒ–
 
     private System.Action callback = null; 
 
@@ -49,13 +49,13 @@ public class TextController : MonoBehaviour
         if (active == false) { return; }
 
 
-        // ‘S•”‚ÌƒeƒLƒXƒg‘—‚è‚ªI‚í‚Á‚½‚ç”ñ•\¦‚É‚·‚é
+        // å…¨éƒ¨ã®ãƒ†ã‚­ã‚¹ãƒˆé€ã‚ŠãŒçµ‚ã‚ã£ãŸã‚‰éè¡¨ç¤ºã«ã™ã‚‹
         if (ParentTexts.Length == parentArrayNum)
         {
             gameObject.SetActive(false);
         }
 
-        // 1ƒCƒxƒ“ƒg•ª‚ÌƒeƒLƒXƒg‘—‚è‚ªI‚í‚Á‚½‚çŸ‚Ì•¶Í‚ğƒZƒbƒg‚µ‚Ä”ñ•\¦‚É‚·‚é
+        // 1ã‚¤ãƒ™ãƒ³ãƒˆåˆ†ã®ãƒ†ã‚­ã‚¹ãƒˆé€ã‚ŠãŒçµ‚ã‚ã£ãŸã‚‰æ¬¡ã®æ–‡ç« ã‚’ã‚»ãƒƒãƒˆã—ã¦éè¡¨ç¤ºã«ã™ã‚‹
         if (ParentTexts[parentArrayNum].ChildText.Length == childArrayNum)
         {
             if (aaa) { }
@@ -85,7 +85,7 @@ public class TextController : MonoBehaviour
             }
         }
 
-        // •¶Í‚ÌÅŒã‚Ü‚Å—ˆ‚½‚çƒ[ƒh‚³‚¹‚ÄŸ‚Ì•¶Í‚ÌƒZƒbƒg‚ğ‚·‚é
+        // æ–‡ç« ã®æœ€å¾Œã¾ã§æ¥ãŸã‚‰ãƒ­ãƒ¼ãƒ‰ã•ã›ã¦æ¬¡ã®æ–‡ç« ã®ã‚»ãƒƒãƒˆã‚’ã™ã‚‹
         if (ParentTexts[parentArrayNum].ChildText[childArrayNum].Length == textNum - 1)
         {
             loadFlag = true;
@@ -100,10 +100,10 @@ public class TextController : MonoBehaviour
         }
 
 
-        // Ÿ‚Ì•¶Í‚Ü‚Å‚Ìƒ[ƒhŠÔ‚ª‚­‚é‚Ü‚Å‘Ò‹@
+        // æ¬¡ã®æ–‡ç« ã¾ã§ã®ãƒ­ãƒ¼ãƒ‰æ™‚é–“ãŒãã‚‹ã¾ã§å¾…æ©Ÿ
         if (loadFlag) { return; }
 
-        // ƒeƒLƒXƒg‘—‚è
+        // ãƒ†ã‚­ã‚¹ãƒˆé€ã‚Š
         time += Time.deltaTime;
         if (textTime < time)
         {
@@ -114,7 +114,7 @@ public class TextController : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒeƒLƒXƒg‘—‚è
+    /// ãƒ†ã‚­ã‚¹ãƒˆé€ã‚Š
     /// </summary>
     public void DisplaySentence()
     {
@@ -124,7 +124,7 @@ public class TextController : MonoBehaviour
     }
 
     /// <summary>
-    /// Text‚Ì•\¦/”ñ•\¦
+    /// Textã®è¡¨ç¤º/éè¡¨ç¤º
     /// </summary>
     /// <param name="value"></param>
     public void SetTextActive(bool value, System.Action _callback = null)

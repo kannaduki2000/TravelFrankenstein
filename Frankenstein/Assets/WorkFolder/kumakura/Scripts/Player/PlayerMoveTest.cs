@@ -1,9 +1,9 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// À‹@‚Å‚Íg‚í‚ñ
+/// å®Ÿæ©Ÿã§ã¯ä½¿ã‚ã‚“
 /// </summary>
 public class PlayerMoveTest : MonoBehaviour
 {
@@ -19,7 +19,7 @@ public class PlayerMoveTest : MonoBehaviour
 
     void Update()
     {
-        // “düƒfƒoƒbƒO
+        // é›»ç·šãƒ‡ãƒãƒƒã‚°
         if (Input.GetKeyDown(KeyCode.Return))
         {
             electricCableCon.CablePointMove(gameObject, id, startPoint);
@@ -35,7 +35,7 @@ public class PlayerMoveTest : MonoBehaviour
 
         }
 
-        // ƒP[ƒuƒ‹ƒJ[ƒfƒoƒbƒO
+        // ã‚±ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ãƒ‡ãƒãƒƒã‚°
         if (Input.GetKeyDown(KeyCode.Q))
         {
             EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStart, true);

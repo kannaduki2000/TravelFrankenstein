@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,31 +12,31 @@ public class GameSceneDebug : MonoBehaviour
     {
         if (!debugMode) return;
         #if UNITY_EDITOR
-            // ¶ƒRƒ“ƒgƒ[ƒ‹ƒL[
+            // å·¦ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚­ãƒ¼
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                // ƒV[ƒ“‚ÌÄ“Ç‚İ‚İ
+                // ã‚·ãƒ¼ãƒ³ã®å†èª­ã¿è¾¼ã¿
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
 
-            // ¶‚ÌƒVƒtƒgƒL[
+            // å·¦ã®ã‚·ãƒ•ãƒˆã‚­ãƒ¼
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                // ƒQ[ƒ€“àŠÔ3”{‚É•ÏX
+                // ã‚²ãƒ¼ãƒ å†…æ™‚é–“3å€ã«å¤‰æ›´
                 Time.timeScale = 3;
             }
 
-            // ‰E‚ÌƒVƒtƒgƒL[
+            // å³ã®ã‚·ãƒ•ãƒˆã‚­ãƒ¼
             if (Input.GetKeyDown(KeyCode.RightShift))
             {
-                // ƒQ[ƒ€“àŠÔ0.5”{‚É•ÏX
+                // ã‚²ãƒ¼ãƒ å†…æ™‚é–“0.5å€ã«å¤‰æ›´
                 Time.timeScale = 0.5f;
             }
 
-            // ƒVƒtƒgƒL[‚ğ—£‚·
+            // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ã‚’é›¢ã™
             if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
             {
-                // ƒQ[ƒ€“àŠÔ“™‘¬‚É–ß‚·
+                // ã‚²ãƒ¼ãƒ å†…æ™‚é–“ç­‰é€Ÿã«æˆ»ã™
                 Time.timeScale = 1;
             }
         #endif

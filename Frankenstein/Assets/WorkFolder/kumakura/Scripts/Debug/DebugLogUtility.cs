@@ -1,14 +1,14 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace DebugLogUtility
 {
-    // Debug‚ği‚éƒNƒ‰ƒX
+    // Debugã‚’å¸ã‚‹ã‚¯ãƒ©ã‚¹
     public class DLUtility
     {
         public static void DebugLog(object _message)
         {
             Debug.Log(_message);
-        }                                           // ’Êí‚ÌDebug.Log‚Æ“¯‚¶
+        }                                           // é€šå¸¸ã®Debug.Logã¨åŒã˜
         public static void DebugLogArray(object[] _message, string _context = "Array")
         {
             int arrayNum = 0;
@@ -19,7 +19,7 @@ namespace DebugLogUtility
                 arrayNum++;
             }
             Debug.Log("--- End ---");
-        }         // ”z—ñ‚ğ“ü‚ê‚é‚Æ’†g‚ğ‘S‚ÄƒRƒ“ƒ\[ƒ‹ã‚É•\¦‚·‚é(object)
+        }         // é…åˆ—ã‚’å…¥ã‚Œã‚‹ã¨ä¸­èº«ã‚’å…¨ã¦ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ä¸Šã«è¡¨ç¤ºã™ã‚‹(object)
         public static void DebugLogArray(int[] _message, string _context = "Array")
         {
             int arrayNum = 0;
@@ -30,7 +30,7 @@ namespace DebugLogUtility
                 arrayNum++;
             }
             Debug.Log("--- End ---");
-        }            // ”z—ñ‚ğ“ü‚ê‚é‚Æ’†g‚ğ‘S‚ÄƒRƒ“ƒ\[ƒ‹ã‚É•\¦‚·‚é(int)
+        }            // é…åˆ—ã‚’å…¥ã‚Œã‚‹ã¨ä¸­èº«ã‚’å…¨ã¦ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ä¸Šã«è¡¨ç¤ºã™ã‚‹(int)
         public static void DebugLogArray(string[] _message, string _context = "Array")
         {
             int arrayNum = 0;
@@ -41,42 +41,42 @@ namespace DebugLogUtility
                 arrayNum++;
             }
             Debug.Log("--- End ---");
-        }         // ”z—ñ‚ğ“ü‚ê‚é‚Æ’†g‚ğ‘S‚ÄƒRƒ“ƒ\[ƒ‹ã‚É•\¦‚·‚é(string)
+        }         // é…åˆ—ã‚’å…¥ã‚Œã‚‹ã¨ä¸­èº«ã‚’å…¨ã¦ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ä¸Šã«è¡¨ç¤ºã™ã‚‹(string)
         public static void DebugLogError(object _message)
         {
             Debug.LogError(_message);
-        }                                      // ’Êí‚ÌDebug.LogError‚Æ“¯‚¶
+        }                                      // é€šå¸¸ã®Debug.LogErrorã¨åŒã˜
         public static void DebugLogWarninng(object _message)
         {
             Debug.LogError(_message);
-        }                                   // ’Êí‚ÌDebug.LogWarninng‚Æ“¯‚¶
+        }                                   // é€šå¸¸ã®Debug.LogWarninngã¨åŒã˜
         public static void DrawLine(Vector3 start, Vector3 end, Color color, float duration)
         {
             Debug.DrawLine(start, end, color, duration);
-        }   // ’Êí‚ÌDebug.DrawLine‚Æ“¯‚¶
+        }   // é€šå¸¸ã®Debug.DrawLineã¨åŒã˜
         public static void DrawLine(Vector3 start, Vector3 end, Color color)
         {
             Debug.DrawLine(start, end, color);
-        }                   // ’Êí‚ÌDebug.DrawLine‚Æ“¯‚¶
+        }                   // é€šå¸¸ã®Debug.DrawLineã¨åŒã˜
         public static void DrawLine(Vector3 start, Vector3 end)
         {
             Debug.DrawLine(start, end);
-        }                                // ’Êí‚ÌDebug.DrawLine‚Æ“¯‚¶
+        }                                // é€šå¸¸ã®Debug.DrawLineã¨åŒã˜
         public static void DrawRay(Vector3 start, Vector3 dir, Color color, float duration)
         {
             Debug.DrawRay(start, dir, color, duration);
-        }    // ’Êí‚ÌDebug.DrawRay‚Æ“¯‚¶
+        }    // é€šå¸¸ã®Debug.DrawRayã¨åŒã˜
         public static void DrawRay(Vector3 start, Vector3 dir, Color color)
         {
             Debug.DrawRay(start, dir, color);
-        }                    // ’Êí‚ÌDebug.DrawRay‚Æ“¯‚¶
+        }                    // é€šå¸¸ã®Debug.DrawRayã¨åŒã˜
         public static void DrawRay(Vector3 start, Vector3 dir)
         {
             Debug.DrawRay(start, dir);
-        }                                 // ’Êí‚ÌDebug.DrawRay‚Æ“¯‚¶
+        }                                 // é€šå¸¸ã®Debug.DrawRayã¨åŒã˜
         public static void Break()
         {
             Debug.Break();
-        }                                                             // ’Êí‚ÌDebug.Break‚Æ“¯‚¶
+        }                                                             // é€šå¸¸ã®Debug.Breakã¨åŒã˜
     }
 }
