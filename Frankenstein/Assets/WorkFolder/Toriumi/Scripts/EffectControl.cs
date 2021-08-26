@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +6,12 @@ public class EffectControl : MonoBehaviour
 {
 
     private ParticleSystem Particle;
-    public GameObject m_effect;         //ƒvƒŒƒnƒu
+    public GameObject m_effect;         //ãƒ—ãƒ¬ãƒãƒ–
 
-    // Effect‚ğ”ñƒAƒNƒeƒBƒu‰»
+    // Effectã‚’éã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–
     void Start()
     {
-        m_effect = GameObject.Find("Effect");   //”ñ•\¦‚É‚µ‚Ä‚àŒ©‚Â‚©‚é‚æ‚¤‚É
+        m_effect = GameObject.Find("Effect");   //éè¡¨ç¤ºã«ã—ã¦ã‚‚è¦‹ã¤ã‹ã‚‹ã‚ˆã†ã«
         m_effect.SetActive(false);
     }
 
@@ -21,10 +21,10 @@ public class EffectControl : MonoBehaviour
 
     }
 
-    //Effect‚ğƒAƒNƒeƒBƒu‰»
+    //Effectã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")   //’†g‚Ì•ÏX‚¨Šè‚¢‚µ‚Ü‚·B
+        if (collision.gameObject.tag == "Player")   //ä¸­èº«ã®å¤‰æ›´ãŠé¡˜ã„ã—ã¾ã™ã€‚
         {
            m_effect.SetActive(true);
         }
@@ -34,16 +34,16 @@ public class EffectControl : MonoBehaviour
 
 
 
-//“d‹C‚Ì“üo‚ÉƒGƒtƒFƒNƒg‚ª”­¶
+//é›»æ°—ã®å…¥å‡ºæ™‚ã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒç™ºç”Ÿ
 
-/*\‘¢*/
+/*æ§‹é€ */
 
-// 1 “d‹C‚ğ“ü‚ê‚é‚ÉƒGƒtƒFƒNƒg‚ğ—¬‚·
+// 1 é›»æ°—ã‚’å…¥ã‚Œã‚‹æ™‚ã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æµã™
 
-// Effect‚ğ”ñƒAƒNƒeƒBƒu‰»
+// Effectã‚’éã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–
 //
-// if(“d‹C‚ğ“ü‚ê‚½‚ç)
+// if(é›»æ°—ã‚’å…¥ã‚ŒãŸã‚‰)
 // {
-//    EffectƒAƒNƒeƒBƒu‰»  
+//    Effectã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–  
 // }
 

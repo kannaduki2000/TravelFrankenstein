@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,9 +18,9 @@ public class Collapse : MonoBehaviour
     {
         if (Fall)
         {
-            Transform ground = Ground.transform;                            //Ground‚ÌÀ•W‚ğæ“¾
+            Transform ground = Ground.transform;                            //Groundã®åº§æ¨™ã‚’å–å¾—
             Vector2 pos = ground.position;
-            pos.y = Mathf.MoveTowards(pos.y, -100, Time.deltaTime * speed); //pos.y‚©‚ç-100‚Ü‚ÅTime.deltaTime * speed‚ÌƒXƒs[ƒh‚ÅˆÚ“®
+            pos.y = Mathf.MoveTowards(pos.y, -100, Time.deltaTime * speed); //pos.yã‹ã‚‰-100ã¾ã§Time.deltaTime * speedã®ã‚¹ãƒ”ãƒ¼ãƒ‰ã§ç§»å‹•
             ground.position = pos;
             
         }
@@ -34,11 +34,11 @@ public class Collapse : MonoBehaviour
         }
     }
     
-    /* ƒXƒNƒŠƒvƒg“à—e */
-//E’n–Ê‚ª•ö—‚·‚éƒXƒNƒŠƒvƒg
-//EÎ‚ÌŠO‘¤‚ÉTrigger‚ª‚ ‚èAG‚ê‚½‚ç’n–Ê‚ª—‚¿‚éB
-//Espped‚Å—‚¿‚é‘¬‚³‚ª’²ß‰Â”\
-//E-100‚Ì‚Æ‚±‚ë‚Å—‚¿‚é‚‚³‚ª•ÏX‰Â”\
-//EƒAƒjƒ[ƒVƒ‡ƒ“‚ª‚È‚¢‚Ì‚Å‚½‚¾‚½‚¾’n–Ê—‰º‚Ì‚İB
-//EƒJƒƒ‰ˆÚ“®‚ÍƒXƒNƒŠƒvƒg‚ª•ª‚©‚ç‚È‚­‚ÄG‚Á‚Ä‚È‚¢‚Å‚·B
+    /* ã‚¹ã‚¯ãƒªãƒ—ãƒˆå†…å®¹ */
+//ãƒ»åœ°é¢ãŒå´©è½ã™ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+//ãƒ»çŸ³ã®å¤–å´ã«TriggerãŒã‚ã‚Šã€è§¦ã‚ŒãŸã‚‰åœ°é¢ãŒè½ã¡ã‚‹ã€‚
+//ãƒ»sppedã§è½ã¡ã‚‹é€Ÿã•ãŒèª¿ç¯€å¯èƒ½
+//ãƒ»-100ã®ã¨ã“ã‚ã§è½ã¡ã‚‹é«˜ã•ãŒå¤‰æ›´å¯èƒ½
+//ãƒ»ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒãªã„ã®ã§ãŸã ãŸã åœ°é¢è½ä¸‹ã®ã¿ã€‚
+//ãƒ»ã‚«ãƒ¡ãƒ©ç§»å‹•ã¯ã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒåˆ†ã‹ã‚‰ãªãã¦è§¦ã£ã¦ãªã„ã§ã™ã€‚
 }
