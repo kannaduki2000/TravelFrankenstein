@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class TextArray
 {
-    public string[] ChildText;
+    [TextArea(3, 8)] public string[] ChildText;
 }
 
 
