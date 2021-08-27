@@ -6,6 +6,9 @@ public class Enemy2 : MonoBehaviour
 {
     //CharacterController Controller;
     //Transform Target;
+
+    [SerializeField]
+    private GameObject objGet;
     GameObject Ground;
 
     //[SerializeField]
@@ -40,6 +43,8 @@ public class Enemy2 : MonoBehaviour
 
     Rigidbody2D rb;
     public float speed = 1; // スピードX
+
+    int bone = 2;
    
 
 
@@ -93,6 +98,7 @@ public class Enemy2 : MonoBehaviour
 
         // プレイヤーの位置取得
         Player = GameObject.Find("Player").transform;
+        Bone = GameObject.Find("Bone").transform;
 
         thisXScale = transform.localScale.x;
 
@@ -121,6 +127,14 @@ public class Enemy2 : MonoBehaviour
     }
 
     // 骨を取得
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Bone")
+        {
+            bone = 0;
+        }
+    }
+
 
 
     // 突進
@@ -129,25 +143,28 @@ public class Enemy2 : MonoBehaviour
         // プレイヤータグがついているやつが近づいてきたら
         if (collision.gameObject.tag == "Player")
         {
-            //float speed = 0;
-            time2 += Time.deltaTime;
-            if (time2 > 2)
+            if(bone < 1)
             {
-                isloop = true;
+                //float speed = 0;
+                time2 += Time.deltaTime;
+                if (time2 > 2)
+                {
+                    isloop = true;
 
-                if (transform.position.x < Player.position.x)
-                {
-                    //右
-                    rb.velocity = new Vector2(speed, 0);
-                    transform.localScale = new Vector2(1, 1);
-                    isloop = false;
-                }
-                else if (transform.position.x > Player.position.x)
-                {
-                    //左
-                    rb.velocity = new Vector2(-speed, 0);
-                    transform.localScale = new Vector2(-1, 1);
-                    isloop = false;
+                    if (transform.position.x < Player.position.x)
+                    {
+                        //右
+                        rb.velocity = new Vector2(speed, 0);
+                        transform.localScale = new Vector2(1, 1);
+                        isloop = false;
+                    }
+                    else if (transform.position.x > Player.position.x)
+                    {
+                        //左
+                        rb.velocity = new Vector2(-speed, 0);
+                        transform.localScale = new Vector2(-1, 1);
+                        isloop = false;
+                    }
                 }
             }
         }     
@@ -173,6 +190,10 @@ public class Enemy2 : MonoBehaviour
                 rb.velocity = new Vector2(-speed, 0);
                 transform.localScale = new Vector2(1, 1);
             }
+        }
+        if (collision.gameObject.tag == "Bone")
+        {
+            bone = 2;
         }
     }
 
