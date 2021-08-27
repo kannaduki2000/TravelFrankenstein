@@ -30,6 +30,5 @@ public class test_playerController : MonoBehaviour
 			transform.Translate(7.5f, 0.0f, 0.0f);
 		}
 	}
-
 	/*----------------------------------------------------------------------------------------------------*/
 }

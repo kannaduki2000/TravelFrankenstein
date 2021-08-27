@@ -46,7 +46,7 @@ public class PC_Controller : MonoBehaviour
 		Player = GameObject.Find("test_player");			// プレイヤーのオブジェクトをしまっちゃおうね
 		PC = GameObject.Find("test_PC");					// PCのオブジェクトをしまっちゃうおうね
 
-		PlayerScript = Player.GetComponent<test_playerController>();			// プレイヤーの中にあるスクリプトをしまっちゃおうね
+		// PlayerScript = Player.GetComponent<test_PlayerController>();			// プレイヤーの中にあるスクリプトをしまっちゃおうね
 
 		PC_SpriteRenderer = PC.GetComponent<SpriteRenderer>();			// PC のスプライトレンダラーをしまっちゃおうね
 	}
@@ -130,14 +130,14 @@ public class PC_Controller : MonoBehaviour
 
 			private void PlayerHPMinus()			// プレイヤーのHPを減らす関数
 		{
-			player_hp = PlayerScript.HP;			// プレイヤーのHPをしまっちゃおうね
+			// player_hp = PlayerScript.HP;			// プレイヤーのHPをしまっちゃおうね
 			player_hp -= power_cn;					// プレイヤーのHPを消費電力分、減らす
 			PlayerScript.HP = player_hp;			// 減ったプレイヤーのHPをvalueに入れる
 		}
 
 			private void PlayerHPPlus()			// プレイヤーのHPを増やす関数
 		{
-			player_hp = PlayerScript.HP;			// プレイヤーのHPをしまっちゃおうね
+			// player_hp = PlayerScript.HP;			// プレイヤーのHPをしまっちゃおうね
 			player_hp += power_cn;				// プレイヤーのHPを消費電力分、増やす(元に戻す)
 			PlayerScript.HP = player_hp;			// 増えたプレイヤーのHPをvalueに入れる
 		}
