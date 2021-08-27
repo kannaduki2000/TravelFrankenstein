@@ -16,6 +16,8 @@ public class CableCarController : MonoBehaviour
 
     private bool trigger = false;
 
+    private EventBandController eventBandCon;
+
     void Start()
     {
         playerCon = FindObjectOfType<PlayerController>();
@@ -25,6 +27,7 @@ public class CableCarController : MonoBehaviour
             colliders[i].gameObject.SetActive(false);
         }
         ViewCableCar(false);
+        eventBandCon = FindObjectOfType<EventBandController>();
     }
 
     void Update()
@@ -53,8 +56,11 @@ public class CableCarController : MonoBehaviour
         //playerCon.rb2d.velocity = Vector2.zero;
         // 
         //playerCon.vx = 0;
-        ViewCableCar(true);
-        StartCoroutine(Move());
+        eventBandCon.EventStart(() =>
+        {
+            ViewCableCar(true);
+            StartCoroutine(Move());
+        });
     }
 
     public IEnumerator Move()
@@ -66,16 +72,18 @@ public class CableCarController : MonoBehaviour
                 cableCarStopPosition.transform.position, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        Debug.Log("MoveEnd");
         loopFlag = false;
-        // ケーブルカーの当たり判定をActiveにする
-        ColliderActive();
-        // イヴの非表示
-        eve.enabled = false;
-        // ガレキの当たり判定の消滅
-        rubble.enabled = false;
-        playerCon.PlayerMove();
-        EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStop, true);
+        eventBandCon.EventEnd(() =>
+        {
+            // ケーブルカーの当たり判定をActiveにする
+            ColliderActive();
+            // イヴの非表示
+            eve.enabled = false;
+            // ガレキの当たり判定の消滅
+            rubble.enabled = false;
+            playerCon.PlayerMove();
+            EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStop, true);
+        });
         yield break;
     }
 
