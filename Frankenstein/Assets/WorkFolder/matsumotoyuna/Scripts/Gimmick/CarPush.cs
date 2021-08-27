@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +15,7 @@ public class CarPush : MonoBehaviour
     public bool crash = true;
     public bool garekiCrash = false;
     public bool rot = false;
+    public bool carMove = false;
     [SerializeField] private EnemyController enemy;
 
     public PhysicMaterial material;
@@ -36,55 +37,53 @@ public class CarPush : MonoBehaviour
             Crash();
         }
 
-        if(rot == true)
-        {
-            transform.Rotate(0f, 0f, -this.speed / 6);
-        }
+        //if(rot == true)
+        //{
+        //    transform.Rotate(0f, 0f, -this.speed / 6);
+        //}
 
-        if (rot == true && transform.rotation.z >= 0)
-        {
-            transform.rotation = new Quaternion(0, 0, 0, 0);
-            rot = false;
-        }
+        //if (rot == true && transform.rotation.z >= 0)
+        //{
+        //    transform.rotation = new Quaternion(0, 0, 0, 0);
+        //    rot = false;
+        //}
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //‚ª‚ê‚«‚É“–‚½‚Á‚½‚ç
+        //ãŒã‚Œãã«å½“ãŸã£ãŸã‚‰
         if (collision.gameObject.tag == "Gareki")
         {
-            //rigid2D.sharedMaterial = pm;
-            //pm.friction = 10000000;
-            //pm.dynamicFriction = 500000000000000000;
-            //pm.staticFriction = 1;
+            carMove = true;
             rigid2D.constraints = RigidbodyConstraints2D.FreezePositionX;
             rigid2D.velocity = Vector3.zero;
             rigid2D.angularVelocity = 0;
             rot = true;
-            //rigid2D.velocity = Vector2.zero;
-            //Destroy(gareki);
             gareki.SetActive(false);
-            //·”­“®uÔ”j‰óv
+            //æ™‚å·®ç™ºå‹•ã€Œè»Šç ´å£Šã€
             Invoke("CarCrash", 2.0f);
         }
     }
 
     public void Crash()
     {
-        GetComponent<Collider2D>().isTrigger = false;
-        rigid2D.bodyType = RigidbodyType2D.Dynamic;
-        Transform go = this.transform;
-        Vector2 carposition = go.position;
+        if(!carMove)
+        {
+            GetComponent<Collider2D>().isTrigger = false;
+            rigid2D.bodyType = RigidbodyType2D.Dynamic;
+            Transform go = this.transform;
+            Vector2 carposition = go.position;
 
-        carposition.x = Mathf.MoveTowards(carposition.x, 5.5f, Time.deltaTime * speed);
-        go.position = carposition;
+            carposition.x = Mathf.MoveTowards(carposition.x, 5.5f, Time.deltaTime * speed);
+            go.position = carposition;
+        }
     }
 
     private void CarCrash()
     {
-        // ƒGƒlƒ~[‚ª•à‚¯‚é‚æ‚¤‚É‚·‚é
+        // ã‚¨ãƒãƒŸãƒ¼ãŒæ­©ã‘ã‚‹ã‚ˆã†ã«ã™ã‚‹
         //enemy.EnemyMove();
-        // ‘€ìŒ ‚ğ‹­§“I‚ÉPlayer‚É‚·‚é
+        // æ“ä½œæ¨©ã‚’å¼·åˆ¶çš„ã«Playerã«ã™ã‚‹
         //enemy.isFollowing = false;
         //enemy.Follow = true;
 
@@ -92,7 +91,7 @@ public class CarPush : MonoBehaviour
         enemy.enemyMove = true;
         enemy.mt.player_Move = false;
         enemy.camera.GetComponent<CameraClamp>().targetToFollow = enemy.Player.transform;
-        //ÔÁ‚·
+        //è»Šæ¶ˆã™
         gameObject.SetActive(false);
     }
 }

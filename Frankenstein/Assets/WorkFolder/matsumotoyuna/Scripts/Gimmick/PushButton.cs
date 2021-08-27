@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +16,7 @@ public class PushButton : MonoBehaviour
     public bool notpushingbutton = false;
     public bool notpushingbutton2 = false;
 
-    //â‚ğ~‚è‚½Œã‚Ìƒ{ƒ^ƒ“—p
+    //å‚ã‚’é™ã‚ŠãŸå¾Œã®ãƒœã‚¿ãƒ³ç”¨
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "MineCart")
@@ -25,8 +25,8 @@ public class PushButton : MonoBehaviour
         }
     }
 
-    //‚Í‚µ‚²‚ğã‚°‰º‚°‚·‚éƒ{ƒ^ƒ“—p
-    //ƒgƒƒbƒR‚ªƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚¢‚é
+    //ã¯ã—ã”ã‚’ä¸Šã’ä¸‹ã’ã™ã‚‹ãƒœã‚¿ãƒ³ç”¨
+    //ãƒˆãƒ­ãƒƒã‚³ãŒãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ã„ã‚‹æ™‚
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "MineCart")
@@ -36,7 +36,7 @@ public class PushButton : MonoBehaviour
         }
     }
 
-    //ƒgƒƒbƒR‚ªƒ{ƒ^ƒ“‚©‚ç—£‚ê‚½‚Æ‚«
+    //ãƒˆãƒ­ãƒƒã‚³ãŒãƒœã‚¿ãƒ³ã‹ã‚‰é›¢ã‚ŒãŸã¨ã
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.name == "MineCart")
@@ -55,8 +55,8 @@ public class PushButton : MonoBehaviour
 
     public void PushingButton()
     {
-        //â‚ğ~‚è‚½Œã‚Ìƒ{ƒ^ƒ“—p
-        //ƒ{ƒ^ƒ“‚ª‰¡‚ÉˆÚ“®‚·‚éƒ^ƒCƒv
+        //å‚ã‚’é™ã‚ŠãŸå¾Œã®ãƒœã‚¿ãƒ³ç”¨
+        //ãƒœã‚¿ãƒ³ãŒæ¨ªã«ç§»å‹•ã™ã‚‹ã‚¿ã‚¤ãƒ—
         if(notpushingbutton == false && this.gameObject.name == "Button")
         {
             Transform button = this.transform;
@@ -68,8 +68,8 @@ public class PushButton : MonoBehaviour
             Invoke("NotPushButton", 2.0f);
         }
 
-        //‚Í‚µ‚²‚ğã‚°‰º‚°‚·‚éƒ{ƒ^ƒ“—p
-        //ƒ{ƒ^ƒ“‚ª‰º‚ÉˆÚ“®‚·‚éƒ^ƒCƒv
+        //ã¯ã—ã”ã‚’ä¸Šã’ä¸‹ã’ã™ã‚‹ãƒœã‚¿ãƒ³ç”¨
+        //ãƒœã‚¿ãƒ³ãŒä¸‹ã«ç§»å‹•ã™ã‚‹ã‚¿ã‚¤ãƒ—
         if(notpushingbutton2 == false && this.gameObject.name == "Button2")
         {
             Transform button2 = this.transform;
@@ -82,8 +82,8 @@ public class PushButton : MonoBehaviour
             rotladder.pushtorotation = true;
         }
 
-        //‚Í‚µ‚²‚ğã‚°‰º‚°‚·‚éƒ{ƒ^ƒ“—p
-        //ƒ{ƒ^ƒ“‚ªã‚ÉˆÚ“®‚·‚éƒ^ƒCƒv
+        //ã¯ã—ã”ã‚’ä¸Šã’ä¸‹ã’ã™ã‚‹ãƒœã‚¿ãƒ³ç”¨
+        //ãƒœã‚¿ãƒ³ãŒä¸Šã«ç§»å‹•ã™ã‚‹ã‚¿ã‚¤ãƒ—
         if (notpushingbutton2 == true && this.gameObject.name == "Button2")
         {
             Transform button2 = this.transform;

@@ -1,21 +1,21 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//‚Í‚µ‚²‚Ì’[‚É‹ó‚ÌƒIƒuƒWƒFƒNƒgì‚é
-//‚»‚¢‚Â‚ªeA‚Í‚µ‚²‚ğq‚É‚·‚é
-//‹ó‚ÌƒIƒuƒWƒFƒNƒg‚É‚±‚ê‚ğ•t‚¯‚Ä‚ËI
+//ã¯ã—ã”ã®ç«¯ã«ç©ºã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œã‚‹
+//ãã„ã¤ãŒè¦ªã€ã¯ã—ã”ã‚’å­ã«ã™ã‚‹
+//ç©ºã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã“ã‚Œã‚’ä»˜ã‘ã¦ã­ï¼
 
 public class RotLadder : MonoBehaviour
 {
-    //‰ñ“]ƒXƒs[ƒh
+    //å›è»¢ã‚¹ãƒ”ãƒ¼ãƒ‰
     float speed = 40f;
-    //ƒXƒCƒbƒ`‚ğ‰Ÿ‚³‚ê‚½‚çtrue
+    //ã‚¹ã‚¤ãƒƒãƒã‚’æŠ¼ã•ã‚ŒãŸã‚‰true
     public bool pushtorotation = false;
 
     void Update()
     {
-        //ƒXƒCƒbƒ`‰Ÿ‚³‚ê‚½‚ç
+        //ã‚¹ã‚¤ãƒƒãƒæŠ¼ã•ã‚ŒãŸã‚‰
         if(pushtorotation)
         {
             float step = speed * Time.deltaTime;
@@ -23,8 +23,8 @@ public class RotLadder : MonoBehaviour
            (transform.rotation, Quaternion.Euler(0, 0, -20.237f), step);
         }
 
-        //ƒXƒCƒbƒ`‚ğ‰Ÿ‚³‚ê‚Ä‚È‚¯‚ê‚Î
-        //(ª‰ŠúˆÊ’u‚É–ß‚·ˆ—)
+        //ã‚¹ã‚¤ãƒƒãƒã‚’æŠ¼ã•ã‚Œã¦ãªã‘ã‚Œã°
+        //(â†‘åˆæœŸä½ç½®ã«æˆ»ã™å‡¦ç†)
         else if(!pushtorotation)
         {
             float step = speed * Time.deltaTime;
