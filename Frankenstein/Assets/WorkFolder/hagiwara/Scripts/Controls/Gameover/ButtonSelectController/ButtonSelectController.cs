@@ -1,18 +1,18 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonSelectController : MonoBehaviour
 {
-	// ƒCƒ“ƒXƒyƒNƒ^[ã‚ÅÅ‰‚É‘I‘ğ‚·‚éƒ{ƒ^ƒ“‚ğ‚µ‚Ü‚Á‚Ä‚¨‚­‚½‚ß‚Ì‚à‚Ì
+	// æœ€åˆã«é¸æŠã—ã¦ãŠããƒœã‚¿ãƒ³ã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚„ã¤
 	[SerializeField]
 	Button FirstSelectButton;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		// FirstSelectButton‚Ìƒ{ƒ^ƒ“‚ğ‘I‘ğó‘Ô‚É‚·‚é
+		// FirstSelectButtonã«å…¥ã‚ŒãŸãƒœã‚¿ãƒ³ã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
 		FirstSelectButton.Select();
 	}
 }

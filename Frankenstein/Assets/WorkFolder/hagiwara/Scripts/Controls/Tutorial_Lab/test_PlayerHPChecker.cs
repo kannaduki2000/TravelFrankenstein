@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class test_PlayerHPChecker : MonoBehaviour
 {
-    /*Šm”F—p‚È‚Ì‚ÅAŠm”F‚Å‚«‚½‚çƒAƒ^ƒbƒ`‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚Æ‚±‚ÌƒXƒNƒŠƒvƒg‚ğÁ‚µ‚Ä‚­‚¾‚³‚¢*/
+    /*ç¢ºèªç”¨ãªã®ã§ã€ç¢ºèªã§ããŸã‚‰ã‚¢ã‚¿ãƒƒãƒã—ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’æ¶ˆã—ã¦ãã ã•ã„*/
     GameObject text;
     GameObject player;
     Text TEXT;
@@ -23,6 +23,6 @@ public class test_PlayerHPChecker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TEXT.text = "ƒtƒ‰ƒ“ƒPƒ“‚ÌHP:" + test_PlayerController.HP + "\n" + "Šm”F—p‚È‚Ì‚ÅŠm”F‚Å‚«‚½‚çÁ‚µ‚Ä‚­‚¾‚³‚¢";
+        TEXT.text = "ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã®HP:" + test_PlayerController.HP + "\n" + "ç¢ºèªç”¨ãªã®ã§ç¢ºèªã§ããŸã‚‰æ¶ˆã—ã¦ãã ã•ã„";
     }
 }

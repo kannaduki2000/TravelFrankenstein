@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,47 +8,47 @@ public class PC_Controller : MonoBehaviour
 	/*----------------------------------------------------------------------------------------------------*/
 
 	[SerializeField]
-	float dist_setting;			// ‚Ç‚Ì‚­‚ç‚¢‚Ì‹——£‚ÅƒeƒLƒXƒg‚ªo‚½‚èA‰æ‘œ‚ÌØ‚è‘Ö‚¦‚ª‚Å‚«‚é‚æ‚¤‚É‚È‚é‚©Œˆ‚ß‚ç‚ê‚é‚æ
-	public float Dist_Setting			// dis_setting ‚ÌƒvƒƒpƒeƒB
+	float dist_setting;			// ã©ã®ãã‚‰ã„ã®è·é›¢ã§ãƒ†ã‚­ã‚¹ãƒˆãŒå‡ºãŸã‚Šã€ç”»åƒã®åˆ‡ã‚Šæ›¿ãˆãŒã§ãã‚‹ã‚ˆã†ã«ãªã‚‹ã‹æ±ºã‚ã‚‰ã‚Œã‚‹ã‚ˆ
+	public float Dist_Setting			// dis_setting ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 	{
 		get { return dist_setting; }
 	}
 	[SerializeField]
-	Sprite PC_ON_Sprite;			// PC‚ªON‚É‚È‚Á‚½ƒXƒvƒ‰ƒCƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­‚â‚Â
+	Sprite PC_ON_Sprite;			// PCãŒONã«ãªã£ãŸã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚„ã¤
 	[SerializeField]
-	Sprite PC_OFF_Sprite;			// PC‚ªOFF‚É‚È‚Á‚½ƒXƒvƒ‰ƒCƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­‚â‚Â
+	Sprite PC_OFF_Sprite;			// PCãŒOFFã«ãªã£ãŸã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚„ã¤
 
-	float distance = 0.0f;		// ‹——£‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­•Ï”
+	float distance = 0.0f;		// è·é›¢ã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãå¤‰æ•°
 
-	bool Shikaku_ButtonPushFlag = false;		//  ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚à‚¢‚¢‚©‚Ìƒtƒ‰ƒO
-	bool PCSwitchFlag = false;							// PC‚ªƒIƒ“‚©ƒIƒt‚©‚Ìƒtƒ‰ƒO
-	public bool pc_switch_flag			// PCSwitchFlag ‚ÌƒvƒƒpƒeƒB
+	bool Shikaku_ButtonPushFlag = false;		// â–¡ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¡ã‚ƒãŠã†ã­ã—ã¦ã‚‚ã„ã„ã‹ã®ãƒ•ãƒ©ã‚°
+	bool PCSwitchFlag = false;							// PCãŒã‚ªãƒ³ã‹ã‚ªãƒ•ã‹ã®ãƒ•ãƒ©ã‚°
+	public bool pc_switch_flag			// PCSwitchFlag ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 	{
 		get { return PCSwitchFlag; }
 	}
 
-	int player_hp = 0;			// •Ê‚ÌƒXƒNƒŠƒvƒg‚Ì•Ï”‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­•Ï”
-	int power_cn = 30;			// PC‚ğ“_‚¯‚½‚Æ‚«‚ÌÁ”ï“d—Í
+	int player_hp = 0;			// åˆ¥ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å¤‰æ•°ã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãå¤‰æ•°
+	int power_cn = 30;			// PCã‚’ç‚¹ã‘ãŸã¨ãã®æ¶ˆè²»é›»åŠ›
 
-	GameObject Player;		// ƒvƒŒƒCƒ„[‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­ƒIƒuƒWƒFƒNƒg
-	GameObject PC;              // PC‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­ƒIƒuƒWƒFƒNƒg
+	GameObject Player;		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	GameObject PC;              // PCã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-	SpriteRenderer PC_SpriteRenderer;			// ƒXƒvƒ‰ƒCƒgƒŒƒ“ƒ_ƒ‰[‚ğ•Â‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚â‚Â
+	SpriteRenderer PC_SpriteRenderer;			// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã‚’é–‰ã¾ã£ã¡ã‚ƒãŠã†ã­ã‚„ã¤
 
-	PlayerController PlayerScript;		// ƒvƒŒƒCƒ„[‚ÌƒXƒNƒŠƒvƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­‚â‚Â
+	PlayerController PlayerScript;		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚„ã¤
 
 	/*----------------------------------------------------------------------------------------------------*/
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		/*«««‚Ç‚¿‚ç‚àƒeƒXƒg‚ÌƒIƒuƒWƒFƒNƒg‚ª“ü‚Á‚Ä‚¢‚é‚Ì‚ÅA“‡‚ÌÛ‚Í·‚µ‘Ö‚¦‚ğ‚¨Šè‚¢‚µ‚Ü‚·«««*/
-		Player = GameObject.Find("test_player");			// ƒvƒŒƒCƒ„[‚ÌƒIƒuƒWƒFƒNƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë
-		PC = GameObject.Find("test_PC");					// PC‚ÌƒIƒuƒWƒFƒNƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¤‚¨‚¤‚Ë
+		/*â†“â†“â†“ã©ã¡ã‚‰ã‚‚ãƒ†ã‚¹ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå…¥ã£ã¦ã„ã‚‹ã®ã§ã€çµ±åˆã®éš›ã¯å·®ã—æ›¿ãˆã‚’ãŠé¡˜ã„ã—ã¾ã™â†“â†“â†“*/
+		Player = GameObject.Find("test_player");			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­
+		PC = GameObject.Find("test_PC");					// PCã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒã†ãŠã†ã­
 
-		// PlayerScript = Player.GetComponent<test_PlayerController>();			// ƒvƒŒƒCƒ„[‚Ì’†‚É‚ ‚éƒXƒNƒŠƒvƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë
+		// PlayerScript = Player.GetComponent<test_PlayerController>();			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä¸­ã«ã‚ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­
 
-		PC_SpriteRenderer = PC.GetComponent<SpriteRenderer>();			// PC ‚ÌƒXƒvƒ‰ƒCƒgƒŒƒ“ƒ_ƒ‰[‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë
+		PC_SpriteRenderer = PC.GetComponent<SpriteRenderer>();			// PC ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­
 	}
 
 	// Update is called once per frame
@@ -63,47 +63,47 @@ public class PC_Controller : MonoBehaviour
 
 	/*----------------------------------------------------------------------------------------------------*/
 
-	private void GetCoord_And_DistMeas()		 // À•W‚Ìæ“¾‚Æ‹——£‚Ì‘ª’è‚·‚éŠÖ”
+	private void GetCoord_And_DistMeas()		 // åº§æ¨™ã®å–å¾—ã¨è·é›¢ã®æ¸¬å®šã™ã‚‹é–¢æ•°
 	{
-		// ƒvƒŒƒCƒ„[‚ÆPC‚ÌÀ•W‚ğæ“¾‚µ‚¿‚á‚¨‚¤‚Ë
+		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨PCã®åº§æ¨™ã‚’å–å¾—ã—ã¡ã‚ƒãŠã†ã­
 		Vector3 PlayerPos = Player.transform.position;
 		Vector3 PCPos = PC.transform.position;
 
-		distance = Vector3.Distance(PlayerPos, PCPos);       // ƒvƒŒƒCƒ„[‚ÆPC‚Ì‹——£‚ğ‘ª‚ë‚¤‚Ë
+		distance = Vector3.Distance(PlayerPos, PCPos);       // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨PCã®è·é›¢ã‚’æ¸¬ã‚ã†ã­
 	}
 
-	private void Shikaku_ButtonFlagChange()			// Shikaku_ButtonPushFlag ‚ğ•Ï‚¦‚éŠÖ”
+	private void Shikaku_ButtonFlagChange()			// Shikaku_ButtonPushFlag ã‚’å¤‰ãˆã‚‹é–¢æ•°
 	{
-		if (distance <= dist_setting)		// ƒvƒŒƒCƒ„[‚ÆPC‚Ì‹——£‚ªdist_settingˆÈ‰º‚Å‚·‚©H
+		if (distance <= dist_setting)		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨PCã®è·é›¢ãŒdist_settingä»¥ä¸‹ã§ã™ã‹ï¼Ÿ
 		{
 			// YES
-			Shikaku_ButtonPushFlag = true;		//  ƒ{ƒ^ƒ“‚ğ‰Ÿ‚·‚±‚Æ‚ğ‹–‚µ‚½
+			Shikaku_ButtonPushFlag = true;		// â–¡ãƒœã‚¿ãƒ³ã‚’æŠ¼ã™ã“ã¨ã‚’è¨±ã—ãŸ
 		}
 		else
 		{
 			// NO
-			Shikaku_ButtonPushFlag = false;		//  ƒ{ƒ^ƒ“‚ğ‰Ÿ‚·‚±‚Æ‚ğ‹–‚³‚È‚¢
+			Shikaku_ButtonPushFlag = false;		// â–¡ãƒœã‚¿ãƒ³ã‚’æŠ¼ã™ã“ã¨ã‚’è¨±ã•ãªã„
 		}
 	}
 
-	private void Shikaku_ButtonPush()						//  ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Æ‚«‚Ìˆ—‚ÌŠÖ” 
+	private void Shikaku_ButtonPush()						// â–¡ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ãã®å‡¦ç†ã®é–¢æ•° 
 	{
-		/*«««ƒRƒ“ƒgƒ[ƒ‰[‚Ì ƒ{ƒ^ƒ“‚ÆƒL[ƒ{[ƒh‚ÌƒGƒ“ƒ^[ƒL[‚Å”½‰‚·‚é‚æ‚¤‚É‚È‚Á‚Ä‚Ü‚·B“‡‚Ì‚Æ‚«‚ÍA‚È‚ñ‚©‚¢‚¢Š´‚¶‚É‚µ‚Ä‚­‚¾‚³‚¢«««*/
-		if (Shikaku_ButtonPushFlag == true && Input.GetKeyDown(KeyCode.Return))			// Shikaku_ButtonPushFlag ‚ª True Š‚ÂAƒGƒ“ƒ^[ƒL[‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½‚©H
+		/*â†“â†“â†“ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®â–¡ãƒœã‚¿ãƒ³ã¨ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼ã§åå¿œã™ã‚‹ã‚ˆã†ã«ãªã£ã¦ã¾ã™ã€‚çµ±åˆã®ã¨ãã¯ã€ãªã‚“ã‹ã„ã„æ„Ÿã˜ã«ã—ã¦ãã ã•ã„â†“â†“â†“*/
+		if (Shikaku_ButtonPushFlag == true && Input.GetKeyDown(KeyCode.Return))			// Shikaku_ButtonPushFlag ãŒ True ä¸”ã¤ã€ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¾ã—ãŸã‹ï¼Ÿ
 		{
 			// YES
 			PlayerHPProc();
 
-			/*‚È‚ñ‚©‚±‚±‚ç•Ó‚É‚¢‚¢Š´‚¶‚ÉƒGƒtƒFƒNƒg‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢*/
+			/*ãªã‚“ã‹ã“ã“ã‚‰è¾ºã«ã„ã„æ„Ÿã˜ã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å…¥ã‚Œã¦ãã ã•ã„*/
 
 			PCSwitch();
 		}
-		else if (Shikaku_ButtonPushFlag == true && Input.GetButtonDown("Fire1"))            // Shikaku_ButtonPushFlag ‚ª True Š‚ÂA ‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½‚©H
+		else if (Shikaku_ButtonPushFlag == true && Input.GetButtonDown("Fire1"))            // Shikaku_ButtonPushFlag ãŒ True ä¸”ã¤ã€â–¡ãŒæŠ¼ã•ã‚Œã¾ã—ãŸã‹ï¼Ÿ
 		{
 			// YES
 			PlayerHPProc();
 
-			/*‚È‚ñ‚©‚±‚±‚ç•Ó‚É‚¢‚¢Š´‚¶‚ÉƒGƒtƒFƒNƒg‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢*/
+			/*ãªã‚“ã‹ã“ã“ã‚‰è¾ºã«ã„ã„æ„Ÿã˜ã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å…¥ã‚Œã¦ãã ã•ã„*/
 
 			PCSwitch();
 		}
@@ -114,57 +114,57 @@ public class PC_Controller : MonoBehaviour
 
 	}
 
-		private void PlayerHPProc()			// ƒvƒŒƒCƒ„[‚ÌHP‚ÉŠÖ‚·‚éŠÖ”
+		private void PlayerHPProc()			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã«é–¢ã™ã‚‹é–¢æ•°
 		{
-			if (PCSwitchFlag == false)          // PCSwitchFlag ‚ª false ‚Å‚·‚©H
+			if (PCSwitchFlag == false)          // PCSwitchFlag ãŒ false ã§ã™ã‹ï¼Ÿ
 			{
 				// YES
 				PlayerHPMinus();
 			}
-			else if (PCSwitchFlag == true)              // PCSwitchFlag ‚ª true ‚Å‚·‚©H
+			else if (PCSwitchFlag == true)              // PCSwitchFlag ãŒ true ã§ã™ã‹ï¼Ÿ
 			{
 				// NO
 				PlayerHPPlus();
 			}
 		}
 
-			private void PlayerHPMinus()			// ƒvƒŒƒCƒ„[‚ÌHP‚ğŒ¸‚ç‚·ŠÖ”
+			private void PlayerHPMinus()			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã‚’æ¸›ã‚‰ã™é–¢æ•°
 		{
-			// player_hp = PlayerScript.HP;			// ƒvƒŒƒCƒ„[‚ÌHP‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë
-			player_hp -= power_cn;					// ƒvƒŒƒCƒ„[‚ÌHP‚ğÁ”ï“d—Í•ªAŒ¸‚ç‚·
-			PlayerScript.HP = player_hp;			// Œ¸‚Á‚½ƒvƒŒƒCƒ„[‚ÌHP‚ğvalue‚É“ü‚ê‚é
+			// player_hp = PlayerScript.HP;			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­
+			player_hp -= power_cn;					// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã‚’æ¶ˆè²»é›»åŠ›åˆ†ã€æ¸›ã‚‰ã™
+			PlayerScript.HP = player_hp;			// æ¸›ã£ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã‚’valueã«å…¥ã‚Œã‚‹
 		}
 
-			private void PlayerHPPlus()			// ƒvƒŒƒCƒ„[‚ÌHP‚ğ‘‚â‚·ŠÖ”
+			private void PlayerHPPlus()			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã‚’å¢—ã‚„ã™é–¢æ•°
 		{
-			// player_hp = PlayerScript.HP;			// ƒvƒŒƒCƒ„[‚ÌHP‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë
-			player_hp += power_cn;				// ƒvƒŒƒCƒ„[‚ÌHP‚ğÁ”ï“d—Í•ªA‘‚â‚·(Œ³‚É–ß‚·)
-			PlayerScript.HP = player_hp;			// ‘‚¦‚½ƒvƒŒƒCƒ„[‚ÌHP‚ğvalue‚É“ü‚ê‚é
+			// player_hp = PlayerScript.HP;			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­
+			player_hp += power_cn;				// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã‚’æ¶ˆè²»é›»åŠ›åˆ†ã€å¢—ã‚„ã™(å…ƒã«æˆ»ã™)
+			PlayerScript.HP = player_hp;			// å¢—ãˆãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã‚’valueã«å…¥ã‚Œã‚‹
 		}
 
-		private void PCSwitch()			// PC‚Ì“dŒ¹‚ÉŠÖ‚·‚éŠÖ”
+		private void PCSwitch()			// PCã®é›»æºã«é–¢ã™ã‚‹é–¢æ•°
 		{
-			if (PCSwitchFlag == false)          // PCSwitchFlag ‚ª false ‚Å‚·‚©H
+			if (PCSwitchFlag == false)          // PCSwitchFlag ãŒ false ã§ã™ã‹ï¼Ÿ
 			{
 				// YES
 				PCSwitch_ON();
 			}
-			else if (PCSwitchFlag == true)          // PCSwitchFlag ‚ª true ‚Å‚·‚©H
+			else if (PCSwitchFlag == true)          // PCSwitchFlag ãŒ true ã§ã™ã‹ï¼Ÿ
 			{
 				// YES
 				PCSwitch_OFF();
 			}
 		}
 
-			private void PCSwitch_ON()			// PC‚É“dŒ¹‚ª“ü‚éŠÖ”
+			private void PCSwitch_ON()			// PCã«é›»æºãŒå…¥ã‚‹é–¢æ•°
 		{
-				PC_SpriteRenderer.sprite = PC_ON_Sprite;            // PC_ON_Sprite ‚É‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚¢‚½ƒXƒvƒ‰ƒCƒg‚ğ PC_SpriteRenderer ‚ÌƒXƒvƒ‰ƒCƒg‚É“ü‚ê‚é
+				PC_SpriteRenderer.sprite = PC_ON_Sprite;            // PC_ON_Sprite ã«ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠã„ãŸã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ PC_SpriteRenderer ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«å…¥ã‚Œã‚‹
 				PCSwitchFlag = true;
 		}
 
-			private void PCSwitch_OFF()			// PC‚Ì“dŒ¹‚ªØ‚ê‚éŠÖ”
+			private void PCSwitch_OFF()			// PCã®é›»æºãŒåˆ‡ã‚Œã‚‹é–¢æ•°
 		{
-				PC_SpriteRenderer.sprite = PC_OFF_Sprite;            // PC_ON_Sprite ‚É‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚¢‚½ƒXƒvƒ‰ƒCƒg‚ğ PC_SpriteRenderer ‚ÌƒXƒvƒ‰ƒCƒg‚É“ü‚ê‚é
+				PC_SpriteRenderer.sprite = PC_OFF_Sprite;            // PC_ON_Sprite ã«ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠã„ãŸã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ PC_SpriteRenderer ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«å…¥ã‚Œã‚‹
 				PCSwitchFlag = false;
 		}
 

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +6,10 @@ public class TestPlayerController_2 : MonoBehaviour
 {
 	/*----------------------------------------------------------------------------------------------------*/
 
-	// ƒtƒ‰ƒ“ƒPƒ“‚ÌHP
+	// ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã®HP
 	[SerializeField]
 	int playerHp = 100;
-	// ƒtƒ‰ƒ“ƒPƒ“‚ÌHP‚ÌƒvƒƒpƒeƒB
+	// ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã®HPã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 	public int PlayerHp
 	{
 		get { return playerHp; }

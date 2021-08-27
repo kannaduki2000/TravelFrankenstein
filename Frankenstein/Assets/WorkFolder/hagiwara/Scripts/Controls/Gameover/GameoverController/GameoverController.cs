@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,21 +6,21 @@ public class GameoverController : MonoBehaviour
 {
 	/*----------------------------------------------------------------------------------------------------*/
 
-	// ƒvƒŒƒnƒu‚ğ‚µ‚Ü‚Á‚Ä‚¨‚­‚â‚Â
+	// ãƒ—ãƒ¬ãƒãƒ–ã‚’ã—ã¾ã£ã¦ãŠãã‚„ã¤
 	[SerializeField]
 	GameObject GameoverUIPrefab;
 
-	// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ‚µ‚Ü‚Á‚Ä‚¨‚­‚â‚Â
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ã—ã¾ã£ã¦ãŠãã‚„ã¤
 	GameObject GameoverUIInstance;
-	// ƒvƒŒƒCƒ„[‚ğ‚µ‚Ü‚Á‚Ä‚¨‚­‚â‚Â
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã—ã¾ã£ã¦ãŠãã‚„ã¤
 	GameObject PlayerObj;
-	// ƒXƒNƒŠƒvƒg‚ğ‚µ‚Ü‚Á‚Ä‚¨‚­‚â‚Â
+	// ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ã—ã¾ã£ã¦ãŠãã‚„ã¤
 	TestPlayerController_2 PlayerScr;
 
-	// TestPlayerControlloer_2 ‚Ì PlayerHp ‚ğ‚µ‚Ü‚Á‚Ä‚¨‚­‚â‚Â
+	// TestPlayerControlloer_2 ã® PlayerHp ã‚’ã—ã¾ã£ã¦ãŠãã‚„ã¤
 	int hp = 0;
 
-	// Gameover‚©”Û‚©‚Ìƒtƒ‰ƒO
+	// Gameoverã‹å¦ã‹ã®ãƒ•ãƒ©ã‚°
 	bool gameoverFlag = false;
 
 	/*----------------------------------------------------------------------------------------------------*/
@@ -28,27 +28,27 @@ public class GameoverController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		PlayerObj = GameObject.Find("TestPlayer");											// ƒIƒuƒWƒFƒNƒg‚ğŒ©‚Â‚¯‚Ä‚µ‚Ü‚Á‚¿‚á‚¤
-		PlayerScr = PlayerObj.GetComponent<TestPlayerController_2>();		// ƒXƒNƒŠƒvƒg‚ğŒ©‚Â‚¯‚Ä‚µ‚Ü‚Á‚¿‚á‚¤
+		PlayerObj = GameObject.Find("TestPlayer");											// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¦‹ã¤ã‘ã¦ã—ã¾ã£ã¡ã‚ƒã†
+		PlayerScr = PlayerObj.GetComponent<TestPlayerController_2>();		// ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’è¦‹ã¤ã‘ã¦ã—ã¾ã£ã¡ã‚ƒã†
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		hp = PlayerScr.PlayerHp;			// hp ‚É PlayerHp ‚ğ‚µ‚Ü‚Á‚¿‚á‚¤
+		hp = PlayerScr.PlayerHp;			// hp ã« PlayerHp ã‚’ã—ã¾ã£ã¡ã‚ƒã†
 
-		if(hp == 0 && gameoverFlag == false)			// hp ‚ª0‚ÅŠ‚ÂAgameoverFlag ‚Í False ‚Å‚·‚©H
+		if(hp == 0 && gameoverFlag == false)			// hp ãŒ0ã§ä¸”ã¤ã€gameoverFlag ã¯ False ã§ã™ã‹ï¼Ÿ
 		{
 			// YES
 			GameoverUIInstance = GameObject.Instantiate(GameoverUIPrefab);
-			Time.timeScale = 0f;			// »Ş¥Ü°ÙÄŞ¯Ih¢ŠEh‚Ì‚ğ~‚ß‚é¯II
-			gameoverFlag = true;			// gameoverFlag ‚ğ true ‚É‚·‚é
+			Time.timeScale = 0f;			// ï½»ï¾ï½¥ï¾œï½°ï¾™ï¾„ï¾ï½¯ï¼â€ä¸–ç•Œâ€ã®æ™‚ã‚’æ­¢ã‚ã‚‹ï½¯ï¼ï¼
+			gameoverFlag = true;			// gameoverFlag ã‚’ true ã«ã™ã‚‹
 		}
-		else if(hp > 0)			// hp ‚ª 0 ‚æ‚èã‚Å‚·‚©H
+		else if(hp > 0)			// hp ãŒ 0 ã‚ˆã‚Šä¸Šã§ã™ã‹ï¼Ÿ
 		{
 			// YES
-			Time.timeScale = 1f;			// ‰™‚Ì–Ø‘ºA‰Á‘¬‚µ‚Ü‚·(ŠÔ‚ª~‚Ü‚ç‚È‚¢)
-			gameoverFlag = false;			// gameoverFlag ‚ğ false ‚É‚·‚é
+			Time.timeScale = 1f;			// ç”¥ã®æœ¨æ‘ã€åŠ é€Ÿã—ã¾ã™(æ™‚é–“ãŒæ­¢ã¾ã‚‰ãªã„)
+			gameoverFlag = false;			// gameoverFlag ã‚’ false ã«ã™ã‚‹
 		}
 	}
 

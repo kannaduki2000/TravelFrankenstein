@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,29 +7,29 @@ public class textController : MonoBehaviour
 {
 	/*----------------------------------------------------------------------------------------------------*/
 
-	float distance = 0.0f;		// ‹——£‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­•Ï”
+	float distance = 0.0f;		// è·é›¢ã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãå¤‰æ•°
 
-	GameObject Player;		// ƒvƒŒƒCƒ„[‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­ƒIƒuƒWƒFƒNƒg
-	GameObject PC;				// PC‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­ƒIƒuƒWƒFƒNƒg
-	GameObject Textobj;		// ƒeƒLƒXƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­ƒIƒuƒWƒFƒNƒg
+	GameObject Player;		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	GameObject PC;				// PCã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	GameObject Textobj;		// ãƒ†ã‚­ã‚¹ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-	Text Message;			// ƒeƒLƒXƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­ƒeƒLƒXƒg
+	Text Message;			// ãƒ†ã‚­ã‚¹ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠããƒ†ã‚­ã‚¹ãƒˆ
 
-	PC_Controller PC_Script;			// PC‚ÌScript‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë‚µ‚Ä‚¨‚­‚â‚Â
+	PC_Controller PC_Script;			// PCã®Scriptã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­ã—ã¦ãŠãã‚„ã¤
 
 	/*----------------------------------------------------------------------------------------------------*/
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		/*«««‚Ç‚¿‚ç‚àƒeƒXƒg‚ÌƒIƒuƒWƒFƒNƒg‚ª“ü‚Á‚Ä‚¢‚é‚Ì‚ÅA“‡‚ÌÛ‚Í·‚µ‘Ö‚¦‚ğ‚¨Šè‚¢‚µ‚Ü‚·«««*/
-		Player = GameObject.Find("test_player");			// ƒvƒŒƒCƒ„[‚ÌƒIƒuƒWƒFƒNƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë
-		PC = GameObject.Find("test_PC");					// PC‚ÌƒIƒuƒWƒFƒNƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¤‚¨‚¤‚Ë
-		Textobj = GameObject.Find("test_text");			// ƒeƒLƒXƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë
+		/*â†“â†“â†“ã©ã¡ã‚‰ã‚‚ãƒ†ã‚¹ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå…¥ã£ã¦ã„ã‚‹ã®ã§ã€çµ±åˆã®éš›ã¯å·®ã—æ›¿ãˆã‚’ãŠé¡˜ã„ã—ã¾ã™â†“â†“â†“*/
+		Player = GameObject.Find("test_player");			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­
+		PC = GameObject.Find("test_PC");					// PCã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒã†ãŠã†ã­
+		Textobj = GameObject.Find("test_text");			// ãƒ†ã‚­ã‚¹ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­
 
-		Message = Textobj.GetComponent<Text>();			// TextƒRƒ“ƒ|ƒl‚ğ‚µ‚Ü‚Á‚¿‚á‚¨‚¤‚Ë
+		Message = Textobj.GetComponent<Text>();			// Textã‚³ãƒ³ãƒãƒã‚’ã—ã¾ã£ã¡ã‚ƒãŠã†ã­
 
-		PC_Script = PC.GetComponent<PC_Controller>();			// ƒXƒNƒŠƒvƒg‚ğ‚µ‚Ü‚Á‚¿‚á‚¤‚¨‚¶‚³‚ñ
+		PC_Script = PC.GetComponent<PC_Controller>();			// ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ã—ã¾ã£ã¡ã‚ƒã†ãŠã˜ã•ã‚“
 	}
 
 	// Update is called once per frame
@@ -42,26 +42,26 @@ public class textController : MonoBehaviour
 
 	/*----------------------------------------------------------------------------------------------------*/
 
-	private void GetCoord_And_DistMeas()		// À•W‚Ìæ“¾‚Æ‹——£‚Ì‘ª’è‚·‚éŠÖ”
+	private void GetCoord_And_DistMeas()		// åº§æ¨™ã®å–å¾—ã¨è·é›¢ã®æ¸¬å®šã™ã‚‹é–¢æ•°
 	{       
-		// ƒvƒŒƒCƒ„[‚ÆPC‚ÌÀ•W‚ğæ“¾‚µ‚¿‚á‚¨‚¤‚Ë
+		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨PCã®åº§æ¨™ã‚’å–å¾—ã—ã¡ã‚ƒãŠã†ã­
 		Vector3 PlayerPos = Player.transform.position;
 		Vector3 PCPos = PC.transform.position;
 
-		distance = Vector3.Distance(PlayerPos, PCPos);			// ƒvƒŒƒCƒ„[‚ÆPC‚Ì‹——£‚ğ‘ª‚ë‚¤‚Ë
+		distance = Vector3.Distance(PlayerPos, PCPos);			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨PCã®è·é›¢ã‚’æ¸¬ã‚ã†ã­
 	}
 
-	private void TextChange()		// ƒeƒLƒXƒg‚Ì“à—e‚ğ•Ï‚¦‚éŠÖ”
+	private void TextChange()		// ãƒ†ã‚­ã‚¹ãƒˆã®å†…å®¹ã‚’å¤‰ãˆã‚‹é–¢æ•°
 	{
-		if (distance <= PC_Script.Dist_Setting && PC_Script.pc_switch_flag == false)			// ƒvƒŒƒCƒ„[‚ÆPC‚Ì‹——£‚ªdist_settingˆÈ‰º‚ÅAŠ‚ÂAPCSwitchFlag ‚ª False ‚Å‚·‚©H
+		if (distance <= PC_Script.Dist_Setting && PC_Script.pc_switch_flag == false)			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨PCã®è·é›¢ãŒdist_settingä»¥ä¸‹ã§ã€ä¸”ã¤ã€PCSwitchFlag ãŒ False ã§ã™ã‹ï¼Ÿ
 		{
 			// YES
-			Message.text = " ƒ{ƒ^ƒ“:“dŒ¹‚ğ“ü‚ê‚é";
+			Message.text = "â–¡ãƒœã‚¿ãƒ³:é›»æºã‚’å…¥ã‚Œã‚‹";
 		}
-		else if (distance <= PC_Script.Dist_Setting && PC_Script.pc_switch_flag == true)			// ƒvƒŒƒCƒ„[‚ÆPC‚Ì‹——£‚ªdist_settingˆÈ‰º‚ÅAŠ‚ÂAPCSwitchFlag ‚ª True ‚Å‚·‚©H
+		else if (distance <= PC_Script.Dist_Setting && PC_Script.pc_switch_flag == true)			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨PCã®è·é›¢ãŒdist_settingä»¥ä¸‹ã§ã€ä¸”ã¤ã€PCSwitchFlag ãŒ True ã§ã™ã‹ï¼Ÿ
 		{
 			// YES
-			Message.text = " ƒ{ƒ^ƒ“:“dŒ¹‚ğØ‚é";
+			Message.text = "â–¡ãƒœã‚¿ãƒ³:é›»æºã‚’åˆ‡ã‚‹";
 		}
 		else
 		{

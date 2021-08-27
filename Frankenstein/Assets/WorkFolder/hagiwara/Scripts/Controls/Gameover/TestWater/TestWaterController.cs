@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,48 +6,48 @@ public class TestWaterController : MonoBehaviour
 {
 	/*----------------------------------------------------------------------------------------------------*/
 
-	// ƒRƒ‹[ƒ`ƒ“‚Å‚Ç‚Ì‚®‚ç‚¢ˆ—‚ğ~‚ß‚é‚©(default:0.5)
+	// ã‚³ãƒ«ãƒ¼ãƒãƒ³ã§ã©ã®ãã‚‰ã„å‡¦ç†ã‚’æ­¢ã‚ã‚‹ã‹(default:0.5)
 	[SerializeField]
 	float stopTime;
 
-	// ƒvƒŒƒCƒ„[‚ğ‚µ‚Ü‚Á‚Ä‚¨‚­‚â‚Â
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã—ã¾ã£ã¦ãŠãã‚„ã¤
 	GameObject PlayerObj;
-	// ƒvƒŒƒCƒ„[‚ÌƒXƒNƒŠƒvƒg‚ğ‚µ‚Ü‚Á‚Ä‚¨‚­‚â‚Â
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ã—ã¾ã£ã¦ãŠãã‚„ã¤
 	TestPlayerController_2 PlayerScr;
 
-	// test_player_controlloer ‚Ì PlayerHp ‚ğ‚µ‚Ü‚Á‚Ä‚¨‚­‚â‚Â
+	// test_player_controlloer ã® PlayerHp ã‚’ã—ã¾ã£ã¦ãŠãã‚„ã¤
 	int hp = 0;
 
 	/*----------------------------------------------------------------------------------------------------*/
 	// Start is called before the first frame update
 	void Start()
 	{
-		PlayerObj = GameObject.Find("TestPlayer");									// ƒIƒuƒWƒFƒNƒg‚ğŒ©‚Â‚¯‚Ä‚µ‚Ü‚Á‚¿‚á‚¤
-		PlayerScr = PlayerObj.GetComponent<TestPlayerController_2>();		// ƒXƒNƒŠƒvƒg‚ğŒ©‚Â‚¯‚Ä‚µ‚Ü‚Á‚¿‚á‚¤
+		PlayerObj = GameObject.Find("TestPlayer");									// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¦‹ã¤ã‘ã¦ã—ã¾ã£ã¡ã‚ƒã†
+		PlayerScr = PlayerObj.GetComponent<TestPlayerController_2>();		// ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’è¦‹ã¤ã‘ã¦ã—ã¾ã£ã¡ã‚ƒã†
 	}
 
 	/*----------------------------------------------------------------------------------------------------*/
 
 	/// <summary>
-	/// …‚Ì•”•ª‚ÉN“ü‚µ‚½‚Æ‚«‚ÉÀs‚µ‚¿‚á‚¤‚æ`‚ñŠÖ”
+	/// æ°´ã®éƒ¨åˆ†ã«ä¾µå…¥ã—ãŸã¨ãã«å®Ÿè¡Œã—ã¡ã‚ƒã†ã‚ˆï½ã‚“é–¢æ•°
 	/// </summary>
-	/// <param name="other">g‚í‚È‚¢‚É‚åEBE</param>
+	/// <param name="other">ä½¿ã‚ãªã„ã«ã‚‡ãƒ»ã€‚ãƒ»</param>
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		StartCoroutine("Drowned");
 	}
 
 	/// <summary>
-	/// …‚Ö‚¢‚¢Š´‚¶‚É‘Sg‚ªZ‚é‚æ‚¤’²®‚·‚éƒRƒ‹[ƒ`ƒ“
+	/// æ°´ã¸ã„ã„æ„Ÿã˜ã«å…¨èº«ãŒæµ¸ã‚‹ã‚ˆã†èª¿æ•´ã™ã‚‹ã‚³ãƒ«ãƒ¼ãƒãƒ³
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator Drowned()
 	{
-		hp = PlayerScr.PlayerHp;			// hp ‚É PlayerHp ‚ğ‚µ‚Ü‚Á‚¿‚á‚¤
+		hp = PlayerScr.PlayerHp;			// hp ã« PlayerHp ã‚’ã—ã¾ã£ã¡ã‚ƒã†
 
-		yield return new WaitForSeconds(stopTime);			// stopTime •ªAˆ—‚ğ~‚ß‚é
+		yield return new WaitForSeconds(stopTime);			// stopTime åˆ†ã€å‡¦ç†ã‚’æ­¢ã‚ã‚‹
 
-		hp -= PlayerScr.PlayerHp;			// hp ‚ğ PlayerHp •ªAŒ¸‚ç‚µ‚¿‚á‚¤
-		PlayerScr.PlayerHp = hp;			// PlayerHp ‚É hp ‚ğ‚µ‚Ü‚Á‚¿‚á‚¤
+		hp -= PlayerScr.PlayerHp;			// hp ã‚’ PlayerHp åˆ†ã€æ¸›ã‚‰ã—ã¡ã‚ƒã†
+		PlayerScr.PlayerHp = hp;			// PlayerHp ã« hp ã‚’ã—ã¾ã£ã¡ã‚ƒã†
 	}
 }

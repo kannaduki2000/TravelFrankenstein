@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 	/*----------------------------------------------------------------------------------------------------*/
 
 	/// <summary>
-	/// ƒRƒ“ƒeƒjƒ…[‚ğ‰Ÿ‚µ‚½‚Æ‚«‚ÉAƒV[ƒ“‚ğÄ“Ç‚İ‚İ‚·‚éŠÖ”
+	/// ã‚·ãƒ¼ãƒ³ã‚’å†èª­ã¿è¾¼ã¿ã™ã‚‹é–¢æ•°
 	/// </summary>
 	public void Continue()
 	{
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	/// <summary>
-	/// ƒ^ƒCƒgƒ‹‚ğ‰Ÿ‚µ‚½‚Æ‚«‚ÉAƒ^ƒCƒgƒ‹ƒV[ƒ“‚Ö‚Æ–ß‚éŠÖ”
+	/// ã‚·ãƒ¼ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹é–¢æ•°
 	/// </summary>
 	public void Title()
 	{
