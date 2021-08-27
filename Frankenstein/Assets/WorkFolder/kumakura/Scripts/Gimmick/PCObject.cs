@@ -95,15 +95,6 @@ public class PCObject : ElectricItem
                 });
             });
         });
-        // テキストイベント実行後にPlayerが動けるようにする
-        //player.textCon.SetTextActive(true, ()=> player.PlayerMove());
-        //player.textCon.SetTextActive(true, ()=> 
-        //{
-        //    player.PlayerMove();
-        //    EventFlagManager.Instance.SetFlagState(EventFlagName.textEve, true);
-        //    announceObject.enabled = true;
-        //});
-        
     }
     
     #region 萩原さん　PCの電源及びSpriteに関する処理
