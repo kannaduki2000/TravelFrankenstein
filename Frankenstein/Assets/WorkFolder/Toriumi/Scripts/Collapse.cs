@@ -5,13 +5,13 @@ using UnityEngine;
 public class Collapse : MonoBehaviour
 {
     private bool Fall = false;
-    private float speed = 10f;
+    private float speed = 16f;//半田：スピード値の変更
 
     GameObject Ground;
 
     void Start()
     {
-        Ground = GameObject.Find("Ground");
+        Ground = GameObject.Find("CrashGround");//半田：オブジェクト名の変更
     }
 
     void Update()
@@ -20,8 +20,8 @@ public class Collapse : MonoBehaviour
         {
             Transform ground = Ground.transform;                            //Groundの座標を取得
             Vector2 pos = ground.position;
-            pos.y = Mathf.MoveTowards(pos.y, -10, Time.deltaTime * speed); //pos.yから-100までTime.deltaTime * speedのスピードで移動
-            ground.position = pos;
+            pos.y = Mathf.MoveTowards(pos.y, -15, Time.deltaTime * speed); //pos.yから-100までTime.deltaTime * speedのスピードで移動
+            ground.position = pos;   //半田：-10から-15に変更
             
         }
     }
