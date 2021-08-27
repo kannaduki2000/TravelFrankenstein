@@ -12,6 +12,8 @@ TagManager:
   - GoTitleLogo
   - Gareki
   - Car
+  - ElectricCable
+  - CableCarEventCollider
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - Player
   - Ground
   - MineCart
-  - 
+  - SPMineCart
   - 
   - 
   - 

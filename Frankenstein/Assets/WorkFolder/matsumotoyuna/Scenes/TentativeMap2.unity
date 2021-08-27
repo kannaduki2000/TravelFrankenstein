@@ -415,7 +415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 17215722}
   enemy: {fileID: 100064090}
-  MineCart: {fileID: 0}
+  MineCart: {fileID: 965239760}
   speed: 3
   stopDistance: 3
   mt: {fileID: 17215723}
@@ -423,6 +423,8 @@ MonoBehaviour:
   mcp: {fileID: 965239765}
   pushb: {fileID: 444163261}
   enemyMove: 1
+  tukamuFlag: 0
+  muki: 0
 --- !u!212 &100064092
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -501,7 +503,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.10502517, y: -0.05834818}
+  m_Offset: {x: 0.044627786, y: -0.12210125}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -512,7 +514,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.9030688, y: 3.8097115}
+  m_Size: {x: 3.782274, y: 3.56141}
   m_EdgeRadius: 0
 --- !u!50 &100064095
 Rigidbody2D:
@@ -768,9 +770,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mpush: {fileID: 965239765}
-  rotenemy: {fileID: 0}
-  rotladder: {fileID: 0}
-  Button2: {fileID: 0}
+  rotenemy: {fileID: 1973790824}
+  rotladder: {fileID: 1559533796}
+  Button: {fileID: 444163257}
+  Button1: {fileID: 436791096}
+  Button2: {fileID: 1700811801}
   pushingbutton: 0
   rpush: 0
   notpushingbutton: 0
@@ -1171,8 +1175,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.89, y: 4.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1586231544}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1237,7 +1240,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigid2D: {fileID: 965239763}
   physics2D: {fileID: 6200000, guid: 151d6aa69e0928541b733b0168ff7b3b, type: 2}
-  aaa: {fileID: 1586231543}
+  aaa: {fileID: 0}
+  MineCart: {fileID: 965239760}
   minecartpush: 0
   playertouch: 0
   playernotouch: 0
@@ -1795,14 +1799,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1559533794}
-  m_LocalRotation: {x: -0, y: -0, z: 0.17568459, w: 0.9844465}
+  m_LocalRotation: {x: 0, y: 0, z: -0.1756845, w: 0.9844465}
   m_LocalPosition: {x: 20.243944, y: 4.8314734, z: 0}
   m_LocalScale: {x: 0.57161975, y: 0.5875, z: 1}
   m_Children:
   - {fileID: 1093717482}
   m_Father: {fileID: 0}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20.237}
 --- !u!114 &1559533796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,63 +1845,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!1 &1586231543
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1586231544}
-  - component: {fileID: 1586231545}
-  m_Layer: 0
-  m_Name: aaa
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1586231544
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586231543}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 965239762}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1586231545
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586231543}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.01652646}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.97203875}
   m_EdgeRadius: 0
 --- !u!1 &1652243144
 GameObject:
@@ -2133,6 +2080,8 @@ MonoBehaviour:
   mpush: {fileID: 965239765}
   rotenemy: {fileID: 1973790824}
   rotladder: {fileID: 1559533796}
+  Button: {fileID: 0}
+  Button1: {fileID: 0}
   Button2: {fileID: 1700811801}
   pushingbutton: 0
   rpush: 0

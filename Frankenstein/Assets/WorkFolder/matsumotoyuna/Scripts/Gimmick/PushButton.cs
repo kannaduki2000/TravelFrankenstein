@@ -8,7 +8,8 @@ public class PushButton : MonoBehaviour
     public RotationEnemy rotenemy;
     public RotLadder rotladder;
 
-    private GameObject Button;
+    public GameObject Button;
+    public GameObject Button1;
     public GameObject Button2;
     private float speed = 5f;
     public bool pushingbutton = false;
@@ -101,6 +102,8 @@ public class PushButton : MonoBehaviour
     public void NotPushButton()
     {
         notpushingbutton = true;
+        Button1.gameObject.layer = 6;
+        Button.gameObject.layer = 6;
         mpush.playertouch = true;
         rpush = true;
     }
