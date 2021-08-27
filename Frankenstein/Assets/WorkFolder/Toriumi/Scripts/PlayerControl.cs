@@ -18,6 +18,13 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         anim = gameObject.GetComponent<Animator>();
+
+        // 最初の睡眠状態から解除されるためのキー
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            anim.SetTrigger("isGetUp");
+        }
         
         //移動
         Vector2 Position = transform.position;
@@ -48,10 +55,16 @@ public class PlayerControl : MonoBehaviour
                 gameObject.transform.localScale = Iscale;
             }
         }
+    }
+
+    // TextAnimがあったためエラーを吐くので追加。説明表示のためのもの？
+    private void TextAnim()
+    {
 
     }
 
-  
+
+
 
 
 }
