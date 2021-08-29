@@ -9,7 +9,7 @@ public class MinecartPush : MonoBehaviour
 {
     public Rigidbody2D rigid2D;
     public PhysicsMaterial2D physics2D;
-    public GameObject aaa;
+    public GameObject MineCart;
     private float speed = 2f;
     public bool minecartpush = false;
     public bool playertouch = false;
@@ -39,13 +39,11 @@ public class MinecartPush : MonoBehaviour
         //(project setting? のところのやつ)
         else if (collision.gameObject.name == "Player" && playertouch == false)
         {
-            aaa.SetActive(false);
             playernotouch = true;
         }
 
         else if (collision.gameObject.name == "Enemy" && enemytouch == true)
         {
-            aaa.SetActive(false);
             enemytouch = false;
             Invoke("SActive2", 2.0f);
         }
@@ -84,6 +82,7 @@ public class MinecartPush : MonoBehaviour
     {
         if (movestop == false)
         {
+            MineCart.gameObject.layer = 9;
             Transform push = this.transform;
             Vector2 minecartposition = push.position;
 
@@ -98,16 +97,15 @@ public class MinecartPush : MonoBehaviour
     {
         movestop = true;
         rigid2D.constraints = RigidbodyConstraints2D.None;
+        MineCart.gameObject.layer = 8;
     }
 
     public void SActive()
     {
         playertouch = true;
-        aaa.SetActive(true);
     }
 
     public void SActive2()
     {
-        aaa.SetActive(true);
     }
 }

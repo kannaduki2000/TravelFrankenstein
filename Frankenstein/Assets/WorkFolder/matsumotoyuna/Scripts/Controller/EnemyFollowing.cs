@@ -29,12 +29,14 @@ public class EnemyFollowing : MonoBehaviour
     private bool Follow = false;       //二度目の入力でのついてくるか否か
     private bool car = false;
     private bool minecart = false;
+    [SerializeField] private bool tukamuFlag = false;
     private bool okrpush = false;
 
     Vector3 enemyScale;
 
     Rigidbody2D rigid2D;
     float jumpForce = 300.0f;          //ジャンプ力
+    [SerializeField] private float muki = 0;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -47,7 +49,8 @@ public class EnemyFollowing : MonoBehaviour
             cp.rigid2D.constraints = RigidbodyConstraints2D.None;
         }
 
-        if(collision.gameObject.name == "MineCart")
+        //坂を降りるやーつだお
+        if (collision.gameObject.name == "MineCart")
         {
             minecart = true;
         }
@@ -110,13 +113,32 @@ public class EnemyFollowing : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow))
             {
                 this.transform.Translate(-0.01f, 0.0f, 0.0f);
-                transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
+
+                if (tukamuFlag && 0 > muki)
+                {
+                    transform.localScale = new Vector3(-muki, enemyScale.y, enemyScale.z);
+                }
+
+                else
+                {
+                    transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
+                }
             }
 
             if (Input.GetKey(KeyCode.RightArrow))
             {
                 this.transform.Translate(0.01f, 0.0f, 0.0f);
                 transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                
+                if (tukamuFlag && muki > 0)
+                {
+                    transform.localScale = new Vector3(-muki, enemyScale.y, enemyScale.z);
+                }
+
+                else
+                {
+                    transform.localScale = new Vector3(enemyScale.x, enemyScale.y, enemyScale.z);
+                }
             }
 
             if (Jump == false && Input.GetKeyDown(KeyCode.Space))
@@ -135,14 +157,23 @@ public class EnemyFollowing : MonoBehaviour
                 mcp.minecartpush = true;
             }
 
+
             if(Input.GetKeyDown(KeyCode.R) && pushb.rpush == true && okrpush == true)
             {
+                tukamuFlag = true;
+                muki = -transform.localScale.x;
                 mcp.enemyrpush = true;
+                MineCart.transform.parent = this.transform;
+                this.transform.SetParent(transform, false);
+                MineCart.gameObject.layer = 9;
             }
 
             if (Input.GetKeyUp(KeyCode.R) && pushb.rpush == true && okrpush == true)
             {
+                tukamuFlag = false;
                 mcp.enemyrpush = false;
+                MineCart.transform.parent = null;
+                MineCart.gameObject.layer = 8;
             }
         }
 

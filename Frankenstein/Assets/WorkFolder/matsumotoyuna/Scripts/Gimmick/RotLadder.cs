@@ -20,7 +20,7 @@ public class RotLadder : MonoBehaviour
         {
             float step = speed * Time.deltaTime;
             transform.rotation = Quaternion.RotateTowards
-           (transform.rotation, Quaternion.Euler(0, 0, -20.237f), step);
+           (transform.rotation, Quaternion.Euler(0, 0, 20.237f), step);
         }
 
         //スイッチを押されてなければ
@@ -29,7 +29,7 @@ public class RotLadder : MonoBehaviour
         {
             float step = speed * Time.deltaTime;
             transform.rotation = Quaternion.RotateTowards
-           (transform.rotation, Quaternion.Euler(0, 0, 20.237f), step);
+           (transform.rotation, Quaternion.Euler(0, 0, -20.237f), step);
         }
     }
 }

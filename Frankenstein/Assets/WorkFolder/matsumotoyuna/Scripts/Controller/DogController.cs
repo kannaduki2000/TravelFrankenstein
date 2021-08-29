@@ -11,6 +11,9 @@ public class DogController : MonoBehaviour
     [SerializeField] private float speed = 20f;     //ｲｯﾇのスピード
 
     [SerializeField] private bool tukamuFlag = false;
+    [SerializeField] private bool noTossin = false;
+    [SerializeField] private bool migi = false;
+    [SerializeField] private bool hidari = false;
     [SerializeField] private float muki = 0;
 
     Vector3 dogScale;             　　　　　　　　　　//ｲｯﾇの大きさ
@@ -23,6 +26,7 @@ public class DogController : MonoBehaviour
     [SerializeField] private GameObject Cable;      //ケーブル
 
     [SerializeField] private Rigidbody2D rigid2D;
+    [SerializeField] private Animator anim;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -63,6 +67,7 @@ public class DogController : MonoBehaviour
         //dashareaScale = DashArea.transform.localScale;
         playerScale = Player.transform.localScale;
         rigid2D = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
     
     void Update()
@@ -70,37 +75,49 @@ public class DogController : MonoBehaviour
         //動かせるとき
         if (dogMove)
         {
-            if (Input.GetKey(KeyCode.LeftArrow) && !cantMove)
+            if (Input.GetKey(KeyCode.LeftArrow) && !cantMove && !migi)
             {
                 this.transform.Translate(-0.01f, 0.0f, 0.0f);
+                anim.SetBool("DogWalk", true);
+
                 if (tukamuFlag && 0 < muki)
                 {
-                    transform.localScale = new Vector3(muki, dogScale.y, dogScale.z);
+                    transform.localScale = new Vector3(-muki, dogScale.y, dogScale.z);
                 }
+
                 else
                 {
                     transform.localScale = new Vector3(-dogScale.x, dogScale.y, dogScale.z);
                 }
             }
-            
-            if (Input.GetKey(KeyCode.RightArrow) && !cantMove)
+
+            else if (Input.GetKey(KeyCode.RightArrow) && !cantMove && !hidari)
             {
                 this.transform.Translate(0.01f, 0.0f, 0.0f);
+                anim.SetBool("DogWalk", true);
+
                 if (tukamuFlag && muki < 0)
                 {
-                    transform.localScale = new Vector3(muki, dogScale.y, dogScale.z);
+                    transform.localScale = new Vector3(-muki, dogScale.y, dogScale.z);
                 }
+
                 else
                 {
                     transform.localScale = new Vector3(dogScale.x, dogScale.y, dogScale.z);
                 }
-            }          
+            }
+
+            else
+            {
+                anim.SetBool("DogWalk", false);
+            }
 
             //プレイヤーを持つ部分
             if(Input.GetKey(KeyCode.R) && !cantMove && (take || grab))
             {
+                noTossin = true;
                 tukamuFlag = true;
-                muki = transform.localScale.x;
+                muki = -transform.localScale.x;
 
                 //プレイヤーなら
                 if(take)
@@ -120,27 +137,38 @@ public class DogController : MonoBehaviour
             //持ったものを離す部分
             if (Input.GetKeyUp(KeyCode.R) && !cantMove)
             {
+                noTossin = false;
                 Player.transform.parent = null;
                 Cable.transform.parent = null;
                 tukamuFlag = false;
             }
 
             //突進
-            if (Input.GetKey(KeyCode.T) && !cantMove)
+            if (Input.GetKey(KeyCode.T) && !cantMove && !noTossin)
             {
+                //左向き
                 if (transform.localScale.x == -dogScale.x)
                 {
-                    //移動速度が5倍になるだけ
-                    this.transform.Translate(-0.05f, 0.0f, 0.0f);
+                    //移動速度を増やす
+                    this.transform.Translate(-0.02f, 0.0f, 0.0f);
+                    hidari = true;
+                    anim.SetBool("DogWalk", true);
                 }
 
                 if (transform.localScale.x == dogScale.x)
                 {
-                    this.transform.Translate(0.05f, 0.0f, 0.0f);
+                    this.transform.Translate(0.02f, 0.0f, 0.0f);
+                    migi = true;
+                    anim.SetBool("DogWalk", true);
                 }
                 //Invoke("DashStart", 0.1f);
             }
 
+            if(Input.GetKeyUp(KeyCode.T))
+            {
+                migi = false;
+                hidari = false;
+            }
         }
     }
 
