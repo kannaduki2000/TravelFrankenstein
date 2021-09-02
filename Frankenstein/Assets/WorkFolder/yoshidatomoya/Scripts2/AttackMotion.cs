@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackMotion : MonoBehaviour
 {
 
-    public float speed = 1; // ƒXƒs[ƒhX
+    public float speed = 1; // ã‚¹ãƒ”ãƒ¼ãƒ‰X
     public float time = 0;
 
     Rigidbody2D rb;
@@ -32,7 +32,7 @@ public class AttackMotion : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // ƒvƒŒƒCƒ„[ƒ^ƒO‚ª‚Â‚¢‚Ä‚¢‚é‚â‚Â‚ª‹ß‚Ã‚¢‚Ä‚«‚½‚ç
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¿ã‚°ãŒã¤ã„ã¦ã„ã‚‹ã‚„ã¤ãŒè¿‘ã¥ã„ã¦ããŸã‚‰
         if (collision.gameObject.tag == "Player")
         {
             //float speed = 0;
@@ -45,13 +45,13 @@ public class AttackMotion : MonoBehaviour
 
                 if (transform.position.x < Player.position.x)
                 {
-                    //‰E
+                    //å³
                     rb.velocity = new Vector2(speed, 0);
                     transform.localScale = new Vector2(1, 1);
                 }
                 else if (transform.position.x > Player.position.x)
                 {
-                    //¶
+                    //å·¦
 
                     rb.velocity = new Vector2(-speed, 0);
                     transform.localScale = new Vector2(-1, 1);
@@ -68,5 +68,5 @@ public class AttackMotion : MonoBehaviour
     }
 }
 
-// ƒGƒlƒ~[‚Ì‹““®
-// UŒ‚ˆ—i“Ëij
+// ã‚¨ãƒãƒŸãƒ¼ã®æŒ™å‹•
+// æ”»æ’ƒå‡¦ç†ï¼ˆçªé€²ï¼‰

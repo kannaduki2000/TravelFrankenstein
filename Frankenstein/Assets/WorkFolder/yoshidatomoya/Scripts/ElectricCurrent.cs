@@ -1,11 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ElectricCurrent : MonoBehaviour
 {
     //
-    // HP��\��
+    // HPを表示
     int HP = 100;
 
     public float speed;
@@ -23,7 +23,7 @@ public class ElectricCurrent : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // �v���C���[�ړ�
+        // プレイヤー移動
         float horizontalKey = Input.GetAxis("Horizontal");
 
         if (horizontalKey > 0)
@@ -47,31 +47,31 @@ public class ElectricCurrent : MonoBehaviour
         if (touchFlag)
         {
             Debug.Log("aaa");
-            // �\��
+            // 表示
             hpBar.SetActive(true);
 
-            // �d�C�𗬂�
+            // 電気を流す
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                // HP�����炷
+                // HPを減らす
                 HP -= 30;
                 Debug.Log(HP);
-                // �����ɏ�����������
+                // ここに処理を加える
             }
-            // �d�C���[�d
+            // 電気を充電
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                // HP�𑝂₷
+                // HPを増やす
                 HP += 30;
                 Debug.Log(HP);
-                // �����ɏ�����������
+                // ここに処理を加える
             }
 
 
         }
 
 
-        // ��\��
+        // 非表示
 
     }
 
@@ -96,13 +96,13 @@ public class ElectricCurrent : MonoBehaviour
 }
 
 /*
-���d���֌W
-    �d�C�𗬂��Z
-�@�@�d�C���[�d����Z
-�@�@�d�C�𗬂��邩�ǂ����̔���Z
-�@�@�@������Ȃ痬����Ώۂ̏�ԁi�d�C�𗬂�or�[�d�j���擾�Z
-�@�@ �@��ނɍ��킹������������
-�@�@�@�@�i�G�Ȃ炻�̓G�ɉ������d�C������ĒǏ]�j
-�@�@�@�@�i�M�~�b�N�Ȃ炻�̃M�~�b�N�ɉ����������j
-�@�@�d�C�𗬂��镨�̋߂��ɗ�������HP�o�[�ƃ{�^���̕\�� �Z
+＠電流関係
+    電気を流す〇
+　　電気を充電する〇
+　　電気を流せるかどうかの判定〇
+　　　流せるなら流せる対象の状態（電気を流すor充電）を取得〇
+　　 　種類に合わせた処理をする
+　　　　（敵ならその敵に応じた電気を消費して追従）
+　　　　（ギミックならそのギミックに応じた処理）
+　　電気を流せる物の近くに立ったらHPバーとボタンの表示 〇
 */

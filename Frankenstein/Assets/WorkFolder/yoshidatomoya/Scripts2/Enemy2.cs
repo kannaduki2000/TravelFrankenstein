@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,16 +16,16 @@ public class Enemy2 : MonoBehaviour
     //int DetecDist = 8;
     //bool InArea = false;
 
-    // ‚¸‚Á‚ÆA‰•œ‚·‚é
-    public float speedX = 1; // ƒXƒs[ƒhX
-    public float speedY = 0; // ƒXƒs[ƒhY
-    public float speedZ = 0; // ƒXƒs[ƒhZ
-    public float second = 1; // ‚©‚©‚é•b”
+    // ãšã£ã¨ã€å¾€å¾©ã™ã‚‹
+    public float speedX = 1; // ã‚¹ãƒ”ãƒ¼ãƒ‰X
+    public float speedY = 0; // ã‚¹ãƒ”ãƒ¼ãƒ‰Y
+    public float speedZ = 0; // ã‚¹ãƒ”ãƒ¼ãƒ‰Z
+    public float second = 1; // ã‹ã‹ã‚‹ç§’æ•°
     private bool move = false;
     public float Stop = 2;
 
-    public Transform targetPos; // s‚«‚½‚¢êŠ
-    public Vector3 startPos;  // Œ³‚ÌêŠ
+    public Transform targetPos; // è¡ŒããŸã„å ´æ‰€
+    public Vector3 startPos;  // å…ƒã®å ´æ‰€
 
     public bool isSearch = false;
     public bool isloop = false;
@@ -42,22 +42,22 @@ public class Enemy2 : MonoBehaviour
     Transform Bone;
 
     Rigidbody2D rb;
-    public float speed = 1; // ƒXƒs[ƒhX
+    public float speed = 1; // ã‚¹ãƒ”ãƒ¼ãƒ‰X
 
-    int bone = 2;
+    int bone = 0;
    
 
 
     private void Update()
     {
         if (isloop) { return; }
-        // ‰E
+        // å³
         if (isSearch)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos.position, 1f * Time.deltaTime);
             if (targetPos.position.x - transform.position.x <= Mathf.Abs(0.1f))
             {
-                // 2•b’â~
+                // 2ç§’åœæ­¢
                 time += Time.deltaTime;
                 if (time >= 2)
                 {
@@ -68,14 +68,14 @@ public class Enemy2 : MonoBehaviour
                 }
             }
         }
-        // ¶
+        // å·¦
         else
         {            
             transform.position = Vector3.MoveTowards(transform.position, startPos, 1f * Time.deltaTime);
             if (transform.position.x - startPos.x <= Mathf.Abs(0.1f)) 
             {
                 time += Time.deltaTime;
-                // 2•b’â~
+                // 2ç§’åœæ­¢
                 if (time >= 2)
                 {
                     time = 0;
@@ -96,7 +96,7 @@ public class Enemy2 : MonoBehaviour
         startPos = this.transform.position;
         Debug.Log(startPos);
 
-        // ƒvƒŒƒCƒ„[‚ÌˆÊ’uæ“¾
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®å–å¾—
         Player = GameObject.Find("Player").transform;
         Bone = GameObject.Find("Bone").transform;
 
@@ -105,20 +105,20 @@ public class Enemy2 : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Î‚É“–‚½‚Á‚½‚ç“®‚«‚ğ~‚ß‚éˆ—
+    // çŸ³ã«å½“ãŸã£ãŸã‚‰å‹•ãã‚’æ­¢ã‚ã‚‹å‡¦ç†
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       // Stone‚Ìƒ^ƒO‚ª•t‚¢‚Ä‚¢‚é‚à‚Ì‚É“–‚½‚Á‚½‚ç
+       // Stoneã®ã‚¿ã‚°ãŒä»˜ã„ã¦ã„ã‚‹ã‚‚ã®ã«å½“ãŸã£ãŸã‚‰
        if (collision.gameObject.tag == "Stone")
        {
             isloop = true;
             speedX = 0;
-            // ‰EŒü‚«‚Ìó‘Ô‚Å“–‚½‚Á‚½‚ç
+            // å³å‘ãã®çŠ¶æ…‹ã§å½“ãŸã£ãŸã‚‰
            if (this.transform.localScale.x == 1)
            {
                transform.localScale = new Vector3(1, 1, 1);
            }
-           // ¶Œü‚«‚Ìó‘Ô‚Å“–‚½‚Á‚½‚ç
+           // å·¦å‘ãã®çŠ¶æ…‹ã§å½“ãŸã£ãŸã‚‰
            else
            {
                transform.localScale = new Vector3(-1, 1, 1);
@@ -126,21 +126,22 @@ public class Enemy2 : MonoBehaviour
        }
     }
 
-    // œ‚ğæ“¾
-    private void OnCollisionStay2D(Collision2D collision)
+    // éª¨ã‚’å–å¾—
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Bone")
         {
-            bone = 0;
+            bone = 2;
         }
     }
 
 
 
-    // “Ëi
+    // çªé€²
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // ƒvƒŒƒCƒ„[ƒ^ƒO‚ª‚Â‚¢‚Ä‚¢‚é‚â‚Â‚ª‹ß‚Ã‚¢‚Ä‚«‚½‚ç
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¿ã‚°ãŒã¤ã„ã¦ã„ã‚‹ã‚„ã¤ãŒè¿‘ã¥ã„ã¦ããŸã‚‰
         if (collision.gameObject.tag == "Player")
         {
             if(bone < 1)
@@ -153,14 +154,14 @@ public class Enemy2 : MonoBehaviour
 
                     if (transform.position.x < Player.position.x)
                     {
-                        //‰E
+                        //å³
                         rb.velocity = new Vector2(speed, 0);
                         transform.localScale = new Vector2(1, 1);
                         isloop = false;
                     }
                     else if (transform.position.x > Player.position.x)
                     {
-                        //¶
+                        //å·¦
                         rb.velocity = new Vector2(-speed, 0);
                         transform.localScale = new Vector2(-1, 1);
                         isloop = false;
@@ -171,47 +172,45 @@ public class Enemy2 : MonoBehaviour
     }
 
 
-    // Œ³‚ÌˆÊ’u‚É–ß‚é
+    // å…ƒã®ä½ç½®ã«æˆ»ã‚‹
     private void OnTriggerExit2D(Collider2D collision)
     {
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒé›¢ã‚ŒãŸæ™‚
         if (collision.gameObject.tag == "Player")
         {
+            bone = 0;
             time2 = 0;
-            time3 += Time.deltaTime;
             if (transform.position.x < Player.position.x)
             {
-                //‰E
+                //å³
                 rb.velocity = new Vector2(speed, 0);
                 transform.localScale = new Vector2(-1, 1);
             }
             else if (transform.position.x > Player.position.x)
             {
-                //¶
+                //å·¦
                 rb.velocity = new Vector2(-speed, 0);
                 transform.localScale = new Vector2(1, 1);
             }
         }
-        if (collision.gameObject.tag == "Bone")
-        {
-            bone = 2;
-        }
+
     }
 
 }
 
-// ƒGƒlƒ~[©g‚ÌƒeƒŠƒgƒŠ[ŠÔ‚ğs‚«—ˆ‚·‚éZ
-//  ‘Ò‹@ŠÔ‚ ‚èi2•bŠÔjZ
-// ƒtƒ‰ƒ“ƒPƒ“‚ª‹ß‚Ã‚¢‚Ä‚«‚½‚ç“Ëi‚·‚é Z
-//  ƒtƒ‰ƒ“ƒPƒ“‚Ì‹ü@’m‚ÍƒGƒlƒ~[‚ğ’†S‚É‚·‚éiƒGƒlƒ~[‚ª“®‚¢‚½‚ç‹ü@’m‚àˆê‚É“®‚­jZ
-// “Ëi¬Œ÷‚µ‚½‚ç‚S•bŠÔ‘Ò‹@@‚»‚Ì‚ ‚Æ©•ª‚ÌƒeƒŠƒgƒŠ[‚É–ß‚é
-//  ‚S•bŠÔ‘Ò‹@ŒãA‹ü@’m“à‚Éƒtƒ‰ƒ“ƒPƒ“‚ª‚¢‚½‚çƒtƒ‰ƒ“ƒPƒ“‚ÉÄ‚Ñ“Ëi
-// “Ëi‚µ‚½êŠ‚Éƒtƒ‰ƒ“ƒPƒ“‚ª‚¢‚È‚©‚Á‚½‚ç‚Q•bŠÔ‘Ò‹@‚µ‚Ä©•ª‚ÌƒeƒŠƒgƒŠ[‚É–ß‚é ¢
+// ã‚¨ãƒãƒŸãƒ¼è‡ªèº«ã®ãƒ†ãƒªãƒˆãƒªãƒ¼é–“ã‚’è¡Œãæ¥ã™ã‚‹ã€‡
+//  å¾…æ©Ÿæ™‚é–“ã‚ã‚Šï¼ˆ2ç§’é–“ï¼‰ã€‡
+// ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ãŒè¿‘ã¥ã„ã¦ããŸã‚‰çªé€²ã™ã‚‹ ã€‡
+//  ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã®è¦–ç·šå¯ŸçŸ¥ã¯ã‚¨ãƒãƒŸãƒ¼ã‚’ä¸­å¿ƒã«ã™ã‚‹ï¼ˆã‚¨ãƒãƒŸãƒ¼ãŒå‹•ã„ãŸã‚‰è¦–ç·šå¯ŸçŸ¥ã‚‚ä¸€ç·’ã«å‹•ãï¼‰ã€‡
+// çªé€²æˆåŠŸã—ãŸã‚‰ï¼”ç§’é–“å¾…æ©Ÿã€€ãã®ã‚ã¨è‡ªåˆ†ã®ãƒ†ãƒªãƒˆãƒªãƒ¼ã«æˆ»ã‚‹
+//  ï¼”ç§’é–“å¾…æ©Ÿå¾Œã€è¦–ç·šå¯ŸçŸ¥å†…ã«ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ãŒã„ãŸã‚‰ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã«å†ã³çªé€²
+// çªé€²ã—ãŸå ´æ‰€ã«ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ãŒã„ãªã‹ã£ãŸã‚‰ï¼’ç§’é–“å¾…æ©Ÿã—ã¦è‡ªåˆ†ã®ãƒ†ãƒªãƒˆãƒªãƒ¼ã«æˆ»ã‚‹ â–³
 
-    // œ‚ğ‚Á‚Ä‚¢‚éŠÔ‚ÍP‚Á‚Ä‚±‚È‚¢ˆ—
+    // éª¨ã‚’æŒã£ã¦ã„ã‚‹é–“ã¯è¥²ã£ã¦ã“ãªã„å‡¦ç†
 
-    // Î‚É“–‚½‚Á‚½‚ç“®‚«‚ğŠ®‘S‚É~‚ß‚éZ
+    // çŸ³ã«å½“ãŸã£ãŸã‚‰å‹•ãã‚’å®Œå…¨ã«æ­¢ã‚ã‚‹ã€‡
 
-    // ƒvƒŒƒCƒ„[ƒ^ƒO‚Ìæ“¾
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¿ã‚°ã®å–å¾—
     // Player = GameObject.FindWithTag("Player");
     //Target = Player.transform;
 
@@ -221,33 +220,33 @@ public class Enemy2 : MonoBehaviour
            if(InArea)
            {
                Debug.Log("abc");
-               // ƒvƒŒƒCƒ„[‚Ì‚Ù‚¤‚ğŒü‚©‚¹‚é
+               // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã»ã†ã‚’å‘ã‹ã›ã‚‹
                this.transform.LookAt(Target.transform);
 
-               // ƒLƒ…[ƒu‚ÆƒvƒŒƒCƒ„[ŠÔ‚Ì‹——£‚ğŒvZ
+               // ã‚­ãƒ¥ãƒ¼ãƒ–ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼é–“ã®è·é›¢ã‚’è¨ˆç®—
                Vector3 direction = Target.position - this.transform.position;
                direction = direction.normalized;
 
-               // ƒvƒŒƒCƒ„[•ûŒü‚Ì‘¬“x‚ğì¬
+               // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ–¹å‘ã®é€Ÿåº¦ã‚’ä½œæˆ
                Vector3 velocity = direction * MoveSpeed;
 
-               // ƒvƒŒƒCƒ„[‚ªƒWƒƒƒ“ƒv‚µ‚½‚ÉƒLƒ…[ƒu‚ª•‚‚©‚È‚¢‚æ‚¤‚Éy‘¬“x‚ğ0‚ÉŒÅ’è‚µ‚Ä‚¨‚­
+               // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚¸ãƒ£ãƒ³ãƒ—ã—ãŸæ™‚ã«ã‚­ãƒ¥ãƒ¼ãƒ–ãŒæµ®ã‹ãªã„ã‚ˆã†ã«yé€Ÿåº¦ã‚’0ã«å›ºå®šã—ã¦ãŠã
                velocity.y = 0.0f;
 
-               // ƒLƒ…[ƒu‚ğ“®‚©‚·
+               // ã‚­ãƒ¥ãƒ¼ãƒ–ã‚’å‹•ã‹ã™
                Debug.Log("nnn");
                Controller.Move(velocity * Time.deltaTime);
            }
     */
 
-    // ƒvƒŒƒCƒ„[‚ÆƒLƒ…[ƒuŠÔ‚Ì‹——£‚ğŒvZ
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã‚­ãƒ¥ãƒ¼ãƒ–é–“ã®è·é›¢ã‚’è¨ˆç®—
     //Vector3 Apos = this.transform.position;
     //Vector3 Bpos = Target.transform.position;
     //float distance = Vector3.Distance(Apos, Bpos);
 
 
     /*
-    // ‹——£‚ªDetecDist‚Ìİ’è’l–¢–‚Ìê‡‚ÍŒŸ’mƒtƒ‰ƒO‚ğfalse‚É‚·‚é
+    // è·é›¢ãŒDetecDistã®è¨­å®šå€¤æœªæº€ã®å ´åˆã¯æ¤œçŸ¥ãƒ•ãƒ©ã‚°ã‚’falseã«ã™ã‚‹
     if(distance > DetecDist)
     {
         Debug.Log("aaa");
@@ -256,20 +255,20 @@ public class Enemy2 : MonoBehaviour
     */
 
     /*
-    // ƒvƒŒƒCƒ„[‚ªŒŸ’mƒGƒŠƒA‚É‚¢‚½‚çŒŸ’mƒtƒ‰ƒO‚ğtrue‚É‚·‚é
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ¤œçŸ¥ã‚¨ãƒªã‚¢ã«ã„ãŸã‚‰æ¤œçŸ¥ãƒ•ãƒ©ã‚°ã‚’trueã«ã™ã‚‹
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("“®‚¢‚½I");
+        Debug.Log("å‹•ã„ãŸï¼");
         InArea = true;
     }
     */
 
-    // “Ëi‚Ìˆ— –v
+    // çªé€²ã®å‡¦ç† æ²¡
     //   Vector3 direction = (Player.position - transform.position).normalized;
     //  speed = 3.5f;
     //transform.Translate(direction * speed * Time.deltaTime);
 
-    // ‚¸‚Á‚ÆA‰•œ‚·‚é
+    // ãšã£ã¨ã€å¾€å¾©ã™ã‚‹
 
     /*
     void FixedUpdate()
@@ -282,33 +281,33 @@ public class Enemy2 : MonoBehaviour
         //if (move == true)
         //{
 
-        //    float s = Mathf.Sin(Time.time); // ˆÚ“®—Ê‚ğ‹‚ß‚é
+        //    float s = Mathf.Sin(Time.time); // ç§»å‹•é‡ã‚’æ±‚ã‚ã‚‹
         //    this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
-        //    // ƒfƒtƒHƒ‹ƒg‚ª‰EŒü‚«‚Ìê‡
-        //    // ƒXƒP[ƒ‹’læ‚èo‚µ
+        //    // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãŒå³å‘ãã®å ´åˆ
+        //    // ã‚¹ã‚±ãƒ¼ãƒ«å€¤å–ã‚Šå‡ºã—
         //    Vector3 scale = transform.localScale;
 
         //    if (s >= 0)
         //    {
 
-        //        // ‰E•ûŒü‚ÉˆÚ“®’†
-        //        scale.x = 1; // ‚»‚Ì‚Ü‚Üi‰EŒü‚«j
+        //        // å³æ–¹å‘ã«ç§»å‹•ä¸­
+        //        scale.x = 1; // ãã®ã¾ã¾ï¼ˆå³å‘ãï¼‰
         //    }
         //    else
         //    {
-        //        // ¶•ûŒü‚ÉˆÚ“®’†
-        //        scale.x = -1; // ”½“]‚·‚éi¶Œü‚«j
+        //        // å·¦æ–¹å‘ã«ç§»å‹•ä¸­
+        //        scale.x = -1; // åè»¢ã™ã‚‹ï¼ˆå·¦å‘ãï¼‰
         //    }
-        //    // ‘ã“ü‚µ’¼‚·
+        //    // ä»£å…¥ã—ç›´ã™
         //    transform.localScale = scale;
         //}
 
     }  
 */
 
-// –v
+// æ²¡
 /*
-    // Player‚Ìƒ^ƒO‚ª•t‚¢‚Ä‚¢‚é‚à‚Ì‚É“–‚½‚Á‚½‚ç
+    // Playerã®ã‚¿ã‚°ãŒä»˜ã„ã¦ã„ã‚‹ã‚‚ã®ã«å½“ãŸã£ãŸã‚‰
 else if (collision.gameObject.tag == "Player")
 {
     isloop = true;
