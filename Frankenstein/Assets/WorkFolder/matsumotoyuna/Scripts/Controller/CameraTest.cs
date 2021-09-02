@@ -19,18 +19,18 @@ public class CameraTest : MonoBehaviour
     void Update()
     {
         Vector2 playerPos = Player.transform.position;
-        transform.position = new Vector3(playerPos.x, 0, -10);
+        transform.position = new Vector3(playerPos.x, playerPos.y, -10);;
 
         if(enemyfollowing.enemyMove == false)
         {
             Vector2 enemyPos = Enemy.transform.position;
-            transform.position = new Vector3(enemyPos.x, 0, -10);
+            transform.position = new Vector3(enemyPos.x, playerPos.y, -10);
         }
 
         if (mpush.minecartpush == true && pushb.notpushingbutton == false)
         {
             Vector2 minecartPos = MineCart.transform.position;
-            transform.position = new Vector3(minecartPos.x, 0, -10);
+            transform.position = new Vector3(minecartPos.x, playerPos.y, -10);
         }
     }
 }

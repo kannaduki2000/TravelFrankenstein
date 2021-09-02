@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
             }
            
 
-            if ((Input.GetKey("space") || DSInput.PushDown(DSButton.Cross)) && groundCheck)
+            if ((Input.GetKey("space") || DSInput.Push(DSButton.Cross)) && groundCheck)
             {
                 SystemTextEndPlayerMove();
                 if (pushFlag == false)
@@ -529,7 +529,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "GoMap2")
         {
             map2Flag = true;
-            fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("TentativeTitle"));
+            fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("Main_Stag2"));
         }
 
         // ケーブルカーが来るフラグ

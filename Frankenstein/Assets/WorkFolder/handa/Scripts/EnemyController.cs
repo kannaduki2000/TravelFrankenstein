@@ -10,6 +10,9 @@ public class EnemyController : ElectricItem
     public PlayerController mt;
     public GameObject Player;
     public GameObject enemy;
+
+    public GameObject MineCart;
+
     public float stopDistance;  //止まるときの距離
     public float inputSpeed;    //移動速度
     public float jumpingPower;  //ジャンプ
@@ -41,6 +44,14 @@ public class EnemyController : ElectricItem
     private float vx;
     private bool carFlag = false;
     [SerializeField] private CarPush car;
+
+
+    public MinecartPush mcp;
+    public PushButton pushb;
+    private bool minecart = false;
+    private bool okrpush = false;
+    [SerializeField] private bool tukamuFlag = false;
+    [SerializeField] private float muki = 0;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -78,6 +89,17 @@ public class EnemyController : ElectricItem
         {
             carFlag = false;
             //Follow = true;
+        }
+
+        //坂を降りるやーつだお
+        if (collision.gameObject.name == "MineCart")
+        {
+            minecart = true;
+        }
+
+        if (collision.gameObject.name == "MineCart" && pushb.rpush == true)
+        {
+            okrpush = true;
         }
     }
 
@@ -168,6 +190,15 @@ public class EnemyController : ElectricItem
                 vx = -moveSpeed;
                 //this.transform.Translate(-0.01f, 0.0f, 0.0f);
                 transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
+
+                if (tukamuFlag && 0 > muki)
+                {
+                    transform.localScale = new Vector3(-muki, enemyScale.y, enemyScale.z);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
+                }
             }
 
             if (Input.GetKey(KeyCode.RightArrow) || 0.5 < input)
@@ -175,6 +206,15 @@ public class EnemyController : ElectricItem
                 vx = moveSpeed;
                 //this.transform.Translate(0.01f, 0.0f, 0.0f);
                 transform.localScale = enemyScale;
+
+                if (tukamuFlag && muki > 0)
+                {
+                    transform.localScale = new Vector3(-muki, enemyScale.y, enemyScale.z);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(enemyScale.x, enemyScale.y, enemyScale.z);
+                }
             }
 
             if (enemyJump == false && (Input.GetKeyDown(KeyCode.Space) || DSInput.PushDown(DSButton.Cross)))
@@ -183,6 +223,29 @@ public class EnemyController : ElectricItem
                 enemyJump = !enemyJump;
             }
             input = 0;
+
+            if (Input.GetKey(KeyCode.R) && minecart == true)
+            {
+                mcp.minecartpush = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.R) && pushb.rpush == true && okrpush == true)
+            {
+                tukamuFlag = true;
+                muki = -transform.localScale.x;
+                mcp.enemyrpush = true;
+                MineCart.transform.parent = this.transform;
+                this.transform.SetParent(transform, false);
+                MineCart.gameObject.layer = 9;
+            }
+
+            if (Input.GetKeyUp(KeyCode.R) && pushb.rpush == true && okrpush == true)
+            {
+                tukamuFlag = false;
+                mcp.enemyrpush = false;
+                MineCart.transform.parent = null;
+                MineCart.gameObject.layer = 8;
+            }
         }
 
         //★操作の切り替え処理
