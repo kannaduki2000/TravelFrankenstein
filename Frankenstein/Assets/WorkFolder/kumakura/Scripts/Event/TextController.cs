@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DebugLogUtility;
 
 
 [System.Serializable]
 public class TextArray
 {
-    public string[] ChildText;
+    [TextArea(3, 8)] public string[] ChildText;
 }
 
 
@@ -29,13 +30,14 @@ public class TextController : MonoBehaviour
     public bool textFlag = false;   // Text送り中かどうかのフラグ
     private bool aaa = false;
     public bool active = false;     // テキスト送り中以外は非アクティブ
-
-    private System.Action callback = null; 
+    private System.Action callback = null;
+    private EventBandController eventBandCon;
 
     void Start()
     {
         text = GetComponent<Text>();
         SetTextActive(false);
+        eventBandCon = FindObjectOfType<EventBandController>();
     }
 
     void Update()
@@ -68,18 +70,26 @@ public class TextController : MonoBehaviour
                 if (parentArrayNum == 1)
                 {
                     EventFlagManager.Instance.SetFlagState(EventFlagName.textSystem, true);
-                    player.PlayerSetAnnounceImage(AnnounceName.T_Leftstick_Move);
+                    if (eventBandCon != null)
+                    {
+                        eventBandCon.EventEnd(() =>
+                        {
+                            player.PlayerSetAnnounceImage(AnnounceName.T_Leftstick_Move);
+                            player.PlayerMove();
+                        });
+                    }
                     //AnnounceImageManager.Instance.SetAnnounceImage(player.AnnounceImage.sprite, AnnounceName.T_Leftstick_Move);
                 }
                 else if (parentArrayNum == 2)
                 {
                     if (callback != null) callback();
+                    //player.PlayerMove();
                 }
                 childArrayNum = 0;
                 textNum = 0;
                 active = false;
                 SetTextActive(false);
-                player.PlayerMove();
+                //player.PlayerMove();
                 textFlag = false;
                 return;
             }

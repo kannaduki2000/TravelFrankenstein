@@ -12,6 +12,7 @@ public class PCObject : ElectricItem
     [SerializeField] private ImageData imageData; 
     [SerializeField] private Sprite eveReport;
     [SerializeField] private PlayerController player;
+    private EventBandController eventBandCon;
 
     // ここらへん萩原さんの処理用の変数
     [SerializeField] SpriteRenderer PC_SpriteRenderer;  // PC画面
@@ -26,6 +27,7 @@ public class PCObject : ElectricItem
         IsThrow = false;
         IsCharge = true;
         imageData = FindObjectOfType<ImageData>();
+        eventBandCon = FindObjectOfType<EventBandController>();
     }
 
     void Update()
@@ -39,6 +41,7 @@ public class PCObject : ElectricItem
                 if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
                 {
                     // レポートの非表示、テキストイベントの実行
+                    //eventBandCon.EventStart(() => EveReportUnEnabled());
                     EveReportUnEnabled();
                 }
             }
@@ -80,15 +83,18 @@ public class PCObject : ElectricItem
     public void EveReportUnEnabled()
     {
         image.enabled = false;
-        // テキストイベント実行後にPlayerが動けるようにする
-        //player.textCon.SetTextActive(true, ()=> player.PlayerMove());
-        player.textCon.SetTextActive(true, ()=> 
+        eventBandCon.EventStart(() =>
         {
-            player.PlayerMove();
-            EventFlagManager.Instance.SetFlagState(EventFlagName.textEve, true);
-            announceObject.enabled = true;
+            player.textCon.SetTextActive(true, () =>
+            {
+                eventBandCon.EventEnd(() =>
+                {
+                    player.PlayerMove();
+                    EventFlagManager.Instance.SetFlagState(EventFlagName.textEve, true);
+                    announceObject.enabled = true;
+                });
+            });
         });
-        
     }
     
     #region 萩原さん　PCの電源及びSpriteに関する処理

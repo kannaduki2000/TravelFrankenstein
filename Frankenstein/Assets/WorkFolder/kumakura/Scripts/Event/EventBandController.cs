@@ -32,12 +32,20 @@ public class EventBandController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    /// <summary>
+    /// イベントの開始時
+    /// </summary>
+    /// <param name="_callback">帯の表示後に行うイベント</param>
     public void EventStart(System.Action _callback = null)
     {
         callback = _callback;
         StartCoroutine(BandMove(true));
     }
 
+    /// <summary>
+    /// イベント終了時
+    /// </summary>
+    /// <param name="_callback">帯の表示終了後に行うイベント</param>
     public void EventEnd(System.Action _callback = null)
     {
         callback = _callback;

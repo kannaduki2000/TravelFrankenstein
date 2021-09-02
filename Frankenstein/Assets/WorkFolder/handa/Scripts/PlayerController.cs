@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
     public ElectricItem electricItem;
 
     private bool getUpTrigger = true;
+    private EventBandController eventBandCon;
 
 
     // Start is called before the first frame update
@@ -78,6 +79,7 @@ public class PlayerController : MonoBehaviour
         sc = FindObjectOfType<SceneChange>();
         fadeControl = FindObjectOfType<FadeControl>();
         imageData = FindObjectOfType<ImageData>();
+        eventBandCon = FindObjectOfType<EventBandController>();
     }
 
     // Update is called once per frame
@@ -106,10 +108,13 @@ public class PlayerController : MonoBehaviour
                 // 〇ボタン
                 if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
                 {
-                    EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
                     ViewAnnounceImage(false);
                     getUpTrigger = false;
-                    anim.SetTrigger("isGetUp");
+                    if (eventBandCon != null) { eventBandCon.EventStart(() =>
+                    {
+                        EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
+                        anim.SetTrigger("isGetUp");
+                    }); }
                 }
             }
         }
@@ -166,12 +171,6 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Walking", true);
                 // HPバーの向き
                 canvasParent.transform.localScale = new Vector3(canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
-
-                //物を持った時に方向を確認する：半田
-                if (Getitem == true)
-                {
-                    //item.left = false;
-                }
             }
             else if (Input.GetKey("left") || input < -inputRange)
             {
@@ -179,13 +178,6 @@ public class PlayerController : MonoBehaviour
                 vx = -speed;
                 anim.SetBool("Walking", true);
                 canvasParent.transform.localScale = new Vector3(-canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
-
-                //物を持った時に方向を確認する：半田
-                if (Getitem == true)
-                {
-                    //item.left = true;
-                }
-
             }
             else
             {
@@ -304,7 +296,7 @@ public class PlayerController : MonoBehaviour
         /*アイテムを持つ入力処理---------------------------------------------*/
         if (Throw)
         {
-            if (Input.GetKey(KeyCode.R) || Getitem == true && DSInput.PushDown(DSButton.Circle))//半田：SpaceからRに変更
+            if (Input.GetKey(KeyCode.R) || DSInput.PushDown(DSButton.Circle))//半田：SpaceからRに変更
             {
                 //スペースの判定
                 //memo  『? true:false』
@@ -312,10 +304,11 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(presskeyFrames);
             }
 
-            if (Input.GetKeyUp(KeyCode.R) || Getitem == true && DSInput.PushDown(DSButton.Circle))//半田：SpaceからRに変更
+            if (Input.GetKeyUp(KeyCode.R))//半田：SpaceからRに変更
             {
                 //もしスペースが長押しされたら
                 if (PressLong <= presskeyFrames)
+
                 //高めに投げる
                 {
                     item.Hight();
@@ -430,7 +423,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// テキストの表示(実質アニメーション用)
+    /// テキストの表示(アニメーション用)
     /// </summary>
     public void TextAnim()
     {
@@ -438,7 +431,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// 移動可能(実質アニメーション用)
+    /// 移動可能
     /// </summary>
     public void PlayerMove()
     {
@@ -463,7 +456,7 @@ public class PlayerController : MonoBehaviour
             groundCheck = true;
         }
 
-        if (collision.gameObject.tag == "Item" || collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Item")
         {
             Debug.Log("stay");
 
@@ -471,8 +464,6 @@ public class PlayerController : MonoBehaviour
             //Wを押していたら
             if (Input.GetKey(KeyCode.W) || DSInput.Push(DSButton.R1))
             {
-                Debug.Log("持っている");
-
                 Throw = true;
                 //アイテムクラスの取得
                 item = collision.gameObject.GetComponent<KeyPlessThrow>();
@@ -485,16 +476,16 @@ public class PlayerController : MonoBehaviour
                 Getitem = true;
             }
 
-            if (Input.GetKeyUp(KeyCode.W) || DSInput.PushUp(DSButton.R1))
+            if (Getitem == true)
             {
-                Debug.Log("放した");
-                
-                item.gameObject.transform.parent = null;
+                if (Input.GetKeyUp(KeyCode.W) || DSInput.PushUp(DSButton.R1))
+                {
+                    item.gameObject.transform.parent = null;
 
-                //tiemを放したらfalse
-                Getitem = false;
+                    //tiemを放したらfalse
+                    Getitem = false;
+                }
             }
-            
         }
     }
 
