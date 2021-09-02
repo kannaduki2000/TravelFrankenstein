@@ -119,8 +119,8 @@ public class FadeManager : MonoBehaviour
             {
                 //Map2へ
                 //本来はマップ3に遷移
-                Debug.Log("TentativeTitle");
-                SceneManager.LoadScene("TentativeTitle");
+                Debug.Log("Main_Stage2");
+                SceneManager.LoadScene("Main_Stage2");
                 sc.Map2 = false;
             }
         }
