@@ -883,7 +883,6 @@ GameObject:
   - component: {fileID: 378525931}
   - component: {fileID: 378525930}
   - component: {fileID: 378525933}
-  - component: {fileID: 378525934}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -926,7 +925,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.9787054
+  orthographic size: 6.5988884
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -950,7 +949,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378525929}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -120.12, y: -6.5, z: -10}
+  m_LocalPosition: {x: -116.92, y: -5.39, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -963,7 +962,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378525929}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17c47f13759e9c240b96d21ad49239ce, type: 3}
   m_Name: 
@@ -971,26 +970,8 @@ MonoBehaviour:
   targetToFollow: {fileID: 1100497832}
   LeftX: -116
   RightX: 116.5
-  UpY: -5
-  DownY: -6.5
---- !u!114 &378525934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378525929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 411b0a360322c6c4d9f40ec5adb7d69b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyfollowing: {fileID: 503090773}
-  mpush: {fileID: 802404626}
-  pushb: {fileID: 158107265}
-  Player: {fileID: 1100497824}
-  Enemy: {fileID: 503090766}
-  MineCart: {fileID: 802404622}
+  UpY: -7.7
+  DownY: 5
 --- !u!1 &411696624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,30 +1530,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36496b70a51827449250f70963d147b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &503090773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503090766}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1e66f8c8dc8d0543abd3ba09065b94c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  enemy: {fileID: 0}
-  MineCart: {fileID: 0}
-  speed: 3
-  stopDistance: 0
-  mt: {fileID: 0}
-  cp: {fileID: 0}
-  mcp: {fileID: 0}
-  pushb: {fileID: 0}
-  enemyMove: 1
-  tukamuFlag: 0
-  muki: 0
 --- !u!1 &514447672
 GameObject:
   m_ObjectHideFlags: 0
