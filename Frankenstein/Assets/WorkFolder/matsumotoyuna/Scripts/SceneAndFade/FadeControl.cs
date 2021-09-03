@@ -68,7 +68,7 @@ public class FadeControl : MonoBehaviour
     IEnumerator WhiteFadeIn()
     {
         //EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, true);
-        Debug.Log("honntouno fadein takoyaki");
+        //Debug.Log("honntouno fadein takoyaki");
         alpha = fadeImage.color.a;
         while (0 < alpha)
         {
@@ -77,13 +77,13 @@ public class FadeControl : MonoBehaviour
             yield return null;
         }
         if (_callback != null) _callback();
-        EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, false);
+        //EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, false);
         yield break;
     }
 
     IEnumerator WhiteFadeOut()
     {
-        EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, true);
+        //EventFlagManager.Instance.SetFlagState(EventFlagName.isFade, true);
         alpha = fadeImage.color.a;
         while (alpha < 1)
         {

@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour
         }
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.isFade))
         {
+            DebugLogUtility.DLUtility.DebugLog("sss");
             PlayerNotMove();
             return;
         }
@@ -529,7 +530,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "GoMap2")
         {
             map2Flag = true;
-            fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("Main_Stag2"));
+            fadeControl.Fade("out", () => sc.SceneSwitching("Main_Stag2"));
         }
 
         // ケーブルカーが来るフラグ
