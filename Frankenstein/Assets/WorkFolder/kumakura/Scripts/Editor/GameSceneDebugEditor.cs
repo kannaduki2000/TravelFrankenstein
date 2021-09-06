@@ -20,7 +20,10 @@ public class GameSceneDebugEditor : Editor
         "左Ctrlキー : シーンの再読み込み\n" +
         "左Shiftキー : ゲーム内時間3倍に変更\n" +
         "右Shiftキー : ゲーム内時間0.5倍に変更\n" +
-        "Shiftキーを離すと通常のゲーム内時間に戻ります", MessageType.Info);
+        "Shiftキーを離すと通常のゲーム内時間に戻ります\n" +
+        "左Tabキー +\n" +
+        "　　　Tキー : テキストの表示速度最速化\n" +
+        "　　　Pキー : プレイヤーの移動速度上昇", MessageType.Info);
         EditorGUILayout.HelpBox("BuildErrorが起こる場合はこのGameObjectを破棄してください", MessageType.Warning);
     }
 }
