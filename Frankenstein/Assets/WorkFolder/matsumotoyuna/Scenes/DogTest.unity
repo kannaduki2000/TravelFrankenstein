@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 426323190}
   m_Layer: 0
   m_Name: Field
-  m_TagString: Untagged
+  m_TagString: Floar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -870,12 +870,14 @@ MonoBehaviour:
   cantMove: 0
   take: 0
   grab: 0
+  jump: 0
   speed: 0.005
   tukamuFlag: 0
   noTossin: 0
   migi: 0
   hidari: 0
   muki: 0
+  jumpForce: 300
   DashArea: {fileID: 1504821972}
   Wall: {fileID: 633175813}
   Player: {fileID: 144863571}

@@ -8,6 +8,7 @@ public class DogController : MonoBehaviour
     [SerializeField] private bool cantMove = false;   //ｲｯﾇの動き制御
     [SerializeField] private bool take = false;       //ｲｯﾇがプレイヤーを持ち運べるかどうか
     [SerializeField] private bool grab = false;       //ｲｯﾇがケーブルを持ち運べるかどうか
+    [SerializeField] private bool jump = false;       //ｲｯﾇがジャンプできるかどうか
     [SerializeField] private float speed = 20f;       //ｲｯﾇのスピード
 
     [SerializeField] private bool tukamuFlag = false; //今、物を掴んでいるかどうかのフラグ
@@ -15,6 +16,7 @@ public class DogController : MonoBehaviour
     [SerializeField] private bool migi = false;       //右を向いているか
     [SerializeField] private bool hidari = false;     //左を向いているか
     [SerializeField] private float muki = 0;          //どっちを向いているか、物を持っている時は向き固定
+    [SerializeField] private float jumpForce = 300.0f;//ジャンプ力
 
     Vector3 dogScale;             　　　　　　　　　　  //ｲｯﾇの大きさ
     Vector3 dashareaScale;        　　　　　　　　　　  //ｲｯﾇのダッシュ範囲
@@ -30,6 +32,11 @@ public class DogController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.gameObject.tag == "Floar")
+        {
+            jump = false;
+        }
+
         if(collision.gameObject.name == "Wall")
         {
             //壁壊してもろて
@@ -76,6 +83,14 @@ public class DogController : MonoBehaviour
         //操作・アニメーション
         if (dogMove)
         {
+            //ジャンプ
+            if (jump == false && Input.GetKeyDown(KeyCode.Space))
+            {
+                //anim.SetBool("DogWalk", true);
+                this.rigid2D.AddForce(transform.up * this.jumpForce);
+                jump = true;
+            }
+
             if (Input.GetKey(KeyCode.LeftArrow) && !cantMove && !migi)
             {
                 this.transform.Translate(-0.01f, 0.0f, 0.0f);
