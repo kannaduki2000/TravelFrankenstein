@@ -20,7 +20,7 @@ public class Collapse : MonoBehaviour
         {
             Transform ground = Ground.transform;                            //Groundの座標を取得
             Vector2 pos = ground.position;
-            pos.y = Mathf.MoveTowards(pos.y, -15, Time.deltaTime * speed); //pos.yから-100までTime.deltaTime * speedのスピードで移動
+            pos.y = Mathf.MoveTowards(pos.y, -15.18f, Time.deltaTime * speed); //pos.yから-100までTime.deltaTime * speedのスピードで移動
             ground.position = pos;   //半田：-10から-15に変更
             
         }

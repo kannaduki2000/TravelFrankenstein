@@ -217,76 +217,80 @@ public class PlayerController : MonoBehaviour
 
         /*--------------------------------------------------------------------------*/
         
-        /*体力の減増処理-----------------------------------------------------------------*/
-        if (touchFlag || enemyTouchFlag || enemyFollowFlg || electricItem != null)
+        if(player_Move == false)
         {
-            if (enemyCon.isFollowing || textCon.textFlag) { return; }
-
-            // 表示
-            hpCanvas.SetActive(true);
-
-            
-            if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
+            /*体力の減増処理-----------------------------------------------------------------*/
+            if (touchFlag || enemyTouchFlag || enemyFollowFlg || electricItem != null)
             {
-                ViewAnnounceImage(false);
+                if (enemyCon.isFollowing || textCon.textFlag) { return; }
 
-                // 電気を流す
-                if (onElectricity == true || electricItem.ChargeFlag == false)
+                // 表示
+                hpCanvas.SetActive(true);
+
+
+                if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
                 {
-                    electricItem.ChargeFlag = true;
-                    HP -= electricItem.Power;
-                    hp.fillAmount = HP / maxHP;
-                    onElectricity = false; // これいるんかな
-                    // 入れたObject毎のイベントの実行
-                    electricItem.Event();
-                    electricItem.IsChargeEvent = true;
+                    ViewAnnounceImage(false);
+
+                    // 電気を流す
+                    if (onElectricity == true || electricItem.ChargeFlag == false)
+                    {
+                        electricItem.ChargeFlag = true;
+                        HP -= electricItem.Power;
+                        hp.fillAmount = HP / maxHP;
+                        onElectricity = false; // これいるんかな
+                                               // 入れたObject毎のイベントの実行
+                        electricItem.Event();
+                        electricItem.IsChargeEvent = true;
+                    }
+
+                    // 充電する
+                    else if ((onElectricity == false || electricItem.ChargeFlag) && electricItem.IsCharge)
+                    {
+                        HP += electricItem.Power;
+                        //HP += 20;// HPを増やす
+                        hp.fillAmount = HP / maxHP;
+                        // ここに処理を加える
+                        onElectricity = true;
+                        electricItem.ChargeEvent();
+                        electricItem.ChargeFlag = false;
+                    }
+
+                    // モック版熊倉:追加しますた
+                    // 触れている物がEnemyの場合
+                    if (enemyTouchFlag && EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption)) // チュートリアルの吸収フラグがないと追従しないように
+                    {
+                        EventFlagManager.Instance.SetFlagState(EventFlagName.enemyCharge, true);
+                        // 追従開始
+                        enemyCon.isFollowing = true;
+                        // 充電したのでこれ以上充電出来ないように
+                        enemyCon.isCharging = false;
+                        hpCanvas.SetActive(false);
+                    }
                 }
-
-                // 充電する
-                else if ((onElectricity == false || electricItem.ChargeFlag) && electricItem.IsCharge)
+                // 電気を充電
+                else if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
                 {
-                    HP += electricItem.Power;
-                    //HP += 20;// HPを増やす
-                    hp.fillAmount = HP / maxHP;
-                    // ここに処理を加える
-                    onElectricity = true;
-                    electricItem.ChargeEvent();
-                    electricItem.ChargeFlag = false;
-                }
+                    //if (onElectricity == false || electricItem.ChargeFlag)
+                    //{
+                    //    Debug.Log("充電したい");
+                    //    HP += electricItem.Power;
+                    //    //HP += 20;// HPを増やす
+                    //    hp.fillAmount = HP / maxHP;
+                    //    // ここに処理を加える
+                    //    onElectricity = true;
+                    //    electricItem.ChargeFlag = false;
+                    //}
 
-                // モック版熊倉:追加しますた
-                // 触れている物がEnemyの場合
-                if (enemyTouchFlag && EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption)) // チュートリアルの吸収フラグがないと追従しないように
-                {
-                    EventFlagManager.Instance.SetFlagState(EventFlagName.enemyCharge, true);
-                    // 追従開始
-                    enemyCon.isFollowing = true;
-                    // 充電したのでこれ以上充電出来ないように
-                    enemyCon.isCharging = false;
-                    hpCanvas.SetActive(false);
-                }
-            }
-            // 電気を充電
-            else if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
-            {
-                //if (onElectricity == false || electricItem.ChargeFlag)
-                //{
-                //    Debug.Log("充電したい");
-                //    HP += electricItem.Power;
-                //    //HP += 20;// HPを増やす
-                //    hp.fillAmount = HP / maxHP;
-                //    // ここに処理を加える
-                //    onElectricity = true;
-                //    electricItem.ChargeFlag = false;
-                //}
-
-                // ？？？
-                if (enemyFollowFlg)
-                {
-                    enemyCon.isFollowing = false;
+                    // ？？？
+                    if (enemyFollowFlg)
+                    {
+                        enemyCon.isFollowing = false;
+                    }
                 }
             }
         }
+        
         // モック版熊倉:HP表示するObjectから離れたら強制的にHPバーを非表示にします
         else
         {
@@ -309,7 +313,6 @@ public class PlayerController : MonoBehaviour
             {
                 //もしスペースが長押しされたら
                 if (PressLong <= presskeyFrames)
-
                 //高めに投げる
                 {
                     item.Hight();

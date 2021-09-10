@@ -11,8 +11,6 @@ public class EnemyController : ElectricItem
     public GameObject Player;
     public GameObject enemy;
 
-    public GameObject MineCart;
-
     public float stopDistance;  //止まるときの距離
     public float inputSpeed;    //移動速度
     public float jumpingPower;  //ジャンプ
@@ -45,12 +43,13 @@ public class EnemyController : ElectricItem
     private bool carFlag = false;
     [SerializeField] private CarPush car;
 
-
+    //トロッコを押す
+    public GameObject MineCart;
     public MinecartPush mcp;
     public PushButton pushb;
     private bool minecart = false;
-    private bool okrpush = false;
     [SerializeField] private bool tukamuFlag = false;
+    private bool okrpush = false;
     [SerializeField] private float muki = 0;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -58,6 +57,17 @@ public class EnemyController : ElectricItem
         if (collision.gameObject.tag == "Ground")
         {
             enemyJump = false;
+        }
+
+        //坂を降りるやーつだお
+        if (collision.gameObject.name == "MineCart")
+        {
+            minecart = true;
+        }
+
+        if (collision.gameObject.name == "MineCart" && pushb.rpush == true)
+        {
+            okrpush = true;
         }
     }
 
@@ -89,17 +99,6 @@ public class EnemyController : ElectricItem
         {
             carFlag = false;
             //Follow = true;
-        }
-
-        //坂を降りるやーつだお
-        if (collision.gameObject.name == "MineCart")
-        {
-            minecart = true;
-        }
-
-        if (collision.gameObject.name == "MineCart" && pushb.rpush == true)
-        {
-            okrpush = true;
         }
     }
 
@@ -191,6 +190,7 @@ public class EnemyController : ElectricItem
                 //this.transform.Translate(-0.01f, 0.0f, 0.0f);
                 transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
 
+                //トロッコを持っている時のエネミーの向き（左）
                 if (tukamuFlag && 0 > muki)
                 {
                     transform.localScale = new Vector3(-muki, enemyScale.y, enemyScale.z);
@@ -207,6 +207,7 @@ public class EnemyController : ElectricItem
                 //this.transform.Translate(0.01f, 0.0f, 0.0f);
                 transform.localScale = enemyScale;
 
+                //トロッコを持っている時のエネミーの向き（右）
                 if (tukamuFlag && muki > 0)
                 {
                     transform.localScale = new Vector3(-muki, enemyScale.y, enemyScale.z);
@@ -224,11 +225,13 @@ public class EnemyController : ElectricItem
             }
             input = 0;
 
+            //トロッコの前でRを押すと
             if (Input.GetKey(KeyCode.R) && minecart == true)
             {
                 mcp.minecartpush = true;
             }
 
+            //t
             if (Input.GetKeyDown(KeyCode.R) && pushb.rpush == true && okrpush == true)
             {
                 tukamuFlag = true;
@@ -239,6 +242,7 @@ public class EnemyController : ElectricItem
                 MineCart.gameObject.layer = 9;
             }
 
+            //t
             if (Input.GetKeyUp(KeyCode.R) && pushb.rpush == true && okrpush == true)
             {
                 tukamuFlag = false;
@@ -259,7 +263,7 @@ public class EnemyController : ElectricItem
                 mt.player_Move = !mt.player_Move;
                 Following();
                 enemyMove = !enemyMove;
-                //Follow = !Follow;
+                Follow = !Follow;
             }
         }
         //2回目の切り替え時、プレイヤーだけ動いてエネミー不動堂
