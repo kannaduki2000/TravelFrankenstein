@@ -13,7 +13,6 @@ public class EnemyFollowing : MonoBehaviour
     public GameObject player;
     public GameObject enemy;
     public GameObject MineCart;
-    //public Transform target;
     public float speed = 3.0f;         //速度
     public float stopDistance;         //止まるときの距離
 
@@ -24,25 +23,26 @@ public class EnemyFollowing : MonoBehaviour
     public MinecartPush mcp;
     public PushButton pushb;
 
-    public bool enemyMove = true;      //エネミーの動き
-    private bool Jump = false;         //ジャンプ用
-    private bool Follow = false;       //二度目の入力でのついてくるか否か
-    private bool car = false;
-    private bool minecart = false;
-    [SerializeField] private bool tukamuFlag = false;
+    public bool enemyMove = true;                       //エネミーの動き
+    private bool Jump = false;                          //ジャンプ用
+    private bool Follow = false;                        //二度目の入力でのついてくるか否か
+    private bool car = false;                           //車に触れているかどうか
+    private bool minecart = false;                      //トロッコに触れているかどうか
+    [SerializeField] private bool tukamuFlag = false;   //物を掴んでいるかどうか
     private bool okrpush = false;
 
     Vector3 enemyScale;
 
     Rigidbody2D rigid2D;
-    float jumpForce = 300.0f;          //ジャンプ力
-    [SerializeField] private float muki = 0;
+    float jumpForce = 300.0f;                           //ジャンプ力
+    [SerializeField] private float muki = 0;            //向いている方向判定
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Jump = false;
         //↑床に着くまでジャンプさせないマン
 
+        //車に触れているかな～？
         if(collision.gameObject.tag == "Car")
         {
             car = true;
@@ -55,6 +55,7 @@ public class EnemyFollowing : MonoBehaviour
             minecart = true;
         }
 
+        //トロッコに触れている？既にトロッコはボタンを押した？
         if (collision.gameObject.name == "MineCart" && pushb.rpush == true)
         {
             okrpush = true;
@@ -63,6 +64,7 @@ public class EnemyFollowing : MonoBehaviour
 
     void Start()
     {
+        //Rigid～、エネミーの大きさ取得
         this.rigid2D = GetComponent<Rigidbody2D>();
         enemyScale = this.transform.localScale;
     }
@@ -85,7 +87,6 @@ public class EnemyFollowing : MonoBehaviour
                 new Vector2(player.transform.position.x, enemy.transform.position.y),
                 speed * Time.deltaTime);
             }
-            //enemy→player
 
             // 右
             if (player.transform.position.x < transform.position.x)
@@ -147,17 +148,19 @@ public class EnemyFollowing : MonoBehaviour
                 Jump = !Jump;
             }
 
+            //車押すよ
             if(Input.GetKey(KeyCode.R) && car == true)
             {
                 cp.crash = true;
             }
 
+            //トロッコを坂から落とすよ
             if (Input.GetKey(KeyCode.R) && minecart == true)
             {
                 mcp.minecartpush = true;
             }
 
-
+            //トロッコ引っ張るよ
             if(Input.GetKeyDown(KeyCode.R) && pushb.rpush == true && okrpush == true)
             {
                 tukamuFlag = true;
@@ -168,6 +171,7 @@ public class EnemyFollowing : MonoBehaviour
                 MineCart.gameObject.layer = 9;
             }
 
+            //トロッコ手放すよ
             if (Input.GetKeyUp(KeyCode.R) && pushb.rpush == true && okrpush == true)
             {
                 tukamuFlag = false;

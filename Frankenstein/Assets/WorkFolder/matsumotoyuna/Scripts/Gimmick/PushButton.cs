@@ -12,8 +12,8 @@ public class PushButton : MonoBehaviour
     public GameObject Button1;
     public GameObject Button2;
     private float speed = 5f;
-    public bool pushingbutton = false;
-    public bool rpush = false;
+    public bool pushingbutton = false;     //トロッコとボタンが接触したとき用
+    public bool rpush = false;             //最初にトロッコ押す用
     public bool notpushingbutton = false;
     public bool notpushingbutton2 = false;
 
@@ -27,7 +27,7 @@ public class PushButton : MonoBehaviour
     }
 
     //はしごを上げ下げするボタン用
-    //トロッコがボタンを押している時
+    //トロッコがボタンを押した時
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "MineCart")
@@ -48,6 +48,7 @@ public class PushButton : MonoBehaviour
 
     void Update()
     {
+        //ボタン押す判定がtrueかな？もしそうなら…
         if (pushingbutton == true || notpushingbutton2 == true)
         {
             PushingButton();
@@ -101,10 +102,11 @@ public class PushButton : MonoBehaviour
 
     public void NotPushButton()
     {
+        //ずっとnotpushingbutton部分のMove.Towardsが続かないようにする
+        //プレイヤーとのすれ違い対策などのレイヤー変更などなど
         notpushingbutton = true;
         Button1.gameObject.layer = 6;
         Button.gameObject.layer = 6;
-        mpush.playertouch = true;
         rpush = true;
     }
 }

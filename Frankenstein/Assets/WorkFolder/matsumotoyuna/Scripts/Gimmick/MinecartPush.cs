@@ -11,12 +11,10 @@ public class MinecartPush : MonoBehaviour
     public PhysicsMaterial2D physics2D;
     public GameObject MineCart;
     private float speed = 2f;
-    public bool minecartpush = false;
-    public bool playertouch = false;
-    public bool playernotouch = false;
-    public bool enemytouch = false;
-    public bool enemyrpush = false;
-    public bool movestop = false;
+    public bool minecartpush = false;  //坂からトロッコ落とす用
+    public bool enemytouch = false;    //エネミーとすれ違う用、坂から落ちている最中はすれ違う
+    public bool enemyrpush = false;    //エネミーがトロッコ引っ張れる用
+    public bool movestop = false;      //落ちている最中用、止まったらtrue
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -28,6 +26,7 @@ public class MinecartPush : MonoBehaviour
             enemytouch = true;
         }
 
+        //ボタン押した後になんかつるつる滑りやがるため、X固定しちゃったお
         else if (collision.gameObject.name == "Button")
         {
             rigid2D.constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -35,17 +34,12 @@ public class MinecartPush : MonoBehaviour
         }
 
         //トロッコとプレイヤーのすれ違い対策
-        //その前にレイヤーの設定してね！
+        //レイヤーの設定してね！
         //(project setting? のところのやつ)
-        else if (collision.gameObject.name == "Player" && playertouch == false)
-        {
-            playernotouch = true;
-        }
 
         else if (collision.gameObject.name == "Enemy" && enemytouch == true)
         {
             enemytouch = false;
-            Invoke("SActive2", 2.0f);
         }
     }
 
@@ -56,14 +50,10 @@ public class MinecartPush : MonoBehaviour
 
     void Update()
     {
+        //エネミーがトロッコに触れた & R押したらここ
         if (minecartpush == true)
         {
             MineCartPush();
-        }
-
-        if (playernotouch == true)
-        {
-            Invoke("SActive", 2.0f);
         }
 
         //エネミーが手でトロッコを押せる用に重さ変更
@@ -80,6 +70,7 @@ public class MinecartPush : MonoBehaviour
 
     public void MineCartPush()
     {
+        //坂下っていく部分
         if (movestop == false)
         {
             MineCart.gameObject.layer = 9;
@@ -95,17 +86,9 @@ public class MinecartPush : MonoBehaviour
 
     public void MoveStop()
     {
+        //坂を降り終わったらここ
         movestop = true;
         rigid2D.constraints = RigidbodyConstraints2D.None;
         MineCart.gameObject.layer = 8;
-    }
-
-    public void SActive()
-    {
-        playertouch = true;
-    }
-
-    public void SActive2()
-    {
     }
 }

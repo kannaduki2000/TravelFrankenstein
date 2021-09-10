@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class DogController : MonoBehaviour
 {
-    [SerializeField] private bool dogMove = false;  //ｲｯﾇの操作切り替え
-    [SerializeField] private bool cantMove = false; //ｲｯﾇの動き制御
-    [SerializeField] private bool take = false;     //ｲｯﾇがプレイヤーを持ち運べるかどうか
-    [SerializeField] private bool grab = false;     //ｲｯﾇがケーブルを持ち運べるかどうか
-    [SerializeField] private float speed = 20f;     //ｲｯﾇのスピード
+    [SerializeField] private bool dogMove = false;    //ｲｯﾇの操作切り替え
+    [SerializeField] private bool cantMove = false;   //ｲｯﾇの動き制御
+    [SerializeField] private bool take = false;       //ｲｯﾇがプレイヤーを持ち運べるかどうか
+    [SerializeField] private bool grab = false;       //ｲｯﾇがケーブルを持ち運べるかどうか
+    [SerializeField] private float speed = 20f;       //ｲｯﾇのスピード
 
-    [SerializeField] private bool tukamuFlag = false;
-    [SerializeField] private bool noTossin = false;
-    [SerializeField] private bool migi = false;
-    [SerializeField] private bool hidari = false;
-    [SerializeField] private float muki = 0;
+    [SerializeField] private bool tukamuFlag = false; //今、物を掴んでいるかどうかのフラグ
+    [SerializeField] private bool noTossin = false;   //物を持っている時は突進できないようにするフラグ
+    [SerializeField] private bool migi = false;       //右を向いているか
+    [SerializeField] private bool hidari = false;     //左を向いているか
+    [SerializeField] private float muki = 0;          //どっちを向いているか、物を持っている時は向き固定
 
-    Vector3 dogScale;             　　　　　　　　　　//ｲｯﾇの大きさ
-    Vector3 dashareaScale;        　　　　　　　　　　//ｲｯﾇのダッシュ範囲
-    Vector3 playerScale;          　　　　　　　　　　//プレイヤーの大きさ
+    Vector3 dogScale;             　　　　　　　　　　  //ｲｯﾇの大きさ
+    Vector3 dashareaScale;        　　　　　　　　　　  //ｲｯﾇのダッシュ範囲
+    Vector3 playerScale;          　　　　　　　　　　  //プレイヤーの大きさ
 
-    [SerializeField] private GameObject DashArea;   //ダッシュ範囲
-    [SerializeField] private GameObject Wall;       //壊す壁
-    [SerializeField] private GameObject Player;     //プレイヤー
-    [SerializeField] private GameObject Cable;      //ケーブル
+    [SerializeField] private GameObject DashArea;     //ダッシュ範囲
+    [SerializeField] private GameObject Wall;         //壊す壁
+    [SerializeField] private GameObject Player;       //プレイヤー
+    [SerializeField] private GameObject Cable;        //ケーブル
 
     [SerializeField] private Rigidbody2D rigid2D;
     [SerializeField] private Animator anim;
@@ -73,6 +73,7 @@ public class DogController : MonoBehaviour
     void Update()
     {
         //動かせるとき
+        //操作・アニメーション
         if (dogMove)
         {
             if (Input.GetKey(KeyCode.LeftArrow) && !cantMove && !migi)

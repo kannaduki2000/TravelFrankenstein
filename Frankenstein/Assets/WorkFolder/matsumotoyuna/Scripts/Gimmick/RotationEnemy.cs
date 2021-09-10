@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//歯車エネミー用
 public class RotationEnemy : MonoBehaviour
 {
+    //速さや加速度、回転するかどうかの判定
     private float speed = 0;
     private bool kasokuuuuuu = false;
     public bool kasokudekiru = false;

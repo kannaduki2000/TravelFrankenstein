@@ -6,12 +6,11 @@ public class MoveTest : MonoBehaviour
 {
     public GameObject player;
 
-    public bool playerMove = false;
-    private bool Jump = false;
-    public bool touchminecart = false;
+    public bool playerMove = false;  //プレイヤーが動く用
+    private bool Jump = false;       //ジャンプ用
 
     Rigidbody2D rigid2D;
-    float jumpForce = 300.0f;
+    float jumpForce = 300.0f;        //ジャンプ力
 
     public SceneChange sc;
     public FadeControl fadeControl;
@@ -20,11 +19,6 @@ public class MoveTest : MonoBehaviour
     {
         Jump = false;
         //↑床に着くまでジャンプさせないマン
-        if(collision.gameObject.name == "MineCart" && touchminecart == false)
-        {
-            rigid2D.constraints = RigidbodyConstraints2D.FreezeAll;
-            Invoke("Constraints", 2.0f);
-        }
     }
 
     void Start()
@@ -36,6 +30,7 @@ public class MoveTest : MonoBehaviour
 
     void Update()
     {
+        //プレイヤー操作部分
         if (playerMove == false)
         {
             if (Input.GetKey(KeyCode.LeftArrow))
@@ -70,11 +65,5 @@ public class MoveTest : MonoBehaviour
         {
             fadeControl.Fade("out", () => fadeControl.sceneChange.SceneSwitching("MainTitle"));
         }
-    }
-
-    public void Constraints()
-    {
-        rigid2D.constraints = RigidbodyConstraints2D.None;
-        touchminecart = true;
     }
 }

@@ -10,10 +10,8 @@ public class CarPush : MonoBehaviour
     [SerializeField] GameObject gareki;
 
     public PhysicsMaterial2D pm;
-    GameObject front;
 
-    public bool crash = true;
-    public bool garekiCrash = false;
+    public bool crash = true;          //車動く用
     public bool rot = false;
     public bool carMove = false;
     [SerializeField] private EnemyController enemy;
@@ -28,25 +26,11 @@ public class CarPush : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    crash = true;
-        //}
+        //enemyが車を押したらここにGO
         if (crash == true)
         {
             Crash();
         }
-
-        //if(rot == true)
-        //{
-        //    transform.Rotate(0f, 0f, -this.speed / 6);
-        //}
-
-        //if (rot == true && transform.rotation.z >= 0)
-        //{
-        //    transform.rotation = new Quaternion(0, 0, 0, 0);
-        //    rot = false;
-        //}
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
@@ -67,6 +51,8 @@ public class CarPush : MonoBehaviour
 
     public void Crash()
     {
+        //車が動く用
+        //enemyが車の近くでRを押すとここに来るよ
         if(!carMove)
         {
             GetComponent<Collider2D>().isTrigger = false;

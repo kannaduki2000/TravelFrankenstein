@@ -157,7 +157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 17215722}
   playerMove: 0
-  touchminecart: 0
   sc: {fileID: 0}
   fadeControl: {fileID: 0}
 --- !u!212 &17215724
@@ -219,7 +218,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17215722}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.72, y: -4.01, z: 0}
+  m_LocalPosition: {x: -12.64, y: -4.01, z: 0}
   m_LocalScale: {x: 0.675, y: 0.6625, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1240,11 +1239,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigid2D: {fileID: 965239763}
   physics2D: {fileID: 6200000, guid: 151d6aa69e0928541b733b0168ff7b3b, type: 2}
-  aaa: {fileID: 0}
   MineCart: {fileID: 965239760}
   minecartpush: 0
-  playertouch: 0
-  playernotouch: 0
   enemytouch: 0
   enemyrpush: 0
   movestop: 0

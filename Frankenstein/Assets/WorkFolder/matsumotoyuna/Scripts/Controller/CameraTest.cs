@@ -15,9 +15,9 @@ public class CameraTest : MonoBehaviour
     public GameObject Enemy;
     public GameObject MineCart;
 
-    //非効率の極み乙女
     void Update()
     {
+        //それぞれの操作状況に応じてカメラが追従する対象を変更
         Vector2 playerPos = Player.transform.position;
         transform.position = new Vector3(playerPos.x, 0, -10);
 
