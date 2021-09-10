@@ -1,299 +1,600 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
+using DualShockInput;
+
+
+
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb2d;
-
+    public Rigidbody2D rb2d;
+    public Animator anim;
     public GameObject Player;
-
-    private float x_val;
-    private float speed;
-
-    //ƒvƒŒƒCƒ„[‚Ì“®ì‚Ì”’l‚ğ“ü—Íi•à‚­AƒWƒƒƒ“ƒvj
-    public float inputSpeed;
-    public float jumpingPower;
-    //
-    public LayerMask CollisionLayer;
-    [SerializeField] private LayerMask enemyLayer; // ƒ‚ƒbƒN”ÅŒF‘q:“G‚ÌLayeræ“¾—p
-    private bool jumpFlg = false;
-
-    //public Vector2 Speed = new Vector2(1, 1);   //‘¬“x
-    private int presskeyFrames = 0;             //’·‰Ÿ‚µƒtƒŒ[ƒ€”
-    private int PressLong = 300;                 //’·‰Ÿ‚µ”»’è‚Ìè‡’l
-    private int PressShort = 100;                //Œy‚­‰Ÿ‚µ‚½”»’è‚Ìè‡’l
-    private bool aa = false;
-    Item item;
-
-    [SerializeField] int maxHP = 100;
-    [SerializeField] float HP = 100;
-    [SerializeField] private bool touchFlag = false;
-    [SerializeField] private bool enemyTouchFlag = false; // ƒ‚ƒbƒN”ÅŒF‘q:ƒtƒ‰ƒO’Ç‰Á
-    public GameObject hpCanvas;
-    private float hpCanvasScale_x;
-
-    public bool player_Move = false;
-
-    private bool enemyFollowFlg = false;
-
     public GameObject enemy;
 
-    //public EnemyController enemyCon;
+    public float speed;//é€Ÿåº¦
+    public float jumpPower;//ã‚¸ãƒ£ãƒ³ãƒ—
+    public float vx = 0;
+    private bool leftFlag = false;
+    private bool jumpFlag = false;
+    private bool groundCheck = false;//æ¥åœ°åˆ¤å®š 
+    private bool pushFlag = false;
+    public bool player_Move = false;
 
-    // ƒ‚ƒbƒN”ÅŒF‘q:GetCompornentd‚¢‚ñ‚Å’¼‚Åæ“¾A‚±‚±“G‚Ì”‘‚¦‚é‚Í‚¸‚È‚Ì‚Å‘‚«Š·‚¦‚é‚±‚Æ
+    //
+    [SerializeField] private LayerMask enemyLayer; // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:æ•µã®Layerå–å¾—ç”¨
+
+    [SerializeField] private float inputRange = 0.5f;
+    public int maxHP = 100;
+    public float HP = 100;
+    public bool touchFlag = false;
+    public bool enemyTouchFlag = false; // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:ãƒ•ãƒ©ã‚°è¿½åŠ 
+    public bool onElectricity = true;
+    public GameObject hpCanvas;
+    public GameObject canvasParent;
+    private float canvasParentScale_x;
+
+    private int presskeyFrames = 0;             //é•·æŠ¼ã—ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
+    private int PressLong = 300;                //é•·æŠ¼ã—
+    private int PressShort = 100;               //è»½æŠ¼ã—
+    private bool Throw = false;                 //æŠ•ã’ã®ãƒ•ãƒ©ã‚°
+    private bool Getitem = false;               //åŠç”°ï¼šitemã‚’æŒã£ã¦ã„ã‚‹flag
+    Rigidbody2D rb;
+    [SerializeField] KeyPlessThrow item;
+
+    [SerializeField] private ImageData imageData;
+    public Image AnnounceImage;
+    public Canvas TitleLogo;
+
+
+    private bool enemyFollowFlg = false;
+    // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:GetCompornenté‡ã„ã‚“ã§ç›´ã§å–å¾—ã€ã“ã“æ•µã®æ•°å¢—ãˆã‚‹ã¯ãšãªã®ã§æ›¸ãæ›ãˆã‚‹ã“ã¨
     [SerializeField] private EnemyController enemyCon;
     [SerializeField] private Image hp;
+
+    public SceneChange sc;
+    public FadeControl fadeControl;
+
+    // ã‚·ãƒ¼ãƒ³é·ç§»ãŒå¤šé‡ã§å‘¼ã°ã‚Œãªã„ã‚ˆã†ã«ã™ã‚‹
+    private bool titleLogoflag = false;
+    private bool map2Flag = false;
+
+    public TextController textCon;
+
+    public ElectricItem electricItem;
+
+    private bool getUpTrigger = true;
+    private EventBandController eventBandCon;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        hpCanvasScale_x = hpCanvas.transform.localScale.x;
-        // ŒF‘q:‚±‚±‚¢‚ç‚È‚¢‚Æv‚¤‚Å
-        //enemy = GameObject.Find("Enemy");
+        anim = GetComponent<Animator>();
+        canvasParentScale_x = canvasParent.transform.localScale.x;
+        sc = FindObjectOfType<SceneChange>();
+        fadeControl = FindObjectOfType<FadeControl>();
+        imageData = FindObjectOfType<ImageData>();
+        eventBandCon = FindObjectOfType<EventBandController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // ƒ‚ƒbƒN”ÅŒF‘q:Layer‚Å‚â‚Á‚Ä‚½‚Á‚Û‚¢‚Ì‚ÅLinecast‚Åæ“¾
+        //if (enemyCon.isFollowing) { return; }
+
+        // ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ãŒã¾ã èµ·ãä¸ŠãŒã£ã¦ã„ãªã‘ã‚Œã°
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.frankensteinGetUp) == false)
+        {
+            return;
+        }
+        else
+        {
+            // ä¸€åº¦ã§ã‚‚èµ·ãä¸ŠãŒã£ãŸã“ã¨ãŒã‚ã‚Œã°èµ·ãã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¹ã‚­ãƒƒãƒ—
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.getupFlag))
+            {
+                anim.SetBool("GetUpFlag", true);
+                getUpTrigger = false;
+            }
+
+            if (getUpTrigger)
+            {
+                player_Move = true;
+                PlayerSetAnnounceImage(AnnounceName.T_CircleButton_StartUp);
+                // ã€‡ãƒœã‚¿ãƒ³
+                if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
+                {
+                    ViewAnnounceImage(false);
+                    getUpTrigger = false;
+                    if (eventBandCon != null) { eventBandCon.EventStart(() =>
+                    {
+                        EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
+                        anim.SetTrigger("isGetUp");
+                    }); }
+                }
+            }
+        }
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.isFade))
+        {
+            DebugLogUtility.DLUtility.DebugLog("sss");
+            PlayerNotMove();
+            return;
+        }
+
+
+        //anim = gameObject.GetComponent<Animator>();
+        // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:Layerã§ã‚„ã£ã¦ãŸã£ã½ã„ã®ã§Linecastã§å–å¾—
         if (GetEnemyLayer())
         {
-            if (enemyCon.isCharging)
+            
+            // é›»æ°—ã®å¸åã‚¤ãƒ™ãƒ³ãƒˆãŒçµ‚äº†ã—ã¦ã‹ã‚‰ã§ãªã„ã¨HPãƒãƒ¼ã™ã‚‰è¡¨ç¤ºã—ãªã„
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption))
             {
+                electricItem = enemy.GetComponent<ElectricItem>();
+                if (electricItem.IsChargeEvent == false && EventFlagManager.Instance.GetFlagState(EventFlagName.enemyCharge) == false)
+                {
+                    PlayerSetAnnounceImage(AnnounceName.T_Put_Electric_Enemy);
+                }
+                //@item = enemy.GetComponent<KeyPlessThrow>();
+                //@if (electricItem.IsThrow) Throw = true;
+
                 enemyTouchFlag = true;
+                hpCanvas.SetActive(true);
             }
         }
         else
         {
+            if (enemyTouchFlag)
+            {
+                electricItem = null;
+                ViewAnnounceImage(false);
+            }
+            //@item = null;
+            //@Throw = false;
             enemyTouchFlag = false;
+            hpCanvas.SetActive(false);
         }
 
 
-        /*ƒvƒŒƒCƒ„[‚ÌˆÚ“®“ü—Íˆ—--------------------------------------------*/
+        /*ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•å…¥åŠ›å‡¦ç†--------------------------------------------*/
         if(player_Move == false)
         {
-            //–îˆóƒL[‚ª‰Ÿ‚³‚ê‚½ê‡
-            x_val = Input.GetAxis("Horizontal");
-            jumpFlg = IsCollision();
-            //SpaceƒL[‚ª‰Ÿ‚³‚ê‚½ê‡
-            if (Input.GetKeyDown("space") && jumpFlg)
+            vx = 0;
+            var input = Input.GetAxis("J_Horizontal");
+            if (Input.GetKey("right") || inputRange < input)
             {
-                jump();
+                SystemTextEndPlayerMove();
+                vx = speed;
+                anim.SetBool("Walking", true);
+                // HPãƒãƒ¼ã®å‘ã
+                canvasParent.transform.localScale = new Vector3(canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
             }
+            else if (Input.GetKey("left") || input < -inputRange)
+            {
+                SystemTextEndPlayerMove();
+                vx = -speed;
+                anim.SetBool("Walking", true);
+                canvasParent.transform.localScale = new Vector3(-canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
+            }
+            else
+            {
+                anim.SetBool("Walking", false);
+            }
+           
+
+            if ((Input.GetKey("space") || DSInput.Push(DSButton.Cross)) && groundCheck)
+            {
+                SystemTextEndPlayerMove();
+                if (pushFlag == false)
+                {
+                    jumpFlag = true;
+                    pushFlag = true;
+                }
+                else
+                {
+                    pushFlag = false;
+                }
+            }
+
+            //
+            float x = Input.GetAxisRaw("Horizontal");
+            if(input != 0)
+            {
+                //SystemTextEndPlayerMove();
+                Vector2 Iscale = gameObject.transform.localScale;
+                if ((Iscale.x < 0 && inputRange < input) || (Iscale.x > 0 && input < -inputRange))
+                {
+                    Iscale.x *= -1;
+                    gameObject.transform.localScale = Iscale;
+                }
+            }
+            input = 0;
         }
+
+        /*--------------------------------------------------------------------------*/
         
-        /*-----------------------------------------------------------------*/
-
-        /*E‚¤A“Š‚°‚é‚Ì“ü—Íˆ—----------------------------------------------------*/
-        if (aa)
+        /*ä½“åŠ›ã®æ¸›å¢—å‡¦ç†-----------------------------------------------------------------*/
+        if (touchFlag || enemyTouchFlag || enemyFollowFlg || electricItem != null)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                //ƒXƒy[ƒX‚Ì”»’è
-                presskeyFrames += (Input.GetKey(KeyCode.LeftShift)) ? 1 : 0;
-                Debug.Log(presskeyFrames);
-            }
+            if (enemyCon.isFollowing || textCon.textFlag) { return; }
 
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                //‚à‚µƒXƒy[ƒX‚ª’·‰Ÿ‚µ‚³‚ê‚½‚ç‚‚ß‚É“Š‚°‚é
-                if (PressLong <= presskeyFrames)
-                {
-                    item.Hight();
-                    Debug.Log("’·‚ß");
-                    this.gameObject.transform.DetachChildren();
-                }
-                //‚à‚µƒXƒy[ƒX‚ª‰Ÿ‚³‚ê‚½‚ç’á‚ß‚É“Š‚°‚é
-                else if (PressShort <= presskeyFrames)
-                {
-                    item.Low();
-                    Debug.Log("’Z‚ß");
-                    this.gameObject.transform.DetachChildren();
-                }
-            }
-
-            if (Input.GetKeyUp(KeyCode.W))
-            {
-                this.gameObject.transform.DetachChildren();
-            }
-        }
-        /*-----------------------------------------------------------------*/
-
-        /*‘Ì—Í‚ÌŒ¸‘ˆ—-----------------------------------------------------------------*/
-        if (touchFlag || enemyTouchFlag)
-        {
-            // •\¦
+            // è¡¨ç¤º
             hpCanvas.SetActive(true);
 
-            // “d‹C‚ğ—¬‚·
-            if (Input.GetKeyDown(KeyCode.Return))
+            
+            if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
             {
-                HP -= 30;// HP‚ğŒ¸‚ç‚·
-                // ƒ‚ƒbƒN”ÅŒF‘q:HPƒo[
-                hp.fillAmount = HP / maxHP;
-                Debug.Log(HP);
-                
-                // ƒ‚ƒbƒN”ÅŒF‘q:’Ç‰Á‚µ‚Ü‚·‚½
-                // G‚ê‚Ä‚¢‚é•¨‚ªEnemy‚Ìê‡
-                if (enemyTouchFlag)
+                ViewAnnounceImage(false);
+
+                // é›»æ°—ã‚’æµã™
+                if (onElectricity == true || electricItem.ChargeFlag == false)
                 {
-                    // ’Ç]ŠJn
+                    electricItem.ChargeFlag = true;
+                    HP -= electricItem.Power;
+                    hp.fillAmount = HP / maxHP;
+                    onElectricity = false; // ã“ã‚Œã„ã‚‹ã‚“ã‹ãª
+                    // å…¥ã‚ŒãŸObjectæ¯ã®ã‚¤ãƒ™ãƒ³ãƒˆã®å®Ÿè¡Œ
+                    electricItem.Event();
+                    electricItem.IsChargeEvent = true;
+                }
+
+                // å……é›»ã™ã‚‹
+                else if ((onElectricity == false || electricItem.ChargeFlag) && electricItem.IsCharge)
+                {
+                    HP += electricItem.Power;
+                    //HP += 20;// HPã‚’å¢—ã‚„ã™
+                    hp.fillAmount = HP / maxHP;
+                    // ã“ã“ã«å‡¦ç†ã‚’åŠ ãˆã‚‹
+                    onElectricity = true;
+                    electricItem.ChargeEvent();
+                    electricItem.ChargeFlag = false;
+                }
+
+                // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:è¿½åŠ ã—ã¾ã™ãŸ
+                // è§¦ã‚Œã¦ã„ã‚‹ç‰©ãŒEnemyã®å ´åˆ
+                if (enemyTouchFlag && EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption)) // ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã®å¸åãƒ•ãƒ©ã‚°ãŒãªã„ã¨è¿½å¾“ã—ãªã„ã‚ˆã†ã«
+                {
+                    EventFlagManager.Instance.SetFlagState(EventFlagName.enemyCharge, true);
+                    // è¿½å¾“é–‹å§‹
                     enemyCon.isFollowing = true;
-                    // [“d‚µ‚½‚Ì‚Å‚±‚êˆÈã[“do—ˆ‚È‚¢‚æ‚¤‚É
+                    // å……é›»ã—ãŸã®ã§ã“ã‚Œä»¥ä¸Šå……é›»å‡ºæ¥ãªã„ã‚ˆã†ã«
                     enemyCon.isCharging = false;
                     hpCanvas.SetActive(false);
                 }
-                
             }
-            // “d‹C‚ğ[“d
-            if (Input.GetKeyDown(KeyCode.RightShift))
+            // é›»æ°—ã‚’å……é›»
+            else if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
             {
-                HP += 30;// HP‚ğ‘‚â‚·
-                Debug.Log(HP);
-                // ‚±‚±‚Éˆ—‚ğ‰Á‚¦‚é
+                //if (onElectricity == false || electricItem.ChargeFlag)
+                //{
+                //    Debug.Log("å……é›»ã—ãŸã„");
+                //    HP += electricItem.Power;
+                //    //HP += 20;// HPã‚’å¢—ã‚„ã™
+                //    hp.fillAmount = HP / maxHP;
+                //    // ã“ã“ã«å‡¦ç†ã‚’åŠ ãˆã‚‹
+                //    onElectricity = true;
+                //    electricItem.ChargeFlag = false;
+                //}
 
-                if(enemyFollowFlg)
+                // ï¼Ÿï¼Ÿï¼Ÿ
+                if (enemyFollowFlg)
                 {
-
+                    enemyCon.isFollowing = false;
                 }
             }
         }
-        // ƒ‚ƒbƒN”ÅŒF‘q:HP•\¦‚·‚éObject‚©‚ç—£‚ê‚½‚ç‹­§“I‚ÉHPƒo[‚ğ”ñ•\¦‚É‚µ‚Ü‚·
+        // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:HPè¡¨ç¤ºã™ã‚‹Objectã‹ã‚‰é›¢ã‚ŒãŸã‚‰å¼·åˆ¶çš„ã«HPãƒãƒ¼ã‚’éè¡¨ç¤ºã«ã—ã¾ã™
         else
         {
             hpCanvas.SetActive(false);
         }
         /*-----------------------------------------------------------------*/
+
+        /*ã‚¢ã‚¤ãƒ†ãƒ ã‚’æŒã¤å…¥åŠ›å‡¦ç†---------------------------------------------*/
+        if (Throw)
+        {
+            if (Input.GetKey(KeyCode.R) || DSInput.PushDown(DSButton.Circle))//åŠç”°ï¼šSpaceã‹ã‚‰Rã«å¤‰æ›´
+            {
+                //ã‚¹ãƒšãƒ¼ã‚¹ã®åˆ¤å®š
+                //memo  ã€? true:falseã€
+                presskeyFrames += (Input.GetKey(KeyCode.R) || DSInput.PushDown(DSButton.Circle)) ? 1 : 0;//åŠç”°ï¼šSpaceã‹ã‚‰Rã«å¤‰æ›´
+                Debug.Log(presskeyFrames);
+            }
+
+            if (Input.GetKeyUp(KeyCode.R))//åŠç”°ï¼šSpaceã‹ã‚‰Rã«å¤‰æ›´
+            {
+                //ã‚‚ã—ã‚¹ãƒšãƒ¼ã‚¹ãŒé•·æŠ¼ã—ã•ã‚ŒãŸã‚‰
+                if (PressLong <= presskeyFrames)
+
+                //é«˜ã‚ã«æŠ•ã’ã‚‹
+                {
+                    item.Hight();
+                    Debug.Log("é•·ã‚");
+
+                    Getitem = false;
+                    item.gameObject.transform.parent = null;
+                }
+
+                //ã‚‚ã—ã‚¹ãƒšãƒ¼ã‚¹ãŒæŠ¼ã•ã‚ŒãŸã‚‰
+                else if (PressShort <= presskeyFrames)
+
+                //ä½ã‚ã«æŠ•ã’ã‚‹
+                {
+                    item.Low();
+                    Debug.Log("çŸ­ã‚");
+
+                    Getitem = false;
+                    item.gameObject.transform.parent = null;
+                }
+            }
+
+            //if (Input.GetKeyUp(KeyCode.W))
+            //{
+            //    this.gameObject.transform.DetachChildren();
+            //}
+        }
+        /*-----------------------------------------------------------------*/
+
+
+        // @æŠ•ã’ã‚‹å‡¦ç†
+        //if (electricItem != null)
+        //{
+        //    if (electricItem.IsThrow)
+        //    {
+        //        if (Input.GetKey(KeyCode.W))
+        //        {
+        //            Debug.Log("æ´ã‚“ã ");
+        //            // ã“ã“ã§ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å­ä¾›ã«ã™ã‚‹
+        //            item.gameObject.transform.parent = this.transform;
+        //        }
+        //        if (Input.GetKeyUp(KeyCode.W))
+        //        {
+        //            Debug.Log("é›¢ã—ãŸ");
+        //            item.transform.parent = null;
+        //        }
+        //    }
+        //}
+
+
+
     }
 
-    /*ƒvƒŒƒCƒ„[‚Ì•ûŒüˆ—--------------------------------------------------*/
-    void FixedUpdate()
-    {
-        //‘Ò‹@
-        if (x_val == 0)
-        {
-            speed = 0;
-        }
-        //‰E‚ÉˆÚ“®
-        else if (x_val > 0)
-        {
-            speed = inputSpeed;
-            transform.localScale = new Vector3(1, 1, 1);//‰E‚ğŒü‚ğŒü‚­
-            // ƒ‚ƒbƒN”ÅŒF‘q:HPƒo[‚ÌŒü‚«‚Ì’²®
-            Vector3 hpTransform = new Vector3(hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.z);
-            hpCanvas.transform.localScale = hpTransform;
-        }
-        //¶‚ÉˆÚ“®
-        else if (x_val < 0)
-        {
-            speed = inputSpeed * -1;
-            transform.localScale = new Vector3(-1, 1, 1);//¶‚ğŒü‚ğŒü‚­
-            // ƒ‚ƒbƒN”ÅŒF‘q:HPƒo[‚ÌŒü‚«‚Ì’²®
-            Vector3 hpTransform = new Vector3(-hpCanvasScale_x, hpCanvas.transform.localScale.y, hpCanvas.transform.localScale.z);
-            hpCanvas.transform.localScale = hpTransform;
-        }
-        // ƒLƒƒƒ‰ƒNƒ^[‚ğˆÚ“® Vextor2(x²ƒXƒs[ƒhAy²ƒXƒs[ƒh(Œ³‚Ì‚Ü‚Ü))
-        rb2d.velocity = new Vector2(speed, rb2d.velocity.y);
-    }
-    /*-----------------------------------------------------------------*/
 
 
-    /*-----------------------------------------------------*/
-    void jump()
+    /*ç„¡é™ã‚¸ãƒ£ãƒ³ãƒ—ã‚’é˜²ãå‡¦ç†------------------------------------------------*/
+    private void FixedUpdate()
     {
-        rb2d.AddForce(Vector2.up * jumpingPower);
-        jumpFlg = false;
-    }
-    /*------------------------------------------------------------------*/
-
-    /*–³ŒÀƒWƒƒƒ“ƒv‚ğ–h‚®ˆ—------------------------------------------------*/
-    bool IsCollision()
-    {
-        Vector3 left_SP = transform.position - Vector3.right * 0.2f;
-        Vector3 right_SP = transform.position + Vector3.right * 0.2f;
-        Vector3 EP = transform.position - Vector3.up * 1.3f;
-        return Physics2D.Linecast(left_SP, EP, CollisionLayer)
-               || Physics2D.Linecast(right_SP, EP, CollisionLayer);
+        rb2d.velocity = new Vector2(vx, rb2d.velocity.y);
+        if (jumpFlag)
+        {
+            jumpFlag = false;
+            rb2d.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
+        }
     }
     /*-------------------------------------------------------------------*/
 
     /// <summary>
-    /// “G‚ÌƒŒƒCƒ„[‚ª‚ ‚é‚©‚Ç‚¤‚©‚ğæ“¾‚·‚éŠÖ”
+    /// æ•µã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹é–¢æ•°
     /// </summary>
     /// <returns></returns>
     private bool GetEnemyLayer()
     {
-        Vector3 left = transform.position + Vector3.up * 1f - Vector3.right * 3.5f;
-        Vector3 right = transform.position + Vector3.up * 1f + Vector3.right * 3.5f;
-        // ‚±‚±‚ÌƒRƒƒ“ƒgÁ‚¹‚ÎƒfƒoƒbƒO—p‚Ìü‚ªŒ©‚¦‚Ü‚·
-        //Debug.DrawLine(left, right);
+        Vector3 left = transform.position + Vector3.up * 0.5f - Vector3.right * 3.5f;
+        Vector3 right = transform.position + Vector3.up * 0.5f + Vector3.right * 3.5f;
+        // ã“ã“ã®ã‚³ãƒ¡ãƒ³ãƒˆæ¶ˆã›ã°ãƒ‡ãƒãƒƒã‚°ç”¨ã®ç·šãŒè¦‹ãˆã¾ã™
+        Debug.DrawLine(left, right);
         return Physics2D.Linecast(left, right, enemyLayer);
     }
 
-
-    /*---------------------------*/
-    private void OnCollisionExit2D(Collision2D collision)
+    /// <summary>
+    /// ã‚¢ãƒŠã‚¦ãƒ³ã‚¹ç”»åƒã‚’å…¥ã‚Œã¦ã‹ã‚‰è¡¨ç¤º
+    /// </summary>
+    /// <param name="name"></param>
+    public void PlayerSetAnnounceImage(AnnounceName name)
     {
-        if (collision.gameObject.tag == "Item")
+        AnnounceImage.sprite = imageData.GetAnnounceImage(name);
+        ViewAnnounceImage(true);
+
+    }
+
+    /// <summary>
+    /// ã‚¢ãƒŠã‚¦ãƒ³ã‚¹ç”»åƒã®è¡¨ç¤º/éè¡¨ç¤º
+    /// </summary>
+    /// <param name="isView"></param>
+    public void ViewAnnounceImage(bool isView)
+    {
+        AnnounceImage.enabled = isView;
+    }
+
+    /// <summary>
+    /// ãƒ†ã‚­ã‚¹ãƒˆã®è¡¨ç¤ºå¾Œã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå‹•ã„ãŸã‚‰ã‚¢ãƒŠã‚¦ãƒ³ã‚¹ç”»åƒã‚’éè¡¨ç¤ºã«ã™ã‚‹ã€€åå‰ãŒé©å½“ã™ãã‚‹
+    /// </summary>
+    private void SystemTextEndPlayerMove()
+    {
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.textSystem) && 
+            EventFlagManager.Instance.GetFlagState(EventFlagName.textSystemEnd) == false)
         {
-            aa = false;
-            Debug.Log("exit");
+            EventFlagManager.Instance.SetFlagState(EventFlagName.textSystemEnd, true);
+            ViewAnnounceImage(false);
         }
     }
-    /*-------------------------------------------------------------------*/
 
-    /*-------------------------------------------------------------------*/
-    //ƒAƒCƒeƒ€‚É“–‚½‚è‘±‚¯‚½‚ç
-    private void OnCollisionStay2D(Collision2D collision)
+    /// <summary>
+    /// ãƒ†ã‚­ã‚¹ãƒˆã®è¡¨ç¤º(ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨)
+    /// </summary>
+    public void TextAnim()
     {
+        textCon.SetTextActive(true);
+    }
+
+    /// <summary>
+    /// ç§»å‹•å¯èƒ½
+    /// </summary>
+    public void PlayerMove()
+    {
+        player_Move = false;
+    }
+
+    /// <summary>
+    /// ç§»å‹•ä¸å¯èƒ½
+    /// </summary>
+    public void PlayerNotMove()
+    {
+        player_Move = true;
+        vx = 0;
+        rb2d.velocity = Vector2.zero;
+        anim.SetBool("Walking", false);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            groundCheck = true;
+        }
+
         if (collision.gameObject.tag == "Item")
         {
             Debug.Log("stay");
 
-            //W‚ğ‰Ÿ‚µ‚Ä‚¢‚½‚ç
-            if (Input.GetKey(KeyCode.W))
+            //item = collision.gameObject.GetComponent<Item>();
+            //Wã‚’æŠ¼ã—ã¦ã„ãŸã‚‰
+            if (Input.GetKey(KeyCode.W) || DSInput.Push(DSButton.R1))
             {
-                aa = true;
-                //ƒAƒCƒeƒ€ƒNƒ‰ƒX‚Ìæ“¾
-                item = collision.gameObject.GetComponent<Item>();
+                Throw = true;
+                //ã‚¢ã‚¤ãƒ†ãƒ ã‚¯ãƒ©ã‚¹ã®å–å¾—
+                item = collision.gameObject.GetComponent<KeyPlessThrow>();
 
-                //ƒAƒCƒeƒ€‚ÌY²‚ªã‚ª‚é
-                // ‚±‚±‚Å‚±‚ÌƒIƒuƒWƒFƒNƒg‚ğƒvƒŒƒCƒ„[‚Ìq‹Ÿ‚É‚·‚é
+                //ã‚¢ã‚¤ãƒ†ãƒ ã®Yè»¸ãŒä¸ŠãŒã‚‹
+                // ã“ã“ã§ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å­ä¾›ã«ã™ã‚‹
                 item.gameObject.transform.parent = this.transform;
+
+                //itemã‚’æŒã£ãŸã‚‰true
+                Getitem = true;
             }
 
-        }
+            if (Getitem == true)
+            {
+                if (Input.GetKeyUp(KeyCode.W) || DSInput.PushUp(DSButton.R1))
+                {
+                    item.gameObject.transform.parent = null;
 
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            this.gameObject.transform.DetachChildren();
+                    //tiemã‚’æ”¾ã—ãŸã‚‰false
+                    Getitem = false;
+                }
+            }
         }
     }
-    /*-------------------------------------------------------------------*/
 
-    /*HPƒo[‚ğ•\¦‚·‚éƒ^ƒO‚Ì”»’è-----------------------------------------*/
+    
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.GetComponent<ElectricItem>() != null)
+        {
+            electricItem = collision.gameObject.GetComponent<ElectricItem>();
+
+            // æŠ•ã’ã‚Œã‚‹Objectãªã‚‰æƒ…å ±ã‚’å–å¾—
+            //if (electricItem.IsThrow)
+            //{
+            //    Throw = true;
+            //    //ã‚¢ã‚¤ãƒ†ãƒ ã‚¯ãƒ©ã‚¹ã®å–å¾—
+            //    item = collision.gameObject.GetComponent<KeyPlessThrow>();
+            //}
+        }
+
         if (collision.gameObject.tag == "HomeApp")
         {
+            //SetAnnounceImage(AnnounceName.T_SquareButton_Input);
             touchFlag = true;
-        }   
+        }
+
+        //åˆ¤å®šã®å ´æ‰€ã‚’é€šéã—ãŸã‚‰ç™ºç”Ÿ
+        if (collision.gameObject.tag == "GoTitleLogo" && titleLogoflag == false && EventFlagManager.Instance.GetFlagState(EventFlagName.enemyCharge))
+        {
+            // è¤‡æ•°åˆ¤å®šã‚’é˜²ãç‚ºã®ãƒ•ãƒ©ã‚°
+            titleLogoflag = true;
+            fadeControl.Fade("wout", () => sc.SceneSwitching("TitleLogo", true));
+        }
+
+        if (collision.gameObject.tag == "GoTitle")
+        {
+            fadeControl.Fade("out", () => sc.SceneSwitching("MainTitle"));
+        }
+
+        if (collision.gameObject.tag == "GoMap2")
+        {
+            map2Flag = true;
+            fadeControl.Fade("out", () => sc.SceneSwitching("Main_Stag2"));
+        }
+
+        // ã‚±ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ãŒæ¥ã‚‹ãƒ•ãƒ©ã‚°
+        if (collision.gameObject.tag == "CableCarEvent")
+        {
+            EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStart, true);
+        }
+
+        // ã‚±ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ã«ä¹—è»Šoré™è»Š
+        if (collision.gameObject.tag == "CableCarEventCollider")
+        {
+            collision.gameObject.GetComponent<BusEventCollider>().BusEvent(gameObject);
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.gameObject.GetComponent<ElectricItem>() != null)
+        {
+            //if (electricItem != null && electricItem.IsThrow)
+            //{
+            //    Throw = false;
+            //    presskeyFrames = 0;
+            //    item = null;
+            //}
+            electricItem = null;
+        }
+
         if (collision.gameObject.tag == "HomeApp")
         {
             touchFlag = false;
             hpCanvas.SetActive(false);
         }
+        else
+        {
+            groundCheck = false;
+        }
 
-        
-
+        // ä¸€æ—¦æ¶ˆã™
+        //if (collision.gameObject.tag == "Item")
+        //{
+        //    Throw = false;
+        //    presskeyFrames = 0;
+        //    //item.transform.parent = null;
+        //    Debug.Log("exit");
+        //}
     }
-    /*-------------------------------------------------------------------*/
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            touchFlag = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            touchFlag = false;
+        }
+    }
 }
+
+

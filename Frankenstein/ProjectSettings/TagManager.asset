@@ -8,6 +8,17 @@ TagManager:
   - Enemy
   - HomeApp
   - Item
+  - GoMap2
+  - GoTitleLogo
+  - Gareki
+  - Car
+  - ElectricCable
+  - CableCarEventCollider
+  - Ground
+  - pull
+  - BackGround
+  - CableCarEvent
+  - GoTitle
   layers:
   - Default
   - TransparentFX
@@ -17,8 +28,8 @@ TagManager:
   - UI
   - Player
   - Ground
-  - 
-  - 
+  - MineCart
+  - SPMineCart
   - 
   - 
   - 

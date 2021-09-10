@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/WorkFolder/kumakura/Scenes/MainScenes/MainTitle.unity
+    guid: 01c4e86e42deb7f4eb1f4565d64c0e54
+  - enabled: 1
+    path: Assets/WorkFolder/kumakura/Scenes/MainScenes/MainTutorial.unity
+    guid: 3cb270fbbf852a642918361bac71a0a1
+  - enabled: 1
+    path: Assets/WorkFolder/matsumotoyuna/Scenes/TitleLogo.unity
+    guid: 36164211cf65d074d96637269a662bef
+  - enabled: 1
+    path: Assets/WorkFolder/kumakura/Scenes/MainScenes/MainStage_1.unity
+    guid: 493822f0ad8a9c64e8ed6f8bbf69a00d
+  - enabled: 1
+    path: Assets/WorkFolder/handa/Scenes/Main_Stag2.unity
+    guid: 8c5e911666b08db43ab4ceabc6673716
   m_configObjects: {}
