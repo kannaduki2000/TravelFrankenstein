@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DebugLogUtility;
 
 public class Enemy2 : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class Enemy2 : MonoBehaviour
 
     [SerializeField]
     private GameObject objGet;
-    GameObject Ground;
+    private GameObject Ground;
+    private GameObject boneObject;
 
     //[SerializeField]
     //float MoveSpeed = 2.0f;
@@ -44,51 +46,91 @@ public class Enemy2 : MonoBehaviour
     Rigidbody2D rb;
     public float speed = 1; // スピードX
 
-    int bone = 0;
-   
+    public bool bone = false;
+    private bool playerFlag = false;
+    //[SerializeField] private PlayerController playerCon;
+    [SerializeField] private ElectricCurrent player;
+    [SerializeField] private Bone hone;
 
-
+    // 往復移動
     private void Update()
     {
         if (isloop) { return; }
-        // 右
-        if (isSearch)
+        // 骨があれば
+        //if ((playerFlag == false) || (playerFlag && playerCon.isBone)) // PlayerControllerの中のisBoneを参照
+        if ((playerFlag == false) || (playerFlag && player.isBone)) // ElectricCurrentの中のisBoneを参照
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos.position, 1f * Time.deltaTime);
-            if (targetPos.position.x - transform.position.x <= Mathf.Abs(0.1f))
+            DLUtility.DebugLog("移動するよ");
+            // 右
+            if (isSearch)
             {
-                // 2秒停止
-                time += Time.deltaTime;
-                if (time >= 2)
+                transform.position = Vector3.MoveTowards(transform.position, targetPos.position, 1f * Time.deltaTime);
+                if (targetPos.position.x - transform.position.x <= Mathf.Abs(0.1f))
                 {
-                    time = 0;
-                    Vector3 left = new Vector3(-thisXScale, transform.localScale.y, transform.localScale.z);
-                    transform.localScale = left;
-                    isSearch = false;
+                    // 2秒停止
+                    time += Time.deltaTime;
+                    if (time >= 2)
+                    {
+                        time = 0;
+                        Vector3 left = new Vector3(-thisXScale, transform.localScale.y, transform.localScale.z);
+                        transform.localScale = left;
+                        isSearch = false;
+                    }
                 }
             }
-        }
-        // 左
-        else
-        {            
-            transform.position = Vector3.MoveTowards(transform.position, startPos, 1f * Time.deltaTime);
-            if (transform.position.x - startPos.x <= Mathf.Abs(0.1f)) 
-            {
-                time += Time.deltaTime;
-                // 2秒停止
-                if (time >= 2)
+            // 左
+            else
+            {            
+                transform.position = Vector3.MoveTowards(transform.position, startPos, 1f * Time.deltaTime);
+                if (transform.position.x - startPos.x <= Mathf.Abs(0.1f)) 
                 {
-                    time = 0;
-                    Vector3 right = new Vector3(thisXScale, transform.localScale.y, transform.localScale.z);
-                    transform.localScale = right;
-                    isSearch = true;
-                }
+                    time += Time.deltaTime;
+                    // 2秒停止
+                    if (time >= 2)
+                    {
+                        time = 0;
+                        Vector3 right = new Vector3(thisXScale, transform.localScale.y, transform.localScale.z);
+                        transform.localScale = right;
+                        isSearch = true;
+                    }
                
+                }
             }
         }
-        Vector3 direction = (Player.position - transform.position).normalized;
+        // 骨がなければ
+        else
+        {
+            // 突っ込む
+            if(player.isBone == false)
+            {
+                DLUtility.DebugLog("突っ込むよ");
+                time2 += Time.deltaTime;
+                if (time2 > 2)
+                {
+                    Debug.Log("add_player");
+                    isloop = true;
 
-        
+                    if (transform.position.x < Player.position.x)
+                    {
+                        //右
+                        rb.velocity = new Vector2(speed, 0);
+                        transform.localScale = new Vector2(1, 1);
+                        isloop = false;
+                    }
+                    else if (transform.position.x > Player.position.x)
+                    {
+                        //左
+                        rb.velocity = new Vector2(-speed, 0);
+                        transform.localScale = new Vector2(-1, 1);
+                        isloop = false;
+                    }
+                }
+            }
+
+        }
+        //Vector3 direction = (Player.position - transform.position).normalized;
+
+
     }
 
     private void Start()
@@ -126,13 +168,41 @@ public class Enemy2 : MonoBehaviour
        }
     }
 
-    // 骨を取得
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        // プレイヤータグがついているやつが近づいてきたら
+        if (collision.gameObject.tag == "Player")
+        {
+            playerFlag = true;
+        }
+
+        // 骨を投げたら
         if (collision.gameObject.tag == "Bone")
         {
-            bone = 2;
+            // 骨が地面に触れていたら
+            if (collision.gameObject.GetComponent<Bone>().isBone)
+            {
+                DLUtility.DebugLog("骨だよ");
+                isloop = true;
+
+                if (transform.position.x < Bone.position.x)
+                {
+                    //右
+                    rb.velocity = new Vector2(speed, 0);
+                    transform.localScale = new Vector2(1, 1);
+                    isloop = false;
+                }
+                else if (transform.position.x > Bone.position.x)
+                {
+                    //左
+                    rb.velocity = new Vector2(-speed, 0);
+                    transform.localScale = new Vector2(-1, 1);
+                    isloop = false;
+                }
+            }
         }
     }
 
@@ -144,30 +214,28 @@ public class Enemy2 : MonoBehaviour
         // プレイヤータグがついているやつが近づいてきたら
         if (collision.gameObject.tag == "Player")
         {
-            if(bone < 1)
-            {
-                //float speed = 0;
-                time2 += Time.deltaTime;
-                if (time2 > 2)
-                {
-                    isloop = true;
+            //if (bone) { return; }
+            //time2 += Time.deltaTime;
+            //if (time2 > 2)
+            //{
+            //    Debug.Log("add_player");
+            //    isloop = true;
 
-                    if (transform.position.x < Player.position.x)
-                    {
-                        //右
-                        rb.velocity = new Vector2(speed, 0);
-                        transform.localScale = new Vector2(1, 1);
-                        isloop = false;
-                    }
-                    else if (transform.position.x > Player.position.x)
-                    {
-                        //左
-                        rb.velocity = new Vector2(-speed, 0);
-                        transform.localScale = new Vector2(-1, 1);
-                        isloop = false;
-                    }
-                }
-            }
+            //    if (transform.position.x < Player.position.x)
+            //    {
+            //        //右
+            //        rb.velocity = new Vector2(speed, 0);
+            //        transform.localScale = new Vector2(1, 1);
+            //        isloop = false;
+            //    }
+            //    else if (transform.position.x > Player.position.x)
+            //    {
+            //        //左
+            //        rb.velocity = new Vector2(-speed, 0);
+            //        transform.localScale = new Vector2(-1, 1);
+            //        isloop = false;
+            //    }
+            //}
         }     
     }
 
@@ -178,23 +246,33 @@ public class Enemy2 : MonoBehaviour
         // プレイヤーが離れた時
         if (collision.gameObject.tag == "Player")
         {
-            bone = 0;
-            time2 = 0;
-            if (transform.position.x < Player.position.x)
-            {
-                //右
-                rb.velocity = new Vector2(speed, 0);
-                transform.localScale = new Vector2(-1, 1);
-            }
-            else if (transform.position.x > Player.position.x)
-            {
-                //左
-                rb.velocity = new Vector2(-speed, 0);
-                transform.localScale = new Vector2(1, 1);
-            }
+            playerFlag = false;
+            //playerFlag = false;
+            ////bone = false;
+            //time2 = 0;
+            //if (transform.position.x < Player.position.x)
+            //{
+            //    //右
+            //    rb.velocity = new Vector2(speed, 0);
+            //    transform.localScale = new Vector2(-1, 1);
+            //}
+            //else if (transform.position.x > Player.position.x)
+            //{
+            //    //左
+            //    rb.velocity = new Vector2(-speed, 0);
+            //    transform.localScale = new Vector2(1, 1);
+            //}
+            //Debug.Log("del_player");
         }
 
+        //if (collision.gameObject.tag == "Bone")
+        //{
+        //    bone = false;
+        //    Debug.Log("bone : " + bone);
+        //}
+
     }
+
 
 }
 
@@ -206,7 +284,11 @@ public class Enemy2 : MonoBehaviour
 //  ４秒間待機後、視線察知内にフランケンがいたらフランケンに再び突進
 // 突進した場所にフランケンがいなかったら２秒間待機して自分のテリトリーに戻る △
 
-    // 骨を持っている間は襲ってこない処理
+    // もしかしたらシーンを分けて作るかも
+    // 骨を持っている間は襲ってこない処理 〇
+    // 骨を持っている間は完全停止させる
+    // 骨を投げたら敵が骨のところに行く（近くに判定をつけてそこに投げたら骨に向かって突進）
+        
 
     // 石に当たったら動きを完全に止める〇
 

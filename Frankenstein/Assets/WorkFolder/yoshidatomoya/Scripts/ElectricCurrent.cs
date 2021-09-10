@@ -15,6 +15,7 @@ public class ElectricCurrent : MonoBehaviour
 
     public GameObject hpBar;
 
+    public bool isBone = false;
 
     void Start()
     {
@@ -24,7 +25,7 @@ public class ElectricCurrent : MonoBehaviour
     private void FixedUpdate()
     {
         // プレイヤー移動
-        float horizontalKey = Input.GetAxis("Horizontal");
+        float horizontalKey = Input.GetAxis("J_Horizontal");
 
         if (horizontalKey > 0)
         {
@@ -82,6 +83,22 @@ public class ElectricCurrent : MonoBehaviour
         if (collision.gameObject.tag == "HomeApp")
         {
             touchFlag = true;   
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Bone")
+        {
+            isBone = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Bone")
+        {
+            isBone = false;
         }
     }
 
