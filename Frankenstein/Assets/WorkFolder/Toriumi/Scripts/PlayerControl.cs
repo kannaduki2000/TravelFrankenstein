@@ -1,221 +1,70 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    public Vector2 Speed = new Vector2(1, 1);   //‘¬“x
-    private int presskeyFrames = 0;             //’·‰Ÿ‚µƒtƒŒ[ƒ€”
-    private int PressLong = 300;                 //’·‰Ÿ‚µ”»’è‚Ìè‡’l
-    private int PressShort = 100;                //Œy‚­‰Ÿ‚µ‚½”»’è‚Ìè‡’l
-    Rigidbody2D rb;
-    Item item;
-    
-
-
-
+    public Vector2 Speed = new Vector2(1,1);   //é€Ÿåº¦
+    Animator anim;
+   
     void Start()
     {
-        //AnimetorƒRƒ“ƒ|ƒl[ƒVƒ‡ƒ“‚ğæ“¾‚·‚é
-        //anim = GetComponent<Animator>();
+       // Animetorã‚³ãƒ³ãƒãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚’å–å¾—ã™ã‚‹
+        anim = GetComponent<Animator>();
 
     }
 
-    // ƒAƒbƒvƒf[ƒg‚ÍƒtƒŒ[ƒ€‚²‚Æ‚É1‰ñŒÄ‚Ño‚³‚ê‚é
+    // ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã¯ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«1å›å‘¼ã³å‡ºã•ã‚Œã‚‹
     void Update()
     {
-        //var pos = GetComponent<RectTransform>().localPosition;
-        ////¶–îˆóƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚é
-        //if (Input.GetKey(KeyCode.A))
-        //{
-        //    pos.x -= 1;
-        //}
-        ////‰E–îˆóƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚é
-        //else if (Input.GetKey(KeyCode.D))
-        //{
-        //    pos.x += 1;
-        //}
-        //GetComponent<RectTransform>().localPosition = pos;
+        anim = gameObject.GetComponent<Animator>();
+
+        // æœ€åˆã®ç¡çœ çŠ¶æ…‹ã‹ã‚‰è§£é™¤ã•ã‚Œã‚‹ãŸã‚ã®ã‚­ãƒ¼
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            anim.SetTrigger("isGetUp");
+        }
+        
+        //ç§»å‹•
         Vector2 Position = transform.position;
-        if(Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             Position.x -= Speed.x;
+            anim.SetBool("Walking", true);
         }
-        else if(Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             Position.x += Speed.x;
+            anim.SetBool("Walking", true);
         }
-        transform.position=Position;
+        else 
+        {
+            anim.SetBool("Walking",false);
+        }
+        transform.position = Position;
 
-        float x= Input.GetAxisRaw("Horizontal");
-        if(x !=0)
+        //å‘ãåè»¢
+        float x = Input.GetAxisRaw("Horizontal");
+        if (x != 0)
         {
             Vector2 Iscale = gameObject.transform.localScale;
-            if((Iscale.x > 0 && x < 0) || (Iscale.x < 0 && x > 0))
+            if ((Iscale.x > 0 && x < 0) || (Iscale.x < 0 && x > 0))
             {
                 Iscale.x *= -1;
                 gameObject.transform.localScale = Iscale;
             }
         }
-
-        //GameObject obj = GameObject.Find("Player");
-
-        //Vector3 scale = obj.transform.localScale;
-
-        //if(x > 0)
-        //{
-        //    scale.x = 1;
-        //}
-        //else if(x < 0)
-        //{
-        //    scale.x = -1;
-        //}
-
-        //obj.transform.localScale = scale;
-
-
-
-        if (aa)
-        {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                //ƒXƒy[ƒX‚Ì”»’è
-                presskeyFrames += (Input.GetKey(KeyCode.Space)) ? 1 : 0;
-                Debug.Log(presskeyFrames);
-            }
-
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                //‚à‚µƒXƒy[ƒX‚ª’·‰Ÿ‚µ‚³‚ê‚½‚ç
-                if (PressLong <= presskeyFrames)
-
-                //‚‚ß‚É“Š‚°‚é
-                {
-                    item.Hight();
-                    //this.gameObject.transform.DetachChildren();
-                    Debug.Log("’·‚ß");
-                    this.gameObject.transform.DetachChildren();
-                }
-
-                //‚à‚µƒXƒy[ƒX‚ª‰Ÿ‚³‚ê‚½‚ç
-                else if (PressShort <= presskeyFrames)
-
-                //’á‚ß‚É“Š‚°‚é
-                {
-                    item.Low();
-                    //this.gameObject.transform.DetachChildren();
-                    Debug.Log("’Z‚ß");
-                    this.gameObject.transform.DetachChildren();
-                }
-            }
-
-            if (Input.GetKeyUp(KeyCode.W))
-            {
-                this.gameObject.transform.DetachChildren();
-            }
-        }
     }
 
-    private void FixedUpdate()
+    // TextAnimãŒã‚ã£ãŸãŸã‚ã‚¨ãƒ©ãƒ¼ã‚’åãã®ã§è¿½åŠ ã€‚èª¬æ˜è¡¨ç¤ºã®ãŸã‚ã®ã‚‚ã®ï¼Ÿ
+    private void TextAnim()
     {
-        
-    }
-    private bool aa = false;
-    //ƒAƒCƒeƒ€‚É“–‚½‚Á‚½‚ç
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Item")
-        {
-            //ƒAƒjƒ[ƒVƒ‡ƒ“‚ªÄ¶‚³‚ê‚é
-            Debug.Log("ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶");
 
-
-            
-        }
     }
 
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Item")
-        {
-            aa = false;
-            Debug.Log("exit");
-        }
-    }
 
-
-    //ƒAƒCƒeƒ€‚É“–‚½‚è‘±‚¯‚½‚ç
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag =="Item")
-        {
-            Debug.Log("stay");
-
-            //item = collision.gameObject.GetComponent<Item>();
-            //W‚ğ‰Ÿ‚µ‚Ä‚¢‚½‚ç
-            if (Input.GetKey(KeyCode.W))
-            {
-                aa = true;
-                //ƒAƒCƒeƒ€ƒNƒ‰ƒX‚Ìæ“¾
-                item = collision.gameObject.GetComponent<Item>();
-
-                //ƒAƒCƒeƒ€‚ÌY²‚ªã‚ª‚é
-                // ‚±‚±‚Å‚±‚ÌƒIƒuƒWƒFƒNƒg‚ğƒvƒŒƒCƒ„[‚Ìq‹Ÿ‚É‚·‚é
-
-                item.gameObject.transform.parent = this.transform;
-
-
-                //item.Move();
-
-
-                //if (Input.GetKey(KeyCode.Space))
-                //{
-                //    //ƒXƒy[ƒX‚Ì”»’è
-                //    presskeyFrames += (Input.GetKey(KeyCode.Space)) ? 1 : 0;
-                //    Debug.Log(presskeyFrames);
-                //}
-
-                //if (Input.GetKeyUp(KeyCode.Space))
-                //{
-                //    //‚à‚µƒXƒy[ƒX‚ª’·‰Ÿ‚µ‚³‚ê‚½‚ç
-                //    if (PressLong <= presskeyFrames)
-
-                //    //‚‚ß‚É“Š‚°‚é
-                //    {
-                //        item.Hight();
-
-                //        Debug.Log("’·‚ß");
-
-                //    }
-
-                //    //‚à‚µƒXƒy[ƒX‚ª‰Ÿ‚³‚ê‚½‚ç
-                //    else if (PressShort <= presskeyFrames)
-
-                //    //’á‚ß‚É“Š‚°‚é
-                //    {
-                //        item.Low();
-
-                //        Debug.Log("’Z‚ß");
-
-                //    }
-                //}
-
-            }
-
-            
-
-        }
-
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            this.gameObject.transform.DetachChildren();
-        }
-    }
-    //ƒLƒƒƒ‰‚ª”½“]‚µ‚½ƒAƒCƒeƒ€‚¾‚¯’u‚¢‚Ä‚¯‚Ú‚è     Z
-    //ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌÄ¶AƒAƒjƒ[ƒVƒ‡ƒ“‚Ì“ü‚ê•û    Z
-    //’·‰Ÿ‚µ‚Ì”»’è‚æ‚è’Z‚¢”»’è‚Ì‚ª‹­‚¢              Z
-    //q‚©‚çŒ³‚É–ß‚ç‚È‚¢
 
 
 }

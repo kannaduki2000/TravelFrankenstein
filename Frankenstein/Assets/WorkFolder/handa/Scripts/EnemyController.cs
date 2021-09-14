@@ -1,149 +1,345 @@
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DualShockInput;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : ElectricItem
 {
+    Rigidbody2D rb2d;
+    public PlayerController mt;
     public GameObject Player;
     public GameObject enemy;
-    public float stopDistance;         //~‚Ü‚é‚Æ‚«‚Ì‹——£
 
-    public PlayerController mt;
+    public float stopDistance;  //æ­¢ã¾ã‚‹ã¨ãã®è·é›¢
+    public float inputSpeed;    //ç§»å‹•é€Ÿåº¦
+    public float jumpingPower;  //ã‚¸ãƒ£ãƒ³ãƒ—
 
-    // ƒ‚ƒbƒN”ÅŒF‘q:[“d‰Â”\‚©‚Ç‚¤‚©‚ğ”»•Ê‚·‚éƒtƒ‰ƒO
-    public bool isCharging = true; // HP‚ª0‚É‚È‚Á‚½‚çtrue‚É‚·‚é‚æ‚¤‚É‚µ‚Ä‚­‚¾‚³‚¢
+    // ãƒ¢ãƒƒã‚¯ç‰ˆç†Šå€‰:å……é›»å¯èƒ½ã‹ã©ã†ã‹ã‚’åˆ¤åˆ¥ã™ã‚‹ãƒ•ãƒ©ã‚°
+    public bool isCharging = true; // HPãŒ0ã«ãªã£ãŸã‚‰trueã«ã™ã‚‹ã‚ˆã†ã«ã—ã¦ãã ã•ã„
+    public bool isFollowing = true;   //è¿½å¾“ã™ã‚‹ã‹ã©ã†ã‹
+    public bool enemyMove = true;      //ã‚¨ãƒãƒŸãƒ¼ã®å‹•ã
+    private bool enemyJump = false;         //ã‚¸ãƒ£ãƒ³ãƒ—ç”¨
+    public bool Follow = false;       //äºŒåº¦ç›®ã®å…¥åŠ›ã§ã®ã¤ã„ã¦ãã‚‹ã‹å¦ã‹
 
-    public bool isFollowing = true;   //’Ç]‚·‚é‚©‚Ç‚¤‚©
-    public bool enemyMove = true;      //ƒGƒlƒ~[‚Ì“®‚«
-    private bool enemyJump = false;         //ƒWƒƒƒ“ƒv—p
-    [SerializeField] private bool Follow = false;       //“ñ“x–Ú‚Ì“ü—Í‚Å‚Ì‚Â‚¢‚Ä‚­‚é‚©”Û‚©
+    public Camera camera;
 
-    Rigidbody2D rb2d;
+    // ãšã£ã¨ã€å¾€å¾©ã™ã‚‹
+    public float speedX = 1; // ã‚¹ãƒ”ãƒ¼ãƒ‰X
+    public float speedY = 0; // ã‚¹ãƒ”ãƒ¼ãƒ‰Y
+    public float speedZ = 0; // ã‚¹ãƒ”ãƒ¼ãƒ‰Z
+    public float second = 1; // ã‹ã‹ã‚‹ç§’æ•°
+    public bool isWandering = true;//å¾˜å¾Šã™ã‚‹ã‹ã©ã†ã‹
+    float time = 0f;
 
-    public float inputSpeed;
-    public float jumpingPower;
-    
+    Vector3 enemyScale;
 
-    //public LayerMask CollisionLayer;
+    bool cableFlag = false;
+    public ElectricCableController ECon;
+
+    CableData cableData;
+    [SerializeField] private float moveSpeed;
+    private float vx;
+    private bool carFlag = false;
+    [SerializeField] private CarPush car;
+
+    //ãƒˆãƒ­ãƒƒã‚³ã‚’æŠ¼ã™
+    public GameObject MineCart;
+    public MinecartPush mcp;
+    public PushButton pushb;
+    private bool minecart = false;
+    [SerializeField] private bool tukamuFlag = false;
+    private bool okrpush = false;
+    [SerializeField] private float muki = 0;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        enemyJump = false;
+        if (collision.gameObject.tag == "Ground")
+        {
+            enemyJump = false;
+        }
+
+        //å‚ã‚’é™ã‚Šã‚‹ã‚„ãƒ¼ã¤ã ãŠ
+        if (collision.gameObject.name == "MineCart")
+        {
+            minecart = true;
+        }
+
+        if (collision.gameObject.name == "MineCart" && pushb.rpush == true)
+        {
+            okrpush = true;
+        }
     }
-    //ª°‚É’…‚­‚Ü‚ÅƒWƒƒƒ“ƒv‚³‚¹‚È‚¢ƒ}ƒ“
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ElectricCable")
+        {
+            cableFlag = true;
+            cableData = collision.gameObject.GetComponent<CableData>(); // é›»ç·šã®æƒ…å ±å–å¾—
+            // é›»ç·šã‚’ä¼ã†è¡¨ç¤º
+        }
+
+        if (collision.gameObject.tag == "Car")
+        {
+            carFlag = true;
+            //Follow = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ElectricCable")
+        {
+            cableFlag = false;
+            cableData = null;
+        }
+
+        if (collision.gameObject.tag == "Car")
+        {
+            carFlag = false;
+            //Follow = true;
+        }
+    }
+
+    //â†‘åºŠã«ç€ãã¾ã§ã‚¸ãƒ£ãƒ³ãƒ—ã•ã›ãªã„ãƒãƒ³
 
     // Start is called before the first frame update
     void Start()
     {
         this.rb2d = GetComponent<Rigidbody2D>();
+        enemyScale = transform.localScale;
+        IsThrow = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //” ‚ğ—pˆÓ‚µ‚ÄA‚»‚Ì’†‚ÉYÀ•W‚ğ“ü‚ê‚é
+        // ç§»å‹•
+        rb2d.velocity = new Vector2(vx, rb2d.velocity.y);
+
+
+        if (cableFlag && enemyMove == false)
+        {
+            if (Input.GetKeyDown(KeyCode.P) || DSInput.PushDown(DSButton.Square))
+            {
+                if (cableData.point == CablePoint.start) ECon.CablePointMove(gameObject, cableData.CableNum);
+                else ECon.CablePointMove(gameObject, cableData.CableNum, false);
+            }
+        }
+
+        if (carFlag)
+        {
+            // ç”»åƒã®è¡¨ç¤º
+
+            if (Input.GetKeyDown(KeyCode.R) || DSInput.PushDown(DSButton.R1))
+            {
+                EnemyNotMove();
+                car.crash = true;
+                carFlag = false;
+            }
+        }
+
+        //ç®±ã‚’ç”¨æ„ã—ã¦ã€ãã®ä¸­ã«Yåº§æ¨™ã‚’å…¥ã‚Œã‚‹
         Vector2 targetPos = Player.transform.position;
         targetPos.y = transform.position.y;
 
-        //‹——£
+        //è·é›¢
         float distance = Vector2.Distance(transform.position, Player.transform.position);
 
+        // è¿½å¾“ç”¨
         if (isFollowing)
         {
-            //if(ŠÔ‚Ì‹——£‚ª~‚Ü‚é‚Æ‚«‚Ì‹——£ˆÈã‚È‚ç?)
+            //if(é–“ã®è·é›¢ãŒæ­¢ã¾ã‚‹ã¨ãã®è·é›¢ä»¥ä¸Šãªã‚‰?)
             if (distance > stopDistance)
             {
                 transform.position = Vector3.MoveTowards(transform.position,
                 new Vector2(Player.transform.position.x, enemy.transform.position.y),
                 inputSpeed * Time.deltaTime);
             }
-            //enemy¨player
+            //enemyâ†’player
 
-            // ‰E
+            // å³
             if (Player.transform.position.x < transform.position.x)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
             }
 
-            // ¶
+            // å·¦
             else if (Player.transform.position.x > transform.position.x)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = enemyScale;
             }
 
-            //ƒWƒƒƒ“ƒv
-            if (enemyJump == false && Input.GetKeyDown(KeyCode.Space))
+            //ã‚¸ãƒ£ãƒ³ãƒ—
+            if (enemyJump == false && (Input.GetKeyDown(KeyCode.Space) || DSInput.PushDown(DSButton.Cross)))
             {
                 this.rb2d.AddForce(transform.up * this.jumpingPower);
                 enemyJump = !enemyJump;
             }
         }
 
-        //ƒGƒlƒ~[‚Ì“®‚«—p
+        //ã‚¨ãƒãƒŸãƒ¼ã®å‹•ãç”¨
         if (enemyMove == false)
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
+            vx = 0;
+            var input = Input.GetAxis("J_Horizontal");
+            if (Input.GetKey(KeyCode.LeftArrow) || input < -0.5)
             {
-                this.transform.Translate(-0.01f, 0.0f, 0.0f);
-                transform.localScale = new Vector3(-1, 1, 1);
+                vx = -moveSpeed;
+                //this.transform.Translate(-0.01f, 0.0f, 0.0f);
+                transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
+
+                //ãƒˆãƒ­ãƒƒã‚³ã‚’æŒã£ã¦ã„ã‚‹æ™‚ã®ã‚¨ãƒãƒŸãƒ¼ã®å‘ãï¼ˆå·¦ï¼‰
+                if (tukamuFlag && 0 > muki)
+                {
+                    transform.localScale = new Vector3(-muki, enemyScale.y, enemyScale.z);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
+                }
             }
 
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow) || 0.5 < input)
             {
-                this.transform.Translate(0.01f, 0.0f, 0.0f);
-                transform.localScale = new Vector3(1, 1, 1);
+                vx = moveSpeed;
+                //this.transform.Translate(0.01f, 0.0f, 0.0f);
+                transform.localScale = enemyScale;
+
+                //ãƒˆãƒ­ãƒƒã‚³ã‚’æŒã£ã¦ã„ã‚‹æ™‚ã®ã‚¨ãƒãƒŸãƒ¼ã®å‘ãï¼ˆå³ï¼‰
+                if (tukamuFlag && muki > 0)
+                {
+                    transform.localScale = new Vector3(-muki, enemyScale.y, enemyScale.z);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(enemyScale.x, enemyScale.y, enemyScale.z);
+                }
             }
 
-            if (enemyJump == false && Input.GetKeyDown(KeyCode.Space))
+            if (enemyJump == false && (Input.GetKeyDown(KeyCode.Space) || DSInput.PushDown(DSButton.Cross)))
             {
                 this.rb2d.AddForce(transform.up * this.jumpingPower);
                 enemyJump = !enemyJump;
             }
+            input = 0;
+
+            //ãƒˆãƒ­ãƒƒã‚³ã®å‰ã§Rã‚’æŠ¼ã™ã¨
+            if (Input.GetKey(KeyCode.R) && minecart == true)
+            {
+                mcp.minecartpush = true;
+            }
+
+            //t
+            if (Input.GetKeyDown(KeyCode.R) && pushb.rpush == true && okrpush == true)
+            {
+                tukamuFlag = true;
+                muki = -transform.localScale.x;
+                mcp.enemyrpush = true;
+                MineCart.transform.parent = this.transform;
+                this.transform.SetParent(transform, false);
+                MineCart.gameObject.layer = 9;
+            }
+
+            //t
+            if (Input.GetKeyUp(KeyCode.R) && pushb.rpush == true && okrpush == true)
+            {
+                tukamuFlag = false;
+                mcp.enemyrpush = false;
+                MineCart.transform.parent = null;
+                MineCart.gameObject.layer = 8;
+            }
         }
 
-        //š‘€ì‚ÌØ‚è‘Ö‚¦ˆ—
-        //1‰ñ–Ú‚ÌØ‚è‘Ö‚¦‚Ì“®‚«
-        if (Input.GetKeyDown(KeyCode.F) && Follow == false)
+        //â˜…æ“ä½œã®åˆ‡ã‚Šæ›¿ãˆå‡¦ç†
+        //1å›ç›®ã®åˆ‡ã‚Šæ›¿ãˆæ™‚ã®å‹•ã
+        if(isFollowing)
         {
-            mt.player_Move = !mt.player_Move;
-            Following();
-            enemyMove = !enemyMove;
-            Follow = !Follow;
+            if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)) && Follow == false)
+            {
+                // ã‚«ãƒ¡ãƒ©è¿½å¾“ã®å¯¾è±¡ã‚’ã‚¨ãƒãƒŸãƒ¼ã«å¤‰æ›´
+                camera.GetComponent<CameraClamp>().targetToFollow = gameObject.transform;
+                mt.player_Move = !mt.player_Move;
+                Following();
+                enemyMove = !enemyMove;
+                Follow = !Follow;
+            }
         }
-
-        //2‰ñ–Ú‚ÌØ‚è‘Ö‚¦AƒvƒŒƒCƒ„[‚¾‚¯“®‚¢‚ÄƒGƒlƒ~[•s“®“°
-        //‚±‚Ìó‘Ô‚¾‚Æ‰½‰ñEnter‰Ÿ‚µ‚Ä‚àƒvƒŒƒCƒ„[‚µ‚©“®‚©‚ñ‚Å
-        else if (Input.GetKeyDown(KeyCode.F) && Follow == true)
+        //2å›ç›®ã®åˆ‡ã‚Šæ›¿ãˆæ™‚ã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã ã‘å‹•ã„ã¦ã‚¨ãƒãƒŸãƒ¼ä¸å‹•å ‚
+        //ã“ã®çŠ¶æ…‹ã ã¨ä½•å›EnteræŠ¼ã—ã¦ã‚‚ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã—ã‹å‹•ã‹ã‚“ã§
+        else if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)))
         {
-            isFollowing = false;
+            camera.GetComponent<CameraClamp>().targetToFollow = Player.transform;
+            isFollowing = true;
             enemyMove = true;
             mt.player_Move = false;
+            mt.enemyTouchFlag = true;
         }
 
-        //ŒÄ‚Ôƒ{ƒ^ƒ“(Delete‰¼’u‚«)‚ğ‰Ÿ‚µ‚½‚Ì“®‚«
-        //Follow‚ğØ‚è‘Ö‚¦‚é‚±‚Æ‚Å‚à‚¤ˆê“x’Ç]‚âØ‚è‘Ö‚¦‚ª‚Å‚«‚é‚¨
-        if (Follow == true && Input.GetKeyDown(KeyCode.Delete))
+        //å‘¼ã¶ãƒœã‚¿ãƒ³(Deleteä»®ç½®ã)ã‚’æŠ¼ã—ãŸæ™‚ã®å‹•ã
+        //Followã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹ã“ã¨ã§ã‚‚ã†ä¸€åº¦è¿½å¾“ã‚„åˆ‡ã‚Šæ›¿ãˆãŒã§ãã‚‹ãŠ
+        if (Follow == true && (Input.GetKeyDown(KeyCode.Delete ) || DSInput.PushDown(DSButton.R1)) && enemyMove == true && isFollowing)
         {
             isFollowing = true;
             Follow = !Follow;
         }
+
     }
 
-    // ‚©‚Â‚Ä’Ç]‚ÌØ‚è‘Ö‚¦‚¾‚Á‚½‚à‚Ì
+    private void FixedUpdate() // ãšã£ã¨ã€å¾€å¾©ã™ã‚‹
+    {
+
+        if (isWandering == true)
+        {
+            time += Time.deltaTime;
+            float s = Mathf.Sin(Time.time);
+            this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
+            Vector3 scale = transform.localScale;
+            if (s >= 0)
+            {
+                scale.x = enemyScale.x;
+            }
+            else
+            {
+                scale.x = -enemyScale.x;
+            }
+            transform.localScale = scale;
+        }
+        if (isFollowing == true)
+        {
+            isWandering = false;
+        }
+
+
+    }
+
+    public void EnemyMove()
+    {
+        enemyMove = false;
+    }
+
+    public void EnemyNotMove()
+    {
+        enemyMove = true;
+        vx = 0;
+        rb2d.velocity = Vector2.zero;
+    }
+
+    // ã‹ã¤ã¦è¿½å¾“ã®åˆ‡ã‚Šæ›¿ãˆã ã£ãŸã‚‚ã®
     public void Following()
     {
         isFollowing = !isFollowing;
     }
 
-    // ‚©‚Â‚Ä‘€ì‚ÌØ‚è‘Ö‚¦‚¾‚Á‚½‚à‚Ì
+    // ã‹ã¤ã¦æ“ä½œã®åˆ‡ã‚Šæ›¿ãˆã ã£ãŸã‚‚ã®
     public void PlayerChange()
     {
-        // ƒvƒŒƒCƒ„[‚Ì‘€ì‚ğ‚Å‚«‚È‚­‚·‚é
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ“ä½œã‚’ã§ããªãã™ã‚‹
         mt.player_Move = !mt.player_Move;
 
-        // ‘€ìŒ ‚ğ“G‚ÉˆÚ“®‚³‚¹‚é
+        // æ“ä½œæ¨©ã‚’æ•µã«ç§»å‹•ã•ã›ã‚‹
         Following();
         enemyMove = !enemyMove;
     }
-
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,39 +6,71 @@ using UnityEngine.SceneManagement;
 public class GameSceneDebug : MonoBehaviour
 {
     [SerializeField] private bool debugMode = false;
+    private PlayerController player = null;
+    private TextController text = null;
 
+
+    void Start()
+    {
+        if (FindObjectOfType<PlayerController>() != null)
+        {
+            player = FindObjectOfType<PlayerController>();
+        }
+        if (FindObjectOfType<TextController>() != null)
+        {
+            text = FindObjectOfType<TextController>();
+        }
+    }
 
     void Update()
     {
         if (!debugMode) return;
         #if UNITY_EDITOR
-            // ¶ƒRƒ“ƒgƒ[ƒ‹ƒL[
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                // ƒV[ƒ“‚ÌÄ“Ç‚İ‚İ
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+        // å·¦ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚­ãƒ¼
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            // ã‚·ãƒ¼ãƒ³ã®å†èª­ã¿è¾¼ã¿
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
 
-            // ¶‚ÌƒVƒtƒgƒL[
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+        // å·¦Altã‚­ãƒ¼
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            if (Input.GetKeyDown(KeyCode.T))
             {
-                // ƒQ[ƒ€“àŠÔ3”{‚É•ÏX
-                Time.timeScale = 3;
+                // ãƒ†ã‚­ã‚¹ãƒˆã®è¡¨ç¤ºé€Ÿåº¦æœ€é€ŸåŒ–
+                text.textTime = 0.0f;
+                // ãƒ†ã‚­ã‚¹ãƒˆã®è¡¨ç¤ºæ„Ÿè¦šæœ€é€ŸåŒ–
+                text.loadTime = 0.0f;
             }
+            
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•é€Ÿåº¦ä¸Šæ˜‡
+                player.speed = 20.0f;
+            }
+        }
 
-            // ‰E‚ÌƒVƒtƒgƒL[
-            if (Input.GetKeyDown(KeyCode.RightShift))
-            {
-                // ƒQ[ƒ€“àŠÔ0.5”{‚É•ÏX
-                Time.timeScale = 0.5f;
-            }
+        // å·¦ã®ã‚·ãƒ•ãƒˆã‚­ãƒ¼
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            // ã‚²ãƒ¼ãƒ å†…æ™‚é–“3å€ã«å¤‰æ›´
+            Time.timeScale = 3;
+        }
 
-            // ƒVƒtƒgƒL[‚ğ—£‚·
-            if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
-            {
-                // ƒQ[ƒ€“àŠÔ“™‘¬‚É–ß‚·
-                Time.timeScale = 1;
-            }
+        // å³ã®ã‚·ãƒ•ãƒˆã‚­ãƒ¼
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            // ã‚²ãƒ¼ãƒ å†…æ™‚é–“0.5å€ã«å¤‰æ›´
+            Time.timeScale = 0.5f;
+        }
+
+        // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ã‚’é›¢ã™
+        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+        {
+            // ã‚²ãƒ¼ãƒ å†…æ™‚é–“ç­‰é€Ÿã«æˆ»ã™
+            Time.timeScale = 1;
+        }
         #endif
     }
 }

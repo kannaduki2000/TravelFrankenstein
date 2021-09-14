@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.IO;
 using System.Linq;
 using System.Collections;
@@ -15,7 +15,7 @@ public class SceneUnit
 	private List<string> _pathList = new List<string>();
 
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	public SceneUnit(string name, List<string> pathList)
 	{
@@ -24,19 +24,19 @@ public class SceneUnit
 	}
 
 	/// <summary>
-	/// ƒV[ƒ“‚Ì“Ç‚İ‚İ
+	/// ã‚·ãƒ¼ãƒ³ã®èª­ã¿è¾¼ã¿
 	/// </summary>
 	public void Load()
 	{
 		if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) { return; }
 
-		// ‘¶İƒ`ƒFƒbƒN
+		// å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 		for (int i = 0; i < _pathList.Count; i++)
 		{
 			string path = _pathList[i];
 			if (AssetDatabase.LoadAssetAtPath<SceneAsset>(path) == null)
 			{
-				Debug.LogError(path + "‚ª‘¶İ‚µ‚Ü‚¹‚ñ");
+				Debug.LogError(path + "ãŒå­˜åœ¨ã—ã¾ã›ã‚“");
 				return;
 			}
 		}
@@ -47,7 +47,7 @@ public class SceneUnit
 	}
 
 	/// <summary>
-	/// –¼‘O‚ÆƒpƒX
+	/// åå‰ã¨ãƒ‘ã‚¹
 	/// </summary>
 	public string GetNameAndPath()
 	{
@@ -100,7 +100,7 @@ public class SceneUnitSet
 	}
 
 	/// <summary>
-	/// ¶¬‚Æ’Ç‰Á
+	/// ç”Ÿæˆã¨è¿½åŠ 
 	/// </summary>
 	public void Add(string sceneUnitName, List<string> scenePathList)
 	{
@@ -118,7 +118,7 @@ public class SceneUnitSet
 	}
 
 	/// <summary>
-	/// SceneUnit‚ğÁ‹
+	/// SceneUnitã‚’æ¶ˆå»
 	/// </summary>
 	public void Remove(SceneUnit sceneUnit)
 	{
@@ -142,23 +142,23 @@ public class SceneUnitSet
 }
 
 /// <summary>
-/// ƒV[ƒ“‚ğƒNƒŠƒbƒN‚ÅŠJ‚­ƒEƒBƒ“ƒhƒE
+/// ã‚·ãƒ¼ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã§é–‹ãã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
 /// </summary>
 public class OpenSceneWindow : EditorWindow
 {
-	// ƒXƒNƒ[ƒ‹‚ÌˆÊ’u
+	// ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã®ä½ç½®
 	private Vector2 _scrollPosition = Vector2.zero;
 
-	// ƒvƒƒWƒFƒNƒg“à‚Ì‘SƒV[ƒ“‚ÌƒpƒX‚ÆA‚»‚ê‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
+	// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆå†…ã®å…¨ã‚·ãƒ¼ãƒ³ã®ãƒ‘ã‚¹ã¨ã€ãã‚ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹
 	private Dictionary<String, bool> _scenePathDict = new Dictionary<string, bool>();
 
-	// ‘I‘ğƒV[ƒ“‚ÌList
+	// é¸æŠã‚·ãƒ¼ãƒ³ã®List
 	private List<string> _selectingScenePathList = new List<string>();
 
-	// ƒV[ƒ“‚Ì–¼‘O
+	// ã‚·ãƒ¼ãƒ³ã®åå‰
 	private string _sceneUnitName = "";
 
-	// ƒGƒfƒBƒbƒgã‚ÌRabbit Frog -> Scene Window ‚ğƒNƒŠƒbƒN‚·‚é‚ÆŠJ‚­
+	// ã‚¨ãƒ‡ã‚£ãƒƒãƒˆä¸Šã®Rabbit Frog -> Scene Window ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨é–‹ã
 	[MenuItem("Frankenstein/Scene Window")]
 
 	private static void Open()
@@ -184,25 +184,25 @@ public class OpenSceneWindow : EditorWindow
 	private void OnGUI()
 	{
 		_scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, GUI.skin.scrollView);
-		// ˆ—‚±‚±‚©‚ç
+		// å‡¦ç†ã“ã“ã‹ã‚‰
 
 		EditorGUILayout.BeginVertical(GUI.skin.box);
 		{
 			if (SceneUnitSet.Instance.UnitNum != 0)
 			{
-				OnGUIWithTitle(OnSettingSceneUI, "İ’è‚µ‚½ƒV[ƒ“");
+				OnGUIWithTitle(OnSettingSceneUI, "è¨­å®šã—ãŸã‚·ãƒ¼ãƒ³");
 			}
-			OnGUIWithTitle(OnAllSceneGUI, "ƒvƒƒWƒFƒNƒg“à‚ÌƒV[ƒ“");
+			OnGUIWithTitle(OnAllSceneGUI, "ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆå†…ã®ã‚·ãƒ¼ãƒ³");
 			if (_selectingScenePathList.Count != 0)
 			{
-				OnGUIWithTitle(OnSelectingSceneGUI, "‘I‘ğ’†‚ÌƒV[ƒ“");
+				OnGUIWithTitle(OnSelectingSceneGUI, "é¸æŠä¸­ã®ã‚·ãƒ¼ãƒ³");
 			}
 		}
 		EditorGUILayout.EndVertical();
 
 		EditorGUILayout.BeginVertical(GUI.skin.box);
 		{
-			EditorGUILayout.LabelField("ŒF‘q‚ÌƒfƒoƒbƒO—p");
+			EditorGUILayout.LabelField("ç†Šå€‰ã®ãƒ‡ãƒãƒƒã‚°ç”¨");
 		}
 		EditorGUILayout.BeginHorizontal(GUI.skin.box);
 		{
@@ -249,7 +249,7 @@ public class OpenSceneWindow : EditorWindow
 			}
 
 			EditorGUILayout.LabelField(SceneUnitSet.Instance.GetAtNo(i).GetNameAndPath());
-			if (GUILayout.Button("“Ç‚İ‚İ", GUILayout.Width(100)))
+			if (GUILayout.Button("èª­ã¿è¾¼ã¿", GUILayout.Width(100)))
 			{
 				SceneUnitSet.Instance.GetAtNo(i).Load();
 				return;
@@ -287,7 +287,7 @@ public class OpenSceneWindow : EditorWindow
 
 	private void OnAllSceneGUI()
 	{
-		// ‘SƒV[ƒ“‚ÌƒpƒX‚ğ•\¦
+		// å…¨ã‚·ãƒ¼ãƒ³ã®ãƒ‘ã‚¹ã‚’è¡¨ç¤º
 		List<string> changedPathList = new List<string>();
 
 		foreach (KeyValuePair<string, bool> pair in _scenePathDict)
@@ -297,36 +297,36 @@ public class OpenSceneWindow : EditorWindow
 			bool beforeFlag = pair.Value;
 			bool afterFlag = EditorGUILayout.ToggleLeft(Path.GetFileNameWithoutExtension(pair.Key), beforeFlag);
 
-			// ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚Ì•ÏX‚ª‚ ‚ê‚ÎList‚É“o˜^
+			// ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®å¤‰æ›´ãŒã‚ã‚Œã°Listã«ç™»éŒ²
 			if (beforeFlag != afterFlag)
 			{
 				changedPathList.Add(pair.Key);
 			}
 
-			// “Ç‚İ‚İƒ{ƒ^ƒ“•\¦
-			if (GUILayout.Button("“Ç‚İ‚İ", GUILayout.Width(100)))
+			// èª­ã¿è¾¼ã¿ãƒœã‚¿ãƒ³è¡¨ç¤º
+			if (GUILayout.Button("èª­ã¿è¾¼ã¿", GUILayout.Width(100)))
 			{
-				// Œ»İ‚ÌƒV[ƒ“‚É•ÏX‚ª‚ ‚Á‚½ê‡A•Û‘¶‚·‚é‚©Šm”F‚ÌƒEƒBƒ“ƒhƒE‚ğo‚·(ƒLƒƒƒ“ƒZƒ‹‚³‚ê‚½‚ç“Ç‚İ‚İ‚ğ‚µ‚È‚¢)
+				// ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã«å¤‰æ›´ãŒã‚ã£ãŸå ´åˆã€ä¿å­˜ã™ã‚‹ã‹ç¢ºèªã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å‡ºã™(ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚ŒãŸã‚‰èª­ã¿è¾¼ã¿ã‚’ã—ãªã„)
 				if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
 				{
 					return;
 				}
 
-				// ƒV[ƒ“‘¶İ‚·‚é‚©ƒ`ƒFƒbƒN
+				// ã‚·ãƒ¼ãƒ³å­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 				if (AssetDatabase.LoadAssetAtPath<SceneAsset>(pair.Key) == null)
 				{
-					Debug.LogError(pair.Key + "‚ª‘¶İ‚µ‚Ü‚¹‚ñI");
+					Debug.LogError(pair.Key + "ãŒå­˜åœ¨ã—ã¾ã›ã‚“ï¼");
 					return;
 				}
 
-				// ƒV[ƒ““Ç‚İ‚İ
+				// ã‚·ãƒ¼ãƒ³èª­ã¿è¾¼ã¿
 				EditorSceneManager.OpenScene(pair.Key);
 				return;
 			}
 			EditorGUILayout.EndHorizontal();
 		}
 
-		// •ÏX‚ª‚ ‚Á‚½ƒpƒX‚Ìƒtƒ‰ƒO‚ğ•ÏXA‘I‘ğ’†‚ÌƒV[ƒ“‚ÌList‚àXV
+		// å¤‰æ›´ãŒã‚ã£ãŸãƒ‘ã‚¹ã®ãƒ•ãƒ©ã‚°ã‚’å¤‰æ›´ã€é¸æŠä¸­ã®ã‚·ãƒ¼ãƒ³ã®Listã‚‚æ›´æ–°
 		foreach (string changedPath in changedPathList)
 		{
 			_scenePathDict[changedPath] = !_scenePathDict[changedPath];
@@ -342,14 +342,14 @@ public class OpenSceneWindow : EditorWindow
 		}
 		GUILayout.Space(10);
 
-		// ƒV[ƒ“Äæ“¾‚Æ‘I‘ğ‘S‰ğœ‚ğs‚¤ƒ{ƒ^ƒ“•\¦
-		if (GUILayout.Button("ƒV[ƒ“Äæ“¾A‘I‘ğ‘S‰ğœ"))
+		// ã‚·ãƒ¼ãƒ³å†å–å¾—ã¨é¸æŠå…¨è§£é™¤ã‚’è¡Œã†ãƒœã‚¿ãƒ³è¡¨ç¤º
+		if (GUILayout.Button("ã‚·ãƒ¼ãƒ³å†å–å¾—ã€é¸æŠå…¨è§£é™¤"))
 		{
 			Init();
 		}
 	}
 
-	// ‘I‘ğ’†‚ÌƒV[ƒ“‚ğ•\¦‚·‚éGUI
+	// é¸æŠä¸­ã®ã‚·ãƒ¼ãƒ³ã‚’è¡¨ç¤ºã™ã‚‹GUI
 	private void OnSelectingSceneGUI()
 	{
 		EditorGUILayout.BeginVertical(GUI.skin.box);
@@ -363,12 +363,12 @@ public class OpenSceneWindow : EditorWindow
 		EditorGUILayout.EndVertical();
 		GUILayout.Space(10);
 
-		// ƒV[ƒ“ƒ†ƒjƒbƒg‚Ì–¼‘O‚ğ“ü—Í‚·‚éGUI‚ğ•\¦
-		_sceneUnitName = EditorGUILayout.TextField("ƒV[ƒ“ƒ†ƒjƒbƒg–¼", _sceneUnitName);
+		// ã‚·ãƒ¼ãƒ³ãƒ¦ãƒ‹ãƒƒãƒˆã®åå‰ã‚’å…¥åŠ›ã™ã‚‹GUIã‚’è¡¨ç¤º
+		_sceneUnitName = EditorGUILayout.TextField("ã‚·ãƒ¼ãƒ³ãƒ¦ãƒ‹ãƒƒãƒˆå", _sceneUnitName);
 		GUILayout.Space(10);
 
-		// ƒV[ƒ“ƒ†ƒjƒbƒg‚Ìİ’è‚ğs‚¤ƒ{ƒ^ƒ“•\¦
-		if (GUILayout.Button("İ’è"))
+		// ã‚·ãƒ¼ãƒ³ãƒ¦ãƒ‹ãƒƒãƒˆã®è¨­å®šã‚’è¡Œã†ãƒœã‚¿ãƒ³è¡¨ç¤º
+		if (GUILayout.Button("è¨­å®š"))
 		{
 			SceneUnitSet.Instance.Add(_sceneUnitName, _selectingScenePathList);
 			Init();

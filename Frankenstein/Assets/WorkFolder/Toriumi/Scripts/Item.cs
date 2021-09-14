@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public class Item : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -16,111 +16,108 @@ public class Item : MonoBehaviour
         
     }
 
+    //ä½ãæŠ•ã’ã‚‹
     public void Low()
     {
-        ////—Í‚ğ‰Á‚¦‚éŒü‚«
-        //Vector3 forceDirection = new Vector3(3, 3, 0);
+        
+        // è¦ªã®xã‚¹ã‚±ãƒ¼ãƒ«ã‚’å–å¾—
+        // xã‚¹ã‚±ãƒ¼ãƒ«ãŒã€0ã‚ˆã‚Šã‚‚å¤§ãã„ã€‚ã™ãªã‚ã¡ + ãªã‚‰ã°å³æ–¹å‘ã¸
+        // xã‚¹ã‚±ãƒ¼ãƒ«ãŒã€0ã‚ˆã‚Šã‚‚å°ã•ã„ã€‚ã™ãªã‚ã¡ - ãªã‚‰ã°å·¦æ–¹å‘ã¸
+        // ä½†ã—ã€è¦ªã®xã‚¹ã‚±ãƒ¼ãƒ«ãŒåè»¢ã™ã‚‹å ´åˆã®ã¿ä½¿ãˆã‚‹ã€‚
+        // è¦ªã®ã‚¹ã‚±ãƒ¼ãƒ«ãŒ +- å¤‰ã‚ã‚‰ãªã„ã¨åè»¢ã—ãªã„ã§ã™ã€‚
 
-        ////ã‚ÌŒü‚«‚É‰Á‚í‚é—Í‚Ì‘å‚«‚³
-        //float forceMagnitude = 10.0f;
+        Vector2 vec = GameObject.Find("Player").transform.localScale;
+        float x = vec.x;
+        if (x > 0)
+        {
+            //xè»¸æ–¹å‘
+            float I_speed = 70f;
+            float I_degree = 60f; // 60Â°= å³å‘ã
 
-        ////Œü‚«‚Æ‘å‚«‚³‚©‚çitem‚É‰Á‚í‚é—Í‚ğŒvZ
-        //Vector3 force = forceMagnitude * forceDirection;
+            //yè»¸æ–¹å‘
+            float I_Speed = 60f;
+            float I_Degree = 45f; // 45Â°= å³å‘ã
 
-        ////itemƒIƒuƒWƒFƒNƒg‚ÌrigidbodyƒRƒ“ƒ|[ƒlƒ“ƒg‚Ö‚ÌQÆ
-        //Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
 
-        ////—Í‚ğ‰Á‚¦‚éƒƒ\ƒbƒh
-        //rb.AddForce(force, ForceMode2D.Impulse);
+            Vector2 vel = Vector2.zero;
 
-        float I_speed = 60f;
-        float I_degree = 60f;
 
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+            //memo ã€Mathfã€ä¸‰è§’é–¢æ•°ã®å®šæ•°ã¨ãƒ¡ã‚½ãƒƒãƒ‰ã‚’æä¾›
+            //memo2ã€PIã€   Ï€ã‚’æŒ‡å®š
+            //memo3 I_degreeÏ€/180 = 1/x = xÂ°
+            //memo4 xè»¸æ–¹å‘ã®è¨ˆç®— v0cosÎ¸ * t
+            //memo5 yè»¸æ–¹å‘ã®è¨ˆç®— v0sinÎ¸ - gt
 
-        Vector3 vel = Vector3.zero;
-        vel.y = I_speed;
+            vel.x = I_speed * Mathf.Cos(I_degree * Mathf.PI / 180f);
+            vel.y = I_Speed * Mathf.Sin(I_Degree * Mathf.PI / 180f);
+            rb.velocity = vel;
+        }
+        if (x < 0)
+        {
+            //xè»¸æ–¹å‘
+            float I_speed = 70f;
+            float I_degree = 120f; // 120Â°= å·¦å‘ã
 
-        vel.x = I_speed * Mathf.Cos(I_degree * Mathf.PI / 180f);
-        vel.y = I_speed * Mathf.Sin(I_degree * Mathf.PI / 180f);
-        rb.velocity = vel;
-        this.transform.parent = null;
+            //yè»¸æ–¹å‘
+            float I_Speed = 60f;
+            float I_Degree = 135f; // 135Â°= å·¦å‘ã
+
+            Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+
+            Vector2 vel = Vector2.zero;
+
+
+            //memo ã€Mathfã€ä¸‰è§’é–¢æ•°ã®å®šæ•°ã¨ãƒ¡ã‚½ãƒƒãƒ‰ã‚’æä¾›
+            //memo2ã€PIã€   Ï€ã‚’æŒ‡å®š
+            //memo3 I_degreeÏ€/180 = 1/x = xÂ°
+            //memo4 xè»¸æ–¹å‘ã®è¨ˆç®— v0cosÎ¸ * t
+            //memo5 yè»¸æ–¹å‘ã®è¨ˆç®— v0sinÎ¸ - gt
+
+            vel.x = I_speed * Mathf.Cos(I_degree * Mathf.PI / 180f);
+            vel.y = I_Speed * Mathf.Sin(I_Degree * Mathf.PI / 180f);
+            rb.velocity = vel;
+        }
 
     }
 
+    //é«˜ãæŠ•ã’ã‚‹
     public void Hight()
     {
-        ////—Í‚ğ‰Á‚¦‚éŒü‚«
-        //Vector3 forceDirection = new Vector3(6, 6, 0);
 
-        ////ã‚ÌŒü‚«‚É‰Á‚í‚é—Í‚Ì‘å‚«‚³
-        //float forceMagnitude = 10.0f;
+        Vector2 vec = GameObject.Find("Player").transform.localScale;
+        float x = vec.x;
+        if (x > 0)
+        {
+            float I_speed = 55f;
+            float I_degree = 60f; // 60Â°
+            float I_Speed = 70f;
+            float I_Degree = 60f; // 60Â°
 
-        ////Œü‚«‚Æ‘å‚«‚³‚©‚çitem‚É‰Á‚í‚é—Í‚ğŒvZ
-        //Vector3 force = forceMagnitude * forceDirection;
+            Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
 
-        ////itemƒIƒuƒWƒFƒNƒg‚ÌrigidbodyƒRƒ“ƒ|[ƒlƒ“ƒg‚Ö‚ÌQÆ
-        //Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+            Vector2 vel = Vector2.zero;
 
-        ////—Í‚ğ‰Á‚¦‚éƒƒ\ƒbƒh
-        //rb.AddForce(force, ForceMode2D.Impulse);
 
-        float I_speed = 80f;
-        float I_degree = 80f;
+            vel.x = I_speed * Mathf.Cos(I_degree * Mathf.PI / 180f);
+            vel.y = I_Speed * Mathf.Sin(I_Degree * Mathf.PI / 180f);
+            rb.velocity = vel;
+        }
+        else if (x < 0)
+        {
+            float I_speed = 55f;
+            float I_degree = 120f; // 60Â°
+            float I_Speed = 70f;
+            float I_Degree = 120f; // 60Â°
 
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
 
-        Vector3 vel = Vector3.zero;
-        vel.y = I_speed;
+            Vector2 vel = Vector2.zero;
 
-        vel.x = I_speed * Mathf.Cos(I_degree * Mathf.PI / 192.5f);
-        vel.y = I_speed * Mathf.Sin(I_degree * Mathf.PI / 192.5f);
-        rb.velocity = vel;
-        this.transform.parent = null;
+
+            vel.x = I_speed * Mathf.Cos(I_degree * Mathf.PI / 180f);
+            vel.y = I_Speed * Mathf.Sin(I_Degree * Mathf.PI / 180f);
+            rb.velocity = vel;
+        }
     }
-
-    //public void Move()
-    //{
-    //    Vector3 pos = transform.position;
-
-    //    //y²
-    //    pos.y = 50;
-
-    //    //x²
-    //    PlayerControl player = gameObject.GetComponent<PlayerControl>();
-
-    //    // z
-    //    pos.z = 0;
-        
-        
-    //    if (Input.GetKey(KeyCode.A))
-    //    {
-    //        pos.x -= 2;
-    //    }
-    //    //‰E–îˆóƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚é
-    //    else if (Input.GetKey(KeyCode.D))
-    //    {
-    //        pos.x += 2;
-    //    }
-    //    float x = Input.GetAxisRaw("Horizontal");
-
-    //    GameObject obj = GameObject.Find("Player");
-
-    //    Vector3 scale = obj.transform.localScale;
-
-    //    if (x > 0)
-    //    {
-    //        scale.x = 1;
-
-    //    }
-    //    else if (x < 0)
-    //    {
-    //        scale.x = -1;
-    //    }
-
-    //    obj.transform.localScale = scale;
-    //    transform.position = pos;
-    //    //Debug.Log("Z");
-
-    //}
 }

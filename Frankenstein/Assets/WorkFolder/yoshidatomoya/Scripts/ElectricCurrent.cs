@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ElectricCurrent : MonoBehaviour
 {
+    //
     // HP‚ð•\Ž¦
     int HP = 100;
 
