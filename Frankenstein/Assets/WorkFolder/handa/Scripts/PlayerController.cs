@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
         }
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.isFade))
         {
-            DebugLogUtility.DLUtility.DebugLog("sss");
+            //DebugLogUtility.DLUtility.DebugLog("sss");
             PlayerNotMove();
             return;
         }
