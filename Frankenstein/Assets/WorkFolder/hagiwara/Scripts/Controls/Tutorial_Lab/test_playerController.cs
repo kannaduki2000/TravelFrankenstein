@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,9 +6,9 @@ public class test_playerController : MonoBehaviour
 {
 	/*----------------------------------------------------------------------------------------------------*/
 
-	// ƒtƒ‰ƒ“ƒPƒ“‚ÌHP
+	// ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã®HP
 	int hp = 100;
-	// ƒtƒ‰ƒ“ƒPƒ“‚ÌHP‚ÌƒvƒƒpƒeƒB
+	// ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã®HPã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 	public int HP
 	{
 		get { return hp; }
@@ -30,6 +30,5 @@ public class test_playerController : MonoBehaviour
 			transform.Translate(7.5f, 0.0f, 0.0f);
 		}
 	}
-
 	/*----------------------------------------------------------------------------------------------------*/
 }
