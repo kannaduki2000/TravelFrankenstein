@@ -8,23 +8,25 @@ public class ElectricCurrent : MonoBehaviour
     // HPを表示
     int HP = 100;
 
-    public float speed;
+    public float speed; // スピード設定
     private Rigidbody2D rb;
 
-    private bool touchFlag = false;
+    private bool touchFlag = false; // スイッチ
 
     public GameObject hpBar;
 
-    public bool isBone = false;
+    public bool isBone = false;　　// スイッチ
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
+
+    // プレイヤー移動
     private void FixedUpdate()
     {
-        // プレイヤー移動
+        
         float horizontalKey = Input.GetAxis("J_Horizontal");
 
         if (horizontalKey > 0)
@@ -41,15 +43,14 @@ public class ElectricCurrent : MonoBehaviour
         }
     }
 
-
-    // Update is called once per frame
+    // 電気の出し入れ
     void Update()
     {
         if (touchFlag)
         {
             Debug.Log("aaa");
             // 表示
-            hpBar.SetActive(true);
+            hpBar.SetActive(true); // hpBar表示
 
             // 電気を流す
             if (Input.GetKeyDown(KeyCode.Return))
@@ -80,36 +81,41 @@ public class ElectricCurrent : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // HomeAppタグが付いているもののTriggerに触れたら
         if (collision.gameObject.tag == "HomeApp")
         {
-            touchFlag = true;   
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Bone")
-        {
-            isBone = true;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Bone")
-        {
-            isBone = false;
+            touchFlag = true;  // touchFlagをオンにする
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        // HomeAppタグが付いているもののTriggerから離れたら
         if (collision.gameObject.tag == "HomeApp")
         {
-            touchFlag = false;
-            hpBar.SetActive(false);
+            touchFlag = false; // touchFlagをオフにする
+            hpBar.SetActive(false); // hpBar非表示
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Boneタグが付いているもののTriggerに触れたら
+        if (collision.gameObject.tag == "Bone")
+        {
+            isBone = true; // isBoneをオンにする
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // Boneタグが付いているもののTriggerから離れたら
+        if (collision.gameObject.tag == "Bone")
+        {
+            isBone = false; // isBoneをオフにする
+        }
+    }
+
 }
 
 /*

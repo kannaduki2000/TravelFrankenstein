@@ -11,14 +11,12 @@ public class AttackMotion : MonoBehaviour
     Rigidbody2D rb;
 
     Transform Player;
-    // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.Find("Player").transform;
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Vector3 direction = (Player.position - transform.position).normalized;
