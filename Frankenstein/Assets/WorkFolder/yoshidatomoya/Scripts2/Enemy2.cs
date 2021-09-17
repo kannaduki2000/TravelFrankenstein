@@ -144,7 +144,7 @@ public class Enemy2 : MonoBehaviour
 
         }
 
-        if ((playerFlag == false) || (playerFlag && wall.isBone))
+        if ((playerFlag && wall.isBone && player.isBone == false))
         {
             DLUtility.DebugLog("突っ込むよ");
             time2 += Time.deltaTime;
@@ -228,25 +228,7 @@ public class Enemy2 : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         // プレイヤーが離れた時
-        if (collision.gameObject.tag == "Player")
-        {
-            playerFlag = false; // playerFlagをオフにする
-            time2 = 0;
-            if (transform.position.x < Player.position.x && wall.isBone == false)
-            {
-                //右
-                rb.velocity = new Vector2(speed, 0);
-                transform.localScale = new Vector2(-1, 1);
-            }
-            else if (transform.position.x > Player.position.x && wall.isBone == false)
-            {
 
-                //左
-                rb.velocity = new Vector2(-speed, 0);
-                transform.localScale = new Vector2(1, 1);
-            }
-            Debug.Log("del_player");
-        }
     }
 
 }

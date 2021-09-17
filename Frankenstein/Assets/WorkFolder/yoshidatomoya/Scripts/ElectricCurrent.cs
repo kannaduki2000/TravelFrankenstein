@@ -71,8 +71,6 @@ public class ElectricCurrent : MonoBehaviour
 
 
         }
-
-
         // 非表示
 
     }
