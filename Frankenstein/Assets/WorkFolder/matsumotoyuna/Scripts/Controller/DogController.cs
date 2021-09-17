@@ -6,15 +6,18 @@ public class DogController : MonoBehaviour
 {
     [SerializeField] private bool dogMove = false;    //ｲｯﾇの操作切り替え
     [SerializeField] private bool cantMove = false;   //ｲｯﾇの動き制御
-    [SerializeField] private bool take = false;       //ｲｯﾇがプレイヤーを持ち運べるかどうか
+     public bool take = false;                        //ｲｯﾇがプレイヤーを持ち運べるかどうか
     [SerializeField] private bool grab = false;       //ｲｯﾇがケーブルを持ち運べるかどうか
     [SerializeField] private bool jump = false;       //ｲｯﾇがジャンプできるかどうか
     [SerializeField] private float speed = 20f;       //ｲｯﾇのスピード
 
+    public bool notParent = false;                    //親子関係を一つだけにできるよう固定するフラグ
+    public bool notParent2 = false;                    //親子関係を一つだけにできるよう固定するフラグ
     [SerializeField] private bool tukamuFlag = false; //今、物を掴んでいるかどうかのフラグ
     [SerializeField] private bool noTossin = false;   //物を持っている時は突進できないようにするフラグ
     [SerializeField] private bool migi = false;       //右を向いているか
     [SerializeField] private bool hidari = false;     //左を向いているか
+    [SerializeField] private bool kirikae = false;    //切り替え
     [SerializeField] private float muki = 0;          //どっちを向いているか、物を持っている時は向き固定
     [SerializeField] private float jumpForce = 300.0f;//ジャンプ力
 
@@ -35,22 +38,28 @@ public class DogController : MonoBehaviour
         if(collision.gameObject.tag == "Floar")
         {
             jump = false;
+            anim.SetBool("DogJump", false);
         }
 
-        if(collision.gameObject.name == "Wall")
+        if (collision.gameObject.tag != "Floar")
+        {
+            anim.SetBool("DogJump", false);
+        }
+
+        if (collision.gameObject.name == "Wall")
         {
             //壁壊してもろて
             Wall.SetActive(false);
         }
 
         //プレイヤーを運べるようにするお
-        if(collision.gameObject.name == "Player")
+        if(collision.gameObject.name == "Player" && !notParent)
         {
             take = true;
         }
 
         //ケーブルを持てるようにするお
-        if(collision.gameObject.name == "Cable")
+        if(collision.gameObject.name == "Cable" && !notParent)
         {
             grab = true;
         }
@@ -83,14 +92,6 @@ public class DogController : MonoBehaviour
         //操作・アニメーション
         if (dogMove)
         {
-            //ジャンプ
-            if (jump == false && Input.GetKeyDown(KeyCode.Space))
-            {
-                //anim.SetBool("DogWalk", true);
-                this.rigid2D.AddForce(transform.up * this.jumpForce);
-                jump = true;
-            }
-
             if (Input.GetKey(KeyCode.LeftArrow) && !cantMove && !migi)
             {
                 this.transform.Translate(-0.01f, 0.0f, 0.0f);
@@ -110,7 +111,11 @@ public class DogController : MonoBehaviour
             else if (Input.GetKey(KeyCode.RightArrow) && !cantMove && !hidari)
             {
                 this.transform.Translate(0.01f, 0.0f, 0.0f);
-                anim.SetBool("DogWalk", true);
+
+                if(jump == false)
+                {
+                    anim.SetBool("DogWalk", true);
+                }
 
                 if (tukamuFlag && muki < 0)
                 {
@@ -121,11 +126,20 @@ public class DogController : MonoBehaviour
                 {
                     transform.localScale = new Vector3(dogScale.x, dogScale.y, dogScale.z);
                 }
+
             }
 
             else
             {
                 anim.SetBool("DogWalk", false);
+            }
+
+            //ジャンプ
+            if (jump == false && Input.GetKeyDown(KeyCode.Space))
+            {
+                anim.SetBool("DogJump",true);
+                this.rigid2D.AddForce(transform.up * this.jumpForce);
+                jump = true;
             }
 
             //プレイヤーを持つ部分
@@ -134,10 +148,12 @@ public class DogController : MonoBehaviour
                 noTossin = true;
                 tukamuFlag = true;
                 muki = -transform.localScale.x;
+                anim.SetBool("DogCatch", true);
 
                 //プレイヤーなら
                 if(take)
                 {
+                    notParent = true;
                     Player.transform.parent = this.transform;
                     this.transform.SetParent(transform, false);
                 }
@@ -145,6 +161,7 @@ public class DogController : MonoBehaviour
                 //ケーブルなら
                 if (grab)
                 {
+                    notParent2 = true;
                     Cable.transform.parent = this.transform;
                     this.transform.SetParent(transform, false);
                 }
@@ -153,10 +170,13 @@ public class DogController : MonoBehaviour
             //持ったものを離す部分
             if (Input.GetKeyUp(KeyCode.R) && !cantMove)
             {
+                notParent = false;
+                notParent2 = false;
                 noTossin = false;
                 Player.transform.parent = null;
                 Cable.transform.parent = null;
                 tukamuFlag = false;
+                anim.SetBool("DogCatch", false);
             }
 
             //突進
@@ -178,12 +198,15 @@ public class DogController : MonoBehaviour
                     anim.SetBool("DogWalk", true);
                 }
                 //Invoke("DashStart", 0.1f);
+                kirikae = true;
             }
 
-            if(Input.GetKeyUp(KeyCode.T))
+            if(Input.GetKeyUp(KeyCode.T) && kirikae == true)
             {
                 migi = false;
                 hidari = false;
+                kirikae = false;
+                anim.SetBool("DogWalk", false);
             }
         }
     }

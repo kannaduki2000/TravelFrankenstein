@@ -14,6 +14,7 @@ public class MoveTest : MonoBehaviour
 
     public SceneChange sc;
     public FadeControl fadeControl;
+    public DogController dogcontoroller;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -31,6 +32,12 @@ public class MoveTest : MonoBehaviour
     void Update()
     {
         //プレイヤー操作部分
+        if (!Jump && Input.GetKey(KeyCode.Space) && playerMove && dogcontoroller.notParent)
+        {
+            this.rigid2D.AddForce(transform.right * this.jumpForce);
+            Jump = true;
+        }
+
         if (playerMove == false)
         {
             if (Input.GetKey(KeyCode.LeftArrow))
@@ -43,12 +50,6 @@ public class MoveTest : MonoBehaviour
             {
                 this.transform.Translate(0.01f, 0.0f, 0.0f);
                 transform.localScale = new Vector3(0.5f, 0.4710938f, 1);
-            }
-
-            if (Jump == false && Input.GetKeyDown(KeyCode.Space))
-            {
-                this.rigid2D.AddForce(transform.up * this.jumpForce);
-                Jump = !Jump;
             }
         }
     }

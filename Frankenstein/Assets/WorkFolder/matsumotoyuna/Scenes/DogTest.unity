@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 144863574}
   - component: {fileID: 144863573}
   - component: {fileID: 144863572}
+  - component: {fileID: 144863576}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -248,12 +249,29 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144863571}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 2.22, y: -3.2, z: 0}
+  m_LocalPosition: {x: -3.26, y: -2.59, z: 0}
   m_LocalScale: {x: 0.49062023, y: 0.49062023, z: 0.49062}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &144863576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144863571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0083c69088b3d0447825b0a4c12daf95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 144863571}
+  playerMove: 1
+  sc: {fileID: 0}
+  fadeControl: {fileID: 0}
+  dogcontoroller: {fileID: 1878574434}
 --- !u!1 &426323187
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +484,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558280973}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.9, y: 2.12, z: 0}
+  m_LocalPosition: {x: -8.84, y: -2.23, z: 0}
   m_LocalScale: {x: 0.55649996, y: 1.6575749, z: 1.06}
   m_Children: []
   m_Father: {fileID: 0}
@@ -801,7 +819,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878574429}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.95, y: -1.45, z: 0}
+  m_LocalPosition: {x: -5.65, y: -1.45, z: 0}
   m_LocalScale: {x: -0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -872,10 +890,12 @@ MonoBehaviour:
   grab: 0
   jump: 0
   speed: 0.005
+  notParent: 0
   tukamuFlag: 0
   noTossin: 0
   migi: 0
   hidari: 0
+  kirikae: 0
   muki: 0
   jumpForce: 300
   DashArea: {fileID: 1504821972}
