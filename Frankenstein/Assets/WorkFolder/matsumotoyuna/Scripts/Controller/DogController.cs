@@ -9,7 +9,7 @@ public class DogController : MonoBehaviour
      public bool take = false;                        //ｲｯﾇがプレイヤーを持ち運べるかどうか
     [SerializeField] private bool grab = false;       //ｲｯﾇがケーブルを持ち運べるかどうか
     [SerializeField] private bool jump = false;       //ｲｯﾇがジャンプできるかどうか
-    [SerializeField] private float speed = 20f;       //ｲｯﾇのスピード
+    [SerializeField] private float speed = 0.01f;     //ｲｯﾇのスピード
 
     public bool notParent = false;                    //親子関係を一つだけにできるよう固定するフラグ
     public bool notParent2 = false;                    //親子関係を一つだけにできるよう固定するフラグ
@@ -88,13 +88,15 @@ public class DogController : MonoBehaviour
     
     void Update()
     {
+        Debug.Log(speed);
+
         //動かせるとき
         //操作・アニメーション
         if (dogMove)
         {
             if (Input.GetKey(KeyCode.LeftArrow) && !cantMove && !migi)
             {
-                this.transform.Translate(-0.01f, 0.0f, 0.0f);
+                this.transform.Translate(-speed, 0.0f, 0.0f);
                 anim.SetBool("DogWalk", true);
 
                 if (tukamuFlag && 0 < muki)
@@ -110,7 +112,7 @@ public class DogController : MonoBehaviour
 
             else if (Input.GetKey(KeyCode.RightArrow) && !cantMove && !hidari)
             {
-                this.transform.Translate(0.01f, 0.0f, 0.0f);
+                this.transform.Translate(speed, 0.0f, 0.0f);
 
                 if(jump == false)
                 {
@@ -149,6 +151,7 @@ public class DogController : MonoBehaviour
                 tukamuFlag = true;
                 muki = -transform.localScale.x;
                 anim.SetBool("DogCatch", true);
+                speed = 0.005f;
 
                 //プレイヤーなら
                 if(take)
@@ -170,6 +173,7 @@ public class DogController : MonoBehaviour
             //持ったものを離す部分
             if (Input.GetKeyUp(KeyCode.R) && !cantMove)
             {
+                speed = 0.01f;
                 notParent = false;
                 notParent2 = false;
                 noTossin = false;
@@ -186,7 +190,7 @@ public class DogController : MonoBehaviour
                 if (transform.localScale.x == -dogScale.x)
                 {
                     //移動速度を増やす
-                    this.transform.Translate(-0.02f, 0.0f, 0.0f);
+                    this.transform.Translate(-0.02f , 0.0f, 0.0f);
                     hidari = true;
                     anim.SetBool("DogWalk", true);
                 }
@@ -203,6 +207,7 @@ public class DogController : MonoBehaviour
 
             if(Input.GetKeyUp(KeyCode.T) && kirikae == true)
             {
+                speed = 0.01f;
                 migi = false;
                 hidari = false;
                 kirikae = false;
