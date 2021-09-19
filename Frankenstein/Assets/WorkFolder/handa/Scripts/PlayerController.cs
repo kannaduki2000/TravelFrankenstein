@@ -5,9 +5,6 @@ using UnityEngine.Animations;
 using UnityEngine.UI;
 using DualShockInput;
 
-
-
-
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody2D rb2d;
@@ -15,40 +12,37 @@ public class PlayerController : MonoBehaviour
     public GameObject Player;
     public GameObject enemy;
 
-    public float speed;//速度
-    public float jumpPower;//ジャンプ
+    public float speed;                         //速度
+    public float jumpPower;                     //ジャンプの強さ
     public float vx = 0;
-    private bool leftFlag = false;
-    private bool jumpFlag = false;
-    private bool groundCheck = false;//接地判定 
-    private bool pushFlag = false;
-    public bool player_Move = false;
+    private bool jumpFlag = false;              //ジャンプをしたかどうか
+    private bool groundCheck = false;　         //接地判定 
+    private bool pushFlag = false;              //ジャンプボタンを押したかどうか
+    public bool player_Move = false;            //プレイヤーが動けるかどうか
 
-    //
     [SerializeField] private LayerMask enemyLayer; // モック版熊倉:敵のLayer取得用
 
     [SerializeField] private float inputRange = 0.5f;
-    public int maxHP = 100;
-    public float HP = 100;
-    public bool touchFlag = false;
-    public bool enemyTouchFlag = false; // モック版熊倉:フラグ追加
-    public bool onElectricity = true;
-    public GameObject hpCanvas;
-    public GameObject canvasParent;
-    private float canvasParentScale_x;
+    public int maxHP = 100;                     //最大体力
+    public float HP = 100;                      //現在の体力
+    public bool touchFlag = false;              //電気を流せる物に触れているか
+    public bool enemyTouchFlag = false;         // モック版熊倉:フラグ追加
+    public bool enemyOnElect = false;
+    public bool onElectricity = true;           //電気を流しているかどうか
+    public GameObject hpCanvas;                 //HPバーのオブジェクト
+    public GameObject canvasParent;             
+    private float canvasParentScale_x;          //HPバーの反転防止
 
     private int presskeyFrames = 0;             //長押しフレーム数
     private int PressLong = 300;                //長押し
     private int PressShort = 100;               //軽押し
     private bool Throw = false;                 //投げのフラグ
     private bool Getitem = false;               //半田：itemを持っているflag
-    Rigidbody2D rb;
     [SerializeField] KeyPlessThrow item;
 
     [SerializeField] private ImageData imageData;
     public Image AnnounceImage;
     public Canvas TitleLogo;
-
 
     private bool enemyFollowFlg = false;
     // モック版熊倉:GetCompornent重いんで直で取得、ここ敵の数増えるはずなので書き換えること
@@ -69,6 +63,7 @@ public class PlayerController : MonoBehaviour
     private bool getUpTrigger = true;
     private EventBandController eventBandCon;
 
+    [SerializeField] private EveCon eve;
 
     // Start is called before the first frame update
     void Start()
@@ -85,8 +80,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (enemyCon.isFollowing) { return; }
-
         // フランケンがまだ起き上がっていなければ
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.frankensteinGetUp) == false)
         {
@@ -120,17 +113,13 @@ public class PlayerController : MonoBehaviour
         }
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.isFade))
         {
-            //DebugLogUtility.DLUtility.DebugLog("sss");
             PlayerNotMove();
             return;
         }
 
-
-        //anim = gameObject.GetComponent<Animator>();
         // モック版熊倉:LayerでやってたっぽいのでLinecastで取得
         if (GetEnemyLayer())
         {
-            
             // 電気の吸収イベントが終了してからでないとHPバーすら表示しない
             if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricAabsorption))
             {
@@ -139,9 +128,6 @@ public class PlayerController : MonoBehaviour
                 {
                     PlayerSetAnnounceImage(AnnounceName.T_Put_Electric_Enemy);
                 }
-                //@item = enemy.GetComponent<KeyPlessThrow>();
-                //@if (electricItem.IsThrow) Throw = true;
-
                 enemyTouchFlag = true;
                 hpCanvas.SetActive(true);
             }
@@ -213,12 +199,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
             input = 0;
-        }
 
-        /*--------------------------------------------------------------------------*/
-        
-        if(player_Move == false)
-        {
             /*体力の減増処理-----------------------------------------------------------------*/
             if (touchFlag || enemyTouchFlag || enemyFollowFlg || electricItem != null)
             {
@@ -242,6 +223,7 @@ public class PlayerController : MonoBehaviour
                                                // 入れたObject毎のイベントの実行
                         electricItem.Event();
                         electricItem.IsChargeEvent = true;
+
                     }
 
                     // 充電する
@@ -266,31 +248,13 @@ public class PlayerController : MonoBehaviour
                         // 充電したのでこれ以上充電出来ないように
                         enemyCon.isCharging = false;
                         hpCanvas.SetActive(false);
-                    }
-                }
-                // 電気を充電
-                else if (Input.GetKeyDown(KeyCode.Backspace) || DSInput.PushDown(DSButton.Square))
-                {
-                    //if (onElectricity == false || electricItem.ChargeFlag)
-                    //{
-                    //    Debug.Log("充電したい");
-                    //    HP += electricItem.Power;
-                    //    //HP += 20;// HPを増やす
-                    //    hp.fillAmount = HP / maxHP;
-                    //    // ここに処理を加える
-                    //    onElectricity = true;
-                    //    electricItem.ChargeFlag = false;
-                    //}
-
-                    // ？？？
-                    if (enemyFollowFlg)
-                    {
-                        enemyCon.isFollowing = false;
+                        enemyOnElect = true;
                     }
                 }
             }
+            /*--------------------------------------------------------------------------*/
+
         }
-        
         // モック版熊倉:HP表示するObjectから離れたら強制的にHPバーを非表示にします
         else
         {
@@ -335,38 +299,9 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            //if (Input.GetKeyUp(KeyCode.W))
-            //{
-            //    this.gameObject.transform.DetachChildren();
-            //}
         }
         /*-----------------------------------------------------------------*/
-
-
-        // @投げる処理
-        //if (electricItem != null)
-        //{
-        //    if (electricItem.IsThrow)
-        //    {
-        //        if (Input.GetKey(KeyCode.W))
-        //        {
-        //            Debug.Log("掴んだ");
-        //            // ここでこのオブジェクトをプレイヤーの子供にする
-        //            item.gameObject.transform.parent = this.transform;
-        //        }
-        //        if (Input.GetKeyUp(KeyCode.W))
-        //        {
-        //            Debug.Log("離した");
-        //            item.transform.parent = null;
-        //        }
-        //    }
-        //}
-
-
-
     }
-
-
 
     /*無限ジャンプを防ぐ処理------------------------------------------------*/
     private void FixedUpdate()
@@ -455,7 +390,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        //地面判定
+        if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "BackGround" || collision.gameObject.tag == "pull")
         {
             groundCheck = true;
         }
@@ -464,7 +400,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("stay");
 
-            //item = collision.gameObject.GetComponent<Item>();
             //Wを押していたら
             if (Input.GetKey(KeyCode.W) || DSInput.Push(DSButton.R1))
             {
@@ -493,27 +428,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<ElectricItem>() != null)
         {
             electricItem = collision.gameObject.GetComponent<ElectricItem>();
-
-            // 投げれるObjectなら情報を取得
-            //if (electricItem.IsThrow)
-            //{
-            //    Throw = true;
-            //    //アイテムクラスの取得
-            //    item = collision.gameObject.GetComponent<KeyPlessThrow>();
-            //}
         }
 
         if (collision.gameObject.tag == "HomeApp")
         {
-            //SetAnnounceImage(AnnounceName.T_SquareButton_Input);
             touchFlag = true;
         }
 
@@ -536,12 +459,6 @@ public class PlayerController : MonoBehaviour
             fadeControl.Fade("out", () => sc.SceneSwitching("Main_Stag2"));
         }
 
-        // ケーブルカーが来るフラグ
-        if (collision.gameObject.tag == "CableCarEvent")
-        {
-            EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStart, true);
-        }
-
         // ケーブルカーに乗車or降車
         if (collision.gameObject.tag == "CableCarEventCollider")
         {
@@ -554,12 +471,6 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<ElectricItem>() != null)
         {
-            //if (electricItem != null && electricItem.IsThrow)
-            //{
-            //    Throw = false;
-            //    presskeyFrames = 0;
-            //    item = null;
-            //}
             electricItem = null;
         }
 
@@ -572,15 +483,6 @@ public class PlayerController : MonoBehaviour
         {
             groundCheck = false;
         }
-
-        // 一旦消す
-        //if (collision.gameObject.tag == "Item")
-        //{
-        //    Throw = false;
-        //    presskeyFrames = 0;
-        //    //item.transform.parent = null;
-        //    Debug.Log("exit");
-        //}
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6326749918772115940}
   - component: {fileID: 9180793296739932}
   - component: {fileID: 9180793296739931}
+  - component: {fileID: 7425818840158980153}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Enemy
@@ -117,6 +118,11 @@ MonoBehaviour:
   ECon: {fileID: 0}
   moveSpeed: 7.5
   car: {fileID: 0}
+  MineCart: {fileID: 0}
+  mcp: {fileID: 0}
+  pushb: {fileID: 0}
+  tukamuFlag: 0
+  muki: 0
 --- !u!114 &6326749918772115940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,3 +186,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!61 &7425818840158980153
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180793296739930}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.798061, y: 0.012230992}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.33, y: 2.05}
+    newSize: {x: 1.33, y: 2.05}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.82242084, y: 1.3773048}
+  m_EdgeRadius: 0

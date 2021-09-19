@@ -43,6 +43,9 @@ public class EnemyController : ElectricItem
     private bool carFlag = false;
     [SerializeField] private CarPush car;
 
+    [SerializeField] crane cra;
+    private bool craneFlag = false;
+
     //トロッコを押す
     public GameObject MineCart;
     public MinecartPush mcp;
@@ -58,17 +61,6 @@ public class EnemyController : ElectricItem
         {
             enemyJump = false;
         }
-
-        //坂を降りるやーつだお
-        if (collision.gameObject.name == "MineCart")
-        {
-            minecart = true;
-        }
-
-        if (collision.gameObject.name == "MineCart" && pushb.rpush == true)
-        {
-            okrpush = true;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -83,7 +75,25 @@ public class EnemyController : ElectricItem
         if (collision.gameObject.tag == "Car")
         {
             carFlag = true;
-            //Follow = false;
+        }
+
+        if(collision.gameObject.tag == "Crane")
+        {
+            craneFlag = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //坂を降りるやーつだお
+        if (collision.gameObject.name == "Dolly")
+        {
+            minecart = true;
+        }
+
+        if (collision.gameObject.name == "Dolly" && pushb.rpush == true)
+        {
+            okrpush = true;
         }
     }
 
@@ -98,7 +108,11 @@ public class EnemyController : ElectricItem
         if (collision.gameObject.tag == "Car")
         {
             carFlag = false;
-            //Follow = true;
+        }
+
+        if (collision.gameObject.tag == "Crane")
+        {
+            craneFlag = false;
         }
     }
 
@@ -137,6 +151,16 @@ public class EnemyController : ElectricItem
                 EnemyNotMove();
                 car.crash = true;
                 carFlag = false;
+            }
+        }
+
+        if(craneFlag)
+        {
+            if(DSInput.PushDown(DSButton.Square))
+            {
+                EnemyNotMove();
+                //cra.craneMove = true;
+                craneFlag = false;
             }
         }
 
@@ -226,13 +250,13 @@ public class EnemyController : ElectricItem
             input = 0;
 
             //トロッコの前でRを押すと
-            if (Input.GetKey(KeyCode.R) && minecart == true)
+            if (Input.GetKey(KeyCode.R) || DSInput.Push(DSButton.R1) && minecart == true)
             {
                 mcp.minecartpush = true;
             }
 
             //t
-            if (Input.GetKeyDown(KeyCode.R) && pushb.rpush == true && okrpush == true)
+            if (DSInput.PushDown(DSButton.R1) && pushb.rpush == true && okrpush == true)
             {
                 tukamuFlag = true;
                 muki = -transform.localScale.x;
@@ -243,7 +267,7 @@ public class EnemyController : ElectricItem
             }
 
             //t
-            if (Input.GetKeyUp(KeyCode.R) && pushb.rpush == true && okrpush == true)
+            if (DSInput.PushUp(DSButton.R1) && pushb.rpush == true && okrpush == true)
             {
                 tukamuFlag = false;
                 mcp.enemyrpush = false;
@@ -268,7 +292,7 @@ public class EnemyController : ElectricItem
         }
         //2回目の切り替え時、プレイヤーだけ動いてエネミー不動堂
         //この状態だと何回Enter押してもプレイヤーしか動かんで
-        else if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)))
+        else if (mt.enemyOnElect == true && (Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)))
         {
             camera.GetComponent<CameraClamp>().targetToFollow = Player.transform;
             isFollowing = true;
@@ -279,7 +303,7 @@ public class EnemyController : ElectricItem
 
         //呼ぶボタン(Delete仮置き)を押した時の動き
         //Followを切り替えることでもう一度追従や切り替えができるお
-        if (Follow == true && (Input.GetKeyDown(KeyCode.Delete ) || DSInput.PushDown(DSButton.R1)) && enemyMove == true && isFollowing)
+        if (Follow == true && enemyMove == true && isFollowing)
         {
             isFollowing = true;
             Follow = !Follow;
