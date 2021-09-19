@@ -28,7 +28,7 @@ public class MinecartPush : MonoBehaviour
             enemytouch = true;
         }
 
-        else if (collision.gameObject.name == "Button")
+        else if (collision.gameObject.name == "Button" || collision.gameObject.name == "Lever")
         {
             rigid2D.constraints = RigidbodyConstraints2D.FreezePositionX;
             Invoke("MoveStop", 0.5f);

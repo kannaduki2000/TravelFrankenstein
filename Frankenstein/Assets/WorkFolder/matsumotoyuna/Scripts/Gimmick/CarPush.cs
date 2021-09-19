@@ -28,25 +28,10 @@ public class CarPush : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    crash = true;
-        //}
         if (crash == true)
         {
             Crash();
         }
-
-        //if(rot == true)
-        //{
-        //    transform.Rotate(0f, 0f, -this.speed / 6);
-        //}
-
-        //if (rot == true && transform.rotation.z >= 0)
-        //{
-        //    transform.rotation = new Quaternion(0, 0, 0, 0);
-        //    rot = false;
-        //}
     }
     
     private void OnCollisionEnter2D(Collision2D collision)

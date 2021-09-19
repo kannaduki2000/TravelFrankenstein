@@ -11,7 +11,7 @@ public class PushButton : MonoBehaviour
     public GameObject Button;
     public GameObject Button1;
     public GameObject Button2;
-    private float speed = 5f;
+    private float speed = 1f;
     public bool pushingbutton = false;
     public bool rpush = false;
     public bool notpushingbutton = false;
@@ -20,7 +20,7 @@ public class PushButton : MonoBehaviour
     //坂を降りた後のボタン用
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "MineCart")
+        if (collision.gameObject.name == "MineCart" || collision.gameObject.name == "Dolly")
         {
             pushingbutton = true;
         }
@@ -30,7 +30,7 @@ public class PushButton : MonoBehaviour
     //トロッコがボタンを押している時
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "MineCart")
+        if (collision.gameObject.name == "MineCart" || collision.gameObject.name == "Dolly")
         {
             notpushingbutton2 = false;
             pushingbutton = true;
@@ -40,7 +40,7 @@ public class PushButton : MonoBehaviour
     //トロッコがボタンから離れたとき
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "MineCart")
+        if (collision.gameObject.name == "MineCart" || collision.gameObject.name == "Dolly")
         {
             notpushingbutton2 = true;
         }
@@ -58,25 +58,25 @@ public class PushButton : MonoBehaviour
     {
         //坂を降りた後のボタン用
         //ボタンが横に移動するタイプ
-        if(notpushingbutton == false && this.gameObject.name == "Button")
+        if(notpushingbutton == false && this.gameObject.name == "Button" || this.gameObject.name == "Lever")
         {
             Transform button = this.transform;
             Vector2 buttonpos = button.position;
 
-            buttonpos.x = Mathf.MoveTowards(buttonpos.x, -15.5f, Time.deltaTime * speed);
+            buttonpos.x = Mathf.MoveTowards(buttonpos.x, -100f, Time.deltaTime * speed);
             button.position = buttonpos;
 
-            Invoke("NotPushButton", 2.0f);
+            Invoke("NotPushButton", -2.0f);
         }
 
         //はしごを上げ下げするボタン用
         //ボタンが下に移動するタイプ
-        if(notpushingbutton2 == false && this.gameObject.name == "Button2")
+        if(notpushingbutton2 == false && this.gameObject.name == "Button2" || this.gameObject.name == "button")
         {
             Transform button2 = this.transform;
             Vector2 button2pos = button2.position;
 
-            button2pos.y = Mathf.MoveTowards(button2pos.y, -4.4f, Time.deltaTime * speed);
+            button2pos.y = Mathf.MoveTowards(button2pos.y, -15.3f, Time.deltaTime * speed);
             button2.position = button2pos;
 
             rotenemy.rothaguruma = true;
@@ -85,12 +85,12 @@ public class PushButton : MonoBehaviour
 
         //はしごを上げ下げするボタン用
         //ボタンが上に移動するタイプ
-        if (notpushingbutton2 == true && this.gameObject.name == "Button2")
+        if (notpushingbutton2 == true && this.gameObject.name == "Button2" || this.gameObject.name == "button")
         {
             Transform button2 = this.transform;
             Vector2 button2pos = button2.position;
 
-            button2pos.y = Mathf.MoveTowards(button2pos.y, -4.236f, Time.deltaTime * speed);
+            button2pos.y = Mathf.MoveTowards(button2pos.y, -15f, Time.deltaTime * speed);
             button2.position = button2pos;
 
             rotenemy.rothaguruma = false;
