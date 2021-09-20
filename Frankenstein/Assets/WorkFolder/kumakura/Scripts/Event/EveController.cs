@@ -13,6 +13,8 @@ public class EveController : MonoBehaviour
     private EventBandController eventBandCon;
     private PlayerController player;
 
+    private float time = 0;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -55,6 +57,17 @@ public class EveController : MonoBehaviour
         }
     }
 
+    private IEnumerator Delay()
+    {
+        while (time < 2)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        time = 0;
+        EndingManager.Instance.Ending();
+        yield break;
+    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -65,7 +78,8 @@ public class EveController : MonoBehaviour
             player.PlayerNotMove();
             eventBandCon.EventStart(() =>
             {
-                EndingManager.Instance.Ending();
+                StartCoroutine(Delay());
+                //EndingManager.Instance.Ending();
             });
         }
     }
