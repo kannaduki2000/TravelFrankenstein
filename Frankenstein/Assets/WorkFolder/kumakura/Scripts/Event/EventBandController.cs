@@ -52,6 +52,14 @@ public class EventBandController : MonoBehaviour
         StartCoroutine(BandMove(false));
     }
 
+    public void InitEventBand()
+    {
+        for (int ev = 0; ev < eventBands.Length; ev++)
+        {
+           eventBands[ev].transform.position = initialPosY[ev];
+        }
+    }
+
     private IEnumerator BandMove(bool _eventStart)
     {
         if (_eventStart)

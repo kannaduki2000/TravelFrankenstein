@@ -49,6 +49,12 @@ public class SceneChange : MonoBehaviour
                 fadeControl.Fade("in", ()=> EventFlagManager.Instance.SetFlagState(EventFlagName.frankensteinGetUp, true));
                 return;
             }
+
+            if (sceneName == "BadEndScene")
+            {
+                fadeControl.Fade("in", () => fadeControl.Fade("out", () => SceneSwitching("MainTitle")));
+                return;
+            }
             fadeControl.Fade("in");
         }
     }

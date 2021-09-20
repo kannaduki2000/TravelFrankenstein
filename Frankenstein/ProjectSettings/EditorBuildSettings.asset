@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/WorkFolder/handa/Scenes/Main_Stag2.unity
     guid: 8c5e911666b08db43ab4ceabc6673716
+  - enabled: 1
+    path: Assets/WorkFolder/kumakura/Scenes/MainScenes/BadEndScene.unity
+    guid: 155c015716d6e104bbf43e25c4e04f09
+  - enabled: 1
+    path: Assets/WorkFolder/kumakura/Scenes/MainScenes/TrueEndScene.unity
+    guid: 929c3a631e5f7d540a4058706a72cc0c
   m_configObjects: {}

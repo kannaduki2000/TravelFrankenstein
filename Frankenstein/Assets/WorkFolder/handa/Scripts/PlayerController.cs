@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
     public Canvas TitleLogo;
 
     private bool enemyFollowFlg = false;
-    // モック版熊倉:GetCompornent重いんで直で取得、ここ敵の数増えるはずなので書き換えること
     [SerializeField] private EnemyController enemyCon;
     [SerializeField] private Image hp;
 
@@ -62,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
     private bool getUpTrigger = true;
     private EventBandController eventBandCon;
+    private bool endFlagTrigger = false;
 
     [SerializeField] private EveCon eve;
 
@@ -367,6 +367,20 @@ public class PlayerController : MonoBehaviour
     public void TextAnim()
     {
         textCon.SetTextActive(true);
+    }
+
+    /// <summary>
+    /// アニメーション用
+    /// </summary>
+    public void FadeOut()
+    {
+        if (endFlagTrigger) return;
+        endFlagTrigger = true;
+        fadeControl.Fade("out", ()=>
+        {
+            eventBandCon.InitEventBand();
+            fadeControl.sceneChange.SceneSwitching("TrueEndScene");
+        });
     }
 
     /// <summary>
