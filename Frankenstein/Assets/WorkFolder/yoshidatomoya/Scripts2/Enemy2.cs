@@ -1,293 +1,387 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DebugLogUtility;
 
 public class Enemy2 : MonoBehaviour
 {
-    //CharacterController Controller;
-    //Transform Target;
-    GameObject Ground;
+ 
+    [SerializeField]
+    private GameObject objGet;
+    private GameObject Ground;
+    private GameObject boneObject;
 
-    //[SerializeField]
-    //float MoveSpeed = 2.0f;
-    //int DetecDist = 8;
-    //bool InArea = false;
 
-    // ‚¸‚Á‚ÆA‰•œ‚·‚é
-    public float speedX = 1; // ƒXƒs[ƒhX
-    public float speedY = 0; // ƒXƒs[ƒhY
-    public float speedZ = 0; // ƒXƒs[ƒhZ
-    public float second = 1; // ‚©‚©‚é•b”
-    private bool move = false;
+    // ãšã£ã¨ã€å¾€å¾©ã™ã‚‹
+    public float speedX = 1;    // ã‚¹ãƒ”ãƒ¼ãƒ‰X
+    public float speedY = 0;    // ã‚¹ãƒ”ãƒ¼ãƒ‰Y
+    public float speedZ = 0;    // ã‚¹ãƒ”ãƒ¼ãƒ‰Z
+    public float second = 1;    // ã‹ã‹ã‚‹ç§’æ•°
+    private bool move = false;  // ã‚¹ã‚¤ãƒƒãƒ
     public float Stop = 2;
 
-    public Transform targetPos; // s‚«‚½‚¢êŠ
-    public Vector3 startPos;  // Œ³‚ÌêŠ
+    public Transform targetPos;      // è¡ŒããŸã„å ´æ‰€
+    public Vector3 startPos;         // å…ƒã®å ´æ‰€
+    public Vector3 WallPos;
 
-    public bool isSearch = false;
-    public bool isloop = false;
-    private bool move2 = false;
+    public bool isSearch = false;    // ã‚¹ã‚¤ãƒƒãƒ
+
+    public bool isloop = false;      // ã‚¹ã‚¤ãƒƒãƒ
+    private bool move2 = false;      // ã‚¹ã‚¤ãƒƒãƒ
 
     private float thisXScale;
 
-    public float time = 0;
-    public float time2 = 0;
-    public float time3 = 0;
-    public float time4 = 0;
+    public float time = 0;     // 2ç§’åœæ­¢ã•ã›ã‚‹éš›ã®ã‚¿ã‚¤ãƒãƒ¼
+    public float time2 = 0;    // çªé€²ã•ã›ã‚‹å‰ã«2ç§’åœæ­¢ã•ã›ã‚‹ãŸã‚ã®ã‚¿ã‚¤ãƒãƒ¼
+    //public float time3 = 0;
+    //public float time4 = 0;
 
-    Transform Player;
-    Transform Bone;
+    Transform Player; // Playerã®ä½ç½®æƒ…å ±å–å¾—
+    Transform Bone; ã€€// Boneã®ä½ç½®æƒ…å ±å–å¾—
+    Transform Wall;   // Wallã®ä½ç½®æƒ…å ±å–å¾—
 
     Rigidbody2D rb;
-    public float speed = 1; // ƒXƒs[ƒhX
-   
+    public float speed = 1; // ã‚¹ãƒ”ãƒ¼ãƒ‰X
+
+    public bool bone = false;           // ã‚¹ã‚¤ãƒƒãƒ
+    private bool playerFlag = false;    // ã‚¹ã‚¤ãƒƒãƒ
 
 
-    private void Update()
-    {
-        if (isloop) { return; }
-        // ‰E
-        if (isSearch)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos.position, 1f * Time.deltaTime);
-            if (targetPos.position.x - transform.position.x <= Mathf.Abs(0.1f))
-            {
-                // 2•b’â~
-                time += Time.deltaTime;
-                if (time >= 2)
-                {
-                    time = 0;
-                    Vector3 left = new Vector3(-thisXScale, transform.localScale.y, transform.localScale.z);
-                    transform.localScale = left;
-                    isSearch = false;
-                }
-            }
-        }
-        // ¶
-        else
-        {            
-            transform.position = Vector3.MoveTowards(transform.position, startPos, 1f * Time.deltaTime);
-            if (transform.position.x - startPos.x <= Mathf.Abs(0.1f)) 
-            {
-                time += Time.deltaTime;
-                // 2•b’â~
-                if (time >= 2)
-                {
-                    time = 0;
-                    Vector3 right = new Vector3(thisXScale, transform.localScale.y, transform.localScale.z);
-                    transform.localScale = right;
-                    isSearch = true;
-                }
-               
-            }
-        }
-        Vector3 direction = (Player.position - transform.position).normalized;
+    [SerializeField] private ElectricCurrent player; // ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ElectricCurrentã‚’å–å¾—
+    [SerializeField] private Bone hone;              // ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®Boneã‚’å–å¾—
+    [SerializeField] private WallFlag wall;          // ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®WallFlagã‚’å–å¾—
 
-        
-    }
 
     private void Start()
     {
-        startPos = this.transform.position;
+        startPos = this.transform.position; // ç¾åœ¨ã®ä½ç½®å–å¾—
         Debug.Log(startPos);
 
-        // ƒvƒŒƒCƒ„[‚ÌˆÊ’uæ“¾
-        Player = GameObject.Find("Player").transform;
+        
+        Player = GameObject.Find("Player").transform; // Playerã®ä½ç½®å–å¾—
+        Bone = GameObject.Find("Bone").transform;     // Boneã®ä½ç½®å–å¾—
+        Wall = GameObject.Find("wall").transform;     // wallã®ä½ç½®å–å¾—
 
         thisXScale = transform.localScale.x;
 
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Î‚É“–‚½‚Á‚½‚ç“®‚«‚ğ~‚ß‚éˆ—
+
+    // å¾€å¾©ç§»å‹•
+    private void Update()
+    {
+        if (isloop) { return; }
+        // éª¨ãŒã‚ã‚Œã°
+        if ((playerFlag == false) || (playerFlag && player.isBone)) // ElectricCurrentã®ä¸­ã®isBoneã‚’å‚ç…§
+        {
+            DLUtility.DebugLog("ç§»å‹•ã™ã‚‹ã‚ˆ");
+            // å³
+            if (isSearch)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPos.position, 1f * Time.deltaTime);
+                if (targetPos.position.x - transform.position.x <= Mathf.Abs(0.1f))
+                {
+                    // 2ç§’åœæ­¢
+                    time += Time.deltaTime;
+                    if (time >= 2)
+                    {
+                        time = 0;
+                        Vector3 left = new Vector3(-thisXScale, transform.localScale.y, transform.localScale.z);
+                        transform.localScale = left;
+                        isSearch = false;
+                    }
+                }
+            }
+            // å·¦
+            else
+            {            
+                transform.position = Vector3.MoveTowards(transform.position, startPos, 1f * Time.deltaTime);
+                if (transform.position.x - startPos.x <= Mathf.Abs(0.1f)) 
+                {
+                    time += Time.deltaTime;
+                    // 2ç§’åœæ­¢
+                    if (time >= 2)
+                    {
+                        time = 0;
+                        Vector3 right = new Vector3(thisXScale, transform.localScale.y, transform.localScale.z);
+                        transform.localScale = right;
+                        isSearch = true;
+                    }
+               
+                }
+            }
+        }
+        // éª¨ãŒãªã‘ã‚Œã°
+        else
+        {
+            // çªã£è¾¼ã‚€
+            if(player.isBone == false)
+            {
+                DLUtility.DebugLog("çªã£è¾¼ã‚€ã‚ˆ");
+                time2 += Time.deltaTime;
+                if (time2 > 2)
+                {
+                    Debug.Log("add_player");
+                    isloop = true;
+
+                    if (transform.position.x < Player.position.x)
+                    {
+                        //å³
+                        rb.velocity = new Vector2(speed, 0);
+                        transform.localScale = new Vector2(1, 1);
+                        isloop = false;
+                    }
+                    else if (transform.position.x > Player.position.x)
+                    {
+                        //å·¦
+                        rb.velocity = new Vector2(-speed, 0);
+                        transform.localScale = new Vector2(-1, 1);
+                        isloop = false;
+                    }
+                }
+            }
+
+        }
+
+        if ((playerFlag && wall.isBone && player.isBone == false))
+        {
+            DLUtility.DebugLog("çªã£è¾¼ã‚€ã‚ˆ");
+            time2 += Time.deltaTime;
+            if (time2 > 2)
+            {
+                Debug.Log("add_player");
+                isloop = true;
+
+                if (transform.position.x < Wall.position.x)
+                {
+                    //å³
+                    rb.velocity = new Vector2(speed, 0);
+                    transform.localScale = new Vector2(1, 1);
+                    isloop = false;
+                }
+                else if (transform.position.x > Wall.position.x)
+                {
+                    //å·¦
+                    rb.velocity = new Vector2(-speed, 0);
+                    transform.localScale = new Vector2(-1, 1);
+                    isloop = false;
+                }
+            }
+        }
+
+    }
+
+
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       // Stone‚Ìƒ^ƒO‚ª•t‚¢‚Ä‚¢‚é‚à‚Ì‚É“–‚½‚Á‚½‚ç
-       if (collision.gameObject.tag == "Stone")
-       {
+        // çŸ³ã«å½“ãŸã£ãŸã‚‰å‹•ãã‚’æ­¢ã‚ã‚‹å‡¦ç†
+        // Stoneã®ã‚¿ã‚°ãŒä»˜ã„ã¦ã„ã‚‹ã‚‚ã®ã«å½“ãŸã£ãŸã‚‰
+        if (collision.gameObject.tag == "Stone")
+        {
             isloop = true;
             speedX = 0;
-            // ‰EŒü‚«‚Ìó‘Ô‚Å“–‚½‚Á‚½‚ç
+            // å³å‘ãã®çŠ¶æ…‹ã§å½“ãŸã£ãŸã‚‰
            if (this.transform.localScale.x == 1)
            {
                transform.localScale = new Vector3(1, 1, 1);
            }
-           // ¶Œü‚«‚Ìó‘Ô‚Å“–‚½‚Á‚½‚ç
+           // å·¦å‘ãã®çŠ¶æ…‹ã§å½“ãŸã£ãŸã‚‰
            else
            {
                transform.localScale = new Vector3(-1, 1, 1);
            }
-       }
-    }
+        }
 
-    // œ‚ğæ“¾
-
-
-    // “Ëi
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        // ƒvƒŒƒCƒ„[ƒ^ƒO‚ª‚Â‚¢‚Ä‚¢‚é‚â‚Â‚ª‹ß‚Ã‚¢‚Ä‚«‚½‚ç
-        if (collision.gameObject.tag == "Player")
+        if(collision.gameObject.tag == "Bone")
         {
-            //float speed = 0;
-            time2 += Time.deltaTime;
-            if (time2 > 2)
+            isloop = true;
+            speedX = 0;
+            // å³å‘ãã®çŠ¶æ…‹ã§å½“ãŸã£ãŸã‚‰
+            if (this.transform.localScale.x == 1)
             {
-                isloop = true;
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            // å·¦å‘ãã®çŠ¶æ…‹ã§å½“ãŸã£ãŸã‚‰
+            else
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
 
+
+            if (player.isBone)
+            {
                 if (transform.position.x < Player.position.x)
                 {
-                    //‰E
+                    //å³
                     rb.velocity = new Vector2(speed, 0);
                     transform.localScale = new Vector2(1, 1);
                     isloop = false;
                 }
                 else if (transform.position.x > Player.position.x)
                 {
-                    //¶
+                    //å·¦
                     rb.velocity = new Vector2(-speed, 0);
                     transform.localScale = new Vector2(-1, 1);
                     isloop = false;
                 }
             }
-        }     
+        }
+    }
+
+    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¿ã‚°ãŒã¤ã„ã¦ã„ã‚‹ã‚„ã¤ãŒè¿‘ã¥ã„ã¦ããŸã‚‰
+        if (collision.gameObject.tag == "Player")
+        {
+            playerFlag = true; // playerFlagã‚’ã‚ªãƒ³ã«ã™ã‚‹
+        }
     }
 
 
-    // Œ³‚ÌˆÊ’u‚É–ß‚é
+    // å…ƒã®ä½ç½®ã«æˆ»ã‚‹
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            time2 = 0;
-            time3 += Time.deltaTime;
-            if (transform.position.x < Player.position.x)
-            {
-                //‰E
-                rb.velocity = new Vector2(speed, 0);
-                transform.localScale = new Vector2(-1, 1);
-            }
-            else if (transform.position.x > Player.position.x)
-            {
-                //¶
-                rb.velocity = new Vector2(-speed, 0);
-                transform.localScale = new Vector2(1, 1);
-            }
-        }
+        
+
     }
 
 }
 
-// ƒGƒlƒ~[©g‚ÌƒeƒŠƒgƒŠ[ŠÔ‚ğs‚«—ˆ‚·‚éZ
-//  ‘Ò‹@ŠÔ‚ ‚èi2•bŠÔjZ
-// ƒtƒ‰ƒ“ƒPƒ“‚ª‹ß‚Ã‚¢‚Ä‚«‚½‚ç“Ëi‚·‚é Z
-//  ƒtƒ‰ƒ“ƒPƒ“‚Ì‹ü@’m‚ÍƒGƒlƒ~[‚ğ’†S‚É‚·‚éiƒGƒlƒ~[‚ª“®‚¢‚½‚ç‹ü@’m‚àˆê‚É“®‚­jZ
-// “Ëi¬Œ÷‚µ‚½‚ç‚S•bŠÔ‘Ò‹@@‚»‚Ì‚ ‚Æ©•ª‚ÌƒeƒŠƒgƒŠ[‚É–ß‚é
-//  ‚S•bŠÔ‘Ò‹@ŒãA‹ü@’m“à‚Éƒtƒ‰ƒ“ƒPƒ“‚ª‚¢‚½‚çƒtƒ‰ƒ“ƒPƒ“‚ÉÄ‚Ñ“Ëi
-// “Ëi‚µ‚½êŠ‚Éƒtƒ‰ƒ“ƒPƒ“‚ª‚¢‚È‚©‚Á‚½‚ç‚Q•bŠÔ‘Ò‹@‚µ‚Ä©•ª‚ÌƒeƒŠƒgƒŠ[‚É–ß‚é ¢
+// çªé€²(æ•µã®æ”»æ’ƒå‡¦ç†)
 
-    // œ‚ğ‚Á‚Ä‚¢‚éŠÔ‚ÍP‚Á‚Ä‚±‚È‚¢ˆ—
+// ã‚¨ãƒãƒŸãƒ¼è‡ªèº«ã®ãƒ†ãƒªãƒˆãƒªãƒ¼é–“ã‚’è¡Œãæ¥ã™ã‚‹ã€‡
+//  å¾…æ©Ÿæ™‚é–“ã‚ã‚Šï¼ˆ2ç§’é–“ï¼‰ã€‡
+// ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ãŒè¿‘ã¥ã„ã¦ããŸã‚‰çªé€²ã™ã‚‹ ã€‡
+//  ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã®è¦–ç·šå¯ŸçŸ¥ã¯ã‚¨ãƒãƒŸãƒ¼ã‚’ä¸­å¿ƒã«ã™ã‚‹ï¼ˆã‚¨ãƒãƒŸãƒ¼ãŒå‹•ã„ãŸã‚‰è¦–ç·šå¯ŸçŸ¥ã‚‚ä¸€ç·’ã«å‹•ãï¼‰ã€‡
+// çªé€²æˆåŠŸã—ãŸã‚‰ï¼”ç§’é–“å¾…æ©Ÿã€€ãã®ã‚ã¨è‡ªåˆ†ã®ãƒ†ãƒªãƒˆãƒªãƒ¼ã«æˆ»ã‚‹
+//  ï¼”ç§’é–“å¾…æ©Ÿå¾Œã€è¦–ç·šå¯ŸçŸ¥å†…ã«ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ãŒã„ãŸã‚‰ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ã«å†ã³çªé€²
+// çªé€²ã—ãŸå ´æ‰€ã«ãƒ•ãƒ©ãƒ³ã‚±ãƒ³ãŒã„ãªã‹ã£ãŸã‚‰ï¼’ç§’é–“å¾…æ©Ÿã—ã¦è‡ªåˆ†ã®ãƒ†ãƒªãƒˆãƒªãƒ¼ã«æˆ»ã‚‹ â–³
 
-    // Î‚É“–‚½‚Á‚½‚ç“®‚«‚ğŠ®‘S‚É~‚ß‚éZ
-
-    // ƒvƒŒƒCƒ„[ƒ^ƒO‚Ìæ“¾
-    // Player = GameObject.FindWithTag("Player");
-    //Target = Player.transform;
-
-    //Controller = GetComponent<CharacterController>();
-
-    /*
-           if(InArea)
-           {
-               Debug.Log("abc");
-               // ƒvƒŒƒCƒ„[‚Ì‚Ù‚¤‚ğŒü‚©‚¹‚é
-               this.transform.LookAt(Target.transform);
-
-               // ƒLƒ…[ƒu‚ÆƒvƒŒƒCƒ„[ŠÔ‚Ì‹——£‚ğŒvZ
-               Vector3 direction = Target.position - this.transform.position;
-               direction = direction.normalized;
-
-               // ƒvƒŒƒCƒ„[•ûŒü‚Ì‘¬“x‚ğì¬
-               Vector3 velocity = direction * MoveSpeed;
-
-               // ƒvƒŒƒCƒ„[‚ªƒWƒƒƒ“ƒv‚µ‚½‚ÉƒLƒ…[ƒu‚ª•‚‚©‚È‚¢‚æ‚¤‚Éy‘¬“x‚ğ0‚ÉŒÅ’è‚µ‚Ä‚¨‚­
-               velocity.y = 0.0f;
-
-               // ƒLƒ…[ƒu‚ğ“®‚©‚·
-               Debug.Log("nnn");
-               Controller.Move(velocity * Time.deltaTime);
-           }
-    */
-
-    // ƒvƒŒƒCƒ„[‚ÆƒLƒ…[ƒuŠÔ‚Ì‹——£‚ğŒvZ
-    //Vector3 Apos = this.transform.position;
-    //Vector3 Bpos = Target.transform.position;
-    //float distance = Vector3.Distance(Apos, Bpos);
+// ã‚‚ã—ã‹ã—ãŸã‚‰ã‚·ãƒ¼ãƒ³ã‚’åˆ†ã‘ã¦ä½œã‚‹ã‹ã‚‚
+// éª¨ã‚’æŒã£ã¦ã„ã‚‹é–“ã¯è¥²ã£ã¦ã“ãªã„å‡¦ç† ã€‡
+// éª¨ã‚’æŒã£ã¦ã„ã‚‹é–“ã¯å®Œå…¨åœæ­¢ã•ã›ã‚‹
+// éª¨ã‚’æŠ•ã’ãŸã‚‰æ•µãŒéª¨ã®ã¨ã“ã‚ã«è¡Œãï¼ˆè¿‘ãã«åˆ¤å®šã‚’ã¤ã‘ã¦ãã“ã«æŠ•ã’ãŸã‚‰éª¨ã«å‘ã‹ã£ã¦çªé€²ï¼‰ã€‡
 
 
-    /*
-    // ‹——£‚ªDetecDist‚Ìİ’è’l–¢–‚Ìê‡‚ÍŒŸ’mƒtƒ‰ƒO‚ğfalse‚É‚·‚é
-    if(distance > DetecDist)
-    {
-        Debug.Log("aaa");
-        InArea = false;
-    }
-    */
+// çŸ³ã«å½“ãŸã£ãŸã‚‰å‹•ãã‚’å®Œå…¨ã«æ­¢ã‚ã‚‹ã€‡
 
-    /*
-    // ƒvƒŒƒCƒ„[‚ªŒŸ’mƒGƒŠƒA‚É‚¢‚½‚çŒŸ’mƒtƒ‰ƒO‚ğtrue‚É‚·‚é
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("“®‚¢‚½I");
-        InArea = true;
-    }
-    */
 
-    // “Ëi‚Ìˆ— –v
-    //   Vector3 direction = (Player.position - transform.position).normalized;
-    //  speed = 3.5f;
-    //transform.Translate(direction * speed * Time.deltaTime);
 
-    // ‚¸‚Á‚ÆA‰•œ‚·‚é
 
-    /*
-    void FixedUpdate()
-    {
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    Debug.Log("E");
-        //    StartCoroutine(Move());
-        //}
-        //if (move == true)
-        //{
 
-        //    float s = Mathf.Sin(Time.time); // ˆÚ“®—Ê‚ğ‹‚ß‚é
-        //    this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
-        //    // ƒfƒtƒHƒ‹ƒg‚ª‰EŒü‚«‚Ìê‡
-        //    // ƒXƒP[ƒ‹’læ‚èo‚µ
-        //    Vector3 scale = transform.localScale;
 
-        //    if (s >= 0)
-        //    {
 
-        //        // ‰E•ûŒü‚ÉˆÚ“®’†
-        //        scale.x = 1; // ‚»‚Ì‚Ü‚Üi‰EŒü‚«j
-        //    }
-        //    else
-        //    {
-        //        // ¶•ûŒü‚ÉˆÚ“®’†
-        //        scale.x = -1; // ”½“]‚·‚éi¶Œü‚«j
-        //    }
-        //    // ‘ã“ü‚µ’¼‚·
-        //    transform.localScale = scale;
-        //}
+// ã“ã“ã‹ã‚‰ä¸‹ã¯æ²¡ã«ãªã£ãŸãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚³ãƒ¼ãƒ‰
 
-    }  
+
+
+
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¿ã‚°ã®å–å¾—
+// Player = GameObject.FindWithTag("Player");
+//Target = Player.transform;
+//Controller = GetComponent<CharacterController>();
+
+//[SerializeField] private PlayerController playerCon;
+
+//if ((playerFlag == false) || (playerFlag && playerCon.isBone)) // PlayerControllerã®ä¸­ã®isBoneã‚’å‚ç…§
+
+/*
+       if(InArea)
+       {
+           Debug.Log("abc");
+           // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã»ã†ã‚’å‘ã‹ã›ã‚‹
+           this.transform.LookAt(Target.transform);
+
+           // ã‚­ãƒ¥ãƒ¼ãƒ–ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼é–“ã®è·é›¢ã‚’è¨ˆç®—
+           Vector3 direction = Target.position - this.transform.position;
+           direction = direction.normalized;
+
+           // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ–¹å‘ã®é€Ÿåº¦ã‚’ä½œæˆ
+           Vector3 velocity = direction * MoveSpeed;
+
+           // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚¸ãƒ£ãƒ³ãƒ—ã—ãŸæ™‚ã«ã‚­ãƒ¥ãƒ¼ãƒ–ãŒæµ®ã‹ãªã„ã‚ˆã†ã«yé€Ÿåº¦ã‚’0ã«å›ºå®šã—ã¦ãŠã
+           velocity.y = 0.0f;
+
+           // ã‚­ãƒ¥ãƒ¼ãƒ–ã‚’å‹•ã‹ã™
+           Debug.Log("nnn");
+           Controller.Move(velocity * Time.deltaTime);
+       }
 */
 
-// –v
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã‚­ãƒ¥ãƒ¼ãƒ–é–“ã®è·é›¢ã‚’è¨ˆç®—
+//Vector3 Apos = this.transform.position;
+//Vector3 Bpos = Target.transform.position;
+//float distance = Vector3.Distance(Apos, Bpos);
+
+
 /*
-    // Player‚Ìƒ^ƒO‚ª•t‚¢‚Ä‚¢‚é‚à‚Ì‚É“–‚½‚Á‚½‚ç
+// è·é›¢ãŒDetecDistã®è¨­å®šå€¤æœªæº€ã®å ´åˆã¯æ¤œçŸ¥ãƒ•ãƒ©ã‚°ã‚’falseã«ã™ã‚‹
+if(distance > DetecDist)
+{
+    Debug.Log("aaa");
+    InArea = false;
+}
+*/
+
+/*
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ¤œçŸ¥ã‚¨ãƒªã‚¢ã«ã„ãŸã‚‰æ¤œçŸ¥ãƒ•ãƒ©ã‚°ã‚’trueã«ã™ã‚‹
+private void OnTriggerEnter2D(Collider2D collision)
+{
+    Debug.Log("å‹•ã„ãŸï¼");
+    InArea = true;
+}
+*/
+
+// çªé€²ã®å‡¦ç† æ²¡
+//   Vector3 direction = (Player.position - transform.position).normalized;
+//  speed = 3.5f;
+//transform.Translate(direction * speed * Time.deltaTime);
+
+// ãšã£ã¨ã€å¾€å¾©ã™ã‚‹
+
+/*
+void FixedUpdate()
+{
+    //if (Input.GetKeyDown(KeyCode.E))
+    //{
+    //    Debug.Log("E");
+    //    StartCoroutine(Move());
+    //}
+    //if (move == true)
+    //{
+
+    //    float s = Mathf.Sin(Time.time); // ç§»å‹•é‡ã‚’æ±‚ã‚ã‚‹
+    //    this.transform.Translate(speedX * s / 50, speedY * s / 50, speedZ * s / 50);
+    //    // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãŒå³å‘ãã®å ´åˆ
+    //    // ã‚¹ã‚±ãƒ¼ãƒ«å€¤å–ã‚Šå‡ºã—
+    //    Vector3 scale = transform.localScale;
+
+    //    if (s >= 0)
+    //    {
+
+    //        // å³æ–¹å‘ã«ç§»å‹•ä¸­
+    //        scale.x = 1; // ãã®ã¾ã¾ï¼ˆå³å‘ãï¼‰
+    //    }
+    //    else
+    //    {
+    //        // å·¦æ–¹å‘ã«ç§»å‹•ä¸­
+    //        scale.x = -1; // åè»¢ã™ã‚‹ï¼ˆå·¦å‘ãï¼‰
+    //    }
+    //    // ä»£å…¥ã—ç›´ã™
+    //    transform.localScale = scale;
+    //}
+
+}  
+*/
+
+// æ²¡
+/*
+    // Playerã®ã‚¿ã‚°ãŒä»˜ã„ã¦ã„ã‚‹ã‚‚ã®ã«å½“ãŸã£ãŸã‚‰
 else if (collision.gameObject.tag == "Player")
 {
     isloop = true;
@@ -299,3 +393,56 @@ else if (collision.gameObject.tag == "Player")
     }
 }
 */
+
+//CharacterController Controller;
+//Transform Target;
+
+//if (collision.gameObject.tag == "Bone")
+//{
+//    bone = false;
+//    Debug.Log("bone : " + bone);
+//}
+
+//playerFlag = false;
+////bone = false;
+
+
+/*
+// çªé€²
+private void OnTriggerStay2D(Collider2D collision)
+{
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¿ã‚°ãŒã¤ã„ã¦ã„ã‚‹ã‚„ã¤ãŒè¿‘ã¥ã„ã¦ããŸã‚‰
+    if (collision.gameObject.tag == "Player")
+    {
+        //if (bone) { return; }
+        //time2 += Time.deltaTime;
+        //if (time2 > 2)
+        //{
+        //    Debug.Log("add_player");
+        //    isloop = true;
+
+        //    if (transform.position.x < Player.position.x)
+        //    {
+        //        //å³
+        //        rb.velocity = new Vector2(speed, 0);
+        //        transform.localScale = new Vector2(1, 1);
+        //        isloop = false;
+        //    }
+        //    else if (transform.position.x > Player.position.x)
+        //    {
+        //        //å·¦
+        //        rb.velocity = new Vector2(-speed, 0);
+        //        transform.localScale = new Vector2(-1, 1);
+        //        isloop = false;
+        //    }
+        //}
+    }     
+}
+*/
+
+//[SerializeField]
+//float MoveSpeed = 2.0f;
+//int DetecDist = 8;
+//bool InArea = false;
+
+//Vector3 direction = (Player.position - transform.position).normalized;

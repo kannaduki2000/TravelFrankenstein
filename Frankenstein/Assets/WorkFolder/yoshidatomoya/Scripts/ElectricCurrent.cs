@@ -1,30 +1,33 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ElectricCurrent : MonoBehaviour
 {
     //
-    // HP‚ğ•\¦
+    // HPã‚’è¡¨ç¤º
     int HP = 100;
 
-    public float speed;
+    public float speed; // ã‚¹ãƒ”ãƒ¼ãƒ‰è¨­å®š
     private Rigidbody2D rb;
 
-    private bool touchFlag = false;
+    private bool touchFlag = false; // ã‚¹ã‚¤ãƒƒãƒ
 
     public GameObject hpBar;
 
+    public bool isBone = false;ã€€ã€€// ã‚¹ã‚¤ãƒƒãƒ
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
+
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç§»å‹•
     private void FixedUpdate()
     {
-        // ƒvƒŒƒCƒ„[ˆÚ“®
-        float horizontalKey = Input.GetAxis("Horizontal");
+        
+        float horizontalKey = Input.GetAxis("J_Horizontal");
 
         if (horizontalKey > 0)
         {
@@ -40,38 +43,35 @@ public class ElectricCurrent : MonoBehaviour
         }
     }
 
-
-    // Update is called once per frame
+    // é›»æ°—ã®å‡ºã—å…¥ã‚Œ
     void Update()
     {
         if (touchFlag)
         {
             Debug.Log("aaa");
-            // •\¦
-            hpBar.SetActive(true);
+            // è¡¨ç¤º
+            hpBar.SetActive(true); // hpBarè¡¨ç¤º
 
-            // “d‹C‚ğ—¬‚·
+            // é›»æ°—ã‚’æµã™
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                // HP‚ğŒ¸‚ç‚·
+                // HPã‚’æ¸›ã‚‰ã™
                 HP -= 30;
                 Debug.Log(HP);
-                // ‚±‚±‚Éˆ—‚ğ‰Á‚¦‚é
+                // ã“ã“ã«å‡¦ç†ã‚’åŠ ãˆã‚‹
             }
-            // “d‹C‚ğ[“d
+            // é›»æ°—ã‚’å……é›»
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                // HP‚ğ‘‚â‚·
+                // HPã‚’å¢—ã‚„ã™
                 HP += 30;
                 Debug.Log(HP);
-                // ‚±‚±‚Éˆ—‚ğ‰Á‚¦‚é
+                // ã“ã“ã«å‡¦ç†ã‚’åŠ ãˆã‚‹
             }
 
 
         }
-
-
-        // ”ñ•\¦
+        // éè¡¨ç¤º
 
     }
 
@@ -79,30 +79,51 @@ public class ElectricCurrent : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // HomeAppã‚¿ã‚°ãŒä»˜ã„ã¦ã„ã‚‹ã‚‚ã®ã®Triggerã«è§¦ã‚ŒãŸã‚‰
         if (collision.gameObject.tag == "HomeApp")
         {
-            touchFlag = true;   
+            touchFlag = true;  // touchFlagã‚’ã‚ªãƒ³ã«ã™ã‚‹
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        // HomeAppã‚¿ã‚°ãŒä»˜ã„ã¦ã„ã‚‹ã‚‚ã®ã®Triggerã‹ã‚‰é›¢ã‚ŒãŸã‚‰
         if (collision.gameObject.tag == "HomeApp")
         {
-            touchFlag = false;
-            hpBar.SetActive(false);
+            touchFlag = false; // touchFlagã‚’ã‚ªãƒ•ã«ã™ã‚‹
+            hpBar.SetActive(false); // hpBaréè¡¨ç¤º
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Boneã‚¿ã‚°ãŒä»˜ã„ã¦ã„ã‚‹ã‚‚ã®ã®Triggerã«è§¦ã‚ŒãŸã‚‰
+        if (collision.gameObject.tag == "Bone")
+        {
+            isBone = true; // isBoneã‚’ã‚ªãƒ³ã«ã™ã‚‹
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // Boneã‚¿ã‚°ãŒä»˜ã„ã¦ã„ã‚‹ã‚‚ã®ã®Triggerã‹ã‚‰é›¢ã‚ŒãŸã‚‰
+        if (collision.gameObject.tag == "Bone")
+        {
+            isBone = false; // isBoneã‚’ã‚ªãƒ•ã«ã™ã‚‹
+        }
+    }
+
 }
 
 /*
-—“d—¬ŠÖŒW
-    “d‹C‚ğ—¬‚·Z
-@@“d‹C‚ğ[“d‚·‚éZ
-@@“d‹C‚ğ—¬‚¹‚é‚©‚Ç‚¤‚©‚Ì”»’èZ
-@@@—¬‚¹‚é‚È‚ç—¬‚¹‚é‘ÎÛ‚Ìó‘Ôi“d‹C‚ğ—¬‚·or[“dj‚ğæ“¾Z
-@@ @í—Ş‚É‡‚í‚¹‚½ˆ—‚ğ‚·‚é
-@@@@i“G‚È‚ç‚»‚Ì“G‚É‰‚¶‚½“d‹C‚ğÁ”ï‚µ‚Ä’Ç]j
-@@@@iƒMƒ~ƒbƒN‚È‚ç‚»‚ÌƒMƒ~ƒbƒN‚É‰‚¶‚½ˆ—j
-@@“d‹C‚ğ—¬‚¹‚é•¨‚Ì‹ß‚­‚É—§‚Á‚½‚çHPƒo[‚Æƒ{ƒ^ƒ“‚Ì•\¦ Z
+ï¼ é›»æµé–¢ä¿‚
+    é›»æ°—ã‚’æµã™ã€‡
+ã€€ã€€é›»æ°—ã‚’å……é›»ã™ã‚‹ã€‡
+ã€€ã€€é›»æ°—ã‚’æµã›ã‚‹ã‹ã©ã†ã‹ã®åˆ¤å®šã€‡
+ã€€ã€€ã€€æµã›ã‚‹ãªã‚‰æµã›ã‚‹å¯¾è±¡ã®çŠ¶æ…‹ï¼ˆé›»æ°—ã‚’æµã™orå……é›»ï¼‰ã‚’å–å¾—ã€‡
+ã€€ã€€ ã€€ç¨®é¡ã«åˆã‚ã›ãŸå‡¦ç†ã‚’ã™ã‚‹
+ã€€ã€€ã€€ã€€ï¼ˆæ•µãªã‚‰ãã®æ•µã«å¿œã˜ãŸé›»æ°—ã‚’æ¶ˆè²»ã—ã¦è¿½å¾“ï¼‰
+ã€€ã€€ã€€ã€€ï¼ˆã‚®ãƒŸãƒƒã‚¯ãªã‚‰ãã®ã‚®ãƒŸãƒƒã‚¯ã«å¿œã˜ãŸå‡¦ç†ï¼‰
+ã€€ã€€é›»æ°—ã‚’æµã›ã‚‹ç‰©ã®è¿‘ãã«ç«‹ã£ãŸã‚‰HPãƒãƒ¼ã¨ãƒœã‚¿ãƒ³ã®è¡¨ç¤º ã€‡
 */
