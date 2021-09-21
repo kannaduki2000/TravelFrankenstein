@@ -208,6 +208,25 @@ public class Enemy2 : MonoBehaviour
             {
                 transform.localScale = new Vector3(-1, 1, 1);
             }
+
+
+            if (player.isBone)
+            {
+                if (transform.position.x < Player.position.x)
+                {
+                    //右
+                    rb.velocity = new Vector2(speed, 0);
+                    transform.localScale = new Vector2(1, 1);
+                    isloop = false;
+                }
+                else if (transform.position.x > Player.position.x)
+                {
+                    //左
+                    rb.velocity = new Vector2(-speed, 0);
+                    transform.localScale = new Vector2(-1, 1);
+                    isloop = false;
+                }
+            }
         }
     }
 
@@ -227,7 +246,7 @@ public class Enemy2 : MonoBehaviour
     // 元の位置に戻る
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // プレイヤーが離れた時
+        
 
     }
 
