@@ -3131,9 +3131,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downpos: {fileID: 953563821}
-  speed: 3
+  speed: 5
   iselevatordown: 0
   foll: 0
+  FollCrash: {fileID: 8300000, guid: e7c1896fddd2d644f8208b5473c156de, type: 3}
+  onTrigger: 0
 --- !u!1 &596357589
 GameObject:
   m_ObjectHideFlags: 0
@@ -3839,6 +3841,8 @@ MonoBehaviour:
   announceImage: {fileID: 21300000, guid: b67fa937908b1dc4ca97f8575e5e193e, type: 3}
   imageData: {fileID: 0}
   announceObject: {fileID: 1662532272}
+  carBreak: {fileID: 8300000, guid: e7c1896fddd2d644f8208b5473c156de, type: 3}
+  onTrigger: 0
 --- !u!50 &802404627
 Rigidbody2D:
   serializedVersion: 4

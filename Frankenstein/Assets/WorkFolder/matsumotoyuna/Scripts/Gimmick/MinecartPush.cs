@@ -24,6 +24,9 @@ public class MinecartPush : MonoBehaviour
     [SerializeField] private ImageData imageData;
     [SerializeField] private Image announceObject;
 
+    public AudioClip carBreak;
+    public bool onTrigger;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Floar")
@@ -38,6 +41,12 @@ public class MinecartPush : MonoBehaviour
         {
             rigid2D.constraints = RigidbodyConstraints2D.FreezePositionX;
             Invoke("MoveStop", 0.5f);
+
+            if(!onTrigger)
+            {
+                SEConveyer.instance.PlaySE(carBreak);
+                onTrigger = true;
+            }
         }
 
         //トロッコとプレイヤーのすれ違い対策

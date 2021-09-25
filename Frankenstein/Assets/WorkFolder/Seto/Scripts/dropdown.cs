@@ -10,6 +10,9 @@ public class dropdown : MonoBehaviour
 
     public bool foll = false;
 
+    public AudioClip FollCrash;
+    public bool onTrigger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,11 @@ public class dropdown : MonoBehaviour
             if(transform.position.y <= downpos.position.y)
             {
                 iselevatordown = false;
+
+                if (onTrigger)
+                {
+                    SEConveyer.instance.PlaySE(FollCrash);
+                }
             }
             else 
             {
@@ -34,7 +42,8 @@ public class dropdown : MonoBehaviour
         
         if(iselevatordown)
         {
-        transform.position = Vector2.MoveTowards(transform.position,downpos.position,speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position,downpos.position,speed * Time.deltaTime);
+
         }
       
     }

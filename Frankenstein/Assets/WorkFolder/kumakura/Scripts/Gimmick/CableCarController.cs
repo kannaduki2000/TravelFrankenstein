@@ -18,9 +18,6 @@ public class CableCarController : MonoBehaviour
 
     private EventBandController eventBandCon;
 
-    public AudioClip torin;
-    public bool onTrigger = false;
-
     void Start()
     {
         playerCon = FindObjectOfType<PlayerController>();
@@ -59,11 +56,6 @@ public class CableCarController : MonoBehaviour
         //playerCon.rb2d.velocity = Vector2.zero;
         // 
         //playerCon.vx = 0;
-        if(!onTrigger)
-        {
-            SEConveyer.instance.PlaySE(torin);
-            onTrigger = true;
-        }
 
         eventBandCon.EventStart(() =>
         {
