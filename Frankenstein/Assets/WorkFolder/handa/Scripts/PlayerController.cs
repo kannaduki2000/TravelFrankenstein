@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UI;
 using DualShockInput;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -51,6 +52,9 @@ public class PlayerController : MonoBehaviour
     public SceneChange sc;
     public FadeControl fadeControl;
 
+    [SerializeField] private GoofCon goofCon;
+    public bool haveBone = false;
+
     // シーン遷移が多重で呼ばれないようにする
     private bool titleLogoflag = false;
     private bool map2Flag = false;
@@ -62,8 +66,12 @@ public class PlayerController : MonoBehaviour
     private bool getUpTrigger = true;
     private EventBandController eventBandCon;
     private bool endFlagTrigger = false;
-
     [SerializeField] private EveCon eve;
+
+    public bool istouchingpuller = false;
+    public float pullforce;
+
+    public EnemyController[] FollEnemy;
 
     // Start is called before the first frame update
     void Start()
@@ -149,6 +157,7 @@ public class PlayerController : MonoBehaviour
         /*プレイヤーの移動入力処理--------------------------------------------*/
         if(player_Move == false)
         {
+
             vx = 0;
             var input = Input.GetAxis("J_Horizontal");
             if (Input.GetKey("right") || inputRange < input)
@@ -158,6 +167,8 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Walking", true);
                 // HPバーの向き
                 canvasParent.transform.localScale = new Vector3(canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
+
+                
             }
             else if (Input.GetKey("left") || input < -inputRange)
             {
@@ -165,10 +176,24 @@ public class PlayerController : MonoBehaviour
                 vx = -speed;
                 anim.SetBool("Walking", true);
                 canvasParent.transform.localScale = new Vector3(-canvasParentScale_x, canvasParent.transform.localScale.y, canvasParent.transform.localScale.x);
+
+                
             }
             else
             {
                 anim.SetBool("Walking", false);
+            }
+
+            if(istouchingpuller == true)
+            {
+                if (vx > 0)
+                {
+                    rb2d.velocity = new Vector2(vx * (speed - 3), rb2d.velocity.y);
+                }
+                if (vx < 0)
+                {
+                    rb2d.velocity = new Vector2(-(pullforce + speed), rb2d.velocity.y);
+                }
             }
            
 
@@ -249,6 +274,8 @@ public class PlayerController : MonoBehaviour
                         enemyCon.isCharging = false;
                         hpCanvas.SetActive(false);
                         enemyOnElect = true;
+
+                        
                     }
                 }
             }
@@ -479,6 +506,21 @@ public class PlayerController : MonoBehaviour
             collision.gameObject.GetComponent<BusEventCollider>().BusEvent(gameObject);
         }
 
+        if(collision.gameObject.tag == "WarpIN")
+        {
+            Player.gameObject.layer = 12;
+        }
+
+        if(collision.gameObject.tag == "WarpOut")
+        {
+            Player.gameObject.layer = 6;
+        }
+
+        if (collision.gameObject.tag == "pull")
+        {
+            istouchingpuller = true;
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -497,6 +539,11 @@ public class PlayerController : MonoBehaviour
         {
             groundCheck = false;
         }
+
+        if(collision.gameObject.tag == "pull")
+        {
+            istouchingpuller = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -505,6 +552,16 @@ public class PlayerController : MonoBehaviour
         {
             touchFlag = true;
         }
+
+        if(collision.gameObject.tag == "Bone")
+        {
+            haveBone = true;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -514,6 +571,8 @@ public class PlayerController : MonoBehaviour
             touchFlag = false;
         }
     }
+
+    
 }
 
 

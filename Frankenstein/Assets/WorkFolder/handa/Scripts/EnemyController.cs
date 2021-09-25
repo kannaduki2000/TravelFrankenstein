@@ -16,7 +16,7 @@ public class EnemyController : ElectricItem
     public float jumpingPower;  //ジャンプ
 
     // モック版熊倉:充電可能かどうかを判別するフラグ
-    public bool isCharging = true; // HPが0になったらtrueにするようにしてください
+    public bool isCharging = false; // HPが0になったらtrueにするようにしてください
     public bool isFollowing = true;   //追従するかどうか
     public bool enemyMove = true;      //エネミーの動き
     private bool enemyJump = false;         //ジャンプ用
@@ -43,8 +43,8 @@ public class EnemyController : ElectricItem
     private bool carFlag = false;
     [SerializeField] private CarPush car;
 
-    [SerializeField] crane cra;
-    private bool craneFlag = false;
+    [SerializeField] public GiyaGate gate;
+    public bool gateFlag = false;
 
     //トロッコを押す
     public GameObject MineCart;
@@ -54,6 +54,13 @@ public class EnemyController : ElectricItem
     [SerializeField] private bool tukamuFlag = false;
     private bool okrpush = false;
     [SerializeField] private float muki = 0;
+
+    [SerializeField] private RotationEnemy rotene;
+    public bool gaerFlag = false;
+
+    [SerializeField] crane cra;
+    private bool craneFlag = false;
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -77,10 +84,21 @@ public class EnemyController : ElectricItem
             carFlag = true;
         }
 
-        if(collision.gameObject.tag == "Crane")
+        if(collision.gameObject.tag == "Gate")
+        {
+            gateFlag = true;
+        }
+
+        if(collision.gameObject.tag == "Gear")
+        {
+            gaerFlag = true;
+        }
+
+        if (collision.gameObject.tag == "Crane")
         {
             craneFlag = true;
         }
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -110,10 +128,21 @@ public class EnemyController : ElectricItem
             carFlag = false;
         }
 
+        if (collision.gameObject.tag == "Gate")
+        {
+            gateFlag = false;
+        }
+
+        if (collision.gameObject.tag == "Gear")
+        {
+            gaerFlag = false;
+        }
+
         if (collision.gameObject.tag == "Crane")
         {
             craneFlag = false;
         }
+
     }
 
     //↑床に着くまでジャンプさせないマン
@@ -154,13 +183,33 @@ public class EnemyController : ElectricItem
             }
         }
 
+        if(gateFlag)
+        {
+            if(DSInput.PushDown(DSButton.Triangle))
+            {
+                gateFlag = false;
+                gate.GateOnTrigger = true;
+                EnemyNotMove();
+            }
+        }
+
+        if(gaerFlag)
+        {
+            if(DSInput.PushDown(DSButton.Square))
+            {
+                EnemyNotMove();
+                rotene.GiyaOnTrigger = true;
+                gaerFlag = false;
+            }
+        }
+
         if(craneFlag)
         {
             if(DSInput.PushDown(DSButton.Square))
             {
                 EnemyNotMove();
-                //cra.craneMove = true;
                 craneFlag = false;
+                cra.craneMove = true;
             }
         }
 

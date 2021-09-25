@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EveCon : ElectricItem
+public class Conveyer : ElectricItem
 {
-    public Animator anim;
+    [SerializeField]private Animator anim;
+
     [SerializeField] private PlayerController player;
     [SerializeField] private Sprite announceImage;
     [SerializeField] private ImageData imageData;
     [SerializeField] private Image announceObject;
 
-    public bool endFlag = false;
-
 
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
+        Power = 20;
         imageData = FindObjectOfType<ImageData>();
         announceImage = imageData.GetAnnounceImage(AnnounceName.S1_SquareButton_Input);
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -29,27 +29,18 @@ public class EveCon : ElectricItem
         {
             announceObject.enabled = false;
         }
-        
     }
 
     public override void Event()
     {
-        player.PlayerNotMove();
-
-    }
-
-    public void ARoot()
-    {
-
+        anim.SetBool("conbeaOn", true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             announceObject.enabled = true;
-
-            endFlag = true;
         }
     }
 
@@ -58,9 +49,6 @@ public class EveCon : ElectricItem
         if (collision.gameObject.tag == "Player")
         {
             announceObject.enabled = false;
-
-            endFlag = true;
         }
     }
-
 }

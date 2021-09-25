@@ -30,11 +30,6 @@ public class TrafficLight : ElectricItem
         }
     }
 
-    public override void Event()
-    {
-        //player.PlayerNotMove();
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")

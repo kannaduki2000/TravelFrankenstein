@@ -3,53 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EveCon : ElectricItem
+public class TVElectric : ElectricItem
 {
-    public Animator anim;
     [SerializeField] private PlayerController player;
     [SerializeField] private Sprite announceImage;
     [SerializeField] private ImageData imageData;
     [SerializeField] private Image announceObject;
 
-    public bool endFlag = false;
+    [SerializeField] private int power;
 
+    Animator TVAnim;
 
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
+        Power = power;
+        ChargeFlag = true;
         imageData = FindObjectOfType<ImageData>();
-        announceImage = imageData.GetAnnounceImage(AnnounceName.S1_SquareButton_Input);
+        announceImage = imageData.GetAnnounceImage(AnnounceName.S1_SquareButton_Absorption);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(IsChargeEvent)
-        {
-            announceObject.enabled = false;
-        }
         
-    }
-
-    public override void Event()
-    {
-        player.PlayerNotMove();
-
-    }
-
-    public void ARoot()
-    {
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             announceObject.enabled = true;
-
-            endFlag = true;
         }
     }
 
@@ -58,9 +42,6 @@ public class EveCon : ElectricItem
         if (collision.gameObject.tag == "Player")
         {
             announceObject.enabled = false;
-
-            endFlag = true;
         }
     }
-
 }
