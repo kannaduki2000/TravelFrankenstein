@@ -1883,7 +1883,6 @@ GameObject:
   m_Component:
   - component: {fileID: 495273596}
   - component: {fileID: 495273595}
-  - component: {fileID: 495273606}
   - component: {fileID: 495273605}
   - component: {fileID: 495273604}
   - component: {fileID: 495273603}
@@ -2180,13 +2179,13 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495273594}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -10.49942, y: 1.4652996}
+  m_Offset: {x: -12.629639, y: 2.5837865}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2197,33 +2196,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.0157166, y: 1.1629925}
-  m_EdgeRadius: 0
---- !u!61 &495273606
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495273594}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 10.134705, y: -8.404045}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 33.05, y: 17.21}
-    newSize: {x: 33.05, y: 17.21}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 13.069595, y: 0.40190887}
+  m_Size: {x: 4.0399704, y: 1.1040211}
   m_EdgeRadius: 0
 --- !u!1001 &503090765
 PrefabInstance:
@@ -4974,6 +4947,18 @@ PrefabInstance:
       objectReference: {fileID: 503090767}
     - target: {fileID: 1356326465420944896, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: Eenemy.Array.data[1]
+      value: 
+      objectReference: {fileID: 1613896667}
+    - target: {fileID: 1356326465420944896, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
+      propertyPath: FollEnemy.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356326465420944896, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
+      propertyPath: FollEnemy.Array.data[0]
+      value: 
+      objectReference: {fileID: 503090767}
+    - target: {fileID: 1356326465420944896, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
+      propertyPath: FollEnemy.Array.data[1]
       value: 
       objectReference: {fileID: 1613896667}
     - target: {fileID: 1356326465420944900, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}

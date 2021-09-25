@@ -6,21 +6,16 @@ using UnityEngine;
 public class RotationEnemy : MonoBehaviour
 {
     [SerializeField] GameObject GiyaH;
-    [SerializeField] GameObject GiyaH2;
     [SerializeField] GameObject Giya1;
 
     [SerializeField] private RotLadder rot;
-    [SerializeField] private EnemyController eneCon, eneCon2;
+    [SerializeField] private EnemyController eneCon;
 
     private float speed = 0;
     private bool kasokuuuuuu = false;
     public bool kasokudekiru = false;
     public bool rothaguruma = false;
     public bool GiyaOnTrigger = true;
-
-    public bool enemy1Flag = false;
-    public bool enemy2Flag = false;
-
 
     [SerializeField] GameObject Gate;
     private float upSpeed = 5f;
