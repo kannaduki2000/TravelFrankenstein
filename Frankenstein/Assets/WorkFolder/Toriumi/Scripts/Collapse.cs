@@ -9,7 +9,7 @@ public class Collapse : MonoBehaviour
 
     GameObject Ground;
 
-    public CameraShake shake;
+   // public CameraShake shake;
 
     void Start()
     {
