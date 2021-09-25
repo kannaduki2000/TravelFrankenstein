@@ -19,6 +19,12 @@ TagManager:
   - BackGround
   - CableCarEvent
   - GoTitle
+  - WarpIN
+  - WarpOut
+  - Crane
+  - Gear
+  - Enemy2
+  - Gate
   layers:
   - Default
   - TransparentFX
@@ -30,9 +36,9 @@ TagManager:
   - Ground
   - MineCart
   - SPMineCart
-  - 
-  - 
-  - 
+  - BackGround
+  - Floar
+  - WPlayer
   - 
   - 
   - 
@@ -55,4 +61,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer
+    uniqueID: 2271417277
     locked: 0
