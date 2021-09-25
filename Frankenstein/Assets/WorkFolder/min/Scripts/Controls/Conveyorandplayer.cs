@@ -26,7 +26,7 @@ public class Conveyorandplayer : MonoBehaviour
     {
         //////////////////////////////////////////////////////////
         //for player movement
-        movex = Input.GetAxisRaw("Horizontal");
+        movex = Input.GetAxisRaw("J_Horizontal");
 
         if(istouchingpuller == true)
         {
@@ -34,10 +34,13 @@ public class Conveyorandplayer : MonoBehaviour
             if(movex > 0)
             {
                 rb.velocity = new Vector2(movex * (speed - 3),rb.velocity.y);
+                Debug.Log("migi");
             }
             if(movex < 0)
             {
                 rb.velocity = new Vector2(-(pullforce + speed),rb.velocity.y);
+                Debug.Log("hi");
+
             }
         }
         else
@@ -48,35 +51,35 @@ public class Conveyorandplayer : MonoBehaviour
 
         //////////////////////////////////////////////////////////////////////////
         //for Player Jump
-        isGrounded = Physics2D.OverlapCircle(groundcheck.position,radius,whatisground);
-        if(isGrounded && Input.GetKeyDown("w"))
-        {
-            rb.velocity = Vector2.up*jumpforce;
-        }
-        //////////////////////////////////////////////////////////////////////
-
-        /////////////////////////////////////////////////////////////////////
-        // player left and right rotation
-        if(movex > 0)
-        {
-            transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
-        }
-        if(movex < 0)
-        {
-            transform.rotation = Quaternion.Euler(new Vector3(0,180,0));
-        }
-        ////////////////////////////////////////////////////////////////
-
-        ////////////////////////////////////////////////////////////
-        //puller is stop or continue 
-        if(Input.GetKeyDown("space") && isGrounded)
-        {
-            istouchingpuller = true;
-        }
-        //if(Input.GetKeyDown("e") && isGrounded)
+        //isGrounded = Physics2D.OverlapCircle(groundcheck.position,radius,whatisground);
+        //if(isGrounded && Input.GetKeyDown("w"))
         //{
-        //    istouchingpuller = false;
+        //    rb.velocity = Vector2.up*jumpforce;
         //}
+        ////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////
+        //// player left and right rotation
+        //if(movex > 0)
+        //{
+        //    transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+        //}
+        //if(movex < 0)
+        //{
+        //    transform.rotation = Quaternion.Euler(new Vector3(0,180,0));
+        //}
+        //////////////////////////////////////////////////////////////////
+
+        //////////////////////////////////////////////////////////////
+        ////puller is stop or continue 
+        //if(Input.GetKeyDown("space") && isGrounded)
+        //{
+        //    istouchingpuller = true;
+        //}
+        ////if(Input.GetKeyDown("e") && isGrounded)
+        ////{
+        ////    istouchingpuller = false;
+        ////}
         ////////////////////////////////////////////////////////////
     }
     //////////////////////////////////////////////////////////////
@@ -85,14 +88,14 @@ public class Conveyorandplayer : MonoBehaviour
     {
         if(collision.gameObject.tag == "pull")
         {
-            istouchingpuller = false;
+            istouchingpuller = true;
         }
     }
     void OnCollisionExit2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "pull")
         {
-            istouchingpuller = true;
+            istouchingpuller = false;
         }
     }
     ///////////////////////////////////////////////////////////////////////
