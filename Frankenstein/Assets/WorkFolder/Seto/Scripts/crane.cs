@@ -12,7 +12,7 @@ public class crane : MonoBehaviour
 
     public bool craneMove = false;
 
-    [SerializeField] EnemyController enemy;
+    //[SerializeField] PlayerController player;
 
     void Start()
     {
@@ -42,10 +42,5 @@ public class crane : MonoBehaviour
     private void CrashFrame()
     {
         drop.foll = true;
-
-        enemy.isFollowing = false;
-        enemy.enemyMove = true;
-        enemy.mt.player_Move = false;
-        enemy.camera.GetComponent<CameraClamp>().targetToFollow = enemy.Player.transform;
     }
 }

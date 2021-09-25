@@ -33,6 +33,7 @@ public class TextController : MonoBehaviour
     private System.Action callback = null;
     private EventBandController eventBandCon;
 
+    public AudioClip taipSE;
     void Start()
     {
         text = GetComponent<Text>();

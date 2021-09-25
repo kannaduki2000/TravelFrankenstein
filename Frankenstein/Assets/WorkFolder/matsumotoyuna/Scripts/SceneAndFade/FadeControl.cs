@@ -20,6 +20,8 @@ public class FadeControl : MonoBehaviour
 
     public bool hiyoko = false;
 
+    public AudioClip fedSE;
+
     private void Awake()
     {
         myColor = fadeImage.color;
@@ -31,7 +33,12 @@ public class FadeControl : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle)) && hiyoko == false)
         {
             Fade("out", ()=> sceneChange.SceneSwitching("MainTutorial"));
+            if(!hiyoko)
+            {
+                SEConveyer.instance.PlaySE(fedSE);
+            }
             hiyoko = true;
+
         }
     }
 
