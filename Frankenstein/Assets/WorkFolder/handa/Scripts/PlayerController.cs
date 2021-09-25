@@ -80,8 +80,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public AudioClip jumpHigh;
     [SerializeField] public AudioClip jumpRow;
     [SerializeField] public AudioClip aruku;
-    public AudioClip taipSE;
-
+    [SerializeField] public AudioClip taipSE;
+    [SerializeField] public AudioClip sceneChange;
 
     // Start is called before the first frame update
     void Start()
@@ -216,6 +216,11 @@ public class PlayerController : MonoBehaviour
                 {
                     jumpFlag = true;
                     pushFlag = true;
+
+                    if(!jumpFlag)
+                    {
+                        SEConveyer.instance.PlaySE(jumpHigh);
+                    }
                 }
                 else
                 {
@@ -509,6 +514,7 @@ public class PlayerController : MonoBehaviour
             // 複数判定を防ぐ為のフラグ
             titleLogoflag = true;
             fadeControl.Fade("wout", () => sc.SceneSwitching("TitleLogo", true));
+            SEConveyer.instance.PlaySE(sceneChange);
         }
 
         if (collision.gameObject.tag == "GoTitle")

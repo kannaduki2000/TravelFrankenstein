@@ -41,16 +41,18 @@ public class GoofCon : ElectricItem
 
     public bool dogFollow = false;
     public float stopDistance;  //止まるときの距離
-    public float inputSpeed;    //移動速度
     public bool Follow = false;       //二度目の入力でのついてくるか否か
 
     /*グーフ敵対用-----------------------------------------------------------------------*/
-    public Vector2 startPos;
-    Transform target;
-    Transform returnPos;
-    Transform endPos;
-    [SerializeField]private GameObject returm;
-    [SerializeField]private GameObject stop;
+    public Vector3 StartPos;
+    public Vector3 EndPos;
+    public float time;
+    public Vector3 deltaPos;
+    Vector3 vec;
+
+    Vector3 AripPos;　//追尾をやめたときの位置
+
+    Transform target; 
 
     [SerializeField] private float speed = 3f;     //ｲｯﾇのスピード
     public bool searchPlayer = false;   //プレイヤーの索敵
@@ -65,18 +67,14 @@ public class GoofCon : ElectricItem
     // Start is called before the first frame update
     void Start()
     {
+        transform.position = StartPos;
+        deltaPos = (EndPos - StartPos) / time;
+        vec = StartPos - EndPos;
+        AripPos = transform.position;
 
-
-        startPos = this.transform.position;
         target = Player.transform; // Playerの位置取得
-        returnPos = returm.transform;
-        endPos = stop.transform;
-
-
         //親子関係 + 向き
-        //DashArea.transform.parent = this.transform;
         dogScale = this.transform.localScale;
-        //dashareaScale = DashArea.transform.localScale;
         playerScale = Player.transform.localScale;
         rigid2D = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -98,33 +96,30 @@ public class GoofCon : ElectricItem
             {
                 DLUtility.DebugLog("突っ込むよ");
                 time2 += Time.deltaTime;
-                if (time2 > 2)
+                if (time2 > 1)
                 {
                     Debug.Log("add_player");
-                    anim.SetBool("DogWalk", false);
+                    anim.SetBool("DogWalk", true);
                     if (transform.position.x < target.position.x)
                     {
                         //右
-                        rigid2D.velocity = new Vector2(speed, 0);
-                        transform.localScale = new Vector2(-muki, dogScale.y);
+                        rigid2D.velocity = new Vector2(-chaseSpeed, 0);
+                        transform.localScale = new Vector2(dogScale.x, dogScale.y);
 
                     }
                     else if (transform.position.x > target.position.x)
                     {
                         //左
-                        rigid2D.velocity = new Vector2(-speed, 0);
-                        transform.localScale = new Vector2(-dogScale.x, dogScale.y);
+                        rigid2D.velocity = new Vector2(-chaseSpeed, 0);
+                        transform.localScale = new Vector2(dogScale.x, dogScale.y);
                     }
                 }
             }
-            else if (searchPlayer == true && transform.position.x == endPos.position.x)
+            if(searchPlayer == false)
             {
-                //特定の場所で止まる
-            }
-            else
-            {
-                //突進前の座標に戻る
                 anim.SetBool("DogWalk", false);
+                deltaPos = (StartPos - AripPos) / time;
+                vec = AripPos - StartPos;
             }
         }
         else if(playerCon.haveBone == true)
@@ -145,7 +140,7 @@ public class GoofCon : ElectricItem
             {
                 transform.position = Vector3.MoveTowards(transform.position,
                 new Vector2(Player.transform.position.x, dog.transform.position.y),
-                inputSpeed * Time.deltaTime);
+                dogSpeed * Time.deltaTime);
             }
             //enemy→player
 

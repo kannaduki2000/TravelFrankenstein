@@ -9,7 +9,11 @@ public class Collapse : MonoBehaviour
 
     GameObject Ground;
 
-   // public CameraShake shake;
+    public AudioClip yukaCrash;
+    public bool onTrigger;
+
+
+    // public CameraShake shake;
 
     void Start()
     {
@@ -24,6 +28,16 @@ public class Collapse : MonoBehaviour
             Vector2 pos = ground.position;
             pos.y = Mathf.MoveTowards(pos.y, -15, Time.deltaTime * speed); //pos.yから-100までTime.deltaTime * speedのスピードで移動
             ground.position = pos;   //半田：-10から-15に変更
+            Invoke("FallCrash", 0.8f);
+        }
+    }
+
+    public void FallCrash()
+    {
+        if(!onTrigger)
+        {
+            SEConveyer.instance.PlaySE(yukaCrash);
+            onTrigger = true;
         }
     }
 

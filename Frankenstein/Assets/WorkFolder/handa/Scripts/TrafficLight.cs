@@ -10,6 +10,9 @@ public class TrafficLight : ElectricItem
     [SerializeField] private ImageData imageData;
     [SerializeField] private Image announceObject;
 
+    public AudioClip torin;
+    public bool onTrigger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +30,18 @@ public class TrafficLight : ElectricItem
 
             EventFlagManager.Instance.SetFlagState(EventFlagName.cableCarStart, true);
 
+            if (!onTrigger)
+            {
+                SEConveyer.instance.PlaySE(torin);
+                onTrigger = true;
+                Invoke("Stop", 5.0f);
+            }
         }
+    }
+
+    public void Stop()
+    {
+        SEConveyer.instance.StopSE(torin);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

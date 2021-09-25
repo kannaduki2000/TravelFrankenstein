@@ -38,4 +38,16 @@ public class SEConveyer : MonoBehaviour
             Debug.Log("nai");
         }
     }
+
+    public void StopSE(AudioClip clip)
+    {
+        if(audioSource != null)
+        {
+            audioSource.Stop();
+        }
+        else
+        {
+            Debug.Log("nai");
+        }
+    }
 }
