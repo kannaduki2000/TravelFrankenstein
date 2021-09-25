@@ -1239,6 +1239,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 314266570}
     - target: {fileID: 1932907521952040303, guid: 976e531cb2ffbee46bcc7d632e33f630, type: 3}
+      propertyPath: Cable
+      value: 
+      objectReference: {fileID: 210326924}
+    - target: {fileID: 1932907521952040303, guid: 976e531cb2ffbee46bcc7d632e33f630, type: 3}
       propertyPath: speed
       value: 3
       objectReference: {fileID: 0}
@@ -2318,6 +2322,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9180793296739935, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6326749918772115940, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4425,16 +4433,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GiyaH: {fileID: 503090766}
-  GiyaH2: {fileID: 0}
   Giya1: {fileID: 1110525015}
   rot: {fileID: 1708318555}
   eneCon: {fileID: 503090767}
-  eneCon2: {fileID: 0}
   kasokudekiru: 0
   rothaguruma: 0
   GiyaOnTrigger: 0
-  enemy1Flag: 0
-  enemy2Flag: 0
   Gate: {fileID: 1677901021}
 --- !u!212 &1016516475
 SpriteRenderer:
@@ -5193,16 +5197,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GiyaH: {fileID: 0}
-  GiyaH2: {fileID: 0}
   Giya1: {fileID: 0}
   rot: {fileID: 0}
   eneCon: {fileID: 0}
-  eneCon2: {fileID: 0}
   kasokudekiru: 0
   rothaguruma: 1
   GiyaOnTrigger: 0
-  enemy1Flag: 0
-  enemy2Flag: 0
   Gate: {fileID: 0}
 --- !u!212 &1110525017
 SpriteRenderer:
@@ -6027,7 +6027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f43dd8062a4d94098fd1c6cd83e139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopTime: 0
+  stopTime: 0.5
 --- !u!1 &1427903689
 GameObject:
   m_ObjectHideFlags: 0
@@ -8768,16 +8768,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GiyaH: {fileID: 0}
-  GiyaH2: {fileID: 0}
   Giya1: {fileID: 0}
   rot: {fileID: 0}
   eneCon: {fileID: 0}
-  eneCon2: {fileID: 0}
   kasokudekiru: 0
   rothaguruma: 0
   GiyaOnTrigger: 0
-  enemy1Flag: 0
-  enemy2Flag: 0
   Gate: {fileID: 0}
 --- !u!212 &2060890837
 SpriteRenderer:
