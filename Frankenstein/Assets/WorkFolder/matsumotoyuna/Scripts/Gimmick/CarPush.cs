@@ -19,6 +19,9 @@ public class CarPush : MonoBehaviour
     [SerializeField] private EnemyController enemy;
 
     public PhysicMaterial material;
+
+    public AudioClip carCrash;
+    public bool onTrigger;
     void Start()
     {
         rigid2D = GetComponent<Rigidbody2D>();
@@ -47,6 +50,12 @@ public class CarPush : MonoBehaviour
             gareki.SetActive(false);
             //時差発動「車破壊」
             Invoke("CarCrash", 2.0f);
+
+            if(!onTrigger)
+            {
+                SEConveyer.instance.PlaySE(carCrash);
+                onTrigger = true;
+            }
         }
     }
 

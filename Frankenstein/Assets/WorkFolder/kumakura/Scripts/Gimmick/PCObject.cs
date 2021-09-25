@@ -20,6 +20,7 @@ public class PCObject : ElectricItem
     [SerializeField] Sprite PC_OFF_Sprite;              // Off画像
     bool PCSwitchFlag;
 
+    public AudioClip PCOn;
 
     void Start()
     {
@@ -34,6 +35,8 @@ public class PCObject : ElectricItem
     {
         if (IsChargeEvent)
         {
+            SEConveyer.instance.PlaySE(PCOn);
+
             if (EventFlagManager.Instance.GetFlagState(EventFlagName.textEve) == false)
             {
                 announceObject.enabled = false;

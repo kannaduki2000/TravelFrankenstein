@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 3572028403140770439}
   - component: {fileID: 3572028403140770435}
   - component: {fileID: 1932907521952040303}
+  - component: {fileID: 232227243}
   m_Layer: 0
   m_Name: Goof
-  m_TagString: Untagged
+  m_TagString: Dog
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3572028403140770437}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.03999996, y: -0.71, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 343f05b340112a74885108310fb47b63, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,7 +100,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -110,7 +111,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 5}
+  m_Size: {x: 4.7, y: 3}
   m_EdgeRadius: 0
 --- !u!50 &3572028403140770439
 Rigidbody2D:
@@ -165,11 +166,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCon: {fileID: 0}
+  dogSpeed: 0
+  dog: {fileID: 0}
+  camera: {fileID: 0}
   dogMove: 0
   cantMove: 0
   take: 0
   grab: 0
-  speed: 20
+  Jump: 0
+  jumpForce: 300
   tukamuFlag: 0
   noTossin: 0
   migi: 0
@@ -180,8 +185,41 @@ MonoBehaviour:
   Cable: {fileID: 0}
   rigid2D: {fileID: 0}
   anim: {fileID: 3572028403140770435}
-  startPos: {x: 0, y: 0, z: 0}
-  endPos: {x: 0, y: 0, z: 0}
+  dogFollow: 0
+  stopDistance: 0
+  Follow: 0
+  StartPos: {x: 44, y: -7.8, z: 0}
+  EndPos: {x: 0, y: 0, z: 0}
+  time: 0
+  deltaPos: {x: 0, y: 0, z: 0}
+  speed: 3
   searchPlayer: 0
   Hostile: 1
   chaseSpeed: 1
+  time2: 0
+--- !u!61 &232227243
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3572028403140770437}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.033821106, y: -0.77197886}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5, y: 5}
+    newSize: {x: 5, y: 5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 21.627441, y: 3.4560423}
+  m_EdgeRadius: 0
