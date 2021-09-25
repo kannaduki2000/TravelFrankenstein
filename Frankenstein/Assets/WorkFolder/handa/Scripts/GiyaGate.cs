@@ -66,7 +66,7 @@ public class GiyaGate : MonoBehaviour
         eneCon.isFollowing = false;
         eneCon.enemyMove = true;
         eneCon.mt.player_Move = false;
-        Invoke("GaetUp", 1.0f);
+        Invoke("GaetUp", 2.0f);
     }
 
     public void GaetUp()

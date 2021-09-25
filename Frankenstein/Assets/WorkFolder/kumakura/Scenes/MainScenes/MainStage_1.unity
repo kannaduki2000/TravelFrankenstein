@@ -3492,7 +3492,7 @@ PrefabInstance:
     - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
       propertyPath: gate
       value: 
-      objectReference: {fileID: 313958921}
+      objectReference: {fileID: 619478992}
     - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
       propertyPath: Player
       value: 

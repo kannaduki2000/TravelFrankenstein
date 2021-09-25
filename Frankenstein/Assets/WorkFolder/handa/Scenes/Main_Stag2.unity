@@ -4994,11 +4994,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944901, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.91
+      value: -118.2
       objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944901, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.88
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944901, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6607,6 +6607,42 @@ PrefabInstance:
     - target: {fileID: 9180793296739930, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: mt
+      value: 
+      objectReference: {fileID: 1100497825}
+    - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: mcp
+      value: 
+      objectReference: {fileID: 802404626}
+    - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: pushb
+      value: 
+      objectReference: {fileID: 158107265}
+    - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1100497824}
+    - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 378525931}
+    - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: rotene
+      value: 
+      objectReference: {fileID: 1016516474}
+    - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: MineCart
+      value: 
+      objectReference: {fileID: 802404622}
+    - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: enemyMove
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180793296739933, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
+      propertyPath: isCharging
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9180793296739934, guid: 2527e7e931f35434388bb19daed6574d, type: 3}
       propertyPath: m_SortingOrder
