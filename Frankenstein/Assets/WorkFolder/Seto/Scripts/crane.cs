@@ -7,25 +7,45 @@ public class crane : MonoBehaviour
     [SerializeField] GameObject enem;
     [SerializeField] GameObject enem1;
     private Animator anim;
+
+    [SerializeField] dropdown drop;
+
+    public bool craneMove = false;
+
+    [SerializeField] EnemyController enemy;
+
     void Start()
     {
         anim = GetComponent<Animator>();
     }
     void Update()
     {
-        AnimationControl();
-    }
-      private void AnimationControl()
-    {
-        //"e"キーを押したときの処理
-        if(Input.GetKeyDown("e"))
+        if (craneMove == true)
         {
-            //エネミーを非アクティブ
-            enem.SetActive(false);
-            //エネミー1をアクティブ
-            enem1.SetActive(true);
-            //アニメーションCraneを再生
-            anim.Play("Crane");
+            AnimationControl();
         }
+    }
+    public void AnimationControl()
+    {
+        //"e"キーを押したときの処
+        //エネミーを非アクティブ
+        enem.SetActive(false);
+        //エネミー1をアクティブ
+        enem1.SetActive(true);
+        //アニメーションCraneを再生
+        anim.Play("Crane");
+
+        Invoke("CrashFrame", 1.5f);
+
+    }
+
+    private void CrashFrame()
+    {
+        drop.foll = true;
+
+        enemy.isFollowing = false;
+        enemy.enemyMove = true;
+        enemy.mt.player_Move = false;
+        enemy.camera.GetComponent<CameraClamp>().targetToFollow = enemy.Player.transform;
     }
 }

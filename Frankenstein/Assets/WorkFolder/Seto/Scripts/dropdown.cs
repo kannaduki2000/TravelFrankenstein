@@ -6,7 +6,10 @@ public class dropdown : MonoBehaviour
 {
     public Transform downpos;
     public float speed;
-    bool iselevatordown;
+    public bool iselevatordown;
+
+    public bool foll = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +19,7 @@ public class dropdown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("e"))
+        if(foll == true)
         {
             if(transform.position.y <= downpos.position.y)
             {

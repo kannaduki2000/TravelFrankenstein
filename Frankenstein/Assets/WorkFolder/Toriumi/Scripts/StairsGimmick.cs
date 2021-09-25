@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class StairsGimmick : ElectricItem
 {
+    private Animator switchAnim;
+
     [SerializeField] private GameObject anim;
     [SerializeField] private PlayerController player;
     [SerializeField] private GameObject wall;
@@ -14,6 +16,7 @@ public class StairsGimmick : ElectricItem
 
     private void Start()
     {
+        switchAnim = GetComponent<Animator>();
         Power = 30;
         imageData = FindObjectOfType<ImageData>();
         announceImage = imageData.GetAnnounceImage(AnnounceName.S1_SquareButton_Input);
@@ -33,6 +36,7 @@ public class StairsGimmick : ElectricItem
         // アニメーション再生
         anim.gameObject.GetComponent<StairsAnim>().Stairs();
         player.PlayerNotMove();
+        switchAnim.Play("Battery Animation");
     }
 
     public void AnimationEnd()
