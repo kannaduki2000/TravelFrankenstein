@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class crane : MonoBehaviour
 {
@@ -12,17 +13,24 @@ public class crane : MonoBehaviour
 
     public bool craneMove = false;
 
-    //[SerializeField] PlayerController player;
+    [SerializeField] private Sprite announceImage;
+    [SerializeField] private ImageData imageData;
+    [SerializeField] private Image announceObject;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        imageData = FindObjectOfType<ImageData>();
+        announceImage = imageData.GetAnnounceImage(AnnounceName.T_SquareButton);
+
     }
     void Update()
     {
         if (craneMove == true)
         {
             AnimationControl();
+            announceObject.enabled = false;
+
         }
     }
     public void AnimationControl()
@@ -42,5 +50,21 @@ public class crane : MonoBehaviour
     private void CrashFrame()
     {
         drop.foll = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            announceObject.enabled = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            announceObject.enabled = false;
+        }
     }
 }

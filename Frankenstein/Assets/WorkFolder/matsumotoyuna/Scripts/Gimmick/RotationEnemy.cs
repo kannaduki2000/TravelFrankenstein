@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RotationEnemy : MonoBehaviour
 {
@@ -20,9 +21,16 @@ public class RotationEnemy : MonoBehaviour
     [SerializeField] GameObject Gate;
     private float upSpeed = 5f;
 
+
+    [SerializeField] private Sprite announceImage;
+    [SerializeField] private ImageData imageData;
+    [SerializeField] private Image announceObject;
+
     private void Start()
     {
         Gate = GameObject.Find("Ladder");
+        imageData = FindObjectOfType<ImageData>();
+        announceImage = imageData.GetAnnounceImage(AnnounceName.S1_TriangleButton_Gear);
     }
 
     void Update()
@@ -30,6 +38,8 @@ public class RotationEnemy : MonoBehaviour
         if (GiyaOnTrigger == true)
         {
             GiyaChange();
+            announceObject.enabled = false;
+
         }
 
         //動くか否か
@@ -71,19 +81,6 @@ public class RotationEnemy : MonoBehaviour
         eneCon.enemyMove = true;
         eneCon.mt.player_Move = false;
         Invoke("GaetUp", 1.0f);
-
-        //if (enemy1Flag == true)
-        //{
-           
-        //}
-        //else if(enemy2Flag == true)
-        //{
-        //    GiyaH2.SetActive(false);
-        //    eneCon2.isFollowing = false;
-        //    eneCon2.enemyMove = true;
-        //    eneCon2.mt.player_Move = false;
-        //    eneCon2.camera.GetComponent<CameraClamp>().targetToFollow = eneCon.Player.transform;
-        //}
        
     }
 
@@ -92,29 +89,19 @@ public class RotationEnemy : MonoBehaviour
         eneCon.camera.GetComponent<CameraClamp>().targetToFollow = eneCon.Player.transform;
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if(collision.gameObject.tag == "Enemy")
-    //    {
-    //        enemy1Flag = true;
-    //    }
-        
-    //    if(collision.gameObject.tag == "Enemy2")
-    //    {
-    //        enemy2Flag = true;
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Ememy")
+        {
+            announceObject.enabled = true;
+        }
+    }
 
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Enemy")
-    //    {
-    //        enemy1Flag = false;
-    //    }
-
-    //    if (collision.gameObject.tag == "Enemy2")
-    //    {
-    //        enemy2Flag = false;
-    //    }
-    //}
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Ememy")
+        {
+            announceObject.enabled = false;
+        }
+    }
 }

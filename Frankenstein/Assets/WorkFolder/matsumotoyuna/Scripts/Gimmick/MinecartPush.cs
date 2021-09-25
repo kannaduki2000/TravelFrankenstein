@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Physics;
+using UnityEngine.UI;
+
 
 //エネミーがトロッコの前でRを押すと、
 //トロッコが動く仕組みのスクリプトだよ！
@@ -17,6 +19,10 @@ public class MinecartPush : MonoBehaviour
     public bool enemytouch = false;
     public bool enemyrpush = false;
     public bool movestop = false;
+
+    [SerializeField] private Sprite announceImage;
+    [SerializeField] private ImageData imageData;
+    [SerializeField] private Image announceObject;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -52,6 +58,8 @@ public class MinecartPush : MonoBehaviour
     void Start()
     {
         rigid2D = GetComponent<Rigidbody2D>();
+        imageData = FindObjectOfType<ImageData>();
+        announceImage = imageData.GetAnnounceImage(AnnounceName.S1_RButton_Push);
     }
 
     void Update()
@@ -70,6 +78,8 @@ public class MinecartPush : MonoBehaviour
         if (enemyrpush == true)
         {
             rigid2D.mass = 1;
+
+            announceObject.enabled = false;
         }
 
         else if(enemyrpush == false)
@@ -107,5 +117,21 @@ public class MinecartPush : MonoBehaviour
 
     public void SActive2()
     {
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Ememy")
+        {
+            announceObject.enabled = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Ememy")
+        {
+            announceObject.enabled = false;
+        }
     }
 }
