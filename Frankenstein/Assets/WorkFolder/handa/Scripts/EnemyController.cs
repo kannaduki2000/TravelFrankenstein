@@ -58,10 +58,6 @@ public class EnemyController : ElectricItem
     [SerializeField] private RotationEnemy rotene;
     public bool gaerFlag = false;
 
-    [SerializeField] crane cra;
-    private bool craneFlag = false;
-
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -94,10 +90,6 @@ public class EnemyController : ElectricItem
             gaerFlag = true;
         }
 
-        if (collision.gameObject.tag == "Crane")
-        {
-            craneFlag = true;
-        }
 
     }
 
@@ -138,10 +130,7 @@ public class EnemyController : ElectricItem
             gaerFlag = false;
         }
 
-        if (collision.gameObject.tag == "Crane")
-        {
-            craneFlag = false;
-        }
+        
 
     }
 
@@ -202,16 +191,7 @@ public class EnemyController : ElectricItem
                 gaerFlag = false;
             }
         }
-
-        if(craneFlag)
-        {
-            if(DSInput.PushDown(DSButton.Square))
-            {
-                EnemyNotMove();
-                craneFlag = false;
-                cra.craneMove = true;
-            }
-        }
+    
 
         //箱を用意して、その中にY座標を入れる
         Vector2 targetPos = Player.transform.position;

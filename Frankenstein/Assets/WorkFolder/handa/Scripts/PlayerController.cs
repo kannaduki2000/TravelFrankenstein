@@ -73,6 +73,16 @@ public class PlayerController : MonoBehaviour
 
     public EnemyController[] FollEnemy;
 
+    [SerializeField] crane cra;
+    private bool craneFlag = false;
+
+    [SerializeField] public AudioClip kidou;
+    [SerializeField] public AudioClip jumpHigh;
+    [SerializeField] public AudioClip jumpRow;
+    [SerializeField] public AudioClip aruku;
+    public AudioClip taipSE;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -100,6 +110,7 @@ public class PlayerController : MonoBehaviour
             {
                 anim.SetBool("GetUpFlag", true);
                 getUpTrigger = false;
+                
             }
 
             if (getUpTrigger)
@@ -115,6 +126,7 @@ public class PlayerController : MonoBehaviour
                     {
                         EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
                         anim.SetTrigger("isGetUp");
+                        SEConveyer.instance.PlaySE(kidou);
                     }); }
                 }
             }
@@ -279,6 +291,15 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
+
+            if (craneFlag)
+            {
+                if (DSInput.PushDown(DSButton.Triangle))
+                {
+                    craneFlag = false;
+                    cra.craneMove = true;
+                }
+            }
             /*--------------------------------------------------------------------------*/
 
         }
@@ -394,6 +415,7 @@ public class PlayerController : MonoBehaviour
     public void TextAnim()
     {
         textCon.SetTextActive(true);
+        SEConveyer.instance.PlaySE(taipSE);
     }
 
     /// <summary>
@@ -521,6 +543,12 @@ public class PlayerController : MonoBehaviour
             istouchingpuller = true;
         }
 
+        if (collision.gameObject.tag == "Crane")
+        {
+            craneFlag = true;
+        }
+
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -543,6 +571,11 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "pull")
         {
             istouchingpuller = false;
+        }
+
+        if (collision.gameObject.tag == "Crane")
+        {
+            craneFlag = false;
         }
     }
 

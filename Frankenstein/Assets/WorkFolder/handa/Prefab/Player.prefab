@@ -281,9 +281,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356326465420944911}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
   - {fileID: 3394348269628650142}
   m_Father: {fileID: 0}
@@ -328,7 +328,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 57fd51886853f0e4cb263df32158da5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -416,7 +416,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 4.2150617, y: 0}
+  m_Offset: {x: 3.955998, y: 1.2175415}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -427,7 +427,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.169217, y: 10.42}
+  m_Size: {x: 4.6510897, y: 7.984917}
   m_EdgeRadius: 0
 --- !u!114 &1356326465420944896
 MonoBehaviour:
@@ -446,7 +446,7 @@ MonoBehaviour:
   Player: {fileID: 1356326465420944911}
   enemy: {fileID: 0}
   speed: 7.5
-  jumpPower: 40
+  jumpPower: 25
   vx: 0
   player_Move: 0
   enemyLayer:
@@ -457,6 +457,7 @@ MonoBehaviour:
   HP: 100
   touchFlag: 0
   enemyTouchFlag: 0
+  enemyOnElect: 0
   onElectricity: 1
   hpCanvas: {fileID: 1356326464335050599}
   canvasParent: {fileID: 3572815295923477152}
@@ -468,8 +469,22 @@ MonoBehaviour:
   hp: {fileID: 1356326464137568156}
   sc: {fileID: 0}
   fadeControl: {fileID: 0}
+  goofCon: {fileID: 0}
+  haveBone: 0
   textCon: {fileID: 8698326919416394080}
   electricItem: {fileID: 0}
+  eve: {fileID: 0}
+  istouchingpuller: 0
+  pullforce: 5
+  FollEnemy:
+  - {fileID: 0}
+  - {fileID: 0}
+  cra: {fileID: 0}
+  kidou: {fileID: 0}
+  jumpHigh: {fileID: 0}
+  jumpRow: {fileID: 0}
+  aruku: {fileID: 0}
+  taipSE: {fileID: 0}
 --- !u!95 &3714847005560090193
 Animator:
   serializedVersion: 3
@@ -707,6 +722,7 @@ MonoBehaviour:
   loadTime: 1.25
   textFlag: 0
   active: 0
+  taipSE: {fileID: 0}
 --- !u!1 &8471384143695049920
 GameObject:
   m_ObjectHideFlags: 0
