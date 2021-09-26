@@ -5355,6 +5355,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1356326465420944896, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
+      propertyPath: sp
+      value: 
+      objectReference: {fileID: 1100497827}
+    - target: {fileID: 1356326465420944896, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: cra
       value: 
       objectReference: {fileID: 734912363}
@@ -5404,11 +5408,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944901, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -123.64
+      value: 24.59
       objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944901, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.68
+      value: -7.57
       objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944901, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5467,6 +5471,11 @@ MonoBehaviour:
 --- !u!95 &1100497826 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3714847005560090193, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
+  m_PrefabInstance: {fileID: 1100497823}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1100497827 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1356326465420944900, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
   m_PrefabInstance: {fileID: 1100497823}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1100497832 stripped
