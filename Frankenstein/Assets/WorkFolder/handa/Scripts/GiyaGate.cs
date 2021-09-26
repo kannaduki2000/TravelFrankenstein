@@ -90,6 +90,7 @@ public class GiyaGate : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             announceObject.enabled = true;
+            Debug.Log("in");
         }
     }
 
@@ -97,7 +98,9 @@ public class GiyaGate : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            announceObject.enabled = false;
+            announceObject.enabled = false; 
+            Debug.Log("out");
+
         }
     }
 

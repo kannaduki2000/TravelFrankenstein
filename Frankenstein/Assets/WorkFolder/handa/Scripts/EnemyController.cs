@@ -186,7 +186,7 @@ public class EnemyController : ElectricItem
 
         if(gaerFlag)
         {
-            if(DSInput.PushDown(DSButton.Square))
+            if(DSInput.PushDown(DSButton.Triangle))
             {
                 EnemyNotMove();
                 rotene.GiyaOnTrigger = true;
