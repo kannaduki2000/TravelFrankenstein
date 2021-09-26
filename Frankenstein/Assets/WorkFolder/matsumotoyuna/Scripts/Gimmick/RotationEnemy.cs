@@ -91,7 +91,7 @@ public class RotationEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Ememy")
+        if (collision.gameObject.tag == "Enemy")
         {
             announceObject.enabled = true;
         }
@@ -99,7 +99,7 @@ public class RotationEnemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Ememy")
+        if (collision.gameObject.tag == "Enemy")
         {
             announceObject.enabled = false;
         }

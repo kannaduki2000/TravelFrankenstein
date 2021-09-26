@@ -1883,7 +1883,7 @@ GameObject:
   - component: {fileID: 2051842805}
   m_Layer: 0
   m_Name: NextStageCollider
-  m_TagString: GoTitleLogo
+  m_TagString: GoMap2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

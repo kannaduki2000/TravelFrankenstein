@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Physics;
 using UnityEngine.UI;
+using UnityEditor;
 
 
 //エネミーがトロッコの前でRを押すと、
@@ -62,7 +63,22 @@ public class MinecartPush : MonoBehaviour
             enemytouch = false;
             Invoke("SActive2", 2.0f);
         }
+
+        if(collision.gameObject.name == "Enemy")
+        {
+            announceObject.enabled = true;
+        }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.name == "Enemy")
+        {
+            announceObject.enabled = false;
+        }
+    }
+
+
 
     void Start()
     {
@@ -76,6 +92,7 @@ public class MinecartPush : MonoBehaviour
         if (minecartpush == true)
         {
             MineCartPush();
+            announceObject.enabled = false;
         }
 
         if (playernotouch == true)
@@ -124,23 +141,4 @@ public class MinecartPush : MonoBehaviour
         playertouch = true;
     }
 
-    public void SActive2()
-    {
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Ememy")
-        {
-            announceObject.enabled = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Ememy")
-        {
-            announceObject.enabled = false;
-        }
-    }
 }
