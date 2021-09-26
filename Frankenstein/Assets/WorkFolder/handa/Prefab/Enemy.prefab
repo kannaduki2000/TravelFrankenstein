@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 9180793296739932}
   - component: {fileID: 9180793296739931}
   - component: {fileID: 7425818840158980153}
+  - component: {fileID: 1443081057}
+  - component: {fileID: 1443081056}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Enemy
@@ -31,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 9180793296739930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.6, y: 3.14, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -75,8 +77,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1b6d8676b2f1ac54091654d3f5835fb5, type: 3}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 21300000, guid: e12b339e2bb0d9f41931fe9bf73fb9e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,9 +104,10 @@ MonoBehaviour:
   mt: {fileID: 0}
   Player: {fileID: 0}
   enemy: {fileID: 9180793296739930}
+  enemyAnim: {fileID: 1443081056}
   stopDistance: 5
-  inputSpeed: 10
-  jumpingPower: 2400
+  inputSpeed: 30
+  jumpingPower: 1300
   isCharging: 1
   isFollowing: 0
   enemyMove: 1
@@ -114,15 +117,19 @@ MonoBehaviour:
   speedY: 0
   speedZ: 0
   second: 2
-  isWandering: 1
+  isWandering: 0
   ECon: {fileID: 0}
   moveSpeed: 7.5
   car: {fileID: 0}
+  gate: {fileID: 0}
+  gateFlag: 0
   MineCart: {fileID: 0}
   mcp: {fileID: 0}
   pushb: {fileID: 0}
   tukamuFlag: 0
   muki: 0
+  rotene: {fileID: 0}
+  gaerFlag: 0
 --- !u!114 &6326749918772115940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +137,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9180793296739930}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 502f22bc97ed2894c8959b78ad3d6871, type: 3}
   m_Name: 
@@ -152,18 +159,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.36345768, y: 1.3380301}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.33, y: 2.05}
+    oldSize: {x: 20.84, y: 20.84}
     newSize: {x: 1.33, y: 2.05}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.33, y: 2.05}
+  m_Size: {x: 10.802923, y: 13.432888}
   m_EdgeRadius: 0
 --- !u!50 &9180793296739931
 Rigidbody2D:
@@ -203,7 +210,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.33, y: 2.05}
+    oldSize: {x: 20.84, y: 20.84}
     newSize: {x: 1.33, y: 2.05}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -212,3 +219,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.82242084, y: 1.3773048}
   m_EdgeRadius: 0
+--- !u!58 &1443081057
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180793296739930}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.3499762, y: -5.3746295}
+  serializedVersion: 2
+  m_Radius: 5.4453425
+--- !u!95 &1443081056
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180793296739930}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 00944d4706988ec459565309ac6dfea8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

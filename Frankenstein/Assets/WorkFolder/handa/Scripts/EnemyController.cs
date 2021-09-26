@@ -10,6 +10,7 @@ public class EnemyController : ElectricItem
     public PlayerController mt;
     public GameObject Player;
     public GameObject enemy;
+    private Animator anim;
 
     public float stopDistance;  //止まるときの距離
     public float inputSpeed;    //移動速度
@@ -142,6 +143,7 @@ public class EnemyController : ElectricItem
         this.rb2d = GetComponent<Rigidbody2D>();
         enemyScale = transform.localScale;
         IsThrow = true;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -216,12 +218,16 @@ public class EnemyController : ElectricItem
             if (Player.transform.position.x < transform.position.x)
             {
                 transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
+                anim.SetBool("Walking", true);
+
             }
 
             // 左
             else if (Player.transform.position.x > transform.position.x)
             {
                 transform.localScale = enemyScale;
+                anim.SetBool("Walking", true);
+
             }
 
             //ジャンプ
@@ -239,6 +245,7 @@ public class EnemyController : ElectricItem
             var input = Input.GetAxis("J_Horizontal");
             if (Input.GetKey(KeyCode.LeftArrow) || input < -0.5)
             {
+                anim.SetBool("Walking", true);
                 vx = -moveSpeed;
                 //this.transform.Translate(-0.01f, 0.0f, 0.0f);
                 transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
@@ -253,9 +260,9 @@ public class EnemyController : ElectricItem
                     transform.localScale = new Vector3(-enemyScale.x, enemyScale.y, enemyScale.z);
                 }
             }
-
-            if (Input.GetKey(KeyCode.RightArrow) || 0.5 < input)
+            else if (Input.GetKey(KeyCode.RightArrow) || 0.5 < input)
             {
+                anim.SetBool("Walking", true);
                 vx = moveSpeed;
                 //this.transform.Translate(0.01f, 0.0f, 0.0f);
                 transform.localScale = enemyScale;
@@ -269,6 +276,10 @@ public class EnemyController : ElectricItem
                 {
                     transform.localScale = new Vector3(enemyScale.x, enemyScale.y, enemyScale.z);
                 }
+            }
+            else
+            {
+                anim.SetBool("Walking", false);
             }
 
             if (enemyJump == false && (Input.GetKeyDown(KeyCode.Space) || DSInput.PushDown(DSButton.Cross)))

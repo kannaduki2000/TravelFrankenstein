@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageBGM : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class StageBGM : MonoBehaviour
         {
             BGM = this;
             DontDestroyOnLoad(this.gameObject);
+        }
+        else if(SceneManager.GetActiveScene().name == "MainTitle")
+        {
+            Destroy(this.gameObject);
         }
         else
         {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GiyaGate : MonoBehaviour
 {
@@ -17,10 +18,19 @@ public class GiyaGate : MonoBehaviour
     [SerializeField] GameObject Gate;
     private float upSpeed = 5f;
 
+    [SerializeField] private Sprite announceImage;
+    [SerializeField] private ImageData imageData;
+    [SerializeField] private Image announceObject;
+
+
     // Start is called before the first frame update
     void Start()
     {
         Gate = GameObject.Find("Gate");
+
+        imageData = FindObjectOfType<ImageData>();
+        announceImage = imageData.GetAnnounceImage(AnnounceName.S1_TriangleButton_Gear);
+
     }
 
     // Update is called once per frame
@@ -29,6 +39,7 @@ public class GiyaGate : MonoBehaviour
         if (GateOnTrigger == true)
         {
             GiyaChange();
+            announceObject.enabled = false;
         }
 
         if (rothaguruma == false && kasokudekiru == false)
@@ -73,4 +84,21 @@ public class GiyaGate : MonoBehaviour
     {
         eneCon.camera.GetComponent<CameraClamp>().targetToFollow = eneCon.Player.transform;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            announceObject.enabled = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            announceObject.enabled = false;
+        }
+    }
+
 }
