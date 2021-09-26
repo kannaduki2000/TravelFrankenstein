@@ -299,7 +299,7 @@ public class PlayerController : MonoBehaviour
 
             if (craneFlag)
             {
-                if (DSInput.PushDown(DSButton.Triangle))
+                if (DSInput.PushDown(DSButton.Square))
                 {
                     craneFlag = false;
                     cra.craneMove = true;

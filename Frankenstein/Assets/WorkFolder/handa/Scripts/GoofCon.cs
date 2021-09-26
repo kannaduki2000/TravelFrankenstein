@@ -44,7 +44,7 @@ public class GoofCon : ElectricItem
     public bool Follow = false;       //二度目の入力でのついてくるか否か
 
     /*グーフ敵対用-----------------------------------------------------------------------*/
-    public Vector3 StartPos;
+    private Vector3 StartPos;
     public Vector3 EndPos;
     public float time;
     public Vector3 deltaPos;
@@ -67,10 +67,8 @@ public class GoofCon : ElectricItem
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = StartPos;
-        deltaPos = (EndPos - StartPos) / time;
-        vec = StartPos - EndPos;
-        AripPos = transform.position;
+        StartPos = transform.position;
+        time = 0.0f;
 
         target = Player.transform; // Playerの位置取得
         //親子関係 + 向き
@@ -118,8 +116,14 @@ public class GoofCon : ElectricItem
             if(searchPlayer == false)
             {
                 anim.SetBool("DogWalk", false);
-                deltaPos = (StartPos - AripPos) / time;
-                vec = AripPos - StartPos;
+
+                //time += Time.deltaTime;
+                //if (time >= 3.0f)
+                //{
+                //    transform.position = StartPos;
+
+                //    time = 0;
+                //}
             }
         }
         else if(playerCon.haveBone == true)
