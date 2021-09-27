@@ -453,11 +453,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   cra: {fileID: 0}
+  hpbar: {fileID: 0}
+  on_damage: 0
   kidou: {fileID: 8300000, guid: 66c8635fcf48e554ea77030175b837c9, type: 3}
   jumpHigh: {fileID: 8300000, guid: 1e883d28fb1bc6a44a47a82233e70f24, type: 3}
   jumpRow: {fileID: 8300000, guid: 280ae023850be0a4792bd0df836f6ddb, type: 3}
   aruku: {fileID: 0}
   taipSE: {fileID: 8300000, guid: 1712fb37ff373d441a5653a2840cff74, type: 3}
+  sceneChange: {fileID: 0}
 --- !u!95 &3714847005560090193
 Animator:
   serializedVersion: 3
@@ -687,7 +690,7 @@ MonoBehaviour:
   - ChildText:
     - "...\u535A\u58EB\u306E\u5931\u8E2A\n\u53CA\u3073\n\u751F\u547D\u4F53\u300C\u30A4\u30F4\u300D\u306E\u51E6\u5206\u306E\u78BA\u8A8D"
     - ...
-    - "\u751F\u547D\u4F53\u300C\u30A4\u30D6\u300D\u306E\u4E0D\u5177\u5408\u5426\u5B9A"
+    - "\u751F\u547D\u4F53\u300C\u30A4\u30F4\u300D\u306E\u4E0D\u5177\u5408\u5426\u5B9A"
     - ...
     - "\u3053\u308C\u3088\u308A\n\u751F\u547D\u4F53\u300C\u30A4\u30F4\u300D\u306E\u63A2\u7D22\u3092\u958B\u59CB\u3059\u308B"
   text: {fileID: 3678740193704593340}
