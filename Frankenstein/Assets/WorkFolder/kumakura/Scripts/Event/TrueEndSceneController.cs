@@ -6,7 +6,8 @@ using DualShockInput;
 public class TrueEndSceneController : MonoBehaviour
 {
     private FadeControl fade;
-
+    private float time = 0;
+    private bool trigger = true;
 
     void Start()
     {
@@ -15,8 +16,10 @@ public class TrueEndSceneController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle))
+        time += Time.deltaTime;
+        if ((Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle)) && time > 3 && trigger)
         {
+            trigger = false;
             fade.Fade("out", ()=> fade.sceneChange.SceneSwitching("MainTitle"));
         }
     }
