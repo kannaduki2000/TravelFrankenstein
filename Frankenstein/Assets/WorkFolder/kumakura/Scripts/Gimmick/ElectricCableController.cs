@@ -10,7 +10,7 @@ public class ElectricCableController : MonoBehaviour
     public ElectricCableArray[] electricCableArray;
 
     [SerializeField] private float moveSpeed = 10f;
-    private bool loopFlag = false;
+    //private bool loopFlag = false;
 
     /// <summary>
     /// 電線に触れたオブジェクトを移動させる処理
@@ -21,7 +21,7 @@ public class ElectricCableController : MonoBehaviour
     public void CablePointMove(GameObject _moveObject, int _id,  bool _startPoint = true)
     {
         // Updateで呼ばれても大丈夫なようにフラグ管理
-        if (loopFlag) { return; }
+        if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricCableMoving)) { return; }
         StartCoroutine(MoveLoop(_moveObject, _id, _startPoint));
     }
 
@@ -36,7 +36,9 @@ public class ElectricCableController : MonoBehaviour
     private IEnumerator MoveLoop(GameObject _loopObject, int _id, bool _startPoint)
     {
         // ループの開始
-        loopFlag = true;
+        //loopFlag = true;
+        // ケーブル移動中
+        EventFlagManager.Instance.SetFlagState(EventFlagName.electricCableMoving, true);
         // RigitBody2Dの取得
         var body = _loopObject.GetComponent<Rigidbody2D>();
         // 現在のBodyTypeを取得
@@ -73,7 +75,8 @@ public class ElectricCableController : MonoBehaviour
             }
         }
         // ループの終了
-        loopFlag = false;
+        //loopFlag = false;
+        EventFlagManager.Instance.SetFlagState(EventFlagName.electricCableMoving, false);
         // BodyTypeを元の変数に戻す
         body.bodyType = currentBodyType;
         yield break;

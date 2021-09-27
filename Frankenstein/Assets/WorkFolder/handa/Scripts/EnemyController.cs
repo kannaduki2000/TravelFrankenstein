@@ -324,6 +324,7 @@ public class EnemyController : ElectricItem
         {
             if ((Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)) && Follow == false)
             {
+                if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricCableMoving)) { return; }
                 // カメラ追従の対象をエネミーに変更
                 camera.GetComponent<CameraClamp>().targetToFollow = gameObject.transform;
                 mt.player_Move = !mt.player_Move;
@@ -336,6 +337,7 @@ public class EnemyController : ElectricItem
         //この状態だと何回Enter押してもプレイヤーしか動かんで
         else if (mt.enemyOnElect == true && (Input.GetKeyDown(KeyCode.F) || DSInput.PushDown(DSButton.L1)))
         {
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricCableMoving)) { return; }
             camera.GetComponent<CameraClamp>().targetToFollow = Player.transform;
             isFollowing = true;
             enemyMove = true;
@@ -347,6 +349,7 @@ public class EnemyController : ElectricItem
         //Followを切り替えることでもう一度追従や切り替えができるお
         if (Follow == true && enemyMove == true && isFollowing)
         {
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricCableMoving)) { return; }
             isFollowing = true;
             Follow = !Follow;
         }

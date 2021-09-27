@@ -25,9 +25,14 @@ public enum EventFlagName
     enemyEscape,        // cableCarStopがtrueの時にエネミーが倒された時　他のエネミーが逃げ出す
     enemyElectricCharge,// 最初のエネミー追従の時　ギアハーツの生体確認UIの表示
     enemyReport,        // ギアハーツの生体確認終了後　操作切り替えが可能になる
+    electricCableMoving,
     pushCar,            // 車を押すを押した後　操作権をフランケンに強制的に変更、エネミーを呼ぶ表示　カメラの移動がしたい
     shoppingMall,       // ショッピングモールに近付いたら　テキストの表示
     stage1Gear,        // 歯車になるを押した後　ショッピングモールの扉が開く
+
+
+    trueEnd,
+    badEnd,
 
     // End
     FlagEnd,            // フラグリストの最後を意味するので消さない＆位置ずらさないで
