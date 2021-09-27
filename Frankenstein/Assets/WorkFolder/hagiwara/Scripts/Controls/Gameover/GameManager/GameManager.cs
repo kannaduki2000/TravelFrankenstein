@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public void Title()
 	{
-		SceneManager.LoadScene("Test_TitleScene");
+		SceneManager.LoadScene("MainTitle");
 	}
 
 	/*----------------------------------------------------------------------------------------------------*/

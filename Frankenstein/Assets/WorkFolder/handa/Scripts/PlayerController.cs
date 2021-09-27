@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     private bool getUpTrigger = true;
     private EventBandController eventBandCon;
     private bool endFlagTrigger = false;
-    [SerializeField] private EveCon eve;
+    //[SerializeField] private EveCon eve;
 
     public bool istouchingpuller = false;
     public float pullforce;
@@ -616,7 +616,8 @@ public class PlayerController : MonoBehaviour
         {
             OnDamageEffect();
 
-            HP -= 20;
+            HP -= 10;
+            hp.fillAmount = HP / maxHP;
         }
     }
 
@@ -638,9 +639,9 @@ public class PlayerController : MonoBehaviour
         // ダメージフラグON
         on_damage = true;
 
-        //// プレイヤーの位置を後ろに飛ばす
-        //float s = 100f * Time.deltaTime;
-        //transform.Translate(Vector3.up * s);
+        // プレイヤーの位置を後ろに飛ばす
+        float s = 100f * Time.deltaTime;
+        transform.Translate(Vector3.up * s);
 
         //// プレイヤーのlocalScaleでどちらを向いているのかを判定
         //if (transform.localScale.x >= 0)

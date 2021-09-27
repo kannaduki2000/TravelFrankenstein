@@ -13,8 +13,8 @@ public class TestWaterController : MonoBehaviour
 	// プレイヤーをしまっておくやつ
 	GameObject PlayerObj;
 	// プレイヤーのスクリプトをしまっておくやつ
-	PlayerController PlayerScr;
-
+	//TestPlayerController_2 PlayerScr;
+	PlayerController player;
 	// test_player_controlloer の PlayerHp をしまっておくやつ
 	int hp = 0;
 
@@ -22,8 +22,9 @@ public class TestWaterController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		PlayerObj = GameObject.Find("Player");									// オブジェクトを見つけてしまっちゃう
-		PlayerScr = PlayerObj.GetComponent<PlayerController>();		// スクリプトを見つけてしまっちゃう
+		//PlayerObj = GameObject.Find("TestPlayer");									// オブジェクトを見つけてしまっちゃう
+		//PlayerScr = PlayerObj.GetComponent<TestPlayerController_2>();		// スクリプトを見つけてしまっちゃう
+		PlayerObj = GameObject.Find("Player");
 	}
 
 	/*----------------------------------------------------------------------------------------------------*/
@@ -43,11 +44,11 @@ public class TestWaterController : MonoBehaviour
 	/// <returns></returns>
 	IEnumerator Drowned()
 	{
-		hp = PlayerScr.maxHP;			// hp に PlayerHp をしまっちゃう
+		//hp = player.maxHP;			// hp に PlayerHp をしまっちゃう
 
 		yield return new WaitForSeconds(stopTime);			// stopTime 分、処理を止める
 
-		hp -= PlayerScr.maxHP;			// hp を PlayerHp 分、減らしちゃう
-		PlayerScr.maxHP = hp;			// PlayerHp に hp をしまっちゃう
+		hp -= player.maxHP;			// hp を PlayerHp 分、減らしちゃう
+		player.maxHP = hp;			// PlayerHp に hp をしまっちゃう
 	}
 }

@@ -15,7 +15,8 @@ public class GameoverController : MonoBehaviour
 	// プレイヤーをしまっておくやつ
 	GameObject PlayerObj;
 	// スクリプトをしまっておくやつ
-	TestPlayerController_2 PlayerScr;
+	//TestPlayerController_2 PlayerScr;
+	[SerializeField] PlayerController player;
 
 	// TestPlayerControlloer_2 の PlayerHp をしまっておくやつ
 	int hp = 0;
@@ -28,16 +29,18 @@ public class GameoverController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		PlayerObj = GameObject.Find("TestPlayer");											// オブジェクトを見つけてしまっちゃう
-		PlayerScr = PlayerObj.GetComponent<TestPlayerController_2>();		// スクリプトを見つけてしまっちゃう
+		//PlayerObj = GameObject.Find("TestPlayer");											// オブジェクトを見つけてしまっちゃう
+		//PlayerScr = PlayerObj.GetComponent<TestPlayerController_2>();		// スクリプトを見つけてしまっちゃう
+
+
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		hp = PlayerScr.PlayerHp;			// hp に PlayerHp をしまっちゃう
+		hp = (int)player.HP ;			// hp に PlayerHp をしまっちゃう
 
-		if(hp == 0 && gameoverFlag == false)			// hp が0で且つ、gameoverFlag は False ですか？
+		if(hp < 0 && gameoverFlag == false)			// hp が0で且つ、gameoverFlag は False ですか？
 		{
 			// YES
 			GameoverUIInstance = GameObject.Instantiate(GameoverUIPrefab);
