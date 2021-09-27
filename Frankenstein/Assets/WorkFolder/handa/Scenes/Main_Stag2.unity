@@ -1332,7 +1332,7 @@ PrefabInstance:
       objectReference: {fileID: 1100497825}
     - target: {fileID: 1932907521952040303, guid: 976e531cb2ffbee46bcc7d632e33f630, type: 3}
       propertyPath: chaseSpeed
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3572028403140770434, guid: 976e531cb2ffbee46bcc7d632e33f630, type: 3}
       propertyPath: m_RootOrder
@@ -1780,6 +1780,7 @@ GameObject:
   - component: {fileID: 378525931}
   - component: {fileID: 378525930}
   - component: {fileID: 378525933}
+  - component: {fileID: 378525934}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1869,6 +1870,20 @@ MonoBehaviour:
   RightX: 116.5
   UpY: -8.3
   DownY: 5
+--- !u!114 &378525934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378525929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e75e4a31e4ebd7c4d96a6e11804aa6a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameoverUIPrefab: {fileID: 2264772593863726810, guid: 704b4aec1bd4e7b48b66a3ac164803f3, type: 3}
+  player: {fileID: 1100497825}
 --- !u!1 &411696624
 GameObject:
   m_ObjectHideFlags: 0
@@ -5386,6 +5401,10 @@ PrefabInstance:
       propertyPath: FollEnemy.Array.data[1]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1356326465420944899, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944900, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_SortingOrder
       value: 5
@@ -5408,11 +5427,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944901, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.59
+      value: -123.75
       objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944901, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.57
+      value: -8.7
       objectReference: {fileID: 0}
     - target: {fileID: 1356326465420944901, guid: 126da07a3bc66524caf6e53e83dbc46f, type: 3}
       propertyPath: m_LocalPosition.z
