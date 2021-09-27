@@ -76,6 +76,7 @@ public class EveController : MonoBehaviour
         {
             endingTrigger = true;
             player.PlayerNotMove();
+            //player.player_Move = true;//強制に止めてみた
             eventBandCon.EventStart(() =>
             {
                 StartCoroutine(Delay());

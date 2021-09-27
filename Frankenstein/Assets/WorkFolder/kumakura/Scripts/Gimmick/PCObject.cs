@@ -35,7 +35,7 @@ public class PCObject : ElectricItem
     {
         if (IsChargeEvent)
         {
-            SEConveyer.instance.PlaySE(PCOn);
+            //SEConveyer.instance.PlaySE(PCOn);
 
             if (EventFlagManager.Instance.GetFlagState(EventFlagName.textEve) == false)
             {
