@@ -188,6 +188,8 @@ public class EnemyController : ElectricItem
         {
             if(DSInput.PushDown(DSButton.Triangle))
             {
+                // 車押すまでギアになれない
+                if (EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
                 EnemyNotMove();
                 rotene.GiyaOnTrigger = true;
                 gaerFlag = false;
