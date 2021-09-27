@@ -17,7 +17,7 @@ public class TrueEndSceneController : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        if ((Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle)) && time > 3 && trigger)
+        if ((Input.GetKeyDown(KeyCode.Return) || DSInput.PushDown(DSButton.Circle)) && time > 5 && trigger)
         {
             trigger = false;
             fade.Fade("out", ()=> fade.sceneChange.SceneSwitching("MainTitle"));
