@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public GameObject enemy;
 
     public float speed;                         //速度
+    public float input;
     public float jumpPower;                     //ジャンプの強さ
     public float vx = 0;
     private bool jumpFlag = false;              //ジャンプをしたかどうか
@@ -178,7 +179,7 @@ public class PlayerController : MonoBehaviour
         {
 
             vx = 0;
-            var input = Input.GetAxis("J_Horizontal");
+            input = Input.GetAxis("J_Horizontal");
             if (Input.GetKey("right") || inputRange < input)
             {
                 SystemTextEndPlayerMove();
@@ -464,6 +465,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayerNotMove()
     {
+        input = 0;
         player_Move = true;
         vx = 0;
         rb2d.velocity = Vector2.zero;
