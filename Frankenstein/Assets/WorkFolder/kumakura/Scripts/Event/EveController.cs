@@ -26,10 +26,10 @@ public class EveController : MonoBehaviour
     void Update()
     {
         // デバッグ用
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            EndingManager.Instance.Ending();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    EndingManager.Instance.Ending();
+        //}
     }
 
     public void GetUpPlayerAnim()
