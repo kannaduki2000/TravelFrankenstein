@@ -84,22 +84,26 @@ public class GameSceneDebug : MonoBehaviour
     {
         EventFlagManager.Instance.SetFlagState(EventFlagName.frankensteinGetUp, true);
         EventFlagManager.Instance.SetFlagState(EventFlagName.getupFlag, true);
+        EventFlagManager.Instance.SetFlagState(EventFlagName.electricAabsorption, true);
+        EventFlagManager.Instance.SetFlagState(EventFlagName.enemyCharge, true);
     }
 
     public void ChangeMap1()
     {
         GetUp();
+        fade.hiyoko = true;
         fade.Fade("out", ()=> fade.sceneChange.SceneSwitching("MainStage_1"));
     }
 
     public void ChangeMap2()
     {
         GetUp();
+        fade.hiyoko = true;
         fade.Fade("out", ()=> fade.sceneChange.SceneSwitching("Main_Stag2"));
     }
 
 }
-
+#if UNITY_EDITOR
 
 [CustomEditor(typeof(GameSceneDebug))]
 public class GameSceneDebugEditor : Editor
@@ -141,3 +145,5 @@ public class GameSceneDebugEditor : Editor
         EditorGUILayout.HelpBox("BuildErrorが起こる場合はこのGameObjectを破棄してください", MessageType.Warning);
     }
 }
+
+#endif
