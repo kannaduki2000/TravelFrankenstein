@@ -106,6 +106,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            EventFlagManager.Instance.DumpAllFlag();
+        }
+
         // フランケンがまだ起き上がっていなければ
         if (EventFlagManager.Instance.GetFlagState(EventFlagName.frankensteinGetUp) == false)
         {

@@ -89,7 +89,7 @@ public class GiyaGate : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            if (EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
+            if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
             announceObject.enabled = true;
             Debug.Log("in");
         }
@@ -97,7 +97,7 @@ public class GiyaGate : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
+        if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
         if (collision.gameObject.tag == "Enemy")
         {
             announceObject.enabled = false; 

@@ -83,11 +83,13 @@ public class EnemyController : ElectricItem
 
         if(collision.gameObject.tag == "Gate")
         {
+            if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
             gateFlag = true;
         }
 
         if(collision.gameObject.tag == "Gear")
         {
+            if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
             gaerFlag = true;
         }
 
@@ -123,11 +125,13 @@ public class EnemyController : ElectricItem
 
         if (collision.gameObject.tag == "Gate")
         {
+            if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
             gateFlag = false;
         }
 
         if (collision.gameObject.tag == "Gear")
         {
+            if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
             gaerFlag = false;
         }
 
@@ -170,6 +174,7 @@ public class EnemyController : ElectricItem
             {
                 EnemyNotMove();
                 car.crash = true;
+                EventFlagManager.Instance.SetFlagState(EventFlagName.pushCar, true);
                 carFlag = false;
             }
         }
