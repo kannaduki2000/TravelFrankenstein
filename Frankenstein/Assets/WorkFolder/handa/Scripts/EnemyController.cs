@@ -89,7 +89,6 @@ public class EnemyController : ElectricItem
 
         if(collision.gameObject.tag == "Gear")
         {
-            if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
             gaerFlag = true;
         }
 
@@ -131,7 +130,6 @@ public class EnemyController : ElectricItem
 
         if (collision.gameObject.tag == "Gear")
         {
-            if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
             gaerFlag = false;
         }
 
@@ -194,7 +192,7 @@ public class EnemyController : ElectricItem
             if(DSInput.PushDown(DSButton.Triangle))
             {
                 // 車押すまでギアになれない
-                if (EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
+                if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
                 EnemyNotMove();
                 rotene.GiyaOnTrigger = true;
                 gaerFlag = false;
