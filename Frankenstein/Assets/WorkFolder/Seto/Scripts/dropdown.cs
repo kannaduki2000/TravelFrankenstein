@@ -13,6 +13,8 @@ public class dropdown : MonoBehaviour
     public AudioClip FollCrash;
     public bool onTrigger;
 
+    private System.Action callBack = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,9 +45,23 @@ public class dropdown : MonoBehaviour
         if(iselevatordown)
         {
             transform.position = Vector2.MoveTowards(transform.position,downpos.position,speed * Time.deltaTime);
-
         }
       
+    }
+
+    public IEnumerator DropDown(System.Action _callBack = null)
+    {
+        callBack = _callBack;
+        while (transform.position.y - 0.1f >= downpos.position.y)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, downpos.position, speed * Time.deltaTime);
+            yield return null;
+        }
+
+        SEConveyer.instance.PlaySE(FollCrash);
+
+        if (callBack != null) { callBack(); }
+        yield break;
     }
     
 }

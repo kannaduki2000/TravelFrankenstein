@@ -86,6 +86,7 @@ public class PCObject : ElectricItem
     public void EveReportUnEnabled()
     {
         image.enabled = false;
+        EventFlagManager.Instance.SetFlagState(EventFlagName.textEve, true);
         eventBandCon.EventStart(() =>
         {
             player.textCon.SetTextActive(true, () =>
@@ -93,7 +94,6 @@ public class PCObject : ElectricItem
                 eventBandCon.EventEnd(() =>
                 {
                     player.PlayerMove();
-                    EventFlagManager.Instance.SetFlagState(EventFlagName.textEve, true);
                     announceObject.enabled = true;
                 });
             });

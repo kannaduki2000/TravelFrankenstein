@@ -17,39 +17,62 @@ public class crane : MonoBehaviour
     [SerializeField] private ImageData imageData;
     [SerializeField] private Image announceObject;
 
+    private PlayerController player;
+    private EventBandController band;
+
     void Start()
     {
         anim = GetComponent<Animator>();
         imageData = FindObjectOfType<ImageData>();
         announceImage = imageData.GetAnnounceImage(AnnounceName.T_SquareButton);
+        player = FindObjectOfType<PlayerController>();
+        band = FindObjectOfType<EventBandController>();
 
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            AnimationControl();
+        }
+
         if (craneMove == true)
         {
             AnimationControl();
             announceObject.enabled = false;
-
+            craneMove = false;
         }
     }
     public void AnimationControl()
     {
-        //"e"キーを押したときの処
-        //エネミーを非アクティブ
-        enem.SetActive(false);
-        //エネミー1をアクティブ
-        enem1.SetActive(true);
-        //アニメーションCraneを再生
-        anim.Play("Crane");
-
-        Invoke("CrashFrame", 1.5f);
-
+        player.PlayerNotMove();
+        band.EventStart(()=>
+        {
+            //"e"キーを押したときの処
+            //エネミーを非アクティブ
+            enem.SetActive(false);
+            //エネミー1をアクティブ
+            enem1.SetActive(true);
+            //アニメーションCraneを再生
+            anim.Play("Crane");
+        }
+        );
     }
 
-    private void CrashFrame()
+     /// <summary>
+     /// anim
+     /// </summary>
+    public void CrashFrame()
     {
-        drop.foll = true;
+        StartCoroutine(drop.DropDown(()=>
+        {
+            band.EventEnd(()=>
+            {
+                player.PlayerMove();
+            }
+            );
+        }
+        ));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

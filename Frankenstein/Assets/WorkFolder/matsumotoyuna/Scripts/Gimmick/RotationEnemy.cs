@@ -18,6 +18,8 @@ public class RotationEnemy : MonoBehaviour
     public bool rothaguruma = false;
     public bool GiyaOnTrigger = true;
 
+    private bool trigger = true;
+
     [SerializeField] GameObject Gate;
     private float upSpeed = 5f;
 
@@ -78,8 +80,12 @@ public class RotationEnemy : MonoBehaviour
         vector2.y = Mathf.MoveTowards(vector2.y, 2, Time.deltaTime * upSpeed);
         gate.position = vector2;
         eneCon.isFollowing = false;
+        if (trigger)
+        {
+            eneCon.mt.player_Move = false;
+            trigger = false;
+        }
         eneCon.enemyMove = true;
-        eneCon.mt.player_Move = false;
         Invoke("GaetUp", 1.0f);
        
     }
