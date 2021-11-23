@@ -179,8 +179,9 @@ public class EnemyController : ElectricItem
 
         if(gateFlag)
         {
-            if(DSInput.PushDown(DSButton.Triangle))
+            if(Input.GetKeyDown(KeyCode.O) || DSInput.PushDown(DSButton.Triangle))
             {
+                EventFlagManager.Instance.SetFlagState(EventFlagName.stage1Gear, true);
                 gateFlag = false;
                 gate.GateOnTrigger = true;
                 EnemyNotMove();
@@ -189,13 +190,18 @@ public class EnemyController : ElectricItem
 
         if(gaerFlag)
         {
-            if(DSInput.PushDown(DSButton.Triangle))
+            if(Input.GetKeyDown(KeyCode.O) || DSInput.PushDown(DSButton.Triangle))
             {
                 // 車押すまでギアになれない
                 if (!EventFlagManager.Instance.GetFlagState(EventFlagName.pushCar)) { return; }
-                EnemyNotMove();
-                rotene.GiyaOnTrigger = true;
-                gaerFlag = false;
+                // ステージ1でギアになっておらずステージ2でボタンを押していない時またはその逆の状態でのみ歯車になれる処理（書き方汚い）
+                if (EventFlagManager.Instance.GetFlagState(EventFlagName.stage1Gear) && EventFlagManager.Instance.GetFlagState(EventFlagName.pushButton) ||
+                    !EventFlagManager.Instance.GetFlagState(EventFlagName.stage1Gear) && !EventFlagManager.Instance.GetFlagState(EventFlagName.pushButton))
+                {
+                    EnemyNotMove();
+                    rotene.GiyaOnTrigger = true;
+                    gaerFlag = false;
+                }
             }
         }
     
@@ -330,6 +336,11 @@ public class EnemyController : ElectricItem
                 if (EventFlagManager.Instance.GetFlagState(EventFlagName.electricCableMoving)) { return; }
                 // カメラ追従の対象をエネミーに変更
                 camera.GetComponent<CameraClamp>().targetToFollow = gameObject.transform;
+
+                // プレイヤーの動きを強制的に止める
+                mt.vx = 0;
+                mt.rb2d.velocity = Vector2.zero;
+                mt.anim.SetBool("Walking", false);
                 mt.player_Move = !mt.player_Move;
                 Following();
                 enemyMove = !enemyMove;
