@@ -31,6 +31,7 @@ public enum EventFlagName
     stage1Gear,        // 歯車になるを押した後　ショッピングモールの扉が開く
 
     pushButton,
+    craneFlag,
 
 
     trueEnd,
