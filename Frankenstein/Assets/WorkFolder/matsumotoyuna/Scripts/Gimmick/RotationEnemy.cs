@@ -99,7 +99,9 @@ public class RotationEnemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            announceObject.enabled = true;
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.stage1Gear) && EventFlagManager.Instance.GetFlagState(EventFlagName.pushButton) ||
+                    !EventFlagManager.Instance.GetFlagState(EventFlagName.stage1Gear) && !EventFlagManager.Instance.GetFlagState(EventFlagName.pushButton))
+                announceObject.enabled = true;
         }
     }
 

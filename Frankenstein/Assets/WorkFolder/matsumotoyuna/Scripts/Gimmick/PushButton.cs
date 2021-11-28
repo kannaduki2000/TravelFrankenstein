@@ -56,6 +56,7 @@ public class PushButton : MonoBehaviour
 
     public void PushingButton()
     {
+        EventFlagManager.Instance.SetFlagState(EventFlagName.pushButton, true);
         //坂を降りた後のボタン用
         //ボタンが横に移動するタイプ
         if(notpushingbutton == false && this.gameObject.name == "Button" || this.gameObject.name == "Lever")

@@ -30,6 +30,9 @@ public enum EventFlagName
     shoppingMall,       // ショッピングモールに近付いたら　テキストの表示
     stage1Gear,        // 歯車になるを押した後　ショッピングモールの扉が開く
 
+    pushButton,
+    craneFlag,
+
 
     trueEnd,
     badEnd,

@@ -33,11 +33,13 @@ public class crane : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.craneFlag)) return;
             AnimationControl();
         }
 
         if (craneMove == true)
         {
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.craneFlag)) return;
             AnimationControl();
             announceObject.enabled = false;
             craneMove = false;
@@ -48,6 +50,7 @@ public class crane : MonoBehaviour
         player.PlayerNotMove();
         band.EventStart(()=>
         {
+            EventFlagManager.Instance.SetFlagState(EventFlagName.craneFlag, true);
             //"e"キーを押したときの処
             //エネミーを非アクティブ
             enem.SetActive(false);
@@ -79,6 +82,7 @@ public class crane : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            if (EventFlagManager.Instance.GetFlagState(EventFlagName.craneFlag)) return;
             announceObject.enabled = true;
         }
     }
